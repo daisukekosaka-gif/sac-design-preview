@@ -13,10 +13,11 @@
   /* カラー */
   --color-white: #FFFFFF;
   --color-black: #0A0A0A;
-  --color-gray: #888888;
   --color-gray-light: #F5F5F5;
   --color-gray-mid: #CCCCCC;
-  --color-accent: #0A0A0A;
+  --color-gray-dark: #888888;
+  --color-accent-gold: #C8A86B;
+  --color-accent-charcoal: #2D2D2D;
 
   /* フォント */
   --font-en: 'Inter', sans-serif;
@@ -381,7 +382,7 @@ p {
   font-family: var(--font-en);
   font-size: 0.7rem;
   letter-spacing: 0.15em;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   transition: color var(--transition-fast);
 }
 
@@ -401,7 +402,7 @@ p {
   font-family: var(--font-en);
   font-size: 0.7rem;
   letter-spacing: 0.1em;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
 }
 
 /* ============================================================
@@ -429,7 +430,7 @@ p {
 /* 色 */
 .text-white { color: var(--color-white); }
 .text-black { color: var(--color-black); }
-.text-gray  { color: var(--color-gray); }
+.text-gray  { color: var(--color-gray-dark); }
 
 /* 背景色 */
 .bg-white { background-color: var(--color-white); }
@@ -444,7 +445,7 @@ p {
   font-size: 0.65rem;
   font-weight: 500;
   letter-spacing: 0.25em;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   text-transform: uppercase;
   display: block;
   margin-bottom: var(--space-sm);
@@ -473,7 +474,7 @@ p {
   font-family: var(--font-jp);
   font-size: 0.9rem;
   font-weight: 300;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   line-height: 1.9;
   max-width: 500px;
 }
@@ -601,7 +602,7 @@ p {
   font-size: 0.65rem;
   font-weight: 500;
   letter-spacing: 0.2em;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   text-transform: uppercase;
   margin-bottom: 6px;
 }
@@ -627,7 +628,7 @@ p {
   font-size: 0.65rem;
   font-weight: 500;
   letter-spacing: 0.25em;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   text-transform: uppercase;
   display: block;
   margin-bottom: var(--space-sm);
@@ -645,7 +646,7 @@ p {
   font-family: var(--font-jp);
   font-size: 0.9rem;
   font-weight: 300;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   margin-top: var(--space-sm);
   letter-spacing: 0.1em;
 }
@@ -687,7 +688,7 @@ p {
 }
 
 .form-label .required {
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   margin-left: 4px;
   font-size: 0.6rem;
 }
@@ -761,7 +762,7 @@ p {
   font-weight: 500;
   font-size: 0.75rem;
   letter-spacing: 0.1em;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   width: 220px;
   padding-left: 0;
 }
@@ -796,7 +797,7 @@ p {
   font-family: var(--font-en);
   font-size: 0.75rem;
   letter-spacing: 0.1em;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
 }
 
 .news-category {
@@ -808,7 +809,7 @@ p {
   border: 1px solid var(--color-gray-mid);
   padding: 4px 10px;
   display: inline-block;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
 }
 
 .news-title {
@@ -838,7 +839,7 @@ p {
   border: 1px solid var(--color-gray-mid);
   background: none;
   cursor: pointer;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   transition: all var(--transition-fast);
 }
 
@@ -890,7 +891,7 @@ p {
   font-family: var(--font-jp);
   font-size: 0.8rem;
   font-weight: 300;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   margin-bottom: 8px;
 }
 
@@ -900,7 +901,7 @@ p {
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   margin-bottom: var(--space-sm);
 }
 
@@ -909,7 +910,7 @@ p {
   font-size: 0.85rem;
   font-weight: 300;
   line-height: 1.9;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
 }
 
 /* ============================================================
@@ -933,7 +934,7 @@ p {
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.15em;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   padding-top: 6px;
 }
 
@@ -952,7 +953,7 @@ p {
   font-family: var(--font-jp);
   font-size: 0.85rem;
   font-weight: 300;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   letter-spacing: 0.1em;
   margin-bottom: var(--space-sm);
 }
@@ -962,7 +963,7 @@ p {
   font-size: 0.9rem;
   font-weight: 300;
   line-height: 2;
-  color: var(--color-gray);
+  color: var(--color-gray-dark);
   max-width: 640px;
 }
 
