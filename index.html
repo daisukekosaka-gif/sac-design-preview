@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SAC / Smart AI Production - ONE PROMPT CHANGE THE WORLD. クリエイティブ制作の制約を、解放する。">
-  <title>SAC / Smart AI Production</title>
-  <!-- Google Fonts -->
+  <meta name="description" content="SAC / Smart AI Creative — ONE PROMPT CHANGE THE WORLD. クリエイティブ制作の制約を、解放する。Powered by EPOCH Inc.">
+  <title>SAC / Smart AI Creative</title>
+  <!-- Google Fonts（Inter 300/400/700/900 + Noto Sans JP 300/400/700） -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <!-- CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/layout.css">
 </head>
@@ -19,23 +18,21 @@
   <div class="page-transition" aria-hidden="true"></div>
 
   <!-- ============================================================
-       01. グローバルヘッダー（固定・透明→スクロールで白背景）
+       01. グローバルヘッダー（position: fixed）
+       初期：背景透明・文字白
+       スクロール後：背景白・文字黒・下ボーダー
        ============================================================ -->
   <header class="site-header header-dark" role="banner">
     <div class="header-inner">
-      <!-- ロゴ -->
-      <a href="index.html" class="header-logo" aria-label="SAC トップページへ">
-        SAC
-      </a>
+      <a href="index.html" class="header-logo" aria-label="SAC トップページへ">SAC</a>
 
-      <!-- デスクトップナビ -->
       <nav class="site-nav" role="navigation" aria-label="メインナビゲーション">
         <a href="about.html" class="nav-link">ABOUT</a>
         <a href="service.html" class="nav-link">SERVICE</a>
         <a href="works.html" class="nav-link">WORKS</a>
         <!-- MANAGEMENTドロップダウン -->
         <div class="nav-dropdown">
-          <a href="management.html" class="nav-link nav-link--has-dropdown">MANAGEMENT</a>
+          <a href="management.html" class="nav-link">MANAGEMENT</a>
           <div class="nav-dropdown-menu">
             <a href="management.html#member-a" class="nav-dropdown-link">MEMBER A</a>
             <a href="management.html#member-b" class="nav-dropdown-link">MEMBER B</a>
@@ -48,23 +45,22 @@
         <a href="contact.html" class="nav-link">CONTACT</a>
       </nav>
 
-      <!-- ハンバーガーボタン（SP） -->
       <button class="hamburger" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-nav">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
-  <!-- モバイルナビ（フルスクリーンオーバーレイ） -->
+  <!-- モバイルナビ（フルスクリーン黒オーバーレイ） -->
   <nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション">
     <div class="mobile-nav-inner">
       <a href="about.html" class="mobile-nav-link">ABOUT</a>
       <a href="service.html" class="mobile-nav-link">SERVICE</a>
       <a href="works.html" class="mobile-nav-link">WORKS</a>
-      <a href="management.html" class="mobile-nav-link">MANAGEMENT</a>
-      <div class="mobile-nav-sub">
+      <!-- MANAGEMENTサブメニュー展開可能 -->
+      <button class="mobile-nav-toggle" aria-expanded="false">MANAGEMENT</button>
+      <div class="mobile-nav-sub" aria-hidden="true">
+        <a href="management.html" class="mobile-nav-sub-link">ALL MEMBERS</a>
         <a href="management.html#member-a" class="mobile-nav-sub-link">MEMBER A</a>
         <a href="management.html#member-b" class="mobile-nav-sub-link">MEMBER B</a>
         <a href="management.html#member-c" class="mobile-nav-sub-link">MEMBER C</a>
@@ -76,66 +72,55 @@
     </div>
   </nav>
 
-  <!-- ============================================================
-       メインコンテンツ
-       ============================================================ -->
   <main>
 
     <!-- ============================================================
-         02. Hero セクション（フルスクリーン・100vh）
-         背景: #0A0A0A + CSSノイズテクスチャ
+         02. Hero セクション（100svh・背景#0A0A0A）
+         左揃え・2行コピー・ゴールドライン・和文サブ
+         右下縦書き「SMART AI CREATIVE」・左下スクロール誘導
          ============================================================ -->
     <section class="hero" aria-label="ヒーロー">
-      <!-- CSSノイズテクスチャ背景 -->
-      <div class="hero-noise" aria-hidden="true"></div>
+      <div class="hero-grain" aria-hidden="true"></div>
 
       <div class="hero-content">
-        <!-- メインコピー：文字単位スタッガーアニメーション -->
-        <h1 class="hero-main-copy" aria-label="ONE PROMPT CHANGE THE WORLD">
-          <span class="hero-line hero-line--1">
-            <span class="hero-char" style="--i:0">O</span><span class="hero-char" style="--i:1">N</span><span class="hero-char" style="--i:2">E</span><span class="hero-char hero-char--space" style="--i:3">&nbsp;</span><span class="hero-char" style="--i:4">P</span><span class="hero-char" style="--i:5">R</span><span class="hero-char" style="--i:6">O</span><span class="hero-char" style="--i:7">M</span><span class="hero-char" style="--i:8">P</span><span class="hero-char" style="--i:9">T</span>
-          </span>
-          <span class="hero-line hero-line--2">
-            <span class="hero-char" style="--i:10">C</span><span class="hero-char" style="--i:11">H</span><span class="hero-char" style="--i:12">A</span><span class="hero-char" style="--i:13">N</span><span class="hero-char" style="--i:14">G</span><span class="hero-char" style="--i:15">E</span><span class="hero-char hero-char--space" style="--i:16">&nbsp;</span><span class="hero-char" style="--i:17">T</span><span class="hero-char" style="--i:18">H</span><span class="hero-char" style="--i:19">E</span><span class="hero-char hero-char--space" style="--i:20">&nbsp;</span><span class="hero-char" style="--i:21">W</span><span class="hero-char" style="--i:22">O</span><span class="hero-char" style="--i:23">R</span><span class="hero-char" style="--i:24">L</span><span class="hero-char" style="--i:25">D</span>
-          </span>
+        <h1 class="hero-copy" aria-label="ONE PROMPT CHANGE THE WORLD">
+          <!-- Line 1: ONE PROMPT（文字単位stagger） -->
+          <span class="hero-line hero-line--1" aria-hidden="true"><span class="hero-char" style="--d:0">O</span><span class="hero-char" style="--d:1">N</span><span class="hero-char" style="--d:2">E</span><span class="hero-char hero-char--space" style="--d:3">&nbsp;</span><span class="hero-char" style="--d:4">P</span><span class="hero-char" style="--d:5">R</span><span class="hero-char" style="--d:6">O</span><span class="hero-char" style="--d:7">M</span><span class="hero-char" style="--d:8">P</span><span class="hero-char" style="--d:9">T</span></span>
+          <!-- ゴールドライン（1px・幅60px・左揃え） -->
+          <span class="hero-gold-line" aria-hidden="true"></span>
+          <!-- Line 2: CHANGE THE WORLD -->
+          <span class="hero-line hero-line--2" aria-hidden="true"><span class="hero-char" style="--d:11">C</span><span class="hero-char" style="--d:12">H</span><span class="hero-char" style="--d:13">A</span><span class="hero-char" style="--d:14">N</span><span class="hero-char" style="--d:15">G</span><span class="hero-char" style="--d:16">E</span><span class="hero-char hero-char--space" style="--d:17">&nbsp;</span><span class="hero-char" style="--d:18">T</span><span class="hero-char" style="--d:19">H</span><span class="hero-char" style="--d:20">E</span><span class="hero-char hero-char--space" style="--d:21">&nbsp;</span><span class="hero-char" style="--d:22">W</span><span class="hero-char" style="--d:23">O</span><span class="hero-char" style="--d:24">R</span><span class="hero-char" style="--d:25">L</span><span class="hero-char" style="--d:26">D</span></span>
         </h1>
-
-        <!-- ゴールドのブリンキングキャレット -->
-        <span class="hero-cursor" aria-hidden="true">_</span>
-
         <!-- 和文コピー -->
-        <p class="hero-sub-copy">クリエイティブ制作の制約を、解放する。</p>
+        <p class="hero-sub">クリエイティブ制作の制約を、解放する。</p>
       </div>
 
-      <!-- スクロール誘導 -->
+      <!-- 右下縦書き -->
+      <span class="hero-vertical" aria-hidden="true">SMART AI CREATIVE</span>
+
+      <!-- 左下スクロール誘導 -->
       <div class="hero-scroll" aria-hidden="true">
-        <span class="hero-scroll-text">SCROLL</span>
+        <span class="hero-scroll-label">SCROLL</span>
         <div class="hero-scroll-line"></div>
       </div>
     </section>
 
     <!-- ============================================================
-         03. About セクション
-         白背景・左に番号・右にテキスト
+         03. ABOUT セクション（白背景・padding: 120px 0）
+         左1/3: 番号+タイトル / 右2/3: リード+本文+CTA
          ============================================================ -->
-    <section class="section section--about" id="about" aria-labelledby="about-heading">
+    <section class="sec sec--about" id="about" aria-labelledby="about-heading">
       <div class="container">
-        <div class="about-layout">
-          <!-- 左：番号とセクションタイトル -->
+        <div class="about-grid">
           <div class="about-left" data-scroll>
-            <span class="section-number">01</span>
-            <h2 class="section-heading" id="about-heading">ABOUT</h2>
+            <span class="sec-num">01</span>
+            <h2 class="sec-title" id="about-heading">ABOUT</h2>
           </div>
-          <!-- 右：テキストとCTA -->
           <div class="about-right">
-            <p class="about-lead" data-scroll data-scroll-delay="1">
-              AIとクリエイティブの融合点で、<br>私たちは新しい制作の形を定義する。
-            </p>
-            <p class="about-lead-en" data-scroll data-scroll-delay="2">
-              We define a new form of creative production<br>at the intersection of AI and creativity.
-            </p>
+            <p class="about-lead" data-scroll data-scroll-delay="1">AIとクリエイティブの融合点で、<br>私たちは新しい制作の形を定義する。</p>
+            <p class="about-body" data-scroll data-scroll-delay="2">Smart AI Creative（SAC）は、EPOCH Inc.が擁するAIクリエイティブ特化スタジオです。映像・Web・グラフィック・インスタレーションなど、あらゆる制作領域でAIを活用し、スピード・コスト・クオリティの限界を超えます。ビジネス成果から逆算した"運用設計付きのAI制作"で、制作の制約をすべて解放します。</p>
             <div data-scroll data-scroll-delay="3">
-              <a href="about.html" class="link-arrow-underline">VIEW MORE</a>
+              <a href="about.html" class="cta-link">VIEW MORE <span class="cta-link-arrow">&rarr;</span></a>
             </div>
           </div>
         </div>
@@ -143,181 +128,178 @@
     </section>
 
     <!-- ============================================================
-         04. Works セクション
-         黒背景・3列×2行グリッド
+         04. WORKS セクション（背景#0A0A0A・padding: 120px 0）
+         タイトル＋3×2グリッド＋CTAボタン
          ============================================================ -->
-    <section class="section section--works" id="works" aria-labelledby="works-heading">
+    <section class="sec sec--works" id="works" aria-labelledby="works-heading">
       <div class="container">
-        <!-- セクションヘッダー -->
-        <div class="section-header-center" data-scroll>
-          <span class="section-number section-number--light">02</span>
-          <h2 class="section-heading section-heading--light" id="works-heading">WORKS</h2>
-        </div>
+        <h2 class="works-title" id="works-heading" data-scroll>WORKS</h2>
 
-        <!-- 3列×2行グリッド -->
         <div class="works-grid">
           <article class="works-card" data-scroll>
             <a href="works.html" class="works-card-link">
-              <div class="works-card-thumb" style="background-color: #1a1a1a;">
-                <span class="works-card-tag">MOVIE</span>
-              </div>
-              <div class="works-card-body">
-                <h3 class="works-card-title">Brand Film — Reimagined</h3>
+              <div class="works-card-thumb" style="background-color:#1a1a1a;">
+                <div class="works-card-overlay"></div>
+                <div class="works-card-info">
+                  <span class="works-card-cat">MOVIE</span>
+                  <h3 class="works-card-name">LAST CALL / 公開オーディション番組OP映像</h3>
+                </div>
               </div>
             </a>
           </article>
-
           <article class="works-card" data-scroll data-scroll-delay="1">
             <a href="works.html" class="works-card-link">
-              <div class="works-card-thumb" style="background-color: #222;">
-                <span class="works-card-tag">WEB</span>
-              </div>
-              <div class="works-card-body">
-                <h3 class="works-card-title">Digital Experience Platform</h3>
+              <div class="works-card-thumb" style="background-color:#222;">
+                <div class="works-card-overlay"></div>
+                <div class="works-card-info">
+                  <span class="works-card-cat">GRAPHIC</span>
+                  <h3 class="works-card-name">MITSUBISHI ESTATE RUGBY / Key Visual</h3>
+                </div>
               </div>
             </a>
           </article>
-
           <article class="works-card" data-scroll data-scroll-delay="2">
             <a href="works.html" class="works-card-link">
-              <div class="works-card-thumb" style="background-color: #2a2a2a;">
-                <span class="works-card-tag">GRAPHIC</span>
-              </div>
-              <div class="works-card-body">
-                <h3 class="works-card-title">Visual Identity System</h3>
+              <div class="works-card-thumb" style="background-color:#2a2a2a;">
+                <div class="works-card-overlay"></div>
+                <div class="works-card-info">
+                  <span class="works-card-cat">WEB</span>
+                  <h3 class="works-card-name">SOFTBANK AI-RAN / Tech Showcase</h3>
+                </div>
               </div>
             </a>
           </article>
-
           <article class="works-card" data-scroll>
             <a href="works.html" class="works-card-link">
-              <div class="works-card-thumb" style="background-color: #1e1e1e;">
-                <span class="works-card-tag">AI CREATIVE</span>
-              </div>
-              <div class="works-card-body">
-                <h3 class="works-card-title">Generative Art Installation</h3>
+              <div class="works-card-thumb" style="background-color:#1e1e1e;">
+                <div class="works-card-overlay"></div>
+                <div class="works-card-info">
+                  <span class="works-card-cat">MOVIE</span>
+                  <h3 class="works-card-name">HYDE / SOCIAL VIRUS Music Video</h3>
+                </div>
               </div>
             </a>
           </article>
-
           <article class="works-card" data-scroll data-scroll-delay="1">
             <a href="works.html" class="works-card-link">
-              <div class="works-card-thumb" style="background-color: #262626;">
-                <span class="works-card-tag">MOVIE</span>
-              </div>
-              <div class="works-card-body">
-                <h3 class="works-card-title">AI-Assisted Short Film</h3>
+              <div class="works-card-thumb" style="background-color:#262626;">
+                <div class="works-card-overlay"></div>
+                <div class="works-card-info">
+                  <span class="works-card-cat">GRAPHIC</span>
+                  <h3 class="works-card-name">PING ゴルフアパレル KV</h3>
+                </div>
               </div>
             </a>
           </article>
-
           <article class="works-card" data-scroll data-scroll-delay="2">
             <a href="works.html" class="works-card-link">
-              <div class="works-card-thumb" style="background-color: #303030;">
-                <span class="works-card-tag">WEB</span>
-              </div>
-              <div class="works-card-body">
-                <h3 class="works-card-title">Corporate Site Renewal</h3>
+              <div class="works-card-thumb" style="background-color:#303030;">
+                <div class="works-card-overlay"></div>
+                <div class="works-card-info">
+                  <span class="works-card-cat">BRANDING</span>
+                  <h3 class="works-card-name">24 CENTURY RAMEN</h3>
+                </div>
               </div>
             </a>
           </article>
         </div>
 
-        <!-- VIEW ALL WORKS ボタン -->
-        <div class="section-cta" data-scroll>
-          <a href="works.html" class="btn btn-outline-gold">VIEW ALL WORKS</a>
+        <div class="sec-cta" data-scroll>
+          <a href="works.html" class="btn-gold">VIEW ALL WORKS <span>&rarr;</span></a>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         05. Service セクション
-         白背景・横並びリスト
+         05. SERVICE セクション（白背景・padding: 120px 0）
+         縦書きタイトル＋ボーダー区切りリスト（6サービス）
          ============================================================ -->
-    <section class="section section--service" id="service" aria-labelledby="service-heading">
+    <section class="sec sec--service" id="service" aria-labelledby="service-heading">
       <div class="container">
-        <div class="section-header-center" data-scroll>
-          <span class="section-number">03</span>
-          <h2 class="section-heading" id="service-heading">SERVICE</h2>
-        </div>
-
-        <div class="service-list">
-          <div class="service-item" data-scroll>
-            <span class="service-num">01</span>
-            <div class="service-body">
-              <h3 class="service-name">MOVIE PRODUCTION</h3>
-              <p class="service-desc">AIで拡張された映像制作。コンセプトから納品まで。</p>
-            </div>
-          </div>
-          <div class="service-item" data-scroll data-scroll-delay="1">
-            <span class="service-num">02</span>
-            <div class="service-body">
-              <h3 class="service-name">WEB DESIGN</h3>
-              <p class="service-desc">体験を設計するウェブ制作。UI/UXから実装まで。</p>
-            </div>
-          </div>
-          <div class="service-item" data-scroll data-scroll-delay="2">
-            <span class="service-num">03</span>
-            <div class="service-body">
-              <h3 class="service-name">GRAPHIC DESIGN</h3>
-              <p class="service-desc">ブランドの核心を視覚化。ロゴからVI構築まで。</p>
-            </div>
-          </div>
-          <div class="service-item" data-scroll data-scroll-delay="3">
-            <span class="service-num">04</span>
-            <div class="service-body">
-              <h3 class="service-name">AI CREATIVE</h3>
-              <p class="service-desc">生成AIを活用した次世代クリエイティブ制作。</p>
-            </div>
+        <div class="service-layout">
+          <h2 class="service-vertical-title" id="service-heading" data-scroll>SERVICE</h2>
+          <div class="service-list">
+            <a href="service.html" class="service-row" data-scroll>
+              <span class="service-row-num">01</span>
+              <span class="service-row-name">MOVIE PRODUCTION</span>
+              <span class="service-row-desc">AIで映像制作ステップを12→5に圧縮</span>
+              <span class="service-row-arrow">&rarr;</span>
+            </a>
+            <a href="service.html" class="service-row" data-scroll data-scroll-delay="1">
+              <span class="service-row-num">02</span>
+              <span class="service-row-name">WEB DESIGN</span>
+              <span class="service-row-desc">AIドリブンなUX/UIデザインと実装</span>
+              <span class="service-row-arrow">&rarr;</span>
+            </a>
+            <a href="service.html" class="service-row" data-scroll data-scroll-delay="1">
+              <span class="service-row-num">03</span>
+              <span class="service-row-name">GRAPHIC DESIGN</span>
+              <span class="service-row-desc">AIカンプで撮影ディレクションを効率化</span>
+              <span class="service-row-arrow">&rarr;</span>
+            </a>
+            <a href="service.html" class="service-row" data-scroll data-scroll-delay="2">
+              <span class="service-row-num">04</span>
+              <span class="service-row-name">INSTALLATION</span>
+              <span class="service-row-desc">空間とデジタルを融合した体験設計</span>
+              <span class="service-row-arrow">&rarr;</span>
+            </a>
+            <a href="service.html" class="service-row" data-scroll data-scroll-delay="2">
+              <span class="service-row-num">05</span>
+              <span class="service-row-name">EVENT</span>
+              <span class="service-row-desc">AIを活用したイベント演出・コンテンツ制作</span>
+              <span class="service-row-arrow">&rarr;</span>
+            </a>
+            <a href="service.html" class="service-row" data-scroll data-scroll-delay="3">
+              <span class="service-row-num">06</span>
+              <span class="service-row-name">ANIME</span>
+              <span class="service-row-desc">アニメーション・モーショングラフィックス</span>
+              <span class="service-row-arrow">&rarr;</span>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         06. Info セクション
-         グレーライト背景・最新3件お知らせ
+         06. INFO セクション（背景#F5F5F5・padding: 80px 0）
          ============================================================ -->
-    <section class="section section--info" id="info" aria-labelledby="info-heading">
+    <section class="sec sec--info" id="info" aria-labelledby="info-heading">
       <div class="container">
-        <div class="section-header-row">
-          <div data-scroll>
-            <span class="section-number">04</span>
-            <h2 class="section-heading" id="info-heading">INFO</h2>
-          </div>
-          <a href="info.html" class="link-arrow-underline" data-scroll>VIEW ALL</a>
+        <div class="info-header" data-scroll>
+          <h2 class="sec-title" id="info-heading">INFO</h2>
+          <a href="info.html" class="cta-link">VIEW ALL <span class="cta-link-arrow">&rarr;</span></a>
         </div>
-
         <div class="info-list">
-          <a href="info.html" class="info-item" data-scroll>
-            <time class="info-date" datetime="2026-04-10">2026.04.10</time>
-            <span class="info-title">SAC 公式サイトをリニューアルしました</span>
-            <span class="info-arrow" aria-hidden="true">&rarr;</span>
+          <a href="info.html" class="info-row" data-scroll>
+            <time class="info-row-date" datetime="2026-04-10">2026.04.10</time>
+            <span class="info-row-title">SAC 公式サイトをリニューアルしました</span>
+            <span class="info-row-arrow">&rarr;</span>
           </a>
-          <a href="info.html" class="info-item" data-scroll data-scroll-delay="1">
-            <time class="info-date" datetime="2026-03-25">2026.03.25</time>
-            <span class="info-title">新作インスタレーション作品「PULSE」を公開</span>
-            <span class="info-arrow" aria-hidden="true">&rarr;</span>
+          <a href="info.html" class="info-row" data-scroll data-scroll-delay="1">
+            <time class="info-row-date" datetime="2026-03-25">2026.03.25</time>
+            <span class="info-row-title">新作インスタレーション作品「PULSE」を公開</span>
+            <span class="info-row-arrow">&rarr;</span>
           </a>
-          <a href="info.html" class="info-item" data-scroll data-scroll-delay="2">
-            <time class="info-date" datetime="2026-03-01">2026.03.01</time>
-            <span class="info-title">AI Creativeサービスを正式ローンチしました</span>
-            <span class="info-arrow" aria-hidden="true">&rarr;</span>
+          <a href="info.html" class="info-row" data-scroll data-scroll-delay="2">
+            <time class="info-row-date" datetime="2026-03-01">2026.03.01</time>
+            <span class="info-row-title">AI Creativeサービスを正式ローンチしました</span>
+            <span class="info-row-arrow">&rarr;</span>
           </a>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         07. Contact セクション（フッター上CTA）
-         黒背景・大きなテキスト
+         07. CONTACT セクション（背景#0A0A0A・padding: 160px 0）
          ============================================================ -->
-    <section class="section section--contact" id="contact" aria-labelledby="contact-heading">
+    <section class="sec sec--contact" id="contact" aria-labelledby="contact-heading">
       <div class="container">
-        <div class="contact-cta" data-scroll>
-          <h2 class="contact-heading" id="contact-heading">LET'S CREATE<br>TOGETHER</h2>
-          <p class="contact-sub">お仕事のご依頼・ご相談はこちらから</p>
-          <a href="contact.html" class="btn btn-outline-gold btn-lg">CONTACT</a>
+        <div class="contact-inner" data-scroll>
+          <h2 class="contact-title" id="contact-heading">
+            LET'S CREATE<br>TOGETHER<span class="contact-dot">.</span>
+          </h2>
+          <p class="contact-sub">お仕事のご依頼・ご相談はお気軽にご連絡ください。</p>
+          <a href="contact.html" class="btn-gold btn-gold--lg">CONTACT</a>
         </div>
       </div>
     </section>
@@ -325,32 +307,30 @@
   </main>
 
   <!-- ============================================================
-       08. フッター
-       黒背景・白テキスト
+       08. フッター（背景#0A0A0A）
+       上ボーダー 1px #2D2D2D
        ============================================================ -->
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
-      <div class="footer-top">
-        <!-- 左：ロゴ＋コピーライト -->
+      <div class="footer-main">
         <div class="footer-brand">
-          <a href="index.html" class="footer-logo" aria-label="SAC トップページへ">SAC</a>
-          <p class="footer-copy">&copy; 2024 SAC / Smart AI Production</p>
+          <a href="index.html" class="footer-logo">SAC</a>
+          <span class="footer-brand-sub">Smart AI Creative</span>
         </div>
-        <!-- 右：ナビリンク -->
         <nav class="footer-nav" aria-label="フッターナビゲーション">
-          <a href="about.html" class="footer-nav-link">ABOUT</a>
-          <a href="service.html" class="footer-nav-link">SERVICE</a>
-          <a href="works.html" class="footer-nav-link">WORKS</a>
-          <a href="info.html" class="footer-nav-link">INFO</a>
+          <a href="about.html">ABOUT</a>
+          <a href="service.html">SERVICE</a>
+          <a href="works.html">WORKS</a>
+          <a href="info.html">INFO</a>
         </nav>
+        <span class="footer-powered">Powered by EPOCH Inc.</span>
       </div>
       <div class="footer-bottom">
-        <p class="footer-credit">EPOCH Inc.</p>
+        <p>&copy; 2024 SAC / Smart AI Creative. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
-  <!-- JavaScript -->
   <script src="assets/js/main.js"></script>
 </body>
 </html>

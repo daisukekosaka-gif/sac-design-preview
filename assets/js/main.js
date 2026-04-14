@@ -1,41 +1,41 @@
 /**
- * SAC / Smart AI Production
- * main.js - メインスクリプト（Vanilla JS・ライブラリ不使用）
+ * SAC / Smart AI Creative
+ * main.js — Vanilla JS（ライブラリ不使用）
+ * パフォーマンス優先：will-change / transform / opacity のみ使用
  */
 
 'use strict';
 
 /* ============================================================
    ページロードアニメーション
-   オーバーレイをフェードアウトし、ヒーロー文字アニメーション開始
+   0.3s遅延後にHero文字stagger開始 + オーバーレイフェードアウト
    ============================================================ */
 function initPageLoad() {
   const overlay = document.querySelector('.page-transition');
-  if (!overlay) return;
 
   window.addEventListener('load', () => {
-    requestAnimationFrame(() => {
-      // ヒーロー文字スタッガーアニメーション開始
+    // 0.3s遅延でアニメーション開始
+    setTimeout(() => {
       document.body.classList.add('is-loaded');
-
-      // オーバーレイフェードアウト
-      overlay.classList.add('is-hidden');
-      setTimeout(() => {
-        overlay.style.display = 'none';
-      }, 900);
-    });
+      if (overlay) {
+        overlay.classList.add('is-hidden');
+        setTimeout(() => { overlay.style.display = 'none'; }, 900);
+      }
+    }, 300);
   });
 
-  // フォールバック
+  // フォールバック（3秒後にも発動していなければ強制起動）
   setTimeout(() => {
-    document.body.classList.add('is-loaded');
-    if (overlay) overlay.classList.add('is-hidden');
-  }, 2000);
+    if (!document.body.classList.contains('is-loaded')) {
+      document.body.classList.add('is-loaded');
+      if (overlay) overlay.classList.add('is-hidden');
+    }
+  }, 3000);
 }
 
 /* ============================================================
    ヘッダースクロール
-   スクロール量に応じて透明→白背景へトランジション（0.3s）
+   scrollY > 80 でクラス追加 → CSSトランジション 0.4s
    ============================================================ */
 function initHeaderScroll() {
   const header = document.querySelector('.site-header');
@@ -44,13 +44,12 @@ function initHeaderScroll() {
   const THRESHOLD = 80;
   let ticking = false;
 
-  function updateHeader() {
+  function update() {
     if (window.scrollY > THRESHOLD) {
       header.classList.add('is-scrolled');
       header.classList.remove('header-dark');
     } else {
       header.classList.remove('is-scrolled');
-      // ヒーローがある場合は白文字に復帰
       if (document.querySelector('.hero')) {
         header.classList.add('header-dark');
       }
@@ -58,65 +57,72 @@ function initHeaderScroll() {
     ticking = false;
   }
 
-  // 初期状態
-  updateHeader();
+  update();
 
-  // パッシブスクロールでパフォーマンス向上（requestAnimationFrame節約）
   window.addEventListener('scroll', () => {
     if (!ticking) {
-      requestAnimationFrame(updateHeader);
+      requestAnimationFrame(update);
       ticking = true;
     }
   }, { passive: true });
 }
 
 /* ============================================================
-   ハンバーガーメニュー開閉（フルスクリーンオーバーレイ）
+   ハンバーガーメニュー（フルスクリーンオーバーレイ）
    ============================================================ */
 function initHamburger() {
-  const hamburger = document.querySelector('.hamburger');
-  const mobileNav = document.querySelector('.mobile-nav');
-  if (!hamburger || !mobileNav) return;
+  const btn = document.querySelector('.hamburger');
+  const nav = document.querySelector('.mobile-nav');
+  if (!btn || !nav) return;
 
-  const body = document.body;
-
-  hamburger.addEventListener('click', () => {
-    const isOpen = hamburger.classList.contains('is-open');
-
-    hamburger.classList.toggle('is-open');
-    mobileNav.classList.toggle('is-open');
-
-    // スクロールロック
-    body.style.overflow = isOpen ? '' : 'hidden';
-
-    // アクセシビリティ
-    hamburger.setAttribute('aria-expanded', String(!isOpen));
-    hamburger.setAttribute('aria-label', isOpen ? 'メニューを開く' : 'メニューを閉じる');
+  btn.addEventListener('click', () => {
+    const isOpen = btn.classList.contains('is-open');
+    btn.classList.toggle('is-open');
+    nav.classList.toggle('is-open');
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    btn.setAttribute('aria-label', isOpen ? 'メニューを開く' : 'メニューを閉じる');
   });
 
-  // モバイルナビのリンクをクリックしたら閉じる
-  mobileNav.querySelectorAll('a').forEach(link => {
+  // リンククリックで閉じる
+  nav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      hamburger.classList.remove('is-open');
-      mobileNav.classList.remove('is-open');
-      body.style.overflow = '';
+      btn.classList.remove('is-open');
+      nav.classList.remove('is-open');
+      document.body.style.overflow = '';
     });
   });
 
   // Escキーで閉じる
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && hamburger.classList.contains('is-open')) {
-      hamburger.classList.remove('is-open');
-      mobileNav.classList.remove('is-open');
-      body.style.overflow = '';
+    if (e.key === 'Escape' && btn.classList.contains('is-open')) {
+      btn.classList.remove('is-open');
+      nav.classList.remove('is-open');
+      document.body.style.overflow = '';
     }
   });
 }
 
 /* ============================================================
+   モバイルMANAGEMENTサブメニュー展開
+   max-height + opacityで制御
+   ============================================================ */
+function initMobileSubMenu() {
+  const toggle = document.querySelector('.mobile-nav-toggle');
+  const sub = document.querySelector('.mobile-nav-sub');
+  if (!toggle || !sub) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = sub.classList.contains('is-open');
+    sub.classList.toggle('is-open');
+    sub.setAttribute('aria-hidden', String(isOpen));
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+}
+
+/* ============================================================
    スクロールアニメーション（Intersection Observer）
-   ビューポートに入った要素をフェードイン
-   will-change・transform使用でパフォーマンス優先
+   fadeUp: translateY(40px) → 0 / opacity 0 → 1 / 0.8s
    ============================================================ */
 function initScrollAnimation() {
   const targets = document.querySelectorAll('[data-scroll]');
@@ -127,7 +133,6 @@ function initScrollAnimation() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          // 一度表示したら監視解除（パフォーマンス）
           observer.unobserve(entry.target);
         }
       });
@@ -142,27 +147,22 @@ function initScrollAnimation() {
 }
 
 /* ============================================================
-   WORKSページ：カテゴリフィルター
+   WORKSページ：カテゴリフィルター（他ページ用）
    ============================================================ */
 function initWorksFilter() {
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const workCards = document.querySelectorAll('.work-card');
+  const btns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.work-card');
+  if (!btns.length || !cards.length) return;
 
-  if (!filterBtns.length || !workCards.length) return;
-
-  filterBtns.forEach(btn => {
+  btns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const category = btn.dataset.filter;
-
-      filterBtns.forEach(b => b.classList.remove('is-active'));
+      const cat = btn.dataset.filter;
+      btns.forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
-
-      workCards.forEach(card => {
-        if (category === 'ALL' || card.dataset.category === category) {
-          card.classList.remove('is-hidden');
-        } else {
-          card.classList.add('is-hidden');
-        }
+      cards.forEach(card => {
+        card.classList.toggle('is-hidden',
+          cat !== 'ALL' && card.dataset.category !== cat
+        );
       });
     });
   });
@@ -176,39 +176,28 @@ function initSmoothScroll() {
     anchor.addEventListener('click', (e) => {
       const href = anchor.getAttribute('href');
       if (href === '#') return;
-
       const target = document.querySelector(href);
       if (!target) return;
-
       e.preventDefault();
-
       const headerH = parseInt(
         getComputedStyle(document.documentElement).getPropertyValue('--header-h')
       ) || 80;
       const top = target.getBoundingClientRect().top + window.scrollY - headerH - 16;
-
       window.scrollTo({ top, behavior: 'smooth' });
     });
   });
 }
 
 /* ============================================================
-   アクティブナビリンクの設定
+   アクティブナビリンク
    ============================================================ */
 function initActiveNav() {
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav-link, .footer-nav-link');
-
-  navLinks.forEach(link => {
+  const current = window.location.pathname.replace(/^.*\//, '') || 'index.html';
+  document.querySelectorAll('.nav-link, .footer-nav a').forEach(link => {
     const href = link.getAttribute('href');
     if (!href) return;
-
-    const linkFile = href.replace(/^.*\//, '');
-    const currentFile = currentPath.replace(/^.*\//, '') || 'index.html';
-
-    if (linkFile === currentFile || (currentFile === '' && linkFile === 'index.html')) {
-      link.classList.add('is-active');
-    }
+    const file = href.replace(/^.*\//, '');
+    if (file === current) link.classList.add('is-active');
   });
 }
 
@@ -219,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPageLoad();
   initHeaderScroll();
   initHamburger();
+  initMobileSubMenu();
   initScrollAnimation();
   initWorksFilter();
   initSmoothScroll();
