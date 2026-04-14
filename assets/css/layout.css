@@ -1,6 +1,6 @@
 /* ============================================================
    SAC / Smart AI Production
-   layout.css - グリッド・レイアウト
+   layout.css - グリッド・レイアウト・セクション配置
    ============================================================ */
 
 /* ============================================================
@@ -46,7 +46,7 @@
   padding-bottom: var(--space-xxl);
 }
 
-/* セクションヘッダー */
+/* セクションヘッダー行（左: タイトル、右: リンク） */
 .section-header {
   margin-bottom: var(--space-lg);
 }
@@ -62,36 +62,12 @@
 /* ============================================================
    グリッドシステム
    ============================================================ */
-.grid {
-  display: grid;
-  gap: var(--space-md);
-}
+.grid     { display: grid; gap: var(--space-md); }
+.grid-2   { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+.grid-3   { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+.grid-4   { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); }
+.grid-5   { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-md); }
 
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md);
-}
-
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
-}
-
-.grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-md);
-}
-
-.grid-5 {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-md);
-}
-
-/* ガップ調整 */
 .gap-sm { gap: var(--space-sm); }
 .gap-md { gap: var(--space-md); }
 .gap-lg { gap: var(--space-lg); }
@@ -99,96 +75,57 @@
 /* ============================================================
    フレックスユーティリティ
    ============================================================ */
-.flex {
-  display: flex;
-}
+.flex         { display: flex; }
+.flex-col     { display: flex; flex-direction: column; }
+.flex-center  { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-start   { display: flex; align-items: flex-start; }
 
-.flex-col {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.flex-start {
-  display: flex;
-  align-items: flex-start;
-}
-
-.items-center { align-items: center; }
-.items-start  { align-items: flex-start; }
-.items-end    { align-items: flex-end; }
-
+.items-center  { align-items: center; }
+.items-start   { align-items: flex-start; }
+.items-end     { align-items: flex-end; }
 .justify-center  { justify-content: center; }
 .justify-between { justify-content: space-between; }
 .justify-end     { justify-content: flex-end; }
-
 .flex-wrap { flex-wrap: wrap; }
 
 /* ============================================================
-   ヒーローレイアウト（TOP）
+   03. About セクション レイアウト
+   左右2カラム：左=番号・タイトル / 右=テキスト・CTA
    ============================================================ */
-.hero-layout {
-  position: relative;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ヒーロー内のコンテンツ配置 */
-.hero-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex: 1;
-  padding: calc(var(--header-h) + var(--space-lg)) var(--space-md) var(--space-xl);
-}
-
-/* ============================================================
-   2カラムレイアウト（左コンテンツ + 右コンテンツ）
-   ============================================================ */
-.layout-2col {
+.about-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: var(--space-xl);
   align-items: start;
 }
 
-.layout-2col-wide {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: var(--space-xl);
-  align-items: start;
+.about-left {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-md));
 }
 
 /* ============================================================
-   ワークスグリッド
+   04. Works グリッド（3列×2行）
    ============================================================ */
 .works-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md) var(--space-md);
+  gap: var(--space-md);
 }
 
-/* フィルターで非表示 */
 .work-card.is-hidden {
   display: none;
 }
 
 /* ============================================================
-   メンバーグリッド
+   05. Service リスト
+   横並びリスト（レスポンシブで縦並び）
+   ============================================================ */
+/* service-list, service-item はstyle.cssに定義 */
+
+/* ============================================================
+   メンバーグリッド（他ページ用）
    ============================================================ */
 .members-grid {
   display: grid;
@@ -197,7 +134,7 @@
 }
 
 /* ============================================================
-   インフォグリッド（TOPのサービス概要など）
+   インフォグリッド（概要セクション用・他ページ互換）
    ============================================================ */
 .overview-grid {
   display: grid;
@@ -214,8 +151,23 @@
 }
 
 /* ============================================================
-   ABOUTページ - フィロソフィーレイアウト
+   2カラムレイアウト（他ページ用）
    ============================================================ */
+.layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.layout-2col-wide {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* フィロソフィー・コンタクトレイアウト（他ページ用） */
 .philosophy-layout {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -223,9 +175,6 @@
   align-items: start;
 }
 
-/* ============================================================
-   CONTACTページ
-   ============================================================ */
 .contact-layout {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -233,54 +182,62 @@
   align-items: start;
 }
 
-/* ============================================================
-   ページヒーローのコンテナ
-   ============================================================ */
+/* ページヒーローのコンテナ */
 .page-hero .container {
   padding-top: 0;
   padding-bottom: 0;
 }
 
-/* ============================================================
-   スティッキーサイドバー
-   ============================================================ */
+/* スティッキーサイドバー */
 .sticky-sidebar {
   position: sticky;
   top: calc(var(--header-h) + var(--space-md));
 }
 
-/* ============================================================
-   区切りライン
-   ============================================================ */
+/* 区切りライン */
 .divider {
   border: none;
   border-top: 1px solid var(--color-gray-mid);
   margin: 0;
 }
 
+/* ヒーローレイアウト（互換） */
+.hero-layout {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  padding: calc(var(--header-h) + var(--space-lg)) var(--space-md) var(--space-xl);
+}
+
 /* ============================================================
    レスポンシブ
    ============================================================ */
+
+/* タブレット（1200px以下） */
+@media (max-width: 1200px) {
+  .about-layout {
+    gap: var(--space-lg);
+  }
+}
+
+/* タブレット（1024px以下） */
 @media (max-width: 1024px) {
-  .grid-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-5 { grid-template-columns: repeat(3, 1fr); }
 
-  .grid-5 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .overview-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .members-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .works-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .overview-grid { grid-template-columns: repeat(2, 1fr); }
+  .members-grid  { grid-template-columns: repeat(3, 1fr); }
+  .works-grid    { grid-template-columns: repeat(2, 1fr); }
 
   .philosophy-layout,
   .contact-layout {
@@ -295,25 +252,15 @@
   }
 }
 
+/* タブレット・スマホ（768px以下） */
 @media (max-width: 768px) {
-  .grid-2 {
+  .about-layout {
     grid-template-columns: 1fr;
+    gap: var(--space-lg);
   }
 
-  .grid-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .grid-4 {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-5 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .members-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .about-left {
+    position: static;
   }
 
   .works-grid {
@@ -321,9 +268,13 @@
     gap: var(--space-sm);
   }
 
-  .overview-grid {
-    grid-template-columns: 1fr;
-  }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: 1fr; }
+  .grid-5 { grid-template-columns: repeat(2, 1fr); }
+
+  .members-grid  { grid-template-columns: repeat(2, 1fr); }
+  .overview-grid { grid-template-columns: 1fr; }
 
   .section-header-row {
     flex-direction: column;
@@ -339,8 +290,15 @@
     padding-top: var(--space-xl);
     padding-bottom: var(--space-xl);
   }
+
+  /* Service リストを縦並びに */
+  .service-item {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
 }
 
+/* スマホ（480px以下） */
 @media (max-width: 480px) {
   .container,
   .container-narrow,
@@ -349,20 +307,13 @@
     padding-right: var(--space-sm);
   }
 
-  .grid-3 {
-    grid-template-columns: 1fr;
-  }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-5 { grid-template-columns: 1fr; }
 
-  .grid-5 {
-    grid-template-columns: 1fr;
-  }
+  .works-grid { grid-template-columns: 1fr; }
 
   .members-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-sm);
-  }
-
-  .works-grid {
-    grid-template-columns: 1fr;
   }
 }

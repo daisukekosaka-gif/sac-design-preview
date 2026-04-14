@@ -1,68 +1,77 @@
 /**
  * SAC / Smart AI Production
- * main.js - メインスクリプト
+ * main.js - メインスクリプト（Vanilla JS・ライブラリ不使用）
  */
 
 'use strict';
 
 /* ============================================================
    ページロードアニメーション
+   オーバーレイをフェードアウトし、ヒーロー文字アニメーション開始
    ============================================================ */
 function initPageLoad() {
   const overlay = document.querySelector('.page-transition');
   if (!overlay) return;
 
-  // ロード完了後にフェードアウト
   window.addEventListener('load', () => {
     requestAnimationFrame(() => {
+      // ヒーロー文字スタッガーアニメーション開始
+      document.body.classList.add('is-loaded');
+
+      // オーバーレイフェードアウト
       overlay.classList.add('is-hidden');
       setTimeout(() => {
         overlay.style.display = 'none';
-      }, 700);
+      }, 900);
     });
   });
 
-  // フォールバック: DOMContentLoaded でも動作
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-      overlay.classList.add('is-hidden');
-    }, 300);
-  });
+  // フォールバック
+  setTimeout(() => {
+    document.body.classList.add('is-loaded');
+    if (overlay) overlay.classList.add('is-hidden');
+  }, 2000);
 }
 
 /* ============================================================
    ヘッダースクロール
-   スクロール量に応じてクラスを付与し背景色を変化させる
+   スクロール量に応じて透明→白背景へトランジション（0.3s）
    ============================================================ */
 function initHeaderScroll() {
   const header = document.querySelector('.site-header');
   if (!header) return;
 
   const THRESHOLD = 80;
+  let ticking = false;
 
   function updateHeader() {
     if (window.scrollY > THRESHOLD) {
       header.classList.add('is-scrolled');
-      // ヒーロー上でのみ白文字にする設定を解除
       header.classList.remove('header-dark');
     } else {
       header.classList.remove('is-scrolled');
-      // ヒーローがある場合は白文字に
+      // ヒーローがある場合は白文字に復帰
       if (document.querySelector('.hero')) {
         header.classList.add('header-dark');
       }
     }
+    ticking = false;
   }
 
   // 初期状態
   updateHeader();
 
-  // スクロールイベント（パッシブで登録しパフォーマンス向上）
-  window.addEventListener('scroll', updateHeader, { passive: true });
+  // パッシブスクロールでパフォーマンス向上（requestAnimationFrame節約）
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, { passive: true });
 }
 
 /* ============================================================
-   ハンバーガーメニュー開閉
+   ハンバーガーメニュー開閉（フルスクリーンオーバーレイ）
    ============================================================ */
 function initHamburger() {
   const hamburger = document.querySelector('.hamburger');
@@ -86,7 +95,7 @@ function initHamburger() {
   });
 
   // モバイルナビのリンクをクリックしたら閉じる
-  mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
+  mobileNav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       hamburger.classList.remove('is-open');
       mobileNav.classList.remove('is-open');
@@ -105,8 +114,9 @@ function initHamburger() {
 }
 
 /* ============================================================
-   スクロールアニメーション
-   IntersectionObserver を使用してビューポートに入った要素をフェードイン
+   スクロールアニメーション（Intersection Observer）
+   ビューポートに入った要素をフェードイン
+   will-change・transform使用でパフォーマンス優先
    ============================================================ */
 function initScrollAnimation() {
   const targets = document.querySelectorAll('[data-scroll]');
@@ -117,13 +127,13 @@ function initScrollAnimation() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          // 一度表示したら監視解除
+          // 一度表示したら監視解除（パフォーマンス）
           observer.unobserve(entry.target);
         }
       });
     },
     {
-      rootMargin: '0px 0px -60px 0px', // 少し手前から発火
+      rootMargin: '0px 0px -80px 0px',
       threshold: 0.05
     }
   );
@@ -133,7 +143,6 @@ function initScrollAnimation() {
 
 /* ============================================================
    WORKSページ：カテゴリフィルター
-   data-category 属性でフィルタリング
    ============================================================ */
 function initWorksFilter() {
   const filterBtns = document.querySelectorAll('.filter-btn');
@@ -145,11 +154,9 @@ function initWorksFilter() {
     btn.addEventListener('click', () => {
       const category = btn.dataset.filter;
 
-      // アクティブ状態の更新
       filterBtns.forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
 
-      // カードの表示/非表示
       workCards.forEach(card => {
         if (category === 'ALL' || card.dataset.category === category) {
           card.classList.remove('is-hidden');
@@ -168,8 +175,6 @@ function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
       const href = anchor.getAttribute('href');
-
-      // href="#" のみの場合はスキップ
       if (href === '#') return;
 
       const target = document.querySelector(href);
@@ -177,20 +182,18 @@ function initSmoothScroll() {
 
       e.preventDefault();
 
-      const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 80;
+      const headerH = parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-h')
+      ) || 80;
       const top = target.getBoundingClientRect().top + window.scrollY - headerH - 16;
 
-      window.scrollTo({
-        top,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top, behavior: 'smooth' });
     });
   });
 }
 
 /* ============================================================
    アクティブナビリンクの設定
-   現在のページに対応するナビリンクにis-activeクラスを付与
    ============================================================ */
 function initActiveNav() {
   const currentPath = window.location.pathname;
@@ -200,7 +203,6 @@ function initActiveNav() {
     const href = link.getAttribute('href');
     if (!href) return;
 
-    // パスの末尾のファイル名で比較
     const linkFile = href.replace(/^.*\//, '');
     const currentFile = currentPath.replace(/^.*\//, '') || 'index.html';
 
