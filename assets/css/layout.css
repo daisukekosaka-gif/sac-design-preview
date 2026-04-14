@@ -1,0 +1,368 @@
+/* ============================================================
+   SAC / Smart AI Production
+   layout.css - グリッド・レイアウト
+   ============================================================ */
+
+/* ============================================================
+   コンテナ
+   ============================================================ */
+.container {
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+}
+
+.container-narrow {
+  max-width: var(--container-narrow);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+}
+
+.container-full {
+  width: 100%;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+}
+
+/* ============================================================
+   セクションパディング
+   ============================================================ */
+.section {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}
+
+.section-sm {
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
+}
+
+.section-lg {
+  padding-top: var(--space-xxl);
+  padding-bottom: var(--space-xxl);
+}
+
+/* セクションヘッダー */
+.section-header {
+  margin-bottom: var(--space-lg);
+}
+
+.section-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+  gap: var(--space-md);
+}
+
+/* ============================================================
+   グリッドシステム
+   ============================================================ */
+.grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+.grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-md);
+}
+
+/* ガップ調整 */
+.gap-sm { gap: var(--space-sm); }
+.gap-md { gap: var(--space-md); }
+.gap-lg { gap: var(--space-lg); }
+
+/* ============================================================
+   フレックスユーティリティ
+   ============================================================ */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-start {
+  display: flex;
+  align-items: flex-start;
+}
+
+.items-center { align-items: center; }
+.items-start  { align-items: flex-start; }
+.items-end    { align-items: flex-end; }
+
+.justify-center  { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end     { justify-content: flex-end; }
+
+.flex-wrap { flex-wrap: wrap; }
+
+/* ============================================================
+   ヒーローレイアウト（TOP）
+   ============================================================ */
+.hero-layout {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ヒーロー内のコンテンツ配置 */
+.hero-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  padding: calc(var(--header-h) + var(--space-lg)) var(--space-md) var(--space-xl);
+}
+
+/* ============================================================
+   2カラムレイアウト（左コンテンツ + 右コンテンツ）
+   ============================================================ */
+.layout-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.layout-2col-wide {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* ============================================================
+   ワークスグリッド
+   ============================================================ */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md) var(--space-md);
+}
+
+/* フィルターで非表示 */
+.work-card.is-hidden {
+  display: none;
+}
+
+/* ============================================================
+   メンバーグリッド
+   ============================================================ */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-md);
+}
+
+/* ============================================================
+   インフォグリッド（TOPのサービス概要など）
+   ============================================================ */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--color-gray-mid);
+  border-left: 1px solid var(--color-gray-mid);
+}
+
+.overview-item {
+  padding: var(--space-md);
+  border-right: 1px solid var(--color-gray-mid);
+  border-bottom: 1px solid var(--color-gray-mid);
+}
+
+/* ============================================================
+   ABOUTページ - フィロソフィーレイアウト
+   ============================================================ */
+.philosophy-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* ============================================================
+   CONTACTページ
+   ============================================================ */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* ============================================================
+   ページヒーローのコンテナ
+   ============================================================ */
+.page-hero .container {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* ============================================================
+   スティッキーサイドバー
+   ============================================================ */
+.sticky-sidebar {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-md));
+}
+
+/* ============================================================
+   区切りライン
+   ============================================================ */
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-gray-mid);
+  margin: 0;
+}
+
+/* ============================================================
+   レスポンシブ
+   ============================================================ */
+@media (max-width: 1024px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .overview-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .members-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .works-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .philosophy-layout,
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .layout-2col,
+  .layout-2col-wide {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .members-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .works-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+  }
+
+  .section-lg {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .container,
+  .container-narrow,
+  .container-full {
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-5 {
+    grid-template-columns: 1fr;
+  }
+
+  .members-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .works-grid {
+    grid-template-columns: 1fr;
+  }
+}

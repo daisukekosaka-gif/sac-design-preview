@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SAC / Smart AI Production - WORKS. 映像・ウェブ・グラフィック・インスタレーション・イベント・アニメ作品一覧。">
+  <title>WORKS — SAC / Smart AI Production</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+</head>
+<body>
+
+  <!-- ページローディングオーバーレイ -->
+  <div class="page-transition" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       ヘッダー（共通）
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="header-logo" aria-label="SAC トップページへ">
+        SAC
+        <span>Smart AI Production</span>
+      </a>
+
+      <nav class="site-nav" role="navigation" aria-label="メインナビゲーション">
+        <a href="index.html"      class="nav-link">TOP</a>
+        <a href="about.html"      class="nav-link">ABOUT</a>
+        <a href="service.html"    class="nav-link">SERVICE</a>
+        <a href="works.html"      class="nav-link">WORKS</a>
+        <a href="management.html" class="nav-link">MANAGEMENT</a>
+        <a href="info.html"       class="nav-link">INFO</a>
+        <a href="contact.html"    class="nav-link">CONTACT</a>
+      </nav>
+
+      <button class="hamburger" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- モバイルナビ -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション">
+    <a href="index.html"      class="mobile-nav-link">TOP</a>
+    <a href="about.html"      class="mobile-nav-link">ABOUT</a>
+    <a href="service.html"    class="mobile-nav-link">SERVICE</a>
+    <a href="works.html"      class="mobile-nav-link">WORKS</a>
+    <a href="management.html" class="mobile-nav-link">MANAGEMENT</a>
+    <a href="info.html"       class="mobile-nav-link">INFO</a>
+    <a href="contact.html"    class="mobile-nav-link">CONTACT</a>
+  </nav>
+
+  <!-- ============================================================
+       メインコンテンツ
+       ============================================================ -->
+  <main>
+
+    <!-- ============================================================
+         ページヒーロー
+         ============================================================ -->
+    <section class="page-hero" aria-label="ページタイトル">
+      <div class="container">
+        <span class="page-hero-label">Works</span>
+        <h1 class="page-hero-title" data-scroll>WORKS</h1>
+        <p class="page-hero-sub" data-scroll data-scroll-delay="1">制作実績</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ワークス一覧
+         ============================================================ -->
+    <section class="section" aria-labelledby="works-heading">
+      <div class="container">
+        <h2 id="works-heading" class="sr-only">作品一覧</h2>
+
+        <!-- カテゴリフィルター -->
+        <nav class="filter-nav" aria-label="カテゴリフィルター" data-scroll>
+          <button class="filter-btn is-active" data-filter="ALL" aria-pressed="true">ALL</button>
+          <button class="filter-btn" data-filter="MOVIE" aria-pressed="false">MOVIE</button>
+          <button class="filter-btn" data-filter="WEB" aria-pressed="false">WEB</button>
+          <button class="filter-btn" data-filter="GRAPHIC" aria-pressed="false">GRAPHIC</button>
+          <button class="filter-btn" data-filter="INSTALLATION" aria-pressed="false">INSTALLATION</button>
+          <button class="filter-btn" data-filter="EVENT" aria-pressed="false">EVENT</button>
+          <button class="filter-btn" data-filter="ANIME" aria-pressed="false">ANIME</button>
+          <button class="filter-btn" data-filter="OTHER" aria-pressed="false">OTHER</button>
+        </nav>
+
+        <!-- ワークスグリッド -->
+        <div class="works-grid" role="list" aria-label="作品一覧">
+
+          <!-- Work 01 -->
+          <article class="work-card" data-category="MOVIE" role="listitem" data-scroll>
+            <a href="#" aria-label="Brand Film — Reimagined の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #1a1a1a;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Movie</p>
+                <h3 class="work-card-title">Brand Film — Reimagined</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 02 -->
+          <article class="work-card" data-category="WEB" role="listitem" data-scroll data-scroll-delay="1">
+            <a href="#" aria-label="Digital Experience Platform の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #2a2a2a;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Web</p>
+                <h3 class="work-card-title">Digital Experience Platform</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 03 -->
+          <article class="work-card" data-category="GRAPHIC" role="listitem" data-scroll data-scroll-delay="2">
+            <a href="#" aria-label="Visual Identity System の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #3a3a3a;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Graphic</p>
+                <h3 class="work-card-title">Visual Identity System</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 04 -->
+          <article class="work-card" data-category="INSTALLATION" role="listitem" data-scroll>
+            <a href="#" aria-label="Immersive AI Space の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #222;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Installation</p>
+                <h3 class="work-card-title">Immersive AI Space</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 05 -->
+          <article class="work-card" data-category="ANIME" role="listitem" data-scroll data-scroll-delay="1">
+            <a href="#" aria-label="AI-Assisted Short Film の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #333;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Anime</p>
+                <h3 class="work-card-title">AI-Assisted Short Film</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 06 -->
+          <article class="work-card" data-category="EVENT" role="listitem" data-scroll data-scroll-delay="2">
+            <a href="#" aria-label="Generative Stage Design の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #444;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Event</p>
+                <h3 class="work-card-title">Generative Stage Design</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 07 -->
+          <article class="work-card" data-category="MOVIE" role="listitem" data-scroll>
+            <a href="#" aria-label="Product Launch Cinematic の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #1c1c1c;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Movie</p>
+                <h3 class="work-card-title">Product Launch Cinematic</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 08 -->
+          <article class="work-card" data-category="WEB" role="listitem" data-scroll data-scroll-delay="1">
+            <a href="#" aria-label="AI Portfolio Generator の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #2c2c2c;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Web</p>
+                <h3 class="work-card-title">AI Portfolio Generator</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 09 -->
+          <article class="work-card" data-category="GRAPHIC" role="listitem" data-scroll data-scroll-delay="2">
+            <a href="#" aria-label="Campaign Visual Series の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #383838;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Graphic</p>
+                <h3 class="work-card-title">Campaign Visual Series</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 10 -->
+          <article class="work-card" data-category="INSTALLATION" role="listitem" data-scroll>
+            <a href="#" aria-label="Ambient Data Sculpture の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #282828;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Installation</p>
+                <h3 class="work-card-title">Ambient Data Sculpture</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 11 -->
+          <article class="work-card" data-category="OTHER" role="listitem" data-scroll data-scroll-delay="1">
+            <a href="#" aria-label="Experimental Prompt Art の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #3c3c3c;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Other</p>
+                <h3 class="work-card-title">Experimental Prompt Art</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 12 -->
+          <article class="work-card" data-category="EVENT" role="listitem" data-scroll data-scroll-delay="2">
+            <a href="#" aria-label="Interactive Concert Visual の詳細を見る">
+              <div class="work-card-thumb" style="background-color: #404040;" aria-hidden="true"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Event</p>
+                <h3 class="work-card-title">Interactive Concert Visual</h3>
+              </div>
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       フッター（共通）
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <a href="index.html" class="footer-logo" aria-label="SAC トップページへ">
+            SAC
+            <span>Smart AI Production</span>
+          </a>
+        </div>
+        <nav class="footer-nav" aria-label="フッターナビゲーション">
+          <a href="index.html"      class="footer-nav-link">TOP</a>
+          <a href="about.html"      class="footer-nav-link">ABOUT</a>
+          <a href="service.html"    class="footer-nav-link">SERVICE</a>
+          <a href="works.html"      class="footer-nav-link">WORKS</a>
+          <a href="management.html" class="footer-nav-link">MANAGEMENT</a>
+          <a href="info.html"       class="footer-nav-link">INFO</a>
+          <a href="contact.html"    class="footer-nav-link">CONTACT</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 SAC / Smart AI Production. All Rights Reserved.</p>
+        <p class="footer-copy">sac.epoch-inc.jp</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SAC / Smart AI Production - ONE PROMPT CHANGE THE WORLD. クリエイティブ制作の制約を、解放する。">
+  <title>SAC / Smart AI Production</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+</head>
+<body>
+
+  <!-- ページローディングオーバーレイ -->
+  <div class="page-transition" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       ヘッダー（共通）
+       ============================================================ -->
+  <header class="site-header header-dark" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="header-logo" aria-label="SAC トップページへ">
+        SAC
+        <span>Smart AI Production</span>
+      </a>
+
+      <nav class="site-nav" role="navigation" aria-label="メインナビゲーション">
+        <a href="index.html"      class="nav-link">TOP</a>
+        <a href="about.html"      class="nav-link">ABOUT</a>
+        <a href="service.html"    class="nav-link">SERVICE</a>
+        <a href="works.html"      class="nav-link">WORKS</a>
+        <a href="management.html" class="nav-link">MANAGEMENT</a>
+        <a href="info.html"       class="nav-link">INFO</a>
+        <a href="contact.html"    class="nav-link">CONTACT</a>
+      </nav>
+
+      <!-- ハンバーガーボタン（SP） -->
+      <button class="hamburger" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- モバイルナビ -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション">
+    <a href="index.html"      class="mobile-nav-link">TOP</a>
+    <a href="about.html"      class="mobile-nav-link">ABOUT</a>
+    <a href="service.html"    class="mobile-nav-link">SERVICE</a>
+    <a href="works.html"      class="mobile-nav-link">WORKS</a>
+    <a href="management.html" class="mobile-nav-link">MANAGEMENT</a>
+    <a href="info.html"       class="mobile-nav-link">INFO</a>
+    <a href="contact.html"    class="mobile-nav-link">CONTACT</a>
+  </nav>
+
+  <!-- ============================================================
+       メインコンテンツ
+       ============================================================ -->
+  <main>
+
+    <!-- ============================================================
+         HERO - 全画面ヒーロー
+         ============================================================ -->
+    <section class="hero" aria-label="ヒーロー">
+      <div class="hero-bg" aria-hidden="true"></div>
+
+      <div class="hero-content hero-center">
+        <p class="hero-sub" data-scroll>Smart AI Production</p>
+        <h1 class="hero-tagline" data-scroll data-scroll-delay="1">
+          ONE PROMPT<br>CHANGE THE<br>WORLD
+        </h1>
+        <p class="hero-sub" data-scroll data-scroll-delay="2">クリエイティブ制作の制約を、解放する。</p>
+        <div style="margin-top: 3rem;" data-scroll data-scroll-delay="3">
+          <a href="about.html" class="btn btn-outline-white">ABOUT US</a>
+        </div>
+      </div>
+
+      <!-- スクロールインジケーター -->
+      <div class="hero-scroll" aria-hidden="true">
+        <div class="hero-scroll-line"></div>
+        <span>SCROLL</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ABOUT TEASER
+         ============================================================ -->
+    <section class="section" aria-labelledby="about-teaser-heading">
+      <div class="container">
+        <div class="layout-2col-wide">
+          <div>
+            <span class="section-label" data-scroll>About</span>
+            <h2 id="about-teaser-heading" class="section-title" data-scroll data-scroll-delay="1">
+              We Create.<br>AI Amplifies.
+            </h2>
+          </div>
+          <div data-scroll data-scroll-delay="2">
+            <p class="section-subtitle" style="max-width: none;">
+              SACは、AIを創造的プロセスの中核に据えたクリエイティブスタジオです。<br><br>
+              映像・ウェブ・グラフィック・インスタレーション——あらゆる表現領域において、人間のクリエイティビティとAIの可能性を融合させ、これまで不可能だったビジョンを現実に変えます。<br><br>
+              「ONE PROMPT CHANGE THE WORLD」——ひとつの言葉が、世界を動かす力を持つ時代に。
+            </p>
+            <div style="margin-top: 2rem;">
+              <a href="about.html" class="link-arrow">READ MORE</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         WORKS FEATURED - 厳選作品
+         ============================================================ -->
+    <section class="section bg-gray-light" aria-labelledby="works-featured-heading">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <span class="section-label" data-scroll>Works</span>
+            <h2 id="works-featured-heading" class="section-title" data-scroll data-scroll-delay="1">Featured Works</h2>
+          </div>
+          <a href="works.html" class="link-arrow" data-scroll>VIEW ALL</a>
+        </div>
+
+        <div class="works-grid">
+          <!-- Work 01 -->
+          <article class="work-card" data-scroll>
+            <a href="works.html">
+              <div class="work-card-thumb" style="background-color: #1a1a1a;"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Movie</p>
+                <h3 class="work-card-title">Brand Film — Reimagined</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 02 -->
+          <article class="work-card" data-scroll data-scroll-delay="1">
+            <a href="works.html">
+              <div class="work-card-thumb" style="background-color: #2a2a2a;"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Web</p>
+                <h3 class="work-card-title">Digital Experience Platform</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 03 -->
+          <article class="work-card" data-scroll data-scroll-delay="2">
+            <a href="works.html">
+              <div class="work-card-thumb" style="background-color: #3a3a3a;"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Graphic</p>
+                <h3 class="work-card-title">Visual Identity System</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 04 -->
+          <article class="work-card" data-scroll>
+            <a href="works.html">
+              <div class="work-card-thumb" style="background-color: #222;"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Installation</p>
+                <h3 class="work-card-title">Immersive AI Space</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 05 -->
+          <article class="work-card" data-scroll data-scroll-delay="1">
+            <a href="works.html">
+              <div class="work-card-thumb" style="background-color: #333;"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Anime</p>
+                <h3 class="work-card-title">AI-Assisted Short Film</h3>
+              </div>
+            </a>
+          </article>
+
+          <!-- Work 06 -->
+          <article class="work-card" data-scroll data-scroll-delay="2">
+            <a href="works.html">
+              <div class="work-card-thumb" style="background-color: #444;"></div>
+              <div class="work-card-info">
+                <p class="work-card-category">Event</p>
+                <h3 class="work-card-title">Generative Stage Design</h3>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SERVICE OVERVIEW
+         ============================================================ -->
+    <section class="section" aria-labelledby="service-overview-heading">
+      <div class="container">
+        <div style="margin-bottom: var(--space-lg);">
+          <span class="section-label" data-scroll>Service</span>
+          <h2 id="service-overview-heading" class="section-title" data-scroll data-scroll-delay="1">What We Do</h2>
+        </div>
+
+        <div class="overview-grid">
+          <div class="overview-item" data-scroll>
+            <p style="font-family: var(--font-en); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--color-gray); margin-bottom: 0.5rem;">01</p>
+            <h3 style="font-family: var(--font-en); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.5rem;">VIDEO PRODUCTION</h3>
+            <p style="font-family: var(--font-jp); font-size: 0.8rem; font-weight: 300; color: var(--color-gray); line-height: 1.9;">AIで拡張された映像制作。コンセプトから納品まで、新しいワークフローで実現。</p>
+          </div>
+          <div class="overview-item" data-scroll data-scroll-delay="1">
+            <p style="font-family: var(--font-en); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--color-gray); margin-bottom: 0.5rem;">02</p>
+            <h3 style="font-family: var(--font-en); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.5rem;">WEB DESIGN</h3>
+            <p style="font-family: var(--font-jp); font-size: 0.8rem; font-weight: 300; color: var(--color-gray); line-height: 1.9;">体験を設計するウェブ制作。UI/UXから実装まで一貫したクオリティで。</p>
+          </div>
+          <div class="overview-item" data-scroll data-scroll-delay="2">
+            <p style="font-family: var(--font-en); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--color-gray); margin-bottom: 0.5rem;">03</p>
+            <h3 style="font-family: var(--font-en); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.5rem;">GRAPHIC DESIGN</h3>
+            <p style="font-family: var(--font-jp); font-size: 0.8rem; font-weight: 300; color: var(--color-gray); line-height: 1.9;">ブランドの核心を視覚化する。ロゴからビジュアルアイデンティティまで。</p>
+          </div>
+          <div class="overview-item" data-scroll data-scroll-delay="3">
+            <p style="font-family: var(--font-en); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--color-gray); margin-bottom: 0.5rem;">04</p>
+            <h3 style="font-family: var(--font-en); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.5rem;">AI CREATIVE</h3>
+            <p style="font-family: var(--font-jp); font-size: 0.8rem; font-weight: 300; color: var(--color-gray); line-height: 1.9;">AIネイティブなクリエイティブ制作。生成AIを活用した次世代コンテンツ。</p>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-lg); text-align: center;" data-scroll>
+          <a href="service.html" class="btn btn-outline">VIEW ALL SERVICES</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         INFO - 最新情報
+         ============================================================ -->
+    <section class="section bg-gray-light" aria-labelledby="info-heading">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <span class="section-label" data-scroll>Info</span>
+            <h2 id="info-heading" class="section-title" data-scroll data-scroll-delay="1">Latest News</h2>
+          </div>
+          <a href="info.html" class="link-arrow" data-scroll>ALL NEWS</a>
+        </div>
+
+        <div class="news-list" role="list">
+          <article class="news-item" role="listitem" data-scroll>
+            <time class="news-date" datetime="2026-04-10">2026.04.10</time>
+            <span class="news-category">News</span>
+            <a href="info.html" class="news-title">SAC 公式サイトをリニューアルしました</a>
+          </article>
+          <article class="news-item" role="listitem" data-scroll data-scroll-delay="1">
+            <time class="news-date" datetime="2026-03-25">2026.03.25</time>
+            <span class="news-category">Works</span>
+            <a href="info.html" class="news-title">新作インスタレーション作品「PULSE」を公開</a>
+          </article>
+          <article class="news-item" role="listitem" data-scroll data-scroll-delay="2">
+            <time class="news-date" datetime="2026-03-01">2026.03.01</time>
+            <span class="news-category">Press</span>
+            <a href="info.html" class="news-title">AI Creativeサービスを正式ローンチしました</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       フッター（共通）
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <a href="index.html" class="footer-logo" aria-label="SAC トップページへ">
+            SAC
+            <span>Smart AI Production</span>
+          </a>
+        </div>
+        <nav class="footer-nav" aria-label="フッターナビゲーション">
+          <a href="index.html"      class="footer-nav-link">TOP</a>
+          <a href="about.html"      class="footer-nav-link">ABOUT</a>
+          <a href="service.html"    class="footer-nav-link">SERVICE</a>
+          <a href="works.html"      class="footer-nav-link">WORKS</a>
+          <a href="management.html" class="footer-nav-link">MANAGEMENT</a>
+          <a href="info.html"       class="footer-nav-link">INFO</a>
+          <a href="contact.html"    class="footer-nav-link">CONTACT</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 SAC / Smart AI Production. All Rights Reserved.</p>
+        <p class="footer-copy">sac.epoch-inc.jp</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

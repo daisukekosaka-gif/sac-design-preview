@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SAC / Smart AI Production - CONTACT. お問い合わせはこちらから。">
+  <title>CONTACT — SAC / Smart AI Production</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+</head>
+<body>
+
+  <!-- ページローディングオーバーレイ -->
+  <div class="page-transition" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       ヘッダー（共通）
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="header-logo" aria-label="SAC トップページへ">
+        SAC
+        <span>Smart AI Production</span>
+      </a>
+
+      <nav class="site-nav" role="navigation" aria-label="メインナビゲーション">
+        <a href="index.html"      class="nav-link">TOP</a>
+        <a href="about.html"      class="nav-link">ABOUT</a>
+        <a href="service.html"    class="nav-link">SERVICE</a>
+        <a href="works.html"      class="nav-link">WORKS</a>
+        <a href="management.html" class="nav-link">MANAGEMENT</a>
+        <a href="info.html"       class="nav-link">INFO</a>
+        <a href="contact.html"    class="nav-link">CONTACT</a>
+      </nav>
+
+      <button class="hamburger" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- モバイルナビ -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="モバイルナビゲーション">
+    <a href="index.html"      class="mobile-nav-link">TOP</a>
+    <a href="about.html"      class="mobile-nav-link">ABOUT</a>
+    <a href="service.html"    class="mobile-nav-link">SERVICE</a>
+    <a href="works.html"      class="mobile-nav-link">WORKS</a>
+    <a href="management.html" class="mobile-nav-link">MANAGEMENT</a>
+    <a href="info.html"       class="mobile-nav-link">INFO</a>
+    <a href="contact.html"    class="mobile-nav-link">CONTACT</a>
+  </nav>
+
+  <!-- ============================================================
+       メインコンテンツ
+       ============================================================ -->
+  <main>
+
+    <!-- ============================================================
+         ページヒーロー
+         ============================================================ -->
+    <section class="page-hero" aria-label="ページタイトル">
+      <div class="container">
+        <span class="page-hero-label">Contact</span>
+        <h1 class="page-hero-title" data-scroll>CONTACT</h1>
+        <p class="page-hero-sub" data-scroll data-scroll-delay="1">お問い合わせ</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         コンタクトセクション
+         ============================================================ -->
+    <section class="section" aria-labelledby="contact-heading">
+      <div class="container">
+
+        <div class="contact-layout">
+
+          <!-- 左カラム：コンタクト情報 -->
+          <div class="sticky-sidebar" data-scroll>
+            <span class="section-label">Get in touch</span>
+            <h2 id="contact-heading" class="section-title-jp" style="font-size: 1.2rem; margin-bottom: var(--space-md);">お気軽にご相談ください</h2>
+            <p style="font-family: var(--font-jp); font-size: 0.85rem; font-weight: 300; color: var(--color-gray); line-height: 2; margin-bottom: var(--space-lg);">
+              プロジェクトのご相談、お見積もり依頼、取材・メディア掲載、採用に関するお問い合わせなど、どうぞお気軽にご連絡ください。<br><br>
+              2営業日以内にご返信いたします。
+            </p>
+
+            <div style="border-top: var(--border); padding-top: var(--space-md);">
+              <p style="font-family: var(--font-en); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; color: var(--color-gray); margin-bottom: 8px;">EMAIL</p>
+              <a href="mailto:info@sac.epoch-inc.jp" style="font-family: var(--font-en); font-size: 0.85rem; font-weight: 300; color: var(--color-black);">info@sac.epoch-inc.jp</a>
+            </div>
+
+            <div style="border-top: var(--border); padding-top: var(--space-md); margin-top: var(--space-md);">
+              <p style="font-family: var(--font-en); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; color: var(--color-gray); margin-bottom: 8px;">ADDRESS</p>
+              <address style="font-family: var(--font-jp); font-size: 0.85rem; font-weight: 300; color: var(--color-black); line-height: 1.9; font-style: normal;">
+                〒150-0001<br>
+                東京都渋谷区神宮前1-2-3<br>
+                SACビル 5F
+              </address>
+            </div>
+          </div>
+
+          <!-- 右カラム：お問い合わせフォーム -->
+          <div data-scroll>
+            <form action="#" method="post" novalidate aria-label="お問い合わせフォーム">
+
+              <!-- お名前 -->
+              <div class="form-group">
+                <label for="name" class="form-label">
+                  Name <span class="required">必須</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="form-input"
+                  placeholder="山田 太郎"
+                  required
+                  autocomplete="name"
+                  aria-required="true"
+                >
+              </div>
+
+              <!-- 会社名 -->
+              <div class="form-group">
+                <label for="company" class="form-label">
+                  Company <span style="font-family: var(--font-en); font-size: 0.6rem; color: var(--color-gray); font-weight: 300; letter-spacing: 0.05em;">任意</span>
+                </label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  class="form-input"
+                  placeholder="株式会社〇〇"
+                  autocomplete="organization"
+                >
+              </div>
+
+              <!-- メールアドレス -->
+              <div class="form-group">
+                <label for="email" class="form-label">
+                  Email <span class="required">必須</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-input"
+                  placeholder="your@email.com"
+                  required
+                  autocomplete="email"
+                  aria-required="true"
+                >
+              </div>
+
+              <!-- 電話番号 -->
+              <div class="form-group">
+                <label for="tel" class="form-label">
+                  Phone <span style="font-family: var(--font-en); font-size: 0.6rem; color: var(--color-gray); font-weight: 300; letter-spacing: 0.05em;">任意</span>
+                </label>
+                <input
+                  type="tel"
+                  id="tel"
+                  name="tel"
+                  class="form-input"
+                  placeholder="03-0000-0000"
+                  autocomplete="tel"
+                >
+              </div>
+
+              <!-- お問い合わせ種別 -->
+              <div class="form-group">
+                <label for="type" class="form-label">
+                  Inquiry Type <span class="required">必須</span>
+                </label>
+                <div class="form-select-wrap">
+                  <select
+                    id="type"
+                    name="type"
+                    class="form-select"
+                    required
+                    aria-required="true"
+                  >
+                    <option value="" disabled selected>お問い合わせ種別を選択してください</option>
+                    <option value="project">プロジェクトのご相談</option>
+                    <option value="estimate">お見積もり依頼</option>
+                    <option value="press">取材・メディア掲載</option>
+                    <option value="recruit">採用について</option>
+                    <option value="partnership">パートナーシップ</option>
+                    <option value="other">その他</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- メッセージ -->
+              <div class="form-group">
+                <label for="message" class="form-label">
+                  Message <span class="required">必須</span>
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  class="form-textarea"
+                  placeholder="お問い合わせ内容をご記入ください。プロジェクトの概要・ご予算・スケジュールなどをお伝えいただけますとスムーズにご対応できます。"
+                  required
+                  aria-required="true"
+                ></textarea>
+              </div>
+
+              <!-- プライバシーポリシー同意 -->
+              <div style="margin-bottom: var(--space-md);">
+                <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer;">
+                  <input
+                    type="checkbox"
+                    name="privacy"
+                    required
+                    aria-required="true"
+                    style="margin-top: 3px; width: 16px; height: 16px; cursor: pointer; accent-color: var(--color-black);"
+                  >
+                  <span style="font-family: var(--font-jp); font-size: 0.8rem; font-weight: 300; color: var(--color-gray); line-height: 1.8;">
+                    <a href="#" style="color: var(--color-black); text-decoration: underline; text-underline-offset: 2px;">プライバシーポリシー</a>に同意のうえ、送信してください。
+                  </span>
+                </label>
+              </div>
+
+              <!-- 送信ボタン -->
+              <div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                  SEND MESSAGE
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       フッター（共通）
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <a href="index.html" class="footer-logo" aria-label="SAC トップページへ">
+            SAC
+            <span>Smart AI Production</span>
+          </a>
+        </div>
+        <nav class="footer-nav" aria-label="フッターナビゲーション">
+          <a href="index.html"      class="footer-nav-link">TOP</a>
+          <a href="about.html"      class="footer-nav-link">ABOUT</a>
+          <a href="service.html"    class="footer-nav-link">SERVICE</a>
+          <a href="works.html"      class="footer-nav-link">WORKS</a>
+          <a href="management.html" class="footer-nav-link">MANAGEMENT</a>
+          <a href="info.html"       class="footer-nav-link">INFO</a>
+          <a href="contact.html"    class="footer-nav-link">CONTACT</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 SAC / Smart AI Production. All Rights Reserved.</p>
+        <p class="footer-copy">sac.epoch-inc.jp</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
