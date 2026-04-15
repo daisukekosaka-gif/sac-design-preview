@@ -1,170 +1,28 @@
 /* ============================================================
    SAC / Smart AI Creative
-   layout.css — グリッド・レイアウト専用
+   layout.css — SERVICE 2カラムレイアウト + 追加レイアウト
    ============================================================ */
 
-/* コンテナ */
-.container {
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 0 var(--space-md);
-}
-.container-narrow {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 var(--space-md);
-}
-
-/* ============================================================
-   03. ABOUT グリッド（左1/3 : 右2/3）
-   ============================================================ */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: var(--space-xl);
-  align-items: start;
-}
-.about-left {
-  position: sticky;
-  top: calc(var(--header-h) + var(--space-md));
-}
-
-/* ============================================================
-   04. WORKS グリッド（3列×2行・gap: 2px）
-   ============================================================ */
-.works-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-}
-
-/* ============================================================
-   05. SERVICE レイアウト（縦書きタイトル＋リスト）
-   ============================================================ */
-.service-layout {
+/* ── SERVICE 2カラム（左40% / 右60%） ──────────── */
+.service-inner {
   display: flex;
-  gap: var(--space-lg);
+  gap: 60px;
   align-items: flex-start;
 }
+.service-left { flex: 0 0 40%; }
+.service-right { flex: 1; }
 
-/* ============================================================
-   他ページ互換レイアウト
-   ============================================================ */
-
-/* 汎用グリッド */
-.grid     { display: grid; gap: var(--space-md); }
-.grid-2   { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
-.grid-3   { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
-.grid-4   { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); }
-.grid-5   { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-md); }
-
-/* フレックス */
-.flex         { display: flex; }
-.flex-col     { display: flex; flex-direction: column; }
-.flex-center  { display: flex; align-items: center; justify-content: center; }
-.flex-between { display: flex; align-items: center; justify-content: space-between; }
-
-/* セクションヘッダー行 */
-.section-header-row {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  margin-bottom: var(--space-lg); gap: var(--space-md);
+/* ── INFO 内部レイアウト ─────────────────────────── */
+.info-inner {
+  max-width: 900px;
 }
 
-/* 2カラム */
-.layout-2col {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl); align-items: start;
-}
-.layout-2col-wide {
-  display: grid; grid-template-columns: 3fr 2fr;
-  gap: var(--space-xl); align-items: start;
-}
-
-/* メンバーグリッド */
-.members-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-md);
-}
-
-/* 概要グリッド */
-.overview-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
-  border-top: 1px solid var(--color-gray-mid);
-  border-left: 1px solid var(--color-gray-mid);
-}
-.overview-item {
-  padding: var(--space-md);
-  border-right: 1px solid var(--color-gray-mid);
-  border-bottom: 1px solid var(--color-gray-mid);
-}
-
-/* フィロソフィー・コンタクトレイアウト */
-.philosophy-layout,
-.contact-layout {
-  display: grid; grid-template-columns: 1fr 2fr;
-  gap: var(--space-xl); align-items: start;
-}
-
-/* ページヒーロー */
-.page-hero .container { padding-top: 0; padding-bottom: 0; }
-
-/* スティッキー */
-.sticky-sidebar { position: sticky; top: calc(var(--header-h) + var(--space-md)); }
-
-/* 区切り線 */
-.divider { border: none; border-top: 1px solid var(--color-gray-mid); margin: 0; }
-
-/* ============================================================
-   レスポンシブ
-   ============================================================ */
-@media (max-width: 1200px) {
-  .service-layout { gap: var(--space-md); }
-}
-
-@media (max-width: 1024px) {
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .grid-5 { grid-template-columns: repeat(3, 1fr); }
-  .overview-grid { grid-template-columns: repeat(2, 1fr); }
-  .members-grid  { grid-template-columns: repeat(3, 1fr); }
-
-  .philosophy-layout, .contact-layout,
-  .layout-2col, .layout-2col-wide {
-    grid-template-columns: 1fr; gap: var(--space-lg);
-  }
-}
-
+/* ── レスポンシブ ────────────────────────────────── */
 @media (max-width: 768px) {
-  /* ABOUT: 1カラムへ */
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
+  /* SERVICE: 1カラムに変更 */
+  .service-inner {
+    flex-direction: column;
+    gap: 32px;
   }
-  .about-left { position: static; }
-
-  /* WORKS: 2列 */
-  .works-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
-  }
-
-  /* SERVICE: 縦並び */
-  .service-layout { flex-direction: column; }
-
-  /* 汎用グリッド */
-  .grid-2 { grid-template-columns: 1fr; }
-  .grid-3 { grid-template-columns: repeat(2, 1fr); }
-  .grid-4 { grid-template-columns: 1fr; }
-  .members-grid  { grid-template-columns: repeat(2, 1fr); }
-  .overview-grid { grid-template-columns: 1fr; }
-
-  .section-header-row { flex-direction: column; align-items: flex-start; }
-}
-
-@media (max-width: 480px) {
-  .container, .container-narrow {
-    padding-left: var(--space-sm);
-    padding-right: var(--space-sm);
-  }
-  .works-grid { grid-template-columns: 1fr; }
-  .grid-3 { grid-template-columns: 1fr; }
-  .members-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); }
+  .service-left { flex: none; }
 }

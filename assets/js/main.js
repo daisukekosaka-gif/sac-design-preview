@@ -1,90 +1,91 @@
 /**
  * SAC / Smart AI Creative
  * main.js — Vanilla JS（ライブラリ不使用）
- * パフォーマンス優先：will-change / transform / opacity のみ使用
+ * パフォーマンス: transform / opacity のみアニメーション
  */
 
 'use strict';
 
 /* ============================================================
-   ページロードアニメーション
-   0.3s遅延後にHero文字stagger開始 + オーバーレイフェードアウト
+   1. Hero イントロアニメーション
+   DOMContentLoaded 後 200ms 遅延でスタート
    ============================================================ */
-function initPageLoad() {
-  const overlay = document.querySelector('.page-transition');
+function initHeroIntro() {
+  const goldLine = document.querySelector('.js-hero-gold');
+  const chars = document.querySelector('.hero-chars');
+  const fades = document.querySelectorAll('.js-hero-fade');
 
-  window.addEventListener('load', () => {
-    // 0.3s遅延でアニメーション開始
-    setTimeout(() => {
-      document.body.classList.add('is-loaded');
-      if (overlay) {
-        overlay.classList.add('is-hidden');
-        setTimeout(() => { overlay.style.display = 'none'; }, 900);
-      }
-    }, 300);
-  });
+  if (!goldLine && !chars) return;
 
-  // フォールバック（3秒後にも発動していなければ強制起動）
   setTimeout(() => {
-    if (!document.body.classList.contains('is-loaded')) {
-      document.body.classList.add('is-loaded');
-      if (overlay) overlay.classList.add('is-hidden');
+    /* ゴールドライン: width 0 → 32px */
+    if (goldLine) goldLine.classList.add('is-active');
+
+    /* "ONE PROMPT": translateY(100%) → 0 */
+    setTimeout(() => {
+      if (chars) chars.classList.add('is-active');
+    }, 100);
+
+    /* "CHANGE THE WORLD" + 和文サブ: opacity フェードイン */
+    fades.forEach(el => {
+      const delay = parseFloat(el.dataset.delay || 0) * 1000;
+      setTimeout(() => el.classList.add('is-active'), delay);
+    });
+
+    /* 和文サブ（.hero-sub）を直接操作 */
+    const heroSub = document.querySelector('.hero-sub');
+    if (heroSub) {
+      setTimeout(() => heroSub.classList.add('is-active'), 700);
     }
-  }, 3000);
+  }, 200);
 }
 
 /* ============================================================
-   ヘッダースクロール
-   scrollY > 80 でクラス追加 → CSSトランジション 0.4s
+   2. ヘッダースクロール
+   scrollY > 60px で .is-scrolled 追加
    ============================================================ */
 function initHeaderScroll() {
-  const header = document.querySelector('.site-header');
+  const header = document.getElementById('siteHeader');
   if (!header) return;
 
-  const THRESHOLD = 80;
   let ticking = false;
 
   function update() {
-    if (window.scrollY > THRESHOLD) {
+    if (window.scrollY > 60) {
       header.classList.add('is-scrolled');
       header.classList.remove('header-dark');
     } else {
       header.classList.remove('is-scrolled');
-      if (document.querySelector('.hero')) {
-        header.classList.add('header-dark');
-      }
+      if (document.querySelector('.hero')) header.classList.add('header-dark');
     }
     ticking = false;
   }
 
   update();
-
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(update);
-      ticking = true;
-    }
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
   }, { passive: true });
 }
 
 /* ============================================================
-   ハンバーガーメニュー（フルスクリーンオーバーレイ）
+   3. ハンバーガーメニュー + モバイルサブメニュー
    ============================================================ */
-function initHamburger() {
-  const btn = document.querySelector('.hamburger');
-  const nav = document.querySelector('.mobile-nav');
+function initMobileNav() {
+  const btn = document.getElementById('hamburger');
+  const nav = document.getElementById('mobileNav');
+  const subToggle = document.getElementById('mobileSubToggle');
+  const subMenu = document.getElementById('mobileSubMenu');
   if (!btn || !nav) return;
 
+  /* ハンバーガー開閉 */
   btn.addEventListener('click', () => {
-    const isOpen = btn.classList.contains('is-open');
-    btn.classList.toggle('is-open');
+    const open = btn.classList.toggle('is-open');
     nav.classList.toggle('is-open');
-    document.body.style.overflow = isOpen ? '' : 'hidden';
-    btn.setAttribute('aria-expanded', String(!isOpen));
-    btn.setAttribute('aria-label', isOpen ? 'メニューを開く' : 'メニューを閉じる');
+    document.body.style.overflow = open ? 'hidden' : '';
+    btn.setAttribute('aria-expanded', String(open));
   });
 
-  // リンククリックで閉じる
+  /* リンククリックで閉じる */
   nav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       btn.classList.remove('is-open');
@@ -93,7 +94,15 @@ function initHamburger() {
     });
   });
 
-  // Escキーで閉じる
+  /* MANAGEMENTサブメニュー アコーディオン */
+  if (subToggle && subMenu) {
+    subToggle.addEventListener('click', () => {
+      const open = subMenu.classList.toggle('is-open');
+      subToggle.setAttribute('aria-expanded', String(open));
+    });
+  }
+
+  /* Escape で閉じる */
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && btn.classList.contains('is-open')) {
       btn.classList.remove('is-open');
@@ -104,50 +113,114 @@ function initHamburger() {
 }
 
 /* ============================================================
-   モバイルMANAGEMENTサブメニュー展開
-   max-height + opacityで制御
+   4. Intersection Observer — .js-reveal
+   子要素の stagger: index × 0.08s の delay
    ============================================================ */
-function initMobileSubMenu() {
-  const toggle = document.querySelector('.mobile-nav-toggle');
-  const sub = document.querySelector('.mobile-nav-sub');
-  if (!toggle || !sub) return;
+function initReveal() {
+  const items = document.querySelectorAll('.js-reveal');
+  if (!items.length) return;
 
-  toggle.addEventListener('click', () => {
-    const isOpen = sub.classList.contains('is-open');
-    sub.classList.toggle('is-open');
-    sub.setAttribute('aria-hidden', String(isOpen));
-    toggle.setAttribute('aria-expanded', String(!isOpen));
+  /* 親セクション内の index を計算して stagger delay を設定 */
+  const sections = document.querySelectorAll('section, .works-strip, .service-list');
+  sections.forEach(sec => {
+    const children = sec.querySelectorAll('.js-reveal');
+    children.forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.08}s`;
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60px 0px',
+    threshold: 0.05
+  });
+
+  items.forEach(el => observer.observe(el));
+}
+
+/* ============================================================
+   5. Works Feature パララックス
+   背景を translateY で微妙にズラす
+   ============================================================ */
+function initParallax() {
+  const feature = document.querySelector('.works-feature');
+  if (!feature) return;
+
+  feature.style.willChange = 'background-position';
+  let ticking = false;
+
+  function update() {
+    const rect = feature.getBoundingClientRect();
+    const viewH = window.innerHeight;
+    /* 要素がビューポート内にある場合のみ */
+    if (rect.bottom > 0 && rect.top < viewH) {
+      const offset = (rect.top / viewH) * -60;
+      feature.style.backgroundPositionY = `calc(50% + ${offset}px)`;
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+}
+
+/* ============================================================
+   6. カスタムカーソル（デスクトップのみ）
+   ============================================================ */
+function initCursor() {
+  /* タッチデバイスではスキップ */
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  if (!cursor || !follower) return;
+
+  let mx = 0, my = 0;  // マウス座標
+  let fx = 0, fy = 0;  // フォロワー座標
+
+  document.addEventListener('mousemove', (e) => {
+    mx = e.clientX;
+    my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  /* follower は lerp で追随 */
+  function animate() {
+    fx += (mx - fx) * 0.12;
+    fy += (my - fy) * 0.12;
+    follower.style.left = fx + 'px';
+    follower.style.top = fy + 'px';
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  /* data-cursor 属性でホバー時テキスト表示 */
+  const hoverTargets = document.querySelectorAll('[data-cursor]');
+  hoverTargets.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      const label = el.dataset.cursor;
+      cursor.classList.add('is-hover');
+      cursor.setAttribute('data-label', label);
+      follower.classList.add('is-hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('is-hover');
+      cursor.removeAttribute('data-label');
+      follower.classList.remove('is-hover');
+    });
   });
 }
 
 /* ============================================================
-   スクロールアニメーション（Intersection Observer）
-   fadeUp: translateY(40px) → 0 / opacity 0 → 1 / 0.8s
-   ============================================================ */
-function initScrollAnimation() {
-  const targets = document.querySelectorAll('[data-scroll]');
-  if (!targets.length) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      rootMargin: '0px 0px -80px 0px',
-      threshold: 0.05
-    }
-  );
-
-  targets.forEach(el => observer.observe(el));
-}
-
-/* ============================================================
-   WORKSページ：カテゴリフィルター（他ページ用）
+   7. WORKSページ：カテゴリフィルター（他ページ用）
    ============================================================ */
 function initWorksFilter() {
   const btns = document.querySelectorAll('.filter-btn');
@@ -160,16 +233,14 @@ function initWorksFilter() {
       btns.forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
       cards.forEach(card => {
-        card.classList.toggle('is-hidden',
-          cat !== 'ALL' && card.dataset.category !== cat
-        );
+        card.classList.toggle('is-hidden', cat !== 'ALL' && card.dataset.category !== cat);
       });
     });
   });
 }
 
 /* ============================================================
-   スムーズスクロール（アンカーリンク）
+   8. スムーズスクロール
    ============================================================ */
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -179,25 +250,10 @@ function initSmoothScroll() {
       const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
-      const headerH = parseInt(
-        getComputedStyle(document.documentElement).getPropertyValue('--header-h')
-      ) || 80;
-      const top = target.getBoundingClientRect().top + window.scrollY - headerH - 16;
+      const h = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72;
+      const top = target.getBoundingClientRect().top + window.scrollY - h - 16;
       window.scrollTo({ top, behavior: 'smooth' });
     });
-  });
-}
-
-/* ============================================================
-   アクティブナビリンク
-   ============================================================ */
-function initActiveNav() {
-  const current = window.location.pathname.replace(/^.*\//, '') || 'index.html';
-  document.querySelectorAll('.nav-link, .footer-nav a').forEach(link => {
-    const href = link.getAttribute('href');
-    if (!href) return;
-    const file = href.replace(/^.*\//, '');
-    if (file === current) link.classList.add('is-active');
   });
 }
 
@@ -205,12 +261,12 @@ function initActiveNav() {
    初期化
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
-  initPageLoad();
+  initHeroIntro();
   initHeaderScroll();
-  initHamburger();
-  initMobileSubMenu();
-  initScrollAnimation();
+  initMobileNav();
+  initReveal();
+  initParallax();
+  initCursor();
   initWorksFilter();
   initSmoothScroll();
-  initActiveNav();
 });
