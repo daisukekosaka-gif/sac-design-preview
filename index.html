@@ -1,252 +1,347 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SAC / Smart AI Creative — ONE PROMPT CHANGE THE WORLD. クリエイティブ制作の制約を、解放する。Powered by EPOCH Inc.">
-  <title>SAC / Smart AI Creative</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/layout.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAC | Smart AI Creative — ONE PROMPT CHANGE THE WORLD</title>
+<meta name="description" content="Smart AI Creative（SAC）は、EPOCH Inc.が擁するAIクリエイティブ特化スタジオ。AIとクリエイターの力で、あらゆる制作の制約を解放する。">
+
+<!-- Google Fonts: 欧文=Inter / 和文=Noto Sans JP -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+
+<!-- CSS -->
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/layout.css">
 </head>
 <body>
 
-  <!-- カスタムカーソル（デスクトップのみ） -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursorFollower"></div>
+<!-- ============================================================
+     カスタムカーソル（デスクトップのみ / JSで表示制御）
+     ============================================================ -->
+<div class="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
 
-  <!-- ============================================================
-       HEADER — position: fixed, 透明→白背景
-       ============================================================ -->
-  <header class="site-header header-dark" id="siteHeader">
-    <div class="header-inner">
-      <a href="index.html" class="header-logo">SAC</a>
-      <nav class="site-nav">
-        <a href="about.html" class="nav-link">ABOUT</a>
-        <a href="service.html" class="nav-link">SERVICE</a>
-        <a href="works.html" class="nav-link">WORKS</a>
-        <div class="nav-dropdown">
-          <a href="management.html" class="nav-link">MANAGEMENT</a>
-          <div class="nav-dropdown-menu">
-            <a href="management.html#member-a" class="nav-dropdown-link">MEMBER A</a>
-            <a href="management.html#member-b" class="nav-dropdown-link">MEMBER B</a>
-            <a href="management.html#member-c" class="nav-dropdown-link">MEMBER C</a>
-            <a href="management.html#member-d" class="nav-dropdown-link">MEMBER D</a>
-            <a href="management.html#member-e" class="nav-dropdown-link">MEMBER E</a>
-          </div>
+<!-- ============================================================
+     HEADER — 固定ヘッダー / スクロールで白背景に切替
+     ============================================================ -->
+<header class="site-header" id="siteHeader">
+  <a href="/" class="logo">SAC</a>
+
+  <nav class="global-nav" aria-label="Global navigation">
+    <ul class="nav-list">
+      <li><a href="/about/">ABOUT</a></li>
+      <li><a href="/service/">SERVICE</a></li>
+      <li><a href="/works/">WORKS</a></li>
+      <li class="has-dropdown">
+        <a href="/management/">MANAGEMENT</a>
+        <!-- MANAGEMENT ドロップダウン -->
+        <div class="dropdown">
+          <a href="/management/#member-a">MEMBER A</a>
+          <a href="/management/#member-b">MEMBER B</a>
+          <a href="/management/#member-c">MEMBER C</a>
+          <a href="/management/#member-d">MEMBER D</a>
+          <a href="/management/#member-e">MEMBER E</a>
         </div>
-        <a href="info.html" class="nav-link">INFO</a>
-        <a href="contact.html" class="nav-link">CONTACT</a>
-      </nav>
-      <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- モバイルナビ フルスクリーンオーバーレイ -->
-  <nav class="mobile-nav" id="mobileNav">
-    <div class="mobile-nav-inner">
-      <a href="about.html" class="mobile-nav-link">ABOUT</a>
-      <a href="service.html" class="mobile-nav-link">SERVICE</a>
-      <a href="works.html" class="mobile-nav-link">WORKS</a>
-      <button class="mobile-nav-toggle" id="mobileSubToggle" aria-expanded="false">MANAGEMENT</button>
-      <div class="mobile-nav-sub" id="mobileSubMenu">
-        <a href="management.html" class="mobile-nav-sub-link">ALL MEMBERS</a>
-        <a href="management.html#member-a" class="mobile-nav-sub-link">MEMBER A</a>
-        <a href="management.html#member-b" class="mobile-nav-sub-link">MEMBER B</a>
-        <a href="management.html#member-c" class="mobile-nav-sub-link">MEMBER C</a>
-        <a href="management.html#member-d" class="mobile-nav-sub-link">MEMBER D</a>
-        <a href="management.html#member-e" class="mobile-nav-sub-link">MEMBER E</a>
-      </div>
-      <a href="info.html" class="mobile-nav-link">INFO</a>
-      <a href="contact.html" class="mobile-nav-link">CONTACT</a>
-    </div>
+      </li>
+      <li><a href="/info/">INFO</a></li>
+      <li><a href="/contact/">CONTACT</a></li>
+    </ul>
   </nav>
 
-  <main>
+  <!-- モバイル ハンバーガー -->
+  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
 
-    <!-- ============================================================
-         HERO — 100svh, YouTube動画背景, 左下コピー配置
-         ============================================================ -->
-    <section class="hero" id="hero">
-      <!-- YouTube 動画背景 -->
-      <div class="hero-video-wrap">
-        <iframe
-          src="https://www.youtube.com/embed/BjTYsHLEWkA?start=20&end=70&autoplay=1&mute=1&loop=1&playlist=BjTYsHLEWkA&controls=0&showinfo=0&rel=0&modestbranding=1"
-          allow="autoplay; encrypted-media"
-          allowfullscreen
-          title="SAC ショーリール"
-        ></iframe>
-      </div>
-      <!-- オーバーレイ -->
-      <div class="hero-overlay"></div>
-
-      <!-- 左下コピー -->
-      <div class="hero-copy">
-        <div class="hero-gold-line js-hero-gold"></div>
-        <h1 class="hero-line1">
-          <span class="chars-wrap"><span class="hero-chars" data-text="ONE PROMPT"></span></span>
-        </h1>
-        <p class="hero-line2 js-hero-fade" data-delay="0.4">CHANGE THE WORLD</p>
-        <p class="hero-sub js-hero-fade" data-delay="0.7">クリエイティブ制作の制約を、解放する。</p>
-      </div>
-
-      <!-- 右下縦書き -->
-      <span class="hero-vertical">SMART AI CREATIVE</span>
-
-      <!-- 左中央スクロール誘導 -->
-      <div class="hero-scroll">
-        <span class="hero-scroll-label">SCROLL</span>
-        <div class="hero-scroll-line"></div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         WORKS — 3層構造: フィーチャー → フィルムデュオ → テキストストリップ
-         ============================================================ -->
-    <section class="works" id="works">
-      <!-- セクションヘッダー -->
-      <div class="works-header">
-        <span class="works-header-label js-reveal">SELECTED WORKS</span>
-        <span class="works-header-bg" aria-hidden="true">WORKS</span>
-      </div>
-
-      <!-- Layer 1: メインフィーチャー（70vh） -->
-      <a href="works.html" class="works-feature" data-cursor="VIEW" style="background-image:url('https://www.epoch-inc.jp/wordpress/wp-content/uploads/2026/01/lastcall08-1200x675.jpg');">
-        <div class="works-feature-overlay"></div>
-        <div class="works-feature-content js-reveal">
-          <span class="works-case">CASE NO.01</span>
-          <h3 class="works-feature-title">LAST CALL</h3>
-          <p class="works-feature-sub">公開オーディション番組 OP映像</p>
+<!-- モバイルメニュー オーバーレイ -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <nav>
+    <ul>
+      <li><a href="/about/">ABOUT</a></li>
+      <li><a href="/service/">SERVICE</a></li>
+      <li><a href="/works/">WORKS</a></li>
+      <li class="mobile-accordion">
+        <button class="mobile-accordion-toggle" aria-expanded="false">MANAGEMENT</button>
+        <div class="mobile-accordion-body">
+          <a href="/management/#member-a">MEMBER A</a>
+          <a href="/management/#member-b">MEMBER B</a>
+          <a href="/management/#member-c">MEMBER C</a>
+          <a href="/management/#member-d">MEMBER D</a>
+          <a href="/management/#member-e">MEMBER E</a>
         </div>
-        <span class="works-feature-view">VIEW &rarr;</span>
-      </a>
+      </li>
+      <li><a href="/info/">INFO</a></li>
+      <li><a href="/contact/">CONTACT</a></li>
+    </ul>
+  </nav>
+</div>
 
-      <!-- Layer 2: フィルムデュオ（不均等2分割・45vh） -->
-      <div class="works-duo">
-        <a href="works.html" class="works-duo-item item-wide" data-cursor="VIEW" style="background-image:url('https://www.epoch-inc.jp/wordpress/wp-content/uploads/2024/10/HYDE07-1200x675.jpg');">
-          <div class="works-duo-overlay"></div>
-          <div class="works-duo-content js-reveal">
-            <span class="works-duo-cat">MOVIE</span>
-            <h3 class="works-duo-title">HYDE | SOCIAL VIRUS</h3>
-          </div>
-        </a>
-        <a href="works.html" class="works-duo-item item-narrow" data-cursor="VIEW" style="background-image:url('https://www.epoch-inc.jp/wordpress/wp-content/uploads/2024/03/img01-1200x675.jpg');">
-          <div class="works-duo-overlay"></div>
-          <div class="works-duo-content js-reveal">
-            <span class="works-duo-cat">BRANDING</span>
-            <h3 class="works-duo-title">24世紀ラーメン</h3>
-          </div>
-        </a>
-      </div>
-
-      <!-- Layer 3: テキストストリップ（残り3作品） -->
-      <div class="works-strip">
-        <a href="works.html" class="works-strip-item js-reveal">
-          <span class="works-strip-num">04</span>
-          <span class="works-strip-tag">WEB</span>
-          <span class="works-strip-name">ZEUS WiFi — AIデジタルツイン キャンペーン</span>
-          <span class="works-strip-arrow">&rarr;</span>
-        </a>
-        <a href="works.html" class="works-strip-item js-reveal">
-          <span class="works-strip-num">05</span>
-          <span class="works-strip-tag">TECH SHOWCASE</span>
-          <span class="works-strip-name">SOFTBANK AI-RAN — AI時代の社会インフラ</span>
-          <span class="works-strip-arrow">&rarr;</span>
-        </a>
-        <a href="works.html" class="works-strip-item js-reveal">
-          <span class="works-strip-num">06</span>
-          <span class="works-strip-tag">TRAVEL</span>
-          <span class="works-strip-name">HYATT TABISAKI — Caption by Hyatt 兜町 東京</span>
-          <span class="works-strip-arrow">&rarr;</span>
-        </a>
-      </div>
-
-      <!-- VIEW ALL CTA -->
-      <div class="works-all js-reveal">
-        <a href="works.html">VIEW ALL WORKS &rarr;</a>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         CREATORS — メンバー横並びストリップ
-         ============================================================ -->
-    <section class="creators">
-      <span class="creators-label">CREATORS</span>
-      <div class="creators-list">
-        <div class="creators-item"><div class="creators-avatar"></div><span class="creators-name">MEMBER A</span><span class="creators-role">Director</span></div>
-        <div class="creators-item"><div class="creators-avatar"></div><span class="creators-name">MEMBER B</span><span class="creators-role">Art Director</span></div>
-        <div class="creators-item"><div class="creators-avatar"></div><span class="creators-name">MEMBER C</span><span class="creators-role">Designer</span></div>
-        <div class="creators-item"><div class="creators-avatar"></div><span class="creators-name">MEMBER D</span><span class="creators-role">Engineer</span></div>
-        <div class="creators-item"><div class="creators-avatar"></div><span class="creators-name">MEMBER E</span><span class="creators-role">Producer</span></div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         SERVICE — 白背景, 2カラム（左説明 / 右リスト）
-         ============================================================ -->
-    <section class="service" id="service">
-      <div class="service-inner">
-        <div class="service-left js-reveal">
-          <span class="service-label">SERVICE</span>
-          <p class="service-lead">AIとクリエイターの力で、<br>すべての制作制約を解放する。</p>
-          <p class="service-sub">ビジネス成果から逆算した運用設計付きのAI制作を提供します。</p>
-        </div>
-        <div class="service-right">
-          <div class="service-list">
-            <div class="service-item js-reveal"><span class="service-num">01</span><span class="service-name">MOVIE PRODUCTION</span><span class="service-desc">AIで制作工程を1/5に圧縮</span></div>
-            <div class="service-item js-reveal"><span class="service-num">02</span><span class="service-name">WEB DESIGN & DEV</span><span class="service-desc">AIドリブンなUX/UI実装</span></div>
-            <div class="service-item js-reveal"><span class="service-num">03</span><span class="service-name">GRAPHIC / KEY VISUAL</span><span class="service-desc">AIカンプで撮影を最適化</span></div>
-            <div class="service-item js-reveal"><span class="service-num">04</span><span class="service-name">INSTALLATION</span><span class="service-desc">空間とデジタルを融合した体験設計</span></div>
-            <div class="service-item js-reveal"><span class="service-num">05</span><span class="service-name">EVENT</span><span class="service-desc">AIを活用したイベント演出</span></div>
-            <div class="service-item js-reveal"><span class="service-num">06</span><span class="service-name">ANIMATION</span><span class="service-desc">モーション・アニメーション制作</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         INFO — 背景#F5F5F5, 最新3件
-         ============================================================ -->
-    <section class="info" id="info">
-      <div class="info-inner">
-        <h2 class="info-title js-reveal">INFO</h2>
-        <div class="info-list">
-          <a href="info.html" class="info-row js-reveal"><time>2026.04.10</time><span>SAC 公式サイトをリニューアルしました</span><span class="info-arrow">&rarr;</span></a>
-          <a href="info.html" class="info-row js-reveal"><time>2026.03.25</time><span>新作インスタレーション作品「PULSE」を公開</span><span class="info-arrow">&rarr;</span></a>
-          <a href="info.html" class="info-row js-reveal"><time>2026.03.01</time><span>AI Creativeサービスを正式ローンチしました</span><span class="info-arrow">&rarr;</span></a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         CONTACT — 背景#0A0A0A, 大見出し + CTA
-         ============================================================ -->
-    <section class="contact" id="contact">
-      <div class="contact-inner js-reveal">
-        <h2 class="contact-title">LET'S CREATE<br>TOGETHER<span class="contact-dot">.</span></h2>
-        <p class="contact-sub">お仕事のご依頼・ご相談はお気軽にご連絡ください。</p>
-        <a href="contact.html" class="contact-btn">CONTACT</a>
-      </div>
-    </section>
-
-  </main>
+<main>
 
   <!-- ============================================================
-       FOOTER — 背景#0A0A0A
+       HERO — YouTube動画背景 / 左下コピーブロック
        ============================================================ -->
-  <footer class="site-footer">
-    <div class="footer-main">
-      <div class="footer-brand"><span class="footer-logo">SAC</span><span class="footer-brand-sub">Smart AI Creative</span></div>
-      <nav class="footer-nav"><a href="about.html">ABOUT</a><a href="service.html">SERVICE</a><a href="works.html">WORKS</a><a href="info.html">INFO</a></nav>
-      <span class="footer-powered">Powered by EPOCH Inc.</span>
+  <section class="hero" id="hero">
+    <!-- YouTube 動画背景 -->
+    <div class="hero-video" aria-hidden="true">
+      <iframe
+        src="https://www.youtube.com/embed/BjTYsHLEWkA?start=20&end=70&autoplay=1&mute=1&loop=1&playlist=BjTYsHLEWkA&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
-    <div class="footer-bottom"><p>&copy; 2024 SAC / Smart AI Creative. All rights reserved.</p></div>
-  </footer>
+    <!-- 暗幕オーバーレイ -->
+    <div class="hero-overlay"></div>
 
-  <script src="assets/js/main.js"></script>
+    <!-- 左中央 スクロール誘導 -->
+    <div class="hero-scroll">
+      <span class="hero-scroll-text">SCROLL</span>
+      <span class="hero-scroll-line"></span>
+    </div>
+
+    <!-- 右下 縦書きブランド -->
+    <div class="hero-brand-vertical">SMART AI CREATIVE</div>
+
+    <!-- 左下 コピーブロック -->
+    <div class="hero-copy">
+      <span class="hero-gold-line" id="heroGoldLine"></span>
+      <h1 class="hero-title-1" id="heroTitle1" data-split="ONE PROMPT">ONE PROMPT</h1>
+      <h2 class="hero-title-2" id="heroTitle2">CHANGE THE WORLD</h2>
+      <p class="hero-sub-ja" id="heroSubJa">クリエイティブ制作の制約を、解放する。</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT — 白背景 / 左:番号+ラベル  右:リード+本文+CTA
+       ============================================================ -->
+  <section class="about" id="about">
+    <div class="about-left js-reveal">
+      <div class="section-index">01</div>
+      <div class="section-label">ABOUT</div>
+    </div>
+    <div class="about-right">
+      <p class="about-lead js-reveal">
+        AIとクリエイターの力で、<br>
+        あらゆる制作の制約を解放する。
+      </p>
+      <p class="about-body js-reveal">
+        Smart AI Creative（SAC）は、EPOCH Inc.が擁するAIクリエイティブ特化スタジオです。映像・Web・グラフィック・インスタレーションなど、あらゆる制作領域でAIを活用し、ビジネス成果から逆算した運用設計付きのAI制作を提供します。
+      </p>
+      <a href="/about/" class="about-cta js-reveal">VIEW MORE →</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       WORKS — 1作品=1シーン / タイル禁止
+       ============================================================ -->
+  <section class="works" id="works">
+    <div class="works-label">SELECTED WORKS</div>
+
+    <!-- SCENE 01 — FEATURE（WORK_01 / LAST CALL） -->
+    <a href="/works/last-call" class="scene-01" data-cursor="hover">
+      <div class="scene-01-bg" id="scene01Bg"></div>
+      <div class="scene-01-overlay"></div>
+      <div class="scene-01-number">01</div>
+      <div class="scene-01-view">VIEW →</div>
+      <div class="scene-01-content">
+        <div class="scene-01-cat">MOVIE PRODUCTION</div>
+        <h3 class="scene-01-title">LAST CALL</h3>
+        <p class="scene-01-sub">公開オーディション番組 OP映像</p>
+      </div>
+    </a>
+
+    <!-- SCENE 02 — DUO（WORK_02 + WORK_03） -->
+    <div class="scene-02">
+      <a href="/works/hyde" class="duo-wide" data-cursor="hover">
+        <div class="duo-content">
+          <div class="cat">MOVIE</div>
+          <h3 class="title">HYDE | SOCIAL VIRUS</h3>
+          <p class="sub">Music Video</p>
+        </div>
+      </a>
+      <a href="/works/24-ramen" class="duo-narrow" data-cursor="hover">
+        <div class="duo-content">
+          <div class="cat">BRANDING</div>
+          <h3 class="title">24世紀ラーメン</h3>
+          <p class="sub">あべのハルカス店 店舗映像</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- SCENE 03 — STRIP（WORK_04 / 05 / 06） -->
+    <div class="scene-03">
+      <a href="/works/zeus-wifi" class="strip-item" data-cursor="hover">
+        <span class="strip-num">04</span>
+        <span class="strip-tag">WEB</span>
+        <span class="strip-title">ZEUS WiFi — AIデジタルツイン キャンペーン</span>
+        <span class="strip-arrow">→</span>
+        <div class="strip-thumb" style="background-image:url(https://www.epoch-inc.jp/wordpress/wp-content/uploads/2025/06/zeus_wifi_epoch_ogp.jpg);"></div>
+      </a>
+      <a href="/works/softbank-ai-ran" class="strip-item" data-cursor="hover">
+        <span class="strip-num">05</span>
+        <span class="strip-tag">TECH</span>
+        <span class="strip-title">SOFTBANK AI-RAN — AI時代の社会インフラ</span>
+        <span class="strip-arrow">→</span>
+        <div class="strip-thumb" style="background-image:url(https://www.epoch-inc.jp/wordpress/wp-content/uploads/2024/11/image01-1200x675.jpg);"></div>
+      </a>
+      <a href="/works/hyatt-tabisaki" class="strip-item" data-cursor="hover">
+        <span class="strip-num">06</span>
+        <span class="strip-tag">TRAVEL</span>
+        <span class="strip-title">HYATT TABISAKI — Caption by Hyatt 兜町 東京</span>
+        <span class="strip-arrow">→</span>
+        <div class="strip-thumb" style="background-image:url(https://www.epoch-inc.jp/wordpress/wp-content/uploads/2025/11/Hyatt_Caption_KV_FIX_PC-1-1200x675.jpg);"></div>
+      </a>
+
+      <div class="works-view-all">
+        <a href="/works/" class="works-view-all-btn">VIEW ALL WORKS →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CREATORS — 黒背景の細い帯 / 5名のアバター
+       ============================================================ -->
+  <section class="creators" id="creators">
+    <div class="creators-label">CREATORS</div>
+    <div class="creators-list">
+      <a href="/management/#member-a" class="creator">
+        <div class="creator-avatar"></div>
+        <div class="creator-name">MEMBER A</div>
+        <div class="creator-role">Director</div>
+      </a>
+      <a href="/management/#member-b" class="creator">
+        <div class="creator-avatar"></div>
+        <div class="creator-name">MEMBER B</div>
+        <div class="creator-role">Producer</div>
+      </a>
+      <a href="/management/#member-c" class="creator">
+        <div class="creator-avatar"></div>
+        <div class="creator-name">MEMBER C</div>
+        <div class="creator-role">Designer</div>
+      </a>
+      <a href="/management/#member-d" class="creator">
+        <div class="creator-avatar"></div>
+        <div class="creator-name">MEMBER D</div>
+        <div class="creator-role">Engineer</div>
+      </a>
+      <a href="/management/#member-e" class="creator">
+        <div class="creator-avatar"></div>
+        <div class="creator-name">MEMBER E</div>
+        <div class="creator-role">Creative</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SERVICE — 白背景 / 左:ラベル+リード  右:縦リスト6項目
+       ============================================================ -->
+  <section class="service" id="service">
+    <div class="service-left js-reveal">
+      <div class="section-label gold">SERVICE</div>
+      <p class="service-lead">
+        AIとクリエイターの力で、<br>
+        制作の限界を超える。
+      </p>
+      <p class="service-sub">ビジネス成果から逆算した運用設計付きのAI制作。</p>
+    </div>
+
+    <ul class="service-list">
+      <li class="svc-item js-reveal">
+        <span class="svc-num">01</span>
+        <span class="svc-name">MOVIE PRODUCTION</span>
+        <span class="svc-desc">AIで制作工程を1/5に圧縮</span>
+      </li>
+      <li class="svc-item js-reveal">
+        <span class="svc-num">02</span>
+        <span class="svc-name">WEB DESIGN &amp; DEV</span>
+        <span class="svc-desc">AIドリブンなUX/UI実装</span>
+      </li>
+      <li class="svc-item js-reveal">
+        <span class="svc-num">03</span>
+        <span class="svc-name">GRAPHIC / KEY VISUAL</span>
+        <span class="svc-desc">AIカンプで撮影を最適化</span>
+      </li>
+      <li class="svc-item js-reveal">
+        <span class="svc-num">04</span>
+        <span class="svc-name">INSTALLATION</span>
+        <span class="svc-desc">空間とデジタルを融合した体験設計</span>
+      </li>
+      <li class="svc-item js-reveal">
+        <span class="svc-num">05</span>
+        <span class="svc-name">EVENT</span>
+        <span class="svc-desc">AIを活用したイベント演出</span>
+      </li>
+      <li class="svc-item js-reveal">
+        <span class="svc-num">06</span>
+        <span class="svc-name">ANIMATION</span>
+        <span class="svc-desc">モーション・アニメーション制作</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============================================================
+       INFO — ライトグレー背景 / お知らせ3件
+       ============================================================ -->
+  <section class="info" id="info">
+    <div class="section-label info-label">INFO</div>
+    <ul class="info-list">
+      <li class="info-item js-reveal">
+        <span class="info-date">2026.04.10</span>
+        <span class="info-title">Smart AI Creative、Cannes Lions 2026にて事例登壇が決定。</span>
+        <span class="info-arrow">→</span>
+      </li>
+      <li class="info-item js-reveal">
+        <span class="info-date">2026.03.22</span>
+        <span class="info-title">AIクリエイティブ特化スタジオ「SAC」を正式ローンチしました。</span>
+        <span class="info-arrow">→</span>
+      </li>
+      <li class="info-item js-reveal">
+        <span class="info-date">2026.02.15</span>
+        <span class="info-title">HYATT TABISAKI キャンペーンの制作事例を公開しました。</span>
+        <span class="info-arrow">→</span>
+      </li>
+    </ul>
+    <a href="/info/" class="info-view-all">VIEW ALL →</a>
+  </section>
+
+  <!-- ============================================================
+       CONTACT — 黒背景 / 巨大タイポ "LET'S CREATE TOGETHER."
+       ============================================================ -->
+  <section class="contact" id="contact">
+    <h2 class="contact-title">
+      <span class="contact-title-1">LET'S CREATE</span>
+      <span class="contact-title-2">TOGETHER<span class="gold-dot">.</span></span>
+    </h2>
+    <p class="contact-sub">お仕事のご依頼・ご相談はお気軽にご連絡ください。</p>
+    <a href="/contact/" class="contact-btn" data-cursor="hover">CONTACT</a>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-left">
+      <span class="footer-logo">SAC</span>
+      <span class="footer-tagline">Smart AI Creative</span>
+    </div>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="/about/">ABOUT</a>
+      <a href="/service/">SERVICE</a>
+      <a href="/works/">WORKS</a>
+      <a href="/info/">INFO</a>
+    </nav>
+    <div class="footer-right">Powered by EPOCH Inc.</div>
+  </div>
+  <div class="footer-bottom">
+    © 2024 SAC / Smart AI Creative. All rights reserved.
+  </div>
+</footer>
+
+<!-- JS -->
+<script src="assets/js/main.js"></script>
 </body>
 </html>

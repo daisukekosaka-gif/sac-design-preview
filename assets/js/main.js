@@ -1,272 +1,262 @@
-/**
- * SAC / Smart AI Creative
- * main.js — Vanilla JS（ライブラリ不使用）
- * パフォーマンス: transform / opacity のみアニメーション
- */
-
-'use strict';
-
 /* ============================================================
-   1. Hero イントロアニメーション
-   DOMContentLoaded 後 200ms 遅延でスタート
+   SAC — main.js
+   Vanilla JS のみ。外部ライブラリ禁止。
+   - ヘッダーの scroll 切替
+   - モバイルメニュー開閉
+   - Hero イントロアニメーション
+   - Intersection Observer のリビール
+   - Works SCENE 01 の背景パララックス
+   - カスタムカーソル（デスクトップのみ）
+   - セクション別カーソルカラー切替
    ============================================================ */
-function initHeroIntro() {
-  const goldLine = document.querySelector('.js-hero-gold');
-  const chars = document.querySelector('.hero-chars');
-  const fades = document.querySelectorAll('.js-hero-fade');
 
-  if (!goldLine && !chars) return;
+(() => {
+  'use strict';
 
-  setTimeout(() => {
-    /* ゴールドライン: width 0 → 32px */
-    if (goldLine) goldLine.classList.add('is-active');
-
-    /* "ONE PROMPT": translateY(100%) → 0 */
-    setTimeout(() => {
-      if (chars) chars.classList.add('is-active');
-    }, 100);
-
-    /* "CHANGE THE WORLD" + 和文サブ: opacity フェードイン */
-    fades.forEach(el => {
-      const delay = parseFloat(el.dataset.delay || 0) * 1000;
-      setTimeout(() => el.classList.add('is-active'), delay);
-    });
-
-    /* 和文サブ（.hero-sub）を直接操作 */
-    const heroSub = document.querySelector('.hero-sub');
-    if (heroSub) {
-      setTimeout(() => heroSub.classList.add('is-active'), 700);
-    }
-  }, 200);
-}
-
-/* ============================================================
-   2. ヘッダースクロール
-   scrollY > 60px で .is-scrolled 追加
-   ============================================================ */
-function initHeaderScroll() {
+  /* ==========================================================
+     1. HEADER — scroll で .scrolled 付与
+     ========================================================== */
   const header = document.getElementById('siteHeader');
-  if (!header) return;
 
-  let ticking = false;
-
-  function update() {
-    if (window.scrollY > 60) {
-      header.classList.add('is-scrolled');
-      header.classList.remove('header-dark');
+  const onScrollHeader = () => {
+    if (window.scrollY > 80) {
+      header.classList.add('scrolled');
     } else {
-      header.classList.remove('is-scrolled');
-      if (document.querySelector('.hero')) header.classList.add('header-dark');
+      header.classList.remove('scrolled');
     }
-    ticking = false;
-  }
+  };
+  window.addEventListener('scroll', onScrollHeader, { passive: true });
+  onScrollHeader();
 
-  update();
-  window.addEventListener('scroll', () => {
-    if (!ticking) { requestAnimationFrame(update); ticking = true; }
-  }, { passive: true });
-}
+  /* ==========================================================
+     2. モバイルメニュー 開閉
+     ========================================================== */
+  const hamburger   = document.getElementById('hamburger');
+  const mobileMenu  = document.getElementById('mobileMenu');
+  const accordions  = document.querySelectorAll('.mobile-accordion');
 
-/* ============================================================
-   3. ハンバーガーメニュー + モバイルサブメニュー
-   ============================================================ */
-function initMobileNav() {
-  const btn = document.getElementById('hamburger');
-  const nav = document.getElementById('mobileNav');
-  const subToggle = document.getElementById('mobileSubToggle');
-  const subMenu = document.getElementById('mobileSubMenu');
-  if (!btn || !nav) return;
-
-  /* ハンバーガー開閉 */
-  btn.addEventListener('click', () => {
-    const open = btn.classList.toggle('is-open');
-    nav.classList.toggle('is-open');
-    document.body.style.overflow = open ? 'hidden' : '';
-    btn.setAttribute('aria-expanded', String(open));
-  });
-
-  /* リンククリックで閉じる */
-  nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      btn.classList.remove('is-open');
-      nav.classList.remove('is-open');
-      document.body.style.overflow = '';
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('is-open');
+      hamburger.classList.toggle('is-open', open);
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
-  });
 
-  /* MANAGEMENTサブメニュー アコーディオン */
-  if (subToggle && subMenu) {
-    subToggle.addEventListener('click', () => {
-      const open = subMenu.classList.toggle('is-open');
-      subToggle.setAttribute('aria-expanded', String(open));
-    });
-  }
-
-  /* Escape で閉じる */
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && btn.classList.contains('is-open')) {
-      btn.classList.remove('is-open');
-      nav.classList.remove('is-open');
-      document.body.style.overflow = '';
-    }
-  });
-}
-
-/* ============================================================
-   4. Intersection Observer — .js-reveal
-   子要素の stagger: index × 0.08s の delay
-   ============================================================ */
-function initReveal() {
-  const items = document.querySelectorAll('.js-reveal');
-  if (!items.length) return;
-
-  /* 親セクション内の index を計算して stagger delay を設定 */
-  const sections = document.querySelectorAll('section, .works-strip, .service-list');
-  sections.forEach(sec => {
-    const children = sec.querySelectorAll('.js-reveal');
-    children.forEach((el, i) => {
-      el.style.transitionDelay = `${i * 0.08}s`;
-    });
-  });
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    rootMargin: '0px 0px -60px 0px',
-    threshold: 0.05
-  });
-
-  items.forEach(el => observer.observe(el));
-}
-
-/* ============================================================
-   5. Works Feature パララックス
-   背景を translateY で微妙にズラす
-   ============================================================ */
-function initParallax() {
-  const feature = document.querySelector('.works-feature');
-  if (!feature) return;
-
-  feature.style.willChange = 'background-position';
-  let ticking = false;
-
-  function update() {
-    const rect = feature.getBoundingClientRect();
-    const viewH = window.innerHeight;
-    /* 要素がビューポート内にある場合のみ */
-    if (rect.bottom > 0 && rect.top < viewH) {
-      const offset = (rect.top / viewH) * -60;
-      feature.style.backgroundPositionY = `calc(50% + ${offset}px)`;
-    }
-    ticking = false;
-  }
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) { requestAnimationFrame(update); ticking = true; }
-  }, { passive: true });
-}
-
-/* ============================================================
-   6. カスタムカーソル（デスクトップのみ）
-   ============================================================ */
-function initCursor() {
-  /* タッチデバイスではスキップ */
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-
-  const cursor = document.getElementById('cursor');
-  const follower = document.getElementById('cursorFollower');
-  if (!cursor || !follower) return;
-
-  let mx = 0, my = 0;  // マウス座標
-  let fx = 0, fy = 0;  // フォロワー座標
-
-  document.addEventListener('mousemove', (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
-  });
-
-  /* follower は lerp で追随 */
-  function animate() {
-    fx += (mx - fx) * 0.12;
-    fy += (my - fy) * 0.12;
-    follower.style.left = fx + 'px';
-    follower.style.top = fy + 'px';
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  /* data-cursor 属性でホバー時テキスト表示 */
-  const hoverTargets = document.querySelectorAll('[data-cursor]');
-  hoverTargets.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      const label = el.dataset.cursor;
-      cursor.classList.add('is-hover');
-      cursor.setAttribute('data-label', label);
-      follower.classList.add('is-hover');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('is-hover');
-      cursor.removeAttribute('data-label');
-      follower.classList.remove('is-hover');
-    });
-  });
-}
-
-/* ============================================================
-   7. WORKSページ：カテゴリフィルター（他ページ用）
-   ============================================================ */
-function initWorksFilter() {
-  const btns = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.work-card');
-  if (!btns.length || !cards.length) return;
-
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cat = btn.dataset.filter;
-      btns.forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      cards.forEach(card => {
-        card.classList.toggle('is-hidden', cat !== 'ALL' && card.dataset.category !== cat);
+    // メニュー内リンクをクリックしたら閉じる
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('is-open');
+        hamburger.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       });
     });
-  });
-}
+  }
 
-/* ============================================================
-   8. スムーズスクロール
-   ============================================================ */
-function initSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      const href = anchor.getAttribute('href');
-      if (href === '#') return;
-      const target = document.querySelector(href);
-      if (!target) return;
-      e.preventDefault();
-      const h = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72;
-      const top = target.getBoundingClientRect().top + window.scrollY - h - 16;
-      window.scrollTo({ top, behavior: 'smooth' });
+  // MANAGEMENT アコーディオン
+  accordions.forEach(acc => {
+    const toggle = acc.querySelector('.mobile-accordion-toggle');
+    toggle?.addEventListener('click', () => {
+      const open = acc.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   });
-}
 
-/* ============================================================
-   初期化
-   ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-  initHeroIntro();
-  initHeaderScroll();
-  initMobileNav();
-  initReveal();
-  initParallax();
-  initCursor();
-  initWorksFilter();
-  initSmoothScroll();
-});
+  /* ==========================================================
+     3. HERO イントロアニメーション
+        - ONE PROMPT を1文字ずつ spans に分割し、順次せり上がらせる
+        - ゴールドライン / サブテキスト もフェードイン
+     ========================================================== */
+  const runHeroIntro = () => {
+    const title1   = document.getElementById('heroTitle1');
+    const title2   = document.getElementById('heroTitle2');
+    const subJa    = document.getElementById('heroSubJa');
+    const goldLine = document.getElementById('heroGoldLine');
+    const scrollEl = document.querySelector('.hero-scroll');
+    const brandEl  = document.querySelector('.hero-brand-vertical');
+
+    // 文字分割（空白は &nbsp; で維持）
+    if (title1) {
+      const text = title1.dataset.split || title1.textContent;
+      title1.textContent = '';
+      [...text].forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.textContent = ch === ' ' ? '\u00A0' : ch;
+        span.style.transitionDelay = (i * 0.035) + 's';
+        title1.appendChild(span);
+      });
+    }
+
+    // 100ms後にアニメーション開始
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        goldLine?.classList.add('is-visible');
+        title1?.classList.add('is-visible');
+        title2?.classList.add('is-visible');
+        subJa?.classList.add('is-visible');
+        scrollEl?.classList.add('is-visible');
+        brandEl?.classList.add('is-visible');
+      }, 100);
+    });
+  };
+
+  /* ==========================================================
+     4. Intersection Observer — .js-reveal のリビール
+     ========================================================== */
+  const runRevealObserver = () => {
+    const revealEls = document.querySelectorAll('.js-reveal');
+    if (!('IntersectionObserver' in window) || revealEls.length === 0) {
+      // フォールバック: 全て表示
+      revealEls.forEach(el => el.classList.add('revealed'));
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px 0px -10% 0px',
+      threshold: 0.12
+    });
+
+    revealEls.forEach(el => io.observe(el));
+  };
+
+  /* ==========================================================
+     5. WORKS SCENE 01 — 背景パララックス
+        requestAnimationFrame でスムーズに追随
+     ========================================================== */
+  const runScene01Parallax = () => {
+    const bgEl = document.getElementById('scene01Bg');
+    const scene = document.querySelector('.scene-01');
+    if (!bgEl || !scene) return;
+
+    // will-change は CSS 側でも付与済み（保険）
+    bgEl.style.willChange = 'transform';
+
+    let ticking = false;
+    const update = () => {
+      const rect = scene.getBoundingClientRect();
+      // セクションが画面内にある場合のみ計算
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        // scene-01 の画面中央からのオフセットで計算
+        const offset = (window.innerHeight / 2 - rect.top - rect.height / 2) * 0.12;
+        bgEl.style.transform = `translateY(${offset}px) scale(1.04)`;
+      }
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    update();
+  };
+
+  /* ==========================================================
+     6. カスタムカーソル（デスクトップ & hover対応デバイスのみ）
+     ========================================================== */
+  const runCustomCursor = () => {
+    const cursor = document.querySelector('.cursor');
+    const ring   = document.querySelector('.cursor-ring');
+    if (!cursor || !ring) return;
+
+    // タッチ/モバイルでは無効
+    const canHover = window.matchMedia('(hover: hover)').matches;
+    if (!canHover || window.innerWidth <= 900) return;
+
+    document.body.classList.add('cursor-ready');
+    // デフォルトで非表示なのでマウス移動が来たら表示状態に
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX  = mouseX;
+    let ringY  = mouseY;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      // cursor は即時追随
+      cursor.style.transform =
+        `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    });
+
+    // ring はlerp(0.1)で遅延追随
+    const loop = () => {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      ring.style.transform =
+        `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    };
+    loop();
+
+    // ホバー対象を拡大
+    const hoverTargets = document.querySelectorAll('[data-cursor="hover"]');
+    hoverTargets.forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    // マウスがウィンドウを離れたら薄く
+    window.addEventListener('mouseleave', () => {
+      document.body.classList.remove('cursor-ready');
+    });
+    window.addEventListener('mouseenter', () => {
+      document.body.classList.add('cursor-ready');
+    });
+  };
+
+  /* ==========================================================
+     7. セクション別 カーソルカラー切替
+        白背景セクション（ABOUT / SERVICE / INFO）上では黒ベース
+        ダークセクション（HERO / WORKS / CREATORS / CONTACT）では白ベース
+     ========================================================== */
+  const runCursorColorSwitch = () => {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    if (window.innerWidth <= 900) return;
+
+    // 白背景と判定するセクションのID
+    const lightSections = ['about', 'service', 'info']
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+
+    if (!('IntersectionObserver' in window) || lightSections.length === 0) return;
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // 画面中央（50%）を超えたら light に切替
+        if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
+          document.body.classList.add('cursor-light');
+        } else {
+          document.body.classList.remove('cursor-light');
+        }
+      });
+    }, {
+      root: null,
+      threshold: [0, 0.35, 0.6, 1]
+    });
+
+    lightSections.forEach(el => io.observe(el));
+  };
+
+  /* ==========================================================
+     起動
+     ========================================================== */
+  document.addEventListener('DOMContentLoaded', () => {
+    runHeroIntro();
+    runRevealObserver();
+    runScene01Parallax();
+    runCustomCursor();
+    runCursorColorSwitch();
+  });
+})();
