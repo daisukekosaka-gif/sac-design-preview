@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAC - Smart AI Creative | C案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --gray-bg: #F5F5F5;
+  --gray-light: #CCCCCC;
+  --gray-mid: #888888;
+  --gray-dark: #444444;
+  --near-black: #1A1A1A;
+  --gold: #C8A86B;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-en: 'Inter', sans-serif;
+  --font-jp: 'Noto Sans JP', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-en);
+  color: var(--black);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ===== HEADER ===== */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 72px;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 1000;
+  transition: border-color 0.4s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.header.scrolled { border-bottom-color: #E0E0E0; }
+.header-logo {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: var(--black);
+  text-decoration: none;
+}
+.header-nav { display: flex; gap: 32px; align-items: center; }
+.header-nav a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  text-decoration: none;
+  transition: color 0.3s var(--ease);
+}
+.header-nav a:hover { color: var(--gold); }
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1100;
+  width: 28px;
+}
+.hamburger span {
+  display: block;
+  height: 1px;
+  background: var(--black);
+  transition: all 0.4s var(--ease);
+  width: 100%;
+}
+.hamburger.active span { background: var(--white); }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Mobile overlay */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 1050;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease);
+}
+.mobile-nav.active { opacity: 1; pointer-events: all; }
+.mobile-nav a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.3s var(--ease);
+}
+.mobile-nav a:hover { color: var(--gold); }
+
+/* ===== HERO ===== */
+.hero {
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--white);
+  padding: 72px 0 0;
+  overflow: hidden;
+}
+.hero-sac {
+  position: absolute;
+  top: 92px;
+  left: 48px;
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--gray-mid);
+}
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65vw;
+  max-width: 1100px;
+}
+.hero-line1 {
+  font-family: var(--font-jp);
+  font-weight: 700;
+  font-size: clamp(36px, 5vw, 64px);
+  color: var(--black);
+  align-self: flex-start;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 1s var(--ease) 0.3s;
+}
+.hero-line1.visible { opacity: 1; transform: translateX(0); }
+.hero-video-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 55vh;
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 1.2s var(--ease) 0.6s;
+}
+.hero-video-wrap.visible { opacity: 1; transform: scale(1); }
+.hero-video-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+.hero-line2 {
+  font-family: var(--font-jp);
+  font-weight: 700;
+  font-size: clamp(36px, 5vw, 64px);
+  color: var(--black);
+  align-self: flex-end;
+  margin-top: 16px;
+  opacity: 0;
+  transform: translateX(60px);
+  transition: all 1s var(--ease) 0.9s;
+}
+.hero-line2.visible { opacity: 1; transform: translateX(0); }
+.hero-sub {
+  position: absolute;
+  bottom: 40px;
+  left: 48px;
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 12px;
+  color: var(--gray-mid);
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.hero-scroll span {
+  font-family: var(--font-en);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--gray-light);
+}
+.hero-scroll-line {
+  width: 1px;
+  height: 40px;
+  background: var(--gray-light);
+  position: relative;
+  overflow: hidden;
+}
+.hero-scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--black);
+  animation: scrollLine 2s var(--ease) infinite;
+}
+@keyframes scrollLine {
+  0% { top: -100%; }
+  100% { top: 100%; }
+}
+
+/* ===== SECTIONS COMMON ===== */
+.section-label {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--gray-light);
+  margin-bottom: 48px;
+}
+.section-label.gold { color: var(--gold); }
+.js-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.js-reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== ABOUT ===== */
+.about {
+  background: var(--white);
+  padding: 100px 60px;
+  position: relative;
+  overflow: hidden;
+}
+.about-deco {
+  position: absolute;
+  top: 60px;
+  left: 40px;
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 200px;
+  line-height: 1;
+  color: var(--black);
+  opacity: 0.03;
+  pointer-events: none;
+  user-select: none;
+}
+.about-inner {
+  margin-left: 40%;
+  max-width: 560px;
+}
+.about-lead {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: clamp(20px, 2.5vw, 28px);
+  line-height: 1.8;
+  color: var(--black);
+  margin-bottom: 24px;
+}
+.about-body {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--gray-mid);
+  max-width: 480px;
+  margin-bottom: 32px;
+}
+.cta-link {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.3s var(--ease);
+}
+.cta-link:hover { color: var(--gold); }
+
+/* ===== SERVICE ===== */
+.service {
+  background: var(--white);
+  padding: 80px 60px;
+}
+.service-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px 60px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.service-item { }
+.service-item:nth-child(even) {
+  text-align: right;
+  margin-top: 40px;
+}
+.service-num {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.service-name {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+.service-desc {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 11px;
+  color: var(--gray-mid);
+}
+
+/* ===== WORKS ===== */
+.works {
+  background: linear-gradient(to bottom, var(--white), var(--gray-bg));
+  padding: 80px 60px 100px;
+}
+.works-grid {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.work-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.work-card-bg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s var(--ease);
+}
+.work-card:hover .work-card-bg { transform: scale(1.03); }
+.work-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+  transition: background 0.4s var(--ease);
+}
+.work-card:hover .work-card-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%);
+}
+.work-card-info {
+  position: absolute;
+  bottom: 28px;
+  left: 28px;
+  right: 28px;
+}
+.work-card-tag {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.work-card-title {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: clamp(20px, 2.5vw, 36px);
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.work-card-sub {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+}
+.work-1 { height: 50vh; }
+.work-2 { height: 40vh; margin-top: 80px; }
+.work-3 {
+  grid-column: 1 / -1;
+  height: 35vh;
+  margin-left: -20px;
+  width: calc(100% + 20px);
+}
+.work-card-bg.g1 { background: linear-gradient(135deg, #2A2A2A, #555); }
+.work-card-bg.g2 { background: linear-gradient(135deg, #1A1A2E, #3A3A5E); }
+.work-card-bg.g3 { background: linear-gradient(135deg, #2E1A1A, #5E3A3A); }
+.works-more {
+  text-align: center;
+  margin-top: 48px;
+}
+.works-more a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  text-decoration: none;
+  transition: opacity 0.3s var(--ease);
+}
+.works-more a:hover { opacity: 0.7; }
+
+/* ===== CREATOR ===== */
+.creator {
+  background: var(--white);
+  padding: 100px 60px;
+}
+.creator-list {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 48px;
+}
+.creator-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+}
+.creator-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gray-bg);
+  flex-shrink: 0;
+}
+.creator-text {}
+.creator-name {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--black);
+  transition: color 0.3s var(--ease);
+}
+.creator-item:hover .creator-name { color: var(--gold); }
+.creator-role {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--gray-mid);
+  margin-top: 4px;
+}
+.creator-desc {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 10px;
+  color: var(--gray-mid);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s var(--ease), opacity 0.4s var(--ease);
+  opacity: 0;
+  margin-top: 4px;
+}
+.creator-item:hover .creator-desc { max-height: 40px; opacity: 1; }
+.creator-more a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.3s var(--ease);
+}
+.creator-more a:hover { color: var(--gold); }
+
+/* ===== INFO ===== */
+.info {
+  background: var(--gray-bg);
+  padding: 64px 60px;
+}
+.info-list { list-style: none; max-width: 800px; }
+.info-item {
+  display: flex;
+  gap: 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid #E0E0E0;
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--gray-dark);
+  line-height: 1.6;
+  transition: color 0.3s var(--ease);
+  cursor: pointer;
+}
+.info-item:hover { color: var(--black); }
+.info-date {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--gray-mid);
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.info-more {
+  margin-top: 32px;
+}
+.info-more a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.3s var(--ease);
+}
+.info-more a:hover { color: var(--gold); }
+
+/* ===== CONTACT ===== */
+.contact {
+  background: var(--black);
+  padding: 120px 60px;
+  position: relative;
+  overflow: hidden;
+}
+.contact-deco {
+  position: absolute;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-10deg);
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 200px;
+  color: var(--white);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+}
+.contact-title {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: clamp(40px, 6vw, 96px);
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+.contact-title .gold { color: var(--gold); }
+.contact-sub {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--gray-mid);
+  margin-bottom: 40px;
+}
+.contact-btn {
+  display: inline-block;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 16px 48px;
+  text-decoration: none;
+  transition: all 0.4s var(--ease);
+}
+.contact-btn:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--black);
+  border-top: 1px solid var(--near-black);
+  padding: 40px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.footer-logo {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--white);
+}
+.footer-brand {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 10px;
+  color: var(--gray-mid);
+  letter-spacing: 0.05em;
+}
+.footer-nav {
+  display: flex;
+  gap: 24px;
+}
+.footer-nav a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--gray-mid);
+  text-decoration: none;
+  transition: color 0.3s var(--ease);
+}
+.footer-nav a:hover { color: var(--white); }
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+.footer-epoch {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 9px;
+  color: var(--gray-mid);
+}
+.footer-copy {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 9px;
+  color: var(--gray-mid);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .header { padding: 0 24px; }
+  .header-nav { display: none; }
+  .hamburger { display: flex; }
+  .mobile-nav { display: flex; }
+
+  .hero-sac { left: 24px; top: 84px; }
+  .hero-content { width: 88vw; }
+  .hero-line1, .hero-line2 { font-size: clamp(28px, 7vw, 48px); }
+  .hero-sub { left: 24px; bottom: 48px; font-size: 10px; }
+
+  .about { padding: 64px 24px; }
+  .about-inner { margin-left: 0; }
+  .about-deco { font-size: 120px; left: 12px; }
+
+  .service { padding: 64px 24px; }
+  .service-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .service-item:nth-child(even) { text-align: left; margin-top: 0; }
+
+  .works { padding: 64px 24px; }
+  .works-grid {
+    grid-template-columns: 1fr;
+  }
+  .work-1 { height: 40vh; }
+  .work-2 { height: 35vh; margin-top: 0; }
+  .work-3 { height: 30vh; margin-left: 0; width: 100%; }
+
+  .creator { padding: 64px 24px; }
+  .creator-list { gap: 32px; }
+  .creator-name { font-size: 32px; }
+
+  .info { padding: 48px 24px; }
+  .info-item { flex-direction: column; gap: 4px; }
+
+  .contact { padding: 80px 24px; }
+  .contact-deco { font-size: 120px; right: 20px; }
+
+  .footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+  .footer-right { align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <a href="#" class="header-logo">SAC</a>
+  <nav class="header-nav">
+    <a href="#about">ABOUT</a>
+    <a href="#service">SERVICE</a>
+    <a href="#works">WORKS</a>
+    <a href="#creator">CREATOR</a>
+    <a href="#info">INFO</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#about" class="mobile-nav-link">ABOUT</a>
+  <a href="#service" class="mobile-nav-link">SERVICE</a>
+  <a href="#works" class="mobile-nav-link">WORKS</a>
+  <a href="#creator" class="mobile-nav-link">CREATOR</a>
+  <a href="#info" class="mobile-nav-link">INFO</a>
+  <a href="#contact" class="mobile-nav-link">CONTACT</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <span class="hero-sac">SAC</span>
+  <div class="hero-content">
+    <div class="hero-line1" id="heroLine1">つくりかたを、</div>
+    <div class="hero-video-wrap" id="heroVideo">
+      <iframe
+        src="https://www.youtube.com/embed/PtCzVhUE57s?autoplay=1&mute=1&loop=1&playlist=PtCzVhUE57s&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+    <div class="hero-line2" id="heroLine2">つくりなおす。</div>
+  </div>
+  <p class="hero-sub">AI &times; クリエイター。制作の新しいスタンダードを。</p>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-deco" aria-hidden="true">A</div>
+  <div class="about-inner js-reveal">
+    <p class="section-label">ABOUT</p>
+    <p class="about-lead">AIを道具として使うのではなく、<br>制作の仕組みごと変える。</p>
+    <p class="about-body">Smart AI Creative（SAC）は、EPOCH Inc.が運営するAI特化クリエイティブスタジオです。映像・Web・グラフィック・空間演出まで、AIとクリエイターの協業で、制作の質とスピードを同時に引き上げます。</p>
+    <a href="#" class="cta-link">VIEW MORE &rarr;</a>
+  </div>
+</section>
+
+<!-- SERVICE -->
+<section class="service" id="service">
+  <div class="js-reveal">
+    <p class="section-label gold">SERVICE</p>
+  </div>
+  <div class="service-grid">
+    <div class="service-item js-reveal">
+      <div class="service-num">01</div>
+      <div class="service-name">MOVIE PRODUCTION</div>
+      <div class="service-desc">AI映像制作</div>
+    </div>
+    <div class="service-item js-reveal">
+      <div class="service-num">02</div>
+      <div class="service-name">WEB DESIGN &amp; DEV</div>
+      <div class="service-desc">AIドリブンUX/UI</div>
+    </div>
+    <div class="service-item js-reveal">
+      <div class="service-num">03</div>
+      <div class="service-name">GRAPHIC / KEY VISUAL</div>
+      <div class="service-desc">AIカンプ最適化</div>
+    </div>
+    <div class="service-item js-reveal">
+      <div class="service-num">04</div>
+      <div class="service-name">INSTALLATION</div>
+      <div class="service-desc">空間&times;デジタル体験</div>
+    </div>
+    <div class="service-item js-reveal">
+      <div class="service-num">05</div>
+      <div class="service-name">EVENT</div>
+      <div class="service-desc">AIイベント演出</div>
+    </div>
+    <div class="service-item js-reveal">
+      <div class="service-num">06</div>
+      <div class="service-name">ANIMATION</div>
+      <div class="service-desc">モーション制作</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section class="works" id="works">
+  <div class="js-reveal">
+    <p class="section-label">SELECTED WORKS</p>
+  </div>
+  <div class="works-grid">
+    <div class="work-card work-1 js-reveal">
+      <div class="work-card-bg g1"></div>
+      <div class="work-card-overlay"></div>
+      <div class="work-card-info">
+        <div class="work-card-tag">MOVIE PRODUCTION</div>
+        <div class="work-card-title">LAST CALL</div>
+        <div class="work-card-sub">公開オーディション番組</div>
+      </div>
+    </div>
+    <div class="work-card work-2 js-reveal">
+      <div class="work-card-bg g2"></div>
+      <div class="work-card-overlay"></div>
+      <div class="work-card-info">
+        <div class="work-card-tag">MUSIC VIDEO</div>
+        <div class="work-card-title">HYDE | SOCIAL VIRUS</div>
+        <div class="work-card-sub">Music Video</div>
+      </div>
+    </div>
+    <div class="work-card work-3 js-reveal">
+      <div class="work-card-bg g3"></div>
+      <div class="work-card-overlay"></div>
+      <div class="work-card-info">
+        <div class="work-card-tag">BRANDING</div>
+        <div class="work-card-title">24世紀ラーメン</div>
+        <div class="work-card-sub">ブランディング映像</div>
+      </div>
+    </div>
+  </div>
+  <div class="works-more js-reveal">
+    <a href="#">VIEW ALL WORKS &rarr;</a>
+  </div>
+</section>
+
+<!-- CREATOR -->
+<section class="creator" id="creator">
+  <div class="js-reveal">
+    <p class="section-label">CREATOR</p>
+  </div>
+  <div class="creator-list js-reveal">
+    <div class="creator-item">
+      <div class="creator-avatar"></div>
+      <div class="creator-text">
+        <div class="creator-name">A</div>
+        <div class="creator-role">DIRECTOR</div>
+        <div class="creator-desc">映像演出・コンセプト設計</div>
+      </div>
+    </div>
+    <div class="creator-item">
+      <div class="creator-avatar"></div>
+      <div class="creator-text">
+        <div class="creator-name">B</div>
+        <div class="creator-role">ART DIRECTOR</div>
+        <div class="creator-desc">ビジュアルデザイン・ブランディング</div>
+      </div>
+    </div>
+    <div class="creator-item">
+      <div class="creator-avatar"></div>
+      <div class="creator-text">
+        <div class="creator-name">C</div>
+        <div class="creator-role">ENGINEER</div>
+        <div class="creator-desc">AI技術開発・システム設計</div>
+      </div>
+    </div>
+    <div class="creator-item">
+      <div class="creator-avatar"></div>
+      <div class="creator-text">
+        <div class="creator-name">D</div>
+        <div class="creator-role">MOTION DESIGNER</div>
+        <div class="creator-desc">モーショングラフィックス・VFX</div>
+      </div>
+    </div>
+    <div class="creator-item">
+      <div class="creator-avatar"></div>
+      <div class="creator-text">
+        <div class="creator-name">E</div>
+        <div class="creator-role">PRODUCER</div>
+        <div class="creator-desc">プロジェクト統括・渉外</div>
+      </div>
+    </div>
+  </div>
+  <div class="creator-more js-reveal">
+    <a href="#">VIEW ALL CREATORS &rarr;</a>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info" id="info">
+  <div class="js-reveal">
+    <p class="section-label">INFO</p>
+  </div>
+  <ul class="info-list">
+    <li class="info-item js-reveal">
+      <span class="info-date">2026.04.10</span>
+      <span>Smart AI Creative、Cannes Lions 2026にて事例登壇が決定。</span>
+    </li>
+    <li class="info-item js-reveal">
+      <span class="info-date">2026.03.22</span>
+      <span>AIクリエイティブ特化スタジオ「SAC」を正式ローンチしました。</span>
+    </li>
+    <li class="info-item js-reveal">
+      <span class="info-date">2026.02.15</span>
+      <span>HYATT TABISAKI キャンペーンの制作事例を公開しました。</span>
+    </li>
+  </ul>
+  <div class="info-more js-reveal">
+    <a href="#">VIEW ALL &rarr;</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-deco" aria-hidden="true">&rarr;</div>
+  <div class="js-reveal">
+    <h2 class="contact-title">LET'S CREATE<br>TOGETHER<span class="gold">.</span></h2>
+    <p class="contact-sub">お仕事のご依頼・ご相談はお気軽にご連絡ください。</p>
+    <a href="#" class="contact-btn">CONTACT</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-left">
+    <span class="footer-logo">SAC</span>
+    <span class="footer-brand">Smart AI Creative</span>
+  </div>
+  <nav class="footer-nav">
+    <a href="#about">ABOUT</a>
+    <a href="#service">SERVICE</a>
+    <a href="#works">WORKS</a>
+    <a href="#info">INFO</a>
+  </nav>
+  <div class="footer-right">
+    <span class="footer-epoch">Powered by EPOCH Inc.</span>
+    <span class="footer-copy">&copy; 2024 SAC / Smart AI Creative. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // Header scroll
+  var header = document.getElementById('header');
+  var lastScroll = 0;
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 10) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+    lastScroll = window.scrollY;
+  }, { passive: true });
+
+  // Hero intro animation
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.getElementById('heroLine1').classList.add('visible');
+      document.getElementById('heroVideo').classList.add('visible');
+      document.getElementById('heroLine2').classList.add('visible');
+    }, 200);
+  });
+
+  // Intersection Observer for .js-reveal
+  var revealEls = document.querySelectorAll('.js-reveal');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var delay = entry.target.dataset.delay || 0;
+          setTimeout(function() {
+            entry.target.classList.add('visible');
+          }, delay);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(function(el, i) {
+      // Staggered delay for sibling elements
+      var parent = el.parentElement;
+      var siblings = parent.querySelectorAll('.js-reveal');
+      if (siblings.length > 1) {
+        var idx = Array.prototype.indexOf.call(siblings, el);
+        el.dataset.delay = idx * 80;
+      }
+      observer.observe(el);
+    });
+  } else {
+    revealEls.forEach(function(el) { el.classList.add('visible'); });
+  }
+
+  // Hamburger menu
+  var hamburger = document.getElementById('hamburger');
+  var mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('active');
+    mobileNav.classList.toggle('active');
+    document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+  });
+
+  // Close mobile nav on link click
+  var mobileLinks = document.querySelectorAll('.mobile-nav-link');
+  mobileLinks.forEach(function(link) {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('active');
+      mobileNav.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+</body>
+</html>

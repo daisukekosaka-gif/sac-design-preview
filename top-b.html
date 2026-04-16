@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAC — Smart AI Creative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: 'Inter', 'Noto Sans JP', sans-serif; color: #0A0A0A; background: #fff; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* ===== CUSTOM PROPERTIES ===== */
+:root {
+  --black: #0A0A0A;
+  --white: #ffffff;
+  --gray-100: #F5F5F5;
+  --gray-200: #CCCCCC;
+  --gray-300: #888888;
+  --gray-400: #444444;
+  --gray-500: #1A1A1A;
+  --gold: #C8A86B;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-en: 'Inter', sans-serif;
+  --font-jp: 'Noto Sans JP', sans-serif;
+}
+
+/* ===== HEADER ===== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 1000;
+  transition: background 0.5s var(--ease), border-color 0.5s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.header__logo {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  transition: color 0.5s var(--ease);
+  z-index: 1001;
+}
+.header__nav { display: flex; gap: 32px; }
+.header__nav a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  transition: color 0.5s var(--ease), opacity 0.3s ease;
+  opacity: 0.85;
+}
+.header__nav a:hover { opacity: 1; }
+.header.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom-color: var(--gray-200);
+}
+.header.scrolled .header__logo { color: var(--black); }
+.header.scrolled .header__nav a { color: var(--black); }
+
+/* Hamburger */
+.header__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1001;
+  background: none;
+  border: none;
+  padding: 8px;
+}
+.header__hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--white);
+  transition: transform 0.4s var(--ease), opacity 0.3s ease, background 0.5s var(--ease);
+}
+.header.scrolled .header__hamburger span { background: var(--black); }
+.header__hamburger.active span:nth-child(1) { transform: translateY(3.75px) rotate(45deg); background: var(--white) !important; }
+.header__hamburger.active span:nth-child(2) { opacity: 0; }
+.header__hamburger.active span:nth-child(3) { transform: translateY(-3.75px) rotate(-45deg); background: var(--white) !important; }
+
+/* Mobile menu */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease);
+}
+.mobile-menu.active { opacity: 1; pointer-events: all; }
+.mobile-menu a {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 24px;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.mobile-menu.active a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== HERO ===== */
+.hero-video {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+  background: var(--black);
+}
+.hero-video__watermark {
+  position: absolute;
+  top: 24px;
+  left: 32px;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 10;
+}
+.hero-video__iframe-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.hero-video__iframe-wrap iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 177.78vh;
+  height: 100vh;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  border: none;
+  pointer-events: none;
+}
+.hero-video__gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 100%);
+  z-index: 5;
+}
+.hero-video__scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.hero-video__scroll span {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.5);
+}
+.hero-video__scroll-line {
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,0.25);
+  position: relative;
+  overflow: hidden;
+}
+.hero-video__scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--white);
+  animation: scrollLine 2s var(--ease) infinite;
+}
+@keyframes scrollLine {
+  0% { top: -100%; }
+  50% { top: 0; }
+  100% { top: 100%; }
+}
+
+/* Hero typography zone */
+.hero-copy {
+  background: var(--white);
+  text-align: center;
+  padding: 0 24px;
+}
+.hero-copy__gold-line {
+  width: 2px;
+  height: 0;
+  background: var(--gold);
+  margin: 0 auto;
+  margin-top: 80px;
+  transition: height 1s var(--ease);
+}
+.hero-copy__gold-line.visible { height: 40px; }
+.hero-copy__main {
+  margin-top: 48px;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 1s var(--ease) 0.3s, transform 1s var(--ease) 0.3s;
+}
+.hero-copy__main.visible { opacity: 1; transform: translateY(0); }
+.hero-copy__main h1 {
+  font-family: var(--font-jp);
+  font-weight: 700;
+  font-size: clamp(44px, 6vw, 88px);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: var(--black);
+}
+.hero-copy__sub {
+  margin-top: 32px;
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--gray-300);
+  letter-spacing: 0.04em;
+  line-height: 2;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s var(--ease) 0.6s, transform 1s var(--ease) 0.6s;
+}
+.hero-copy__sub.visible { opacity: 1; transform: translateY(0); }
+.hero-copy__spacer { height: 120px; }
+
+/* ===== SECTION SHARED ===== */
+.section-label {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--gray-200);
+  text-transform: uppercase;
+}
+.section-label--gold { color: var(--gold); }
+.section-label--center { text-align: center; }
+
+/* ===== REVEAL ===== */
+.js-reveal {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+.js-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== ABOUT ===== */
+.about {
+  background: var(--white);
+  padding: 200px 60px;
+}
+.about__inner {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+.about__lead {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.7;
+  margin-top: 40px;
+  color: var(--black);
+}
+.about__body {
+  margin-top: 40px;
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 2.2;
+  color: var(--gray-300);
+}
+
+/* ===== SERVICE ===== */
+.service {
+  background: var(--white);
+  padding: 160px 60px;
+}
+.service__inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.service__lead {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 24px;
+  margin-top: 24px;
+  margin-bottom: 64px;
+  color: var(--black);
+}
+.service__list { border-top: 1px solid #f0f0f0; }
+.service__item {
+  display: flex;
+  align-items: center;
+  padding: 24px 0;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: default;
+  transition: padding-left 0.4s var(--ease);
+}
+.service__item:hover { padding-left: 12px; }
+.service__num {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--gold);
+  min-width: 40px;
+  letter-spacing: 0.05em;
+}
+.service__name {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  min-width: 240px;
+  transition: font-weight 0.3s ease;
+}
+.service__item:hover .service__name { font-weight: 700; }
+.service__desc {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 12px;
+  color: var(--gray-200);
+  margin-left: auto;
+  text-align: right;
+}
+
+/* ===== WORKS ===== */
+.works { padding: 160px 0 80px; }
+.works__header {
+  padding: 0 60px;
+  margin-bottom: 80px;
+}
+.works__lead {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 24px;
+  margin-top: 24px;
+}
+
+/* Work scene */
+.work-scene {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+.work-scene--left { flex-direction: row; }
+.work-scene--right { flex-direction: row-reverse; }
+.work-scene--center {
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.work-scene__visual {
+  flex: 0 0 55%;
+  min-height: 55vh;
+  position: relative;
+  overflow: hidden;
+}
+.work-scene--center .work-scene__visual {
+  width: 80%;
+  min-height: 50vh;
+  flex: none;
+}
+.work-scene__gradient {
+  position: absolute;
+  inset: 0;
+}
+.work-scene__visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.15);
+}
+.work-scene__info {
+  flex: 0 0 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  background: var(--black);
+}
+.work-scene--center .work-scene__info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  padding: 80px 60px 48px;
+  flex: none;
+}
+.work-scene__category {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.work-scene__title {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: clamp(28px, 4vw, 48px);
+  color: var(--white);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.work-scene__subtitle {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 12px;
+}
+.work-scene__link {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.3);
+  margin-top: 40px;
+  transition: color 0.3s ease;
+}
+.work-scene__link:hover { color: var(--white); }
+
+.works__view-all {
+  text-align: center;
+  margin-top: 80px;
+}
+.works__view-all a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  transition: opacity 0.3s ease;
+}
+.works__view-all a:hover { opacity: 0.6; }
+
+/* ===== CREATOR ===== */
+.creator {
+  background: var(--white);
+  padding: 160px 60px;
+  text-align: center;
+}
+.creator__grid {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-top: 64px;
+  flex-wrap: wrap;
+}
+.creator__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  cursor: default;
+}
+.creator__avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  border: 1.5px solid #333;
+  transition: border-color 0.4s var(--ease);
+}
+.creator__item:hover .creator__avatar { border-color: var(--gold); }
+.creator__name {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+.creator__role {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 9px;
+  color: var(--gray-300);
+  opacity: 0.3;
+  transition: opacity 0.4s var(--ease);
+}
+.creator__item:hover .creator__role { opacity: 1; }
+.creator__view-all {
+  margin-top: 64px;
+}
+.creator__view-all a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--gray-200);
+  transition: color 0.3s ease;
+}
+.creator__view-all a:hover { color: var(--gold); }
+
+/* ===== INFO ===== */
+.info {
+  background: var(--gray-100);
+  padding: 80px 60px;
+}
+.info__inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.info__list { margin-top: 40px; }
+.info__item {
+  display: flex;
+  gap: 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid #e8e8e8;
+  align-items: baseline;
+  font-family: var(--font-jp);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.info__date {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--gray-300);
+  min-width: 90px;
+  letter-spacing: 0.04em;
+}
+.info__text { color: var(--gray-400); font-weight: 300; }
+.info__view-all {
+  margin-top: 32px;
+}
+.info__view-all a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--gray-300);
+  transition: color 0.3s ease;
+}
+.info__view-all a:hover { color: var(--gold); }
+
+/* ===== CONTACT ===== */
+.contact {
+  background: var(--black);
+  padding: 200px 60px;
+  text-align: center;
+}
+.contact__title {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: clamp(48px, 8vw, 120px);
+  color: var(--white);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.contact__title .gold { color: var(--gold); }
+.contact__sub {
+  font-family: var(--font-jp);
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--gray-300);
+  margin-top: 32px;
+  letter-spacing: 0.04em;
+}
+.contact__btn {
+  display: inline-block;
+  margin-top: 56px;
+  padding: 16px 56px;
+  border: 1px solid var(--gold);
+  color: var(--white);
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  transition: background 0.4s var(--ease), color 0.4s var(--ease);
+}
+.contact__btn:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--black);
+  border-top: 1px solid var(--gray-500);
+  padding: 48px 60px 32px;
+}
+.footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.footer__logo {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--white);
+  letter-spacing: 0.08em;
+}
+.footer__brand-name {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 10px;
+  color: var(--gray-300);
+  letter-spacing: 0.06em;
+}
+.footer__nav {
+  display: flex;
+  gap: 24px;
+}
+.footer__nav a {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--gray-300);
+  transition: color 0.3s ease;
+}
+.footer__nav a:hover { color: var(--white); }
+.footer__epoch {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 10px;
+  color: var(--gray-300);
+  letter-spacing: 0.04em;
+}
+.footer__copy {
+  width: 100%;
+  text-align: center;
+  margin-top: 32px;
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 9px;
+  color: #555;
+  letter-spacing: 0.04em;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .header { padding: 0 24px; }
+  .header__nav { display: none; }
+  .header__hamburger { display: flex; }
+
+  .hero-video { height: 60vh; }
+  .hero-copy__gold-line { margin-top: 48px; }
+  .hero-copy__spacer { height: 80px; }
+
+  .about { padding: 120px 24px; }
+  .about__lead { font-size: 22px; }
+
+  .service { padding: 100px 24px; }
+  .service__item { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .service__name { min-width: unset; }
+  .service__desc { margin-left: 0; text-align: left; }
+
+  .works__header { padding: 0 24px; }
+  .work-scene { flex-direction: column !important; }
+  .work-scene__visual { flex: none; min-height: 35vh; width: 100%; }
+  .work-scene--center .work-scene__visual { width: 100%; min-height: 35vh; }
+  .work-scene__info { flex: none; padding: 40px 24px; }
+  .work-scene--center .work-scene__info { padding: 40px 24px; position: relative; background: var(--black); }
+
+  .creator { padding: 100px 24px; }
+  .creator__grid { gap: 32px; }
+  .creator__avatar { width: 72px; height: 72px; }
+
+  .info { padding: 60px 24px; }
+  .info__item { flex-direction: column; gap: 4px; }
+
+  .contact { padding: 120px 24px; }
+
+  .footer { padding: 32px 24px 24px; }
+  .footer__inner { flex-direction: column; align-items: flex-start; }
+  .footer__nav { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <a href="#" class="header__logo">SAC</a>
+  <nav class="header__nav">
+    <a href="#about">ABOUT</a>
+    <a href="#service">SERVICE</a>
+    <a href="#works">WORKS</a>
+    <a href="#creator">CREATOR</a>
+    <a href="#info">INFO</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+  <button class="header__hamburger" id="hamburger" aria-label="メニュー">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mobile-menu__link">ABOUT</a>
+  <a href="#service" class="mobile-menu__link">SERVICE</a>
+  <a href="#works" class="mobile-menu__link">WORKS</a>
+  <a href="#creator" class="mobile-menu__link">CREATOR</a>
+  <a href="#info" class="mobile-menu__link">INFO</a>
+  <a href="#contact" class="mobile-menu__link">CONTACT</a>
+</div>
+
+<!-- HERO: Zone 1 — Video -->
+<section class="hero-video">
+  <span class="hero-video__watermark">SAC</span>
+  <div class="hero-video__iframe-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/PtCzVhUE57s?autoplay=1&mute=1&loop=1&playlist=PtCzVhUE57s&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+    ></iframe>
+  </div>
+  <div class="hero-video__gradient"></div>
+  <div class="hero-video__scroll">
+    <span>SCROLL</span>
+    <div class="hero-video__scroll-line"></div>
+  </div>
+</section>
+
+<!-- HERO: Zone 2 — Typography -->
+<section class="hero-copy">
+  <div class="hero-copy__gold-line" id="heroGoldLine"></div>
+  <div class="hero-copy__main" id="heroCopy">
+    <h1>制約を、塗り替える。<br>クリエイティブの可能性を。</h1>
+  </div>
+  <p class="hero-copy__sub" id="heroSub">AI × クリエイター。事業成果から逆算する、新しい制作のかたち。</p>
+  <div class="hero-copy__spacer"></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about__inner">
+    <p class="section-label section-label--center js-reveal">ABOUT</p>
+    <h2 class="about__lead js-reveal">AIで、制作工程そのものを再設計する。</h2>
+    <p class="about__body js-reveal">SAC（Smart AI Creative）は、AIテクノロジーとトップクリエイターの融合により、映像・Web・グラフィック・空間演出など、あらゆるクリエイティブ領域を再定義するスタジオです。事業成果から逆算し、制作プロセスそのものを革新することで、これまでにないスピードと品質を両立します。</p>
+  </div>
+</section>
+
+<!-- SERVICE -->
+<section class="service" id="service">
+  <div class="service__inner">
+    <p class="section-label section-label--gold js-reveal">SERVICE</p>
+    <h2 class="service__lead js-reveal">制作のあらゆる領域に、AIを。</h2>
+    <div class="service__list">
+      <div class="service__item js-reveal">
+        <span class="service__num">01</span>
+        <span class="service__name">MOVIE PRODUCTION</span>
+        <span class="service__desc">AI映像制作で工程を1/5に</span>
+      </div>
+      <div class="service__item js-reveal">
+        <span class="service__num">02</span>
+        <span class="service__name">WEB DESIGN & DEV</span>
+        <span class="service__desc">AIドリブンなUX/UI実装</span>
+      </div>
+      <div class="service__item js-reveal">
+        <span class="service__num">03</span>
+        <span class="service__name">GRAPHIC / KEY VISUAL</span>
+        <span class="service__desc">AIカンプで撮影を最適化</span>
+      </div>
+      <div class="service__item js-reveal">
+        <span class="service__num">04</span>
+        <span class="service__name">INSTALLATION</span>
+        <span class="service__desc">空間×デジタルの体験設計</span>
+      </div>
+      <div class="service__item js-reveal">
+        <span class="service__num">05</span>
+        <span class="service__name">EVENT</span>
+        <span class="service__desc">AIを活用したイベント演出</span>
+      </div>
+      <div class="service__item js-reveal">
+        <span class="service__num">06</span>
+        <span class="service__name">ANIMATION</span>
+        <span class="service__desc">モーション・アニメーション制作</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section class="works" id="works">
+  <div class="works__header">
+    <p class="section-label section-label--gold js-reveal">WORKS</p>
+    <h2 class="works__lead js-reveal">つくるものが、すべてを語る。</h2>
+  </div>
+
+  <!-- Work 1: Left-aligned -->
+  <div class="work-scene work-scene--left js-reveal">
+    <div class="work-scene__visual">
+      <div class="work-scene__gradient" style="background: linear-gradient(135deg, #0d0b2e 0%, #2a1a4e 40%, #1a0a3e 100%);"></div>
+      <div class="work-scene__visual-overlay"></div>
+    </div>
+    <div class="work-scene__info">
+      <span class="work-scene__category">MOVIE PRODUCTION</span>
+      <h3 class="work-scene__title">LAST CALL</h3>
+      <p class="work-scene__subtitle">公開オーディション番組 OP映像</p>
+      <a href="#" class="work-scene__link">VIEW →</a>
+    </div>
+  </div>
+
+  <!-- Work 2: Right-aligned -->
+  <div class="work-scene work-scene--right js-reveal">
+    <div class="work-scene__visual">
+      <div class="work-scene__gradient" style="background: linear-gradient(135deg, #1a0a0a 0%, #3a1a2e 40%, #0d0b1e 100%);"></div>
+      <div class="work-scene__visual-overlay"></div>
+    </div>
+    <div class="work-scene__info">
+      <span class="work-scene__category">MUSIC VIDEO</span>
+      <h3 class="work-scene__title">HYDE |<br>SOCIAL VIRUS</h3>
+      <p class="work-scene__subtitle">Music Video</p>
+      <a href="#" class="work-scene__link">VIEW →</a>
+    </div>
+  </div>
+
+  <!-- Work 3: Centered -->
+  <div class="work-scene work-scene--center js-reveal">
+    <div class="work-scene__visual">
+      <div class="work-scene__gradient" style="background: linear-gradient(135deg, #1a1a0a 0%, #2e2a1a 40%, #0a1a1a 100%);"></div>
+      <div class="work-scene__visual-overlay"></div>
+    </div>
+    <div class="work-scene__info">
+      <span class="work-scene__category">BRANDING</span>
+      <h3 class="work-scene__title">24世紀ラーメン</h3>
+      <p class="work-scene__subtitle">ブランディング映像</p>
+      <a href="#" class="work-scene__link">VIEW →</a>
+    </div>
+  </div>
+
+  <div class="works__view-all js-reveal">
+    <a href="#">VIEW ALL WORKS →</a>
+  </div>
+</section>
+
+<!-- CREATOR -->
+<section class="creator" id="creator">
+  <p class="section-label section-label--center js-reveal">CREATOR</p>
+  <div class="creator__grid js-reveal">
+    <div class="creator__item">
+      <div class="creator__avatar"></div>
+      <span class="creator__name">Takumi Sato</span>
+      <span class="creator__role">Director</span>
+    </div>
+    <div class="creator__item">
+      <div class="creator__avatar"></div>
+      <span class="creator__name">Yuki Tanaka</span>
+      <span class="creator__role">Art Director</span>
+    </div>
+    <div class="creator__item">
+      <div class="creator__avatar"></div>
+      <span class="creator__name">Ren Suzuki</span>
+      <span class="creator__role">Motion Designer</span>
+    </div>
+    <div class="creator__item">
+      <div class="creator__avatar"></div>
+      <span class="creator__name">Hana Kimura</span>
+      <span class="creator__role">UI/UX Designer</span>
+    </div>
+    <div class="creator__item">
+      <div class="creator__avatar"></div>
+      <span class="creator__name">Kaito Yamada</span>
+      <span class="creator__role">AI Engineer</span>
+    </div>
+  </div>
+  <div class="creator__view-all js-reveal">
+    <a href="#">VIEW ALL CREATORS →</a>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info" id="info">
+  <div class="info__inner">
+    <p class="section-label js-reveal">INFO</p>
+    <div class="info__list">
+      <div class="info__item js-reveal">
+        <span class="info__date">2026.04.10</span>
+        <span class="info__text">Smart AI Creative、Cannes Lions 2026にて事例登壇が決定。</span>
+      </div>
+      <div class="info__item js-reveal">
+        <span class="info__date">2026.03.22</span>
+        <span class="info__text">AIクリエイティブ特化スタジオ「SAC」を正式ローンチしました。</span>
+      </div>
+      <div class="info__item js-reveal">
+        <span class="info__date">2026.02.15</span>
+        <span class="info__text">HYATT TABISAKI キャンペーンの制作事例を公開しました。</span>
+      </div>
+    </div>
+    <div class="info__view-all js-reveal">
+      <a href="#">VIEW ALL →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <h2 class="contact__title js-reveal">LET'S CREATE<br>TOGETHER<span class="gold">.</span></h2>
+  <p class="contact__sub js-reveal">お仕事のご依頼・ご相談はお気軽にご連絡ください。</p>
+  <a href="#" class="contact__btn js-reveal">CONTACT</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <span class="footer__logo">SAC</span>
+      <span class="footer__brand-name">Smart AI Creative</span>
+    </div>
+    <nav class="footer__nav">
+      <a href="#about">ABOUT</a>
+      <a href="#service">SERVICE</a>
+      <a href="#works">WORKS</a>
+      <a href="#info">INFO</a>
+    </nav>
+    <span class="footer__epoch">Powered by EPOCH Inc.</span>
+    <p class="footer__copy">&copy; 2024 SAC / Smart AI Creative. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // === Header scroll ===
+  var header = document.getElementById('header');
+  var heroGoldLine = document.getElementById('heroGoldLine');
+  var heroCopy = document.getElementById('heroCopy');
+  var heroSub = document.getElementById('heroSub');
+
+  function onScroll() {
+    var sy = window.scrollY || window.pageYOffset;
+    if (sy > 80) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // === Hero animations (triggered when hero-copy enters view) ===
+  var heroCopyObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        heroGoldLine.classList.add('visible');
+        heroCopy.classList.add('visible');
+        heroSub.classList.add('visible');
+        heroCopyObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  heroCopyObserver.observe(heroGoldLine);
+
+  // === Scroll reveal ===
+  var revealElements = document.querySelectorAll('.js-reveal');
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var siblings = entry.target.parentElement.querySelectorAll('.js-reveal');
+        var idx = Array.prototype.indexOf.call(siblings, entry.target);
+        var delay = idx * 80;
+        setTimeout(function() {
+          entry.target.classList.add('revealed');
+        }, delay);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  revealElements.forEach(function(el) {
+    revealObserver.observe(el);
+  });
+
+  // === Mobile menu ===
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  });
+
+  var mobileLinks = mobileMenu.querySelectorAll('a');
+  mobileLinks.forEach(function(link) {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Stagger mobile menu links
+  mobileLinks.forEach(function(link, i) {
+    link.style.transitionDelay = (i * 0.06) + 's';
+  });
+
+})();
+</script>
+</body>
+</html>
