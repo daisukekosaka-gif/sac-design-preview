@@ -182,45 +182,20 @@ img, svg {
 .hero {
   position: relative;
   min-height: 100svh;
-  padding: 88px 48px 48px;
+  padding: 96px 48px 48px;
   background: var(--theme-bg);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr auto;
   column-gap: 64px;
-  row-gap: 20px;
+  row-gap: 28px;
   overflow: hidden;
 }
 
-/* 上段メタ: 左上に小さく配置 */
-.hero__meta {
-  grid-column: 1 / 2;
-  grid-row: 1;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-family: var(--font-en);
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.24em;
-  color: var(--gray-400);
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.hero__meta::before {
-  content: '';
-  display: block;
-  width: 28px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.55;
-}
-
-/* 動画: 右上、主役級。左側は意図的に白地の余白 */
+/* 動画: 右、主役級。左側は意図的に白地の余白のみ */
 .hero__video {
   grid-column: 2 / 3;
-  grid-row: 1 / 3;
+  grid-row: 1 / 2;
   position: relative;
   display: flex;
   align-items: stretch;
@@ -257,17 +232,10 @@ img, svg {
   pointer-events: none;
 }
 
-/* 左側の空白ゾーン（上段）— 意図的に空ける */
-.hero__empty {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-  position: relative;
-}
-
 /* 下段: 巨大タイポ — 全幅にわたる主役 */
 .hero__title-wrap {
   grid-column: 1 / -1;
-  grid-row: 3;
+  grid-row: 2;
   display: block;
   position: relative;
 }
@@ -303,49 +271,6 @@ img, svg {
 .hero__title em {
   font-style: normal;
   color: var(--gold);
-}
-
-/* 和文サブコピー — タイポの上、右寄せの小さな1ブロック */
-.hero__sub {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-  align-self: end;
-  max-width: 360px;
-  padding-bottom: 24px;
-  opacity: 0;
-  transform: translateY(12px);
-}
-
-.hero__sub-en {
-  display: block;
-  font-family: var(--font-en);
-  font-weight: 500;
-  font-size: 10px;
-  letter-spacing: 0.24em;
-  color: var(--gray-400);
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.hero__sub-en::before {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.55;
-}
-
-.hero__sub-jp {
-  font-family: var(--font-jp);
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 1.95;
-  letter-spacing: 0.04em;
-  color: var(--gray-500);
 }
 
 /* SCROLL インジケーター（右下） */
@@ -1080,17 +1005,14 @@ img, svg {
 @media (max-width: 1024px) {
   .hero {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto;
     padding: 120px 24px 56px;
     row-gap: 32px;
   }
-  .hero__meta { grid-column: 1; grid-row: 1; }
-  .hero__video { grid-column: 1; grid-row: 2; justify-content: flex-start; }
-  .hero__video-frame { aspect-ratio: 16 / 10; max-height: 48vh; }
-  .hero__empty { display: none; }
-  .hero__title-wrap { grid-column: 1; grid-row: 3; flex-direction: column; align-items: flex-start; gap: 24px; }
+  .hero__video { grid-column: 1; grid-row: 1; justify-content: flex-start; }
+  .hero__video-frame { aspect-ratio: 16 / 10; max-height: 48vh; min-height: 0; height: auto; }
+  .hero__title-wrap { grid-column: 1; grid-row: 2; }
   .hero__title { font-size: clamp(54px, 14vw, 120px); white-space: nowrap; }
-  .hero__sub { max-width: 100%; padding-bottom: 0; }
   .hero__scroll { display: none; }
   .creator__list { grid-template-columns: repeat(5, 1fr); gap: 14px; }
   .about__head, .about__body-wrap, .about__diagram { grid-template-columns: 1fr; gap: 16px; }
@@ -1155,11 +1077,9 @@ img, svg {
 </div>
 
 <!-- HERO — dots&lines × mount.jp 風
-     構成: 左上メタ + 左側空白 + 右に動画 + 下段に巨大タイポ -->
+     構成: 左側空白 + 右に動画（主役） + 下段に巨大タイポ
+     ミニマル極まれり。装飾テキストを排し、映像とタイポだけで語る -->
 <section class="hero" id="hero" data-theme="ivory">
-
-  <!-- 左上: 小さなメタラベル -->
-  <p class="hero__meta" id="heroMeta">SAC — SMART AI CREATIVE</p>
 
   <!-- 右: 動画（主役、mount.jp風） -->
   <div class="hero__video">
@@ -1167,12 +1087,6 @@ img, svg {
       <!-- YouTube IFrame API で5秒以降ループ -->
       <div id="heroYT"></div>
     </div>
-  </div>
-
-  <!-- 左側: 空白ゾーンの底に和文サブを配置（巨大タイポの上に静かに置く） -->
-  <div class="hero__sub" id="heroSub">
-    <span class="hero__sub-en">Concept / 2026</span>
-    <p class="hero__sub-jp">AIとクリエイターの力で、制作工程そのものを再設計する。<br>制約を超えて、事業を前に進めるクリエイティブを。</p>
   </div>
 
   <!-- 下段: 巨大タイポ（全幅） -->
@@ -1461,29 +1375,11 @@ img, svg {
     var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
     setTimeout(function() {
-      var meta = document.getElementById('heroMeta');
-      if (meta) {
-        meta.style.transition = 'opacity 1s ' + ease + ', transform 1s ' + ease;
-        meta.style.opacity = '1';
-        meta.style.transform = 'translateY(0)';
-      }
-    }, 200);
-
-    setTimeout(function() {
       var l1 = document.getElementById('heroLine1');
       var l2 = document.getElementById('heroLine2');
       if (l1) l1.classList.add('is-in');
       if (l2) l2.classList.add('is-in');
     }, 400);
-
-    setTimeout(function() {
-      var sub = document.getElementById('heroSub');
-      if (sub) {
-        sub.style.transition = 'opacity 1s ' + ease + ', transform 1s ' + ease;
-        sub.style.opacity = '1';
-        sub.style.transform = 'translateY(0)';
-      }
-    }, 900);
 
     setTimeout(function() {
       var v = document.getElementById('heroVideo');
