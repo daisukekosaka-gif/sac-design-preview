@@ -175,39 +175,34 @@ img, svg {
 
 /* ===================== HERO (dots&lines × mount.jp inspired) =====================
    レイアウト方針:
-   - 上段: 左=完全な空白 / 右=動画フレーム（mount.jp風）
-   - 下段: 画面下部に巨大タイポ「ONE PROMPT / CHANGE THE WORLD.」を全幅で配置
-   - タイポが最大の存在感（dotsandlines.io風）
+   - 動画を画面全幅に敷き、HEROの大部分を占める（主役）
+   - 画面下部に巨大タイポ「ONE PROMPT / CHANGE THE WORLD.」を動画の上に被せる
+   - タイポ周辺は動画下部にグラデーション座布団を敷いて視認性を確保
+   - 全要素を100svh内に収める（ファーストビュー完結）
 =========================================================================== */
 .hero {
   position: relative;
-  min-height: 100svh;
-  padding: 96px 48px 48px;
+  height: 100svh;
+  min-height: 640px;
+  padding: 0;
   background: var(--theme-bg);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr auto;
-  column-gap: 64px;
-  row-gap: 28px;
   overflow: hidden;
 }
 
-/* 動画: 右、主役級。左側は意図的に白地の余白のみ */
+/* 動画: ヘッダー直下から画面下端まで、左右に48pxの余白のみの大画面 */
 .hero__video {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-  position: relative;
+  position: absolute;
+  top: 88px;
+  left: 48px;
+  right: 48px;
+  bottom: 48px;
   display: flex;
-  align-items: stretch;
-  justify-content: flex-end;
 }
 
 .hero__video-frame {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 520px;
-  max-height: 68vh;
   overflow: hidden;
   background: var(--black);
   opacity: 0;
@@ -225,19 +220,41 @@ img, svg {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 280%;
-  height: 280%;
+  width: 180%;
+  height: 180%;
   transform: translate(-50%, -50%);
   border: none;
   pointer-events: none;
 }
 
-/* 下段: 巨大タイポ — 全幅にわたる主役 */
+/* タイポ視認性のための半透明グラデーション座布団
+   動画下部からテーマ背景色へフェードさせ、黒タイポが読みやすい領域を作る */
+.hero__video-frame::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 62%;
+  background: linear-gradient(
+    to top,
+    var(--theme-bg) 0%,
+    var(--theme-bg) 18%,
+    rgba(244, 241, 236, 0.82) 42%,
+    rgba(244, 241, 236, 0.35) 70%,
+    rgba(244, 241, 236, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 下段: 巨大タイポ — 動画の上に絶対配置で被せる */
 .hero__title-wrap {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  display: block;
-  position: relative;
+  position: absolute;
+  left: 48px;
+  right: 48px;
+  bottom: 40px;
+  z-index: 5;
 }
 
 .hero__title {
@@ -276,8 +293,8 @@ img, svg {
 /* SCROLL インジケーター（右下） */
 .hero__scroll {
   position: absolute;
-  bottom: 24px;
-  left: 48px;
+  top: 104px;
+  right: 64px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -285,11 +302,12 @@ img, svg {
   font-weight: 500;
   font-size: 10px;
   letter-spacing: 0.24em;
-  color: var(--gray-400);
+  color: rgba(255, 255, 255, 0.6);
   opacity: 0;
   transition: opacity 0.8s var(--ease) 1.3s;
-  z-index: 3;
+  z-index: 6;
   pointer-events: none;
+  mix-blend-mode: difference;
 }
 
 .hero__scroll.is-in { opacity: 1; }
@@ -299,7 +317,7 @@ img, svg {
   display: block;
   width: 40px;
   height: 1px;
-  background: rgba(10,10,10,0.18);
+  background: rgba(255, 255, 255, 0.3);
   overflow: hidden;
 }
 
@@ -310,7 +328,7 @@ img, svg {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: var(--theme-fg);
+  background: #fff;
   animation: scrollLine 2.4s var(--ease) infinite;
 }
 
@@ -1003,17 +1021,11 @@ img, svg {
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 1024px) {
-  .hero {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    padding: 120px 24px 56px;
-    row-gap: 32px;
-  }
-  .hero__video { grid-column: 1; grid-row: 1; justify-content: flex-start; }
-  .hero__video-frame { aspect-ratio: 16 / 10; max-height: 48vh; min-height: 0; height: auto; }
-  .hero__title-wrap { grid-column: 1; grid-row: 2; }
-  .hero__title { font-size: clamp(54px, 14vw, 120px); white-space: nowrap; }
-  .hero__scroll { display: none; }
+  .hero { min-height: 560px; }
+  .hero__video { top: 80px; left: 24px; right: 24px; bottom: 32px; }
+  .hero__title-wrap { left: 24px; right: 24px; bottom: 32px; }
+  .hero__title { font-size: clamp(54px, 10.5vw, 120px); white-space: nowrap; }
+  .hero__scroll { top: 96px; right: 32px; }
   .creator__list { grid-template-columns: repeat(5, 1fr); gap: 14px; }
   .about__head, .about__body-wrap, .about__diagram { grid-template-columns: 1fr; gap: 16px; }
   .about__cta { padding-left: 0; }
@@ -1024,8 +1036,10 @@ img, svg {
   .header__nav { display: none; }
   .header__hamburger { display: flex; }
 
-  .hero { padding: 104px 20px 48px; }
-  .hero__title { font-size: clamp(44px, 14vw, 88px); white-space: normal; }
+  .hero__video { top: 72px; left: 16px; right: 16px; bottom: 24px; }
+  .hero__title-wrap { left: 20px; right: 20px; bottom: 24px; }
+  .hero__title { font-size: clamp(40px, 12vw, 80px); white-space: nowrap; }
+  .hero__scroll { display: none; }
 
   .about { padding: 100px 20px; }
   .works { padding: 80px 20px 100px; }
