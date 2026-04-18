@@ -178,15 +178,16 @@ img, svg {
   position: relative;
   min-height: 100svh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.25fr 1fr;
   align-items: center;
-  padding: 120px 40px 120px;
+  padding: 120px 40px 100px;
   background: var(--theme-bg);
+  gap: 48px;
 }
 
 .hero__content {
   padding: 0 24px 0 24px;
-  max-width: 780px;
+  max-width: 900px;
   position: relative;
   z-index: 2;
 }
@@ -217,10 +218,11 @@ img, svg {
 .hero__title {
   font-family: var(--font-en);
   font-weight: 800;
-  font-size: clamp(48px, 7.6vw, 112px);
-  line-height: 0.95;
+  font-size: clamp(40px, 5.6vw, 96px);
+  line-height: 0.94;
   letter-spacing: -0.035em;
   color: var(--theme-fg);
+  white-space: nowrap;
 }
 
 .hero__title-line {
@@ -300,12 +302,13 @@ img, svg {
   transform: scale(1);
 }
 
-.hero__video-frame iframe {
+.hero__video-frame iframe,
+.hero__video-frame #heroYT {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 190%;
-  height: 190%;
+  width: 260%;
+  height: 260%;
   transform: translate(-50%, -50%);
   border: none;
   pointer-events: none;
@@ -1152,12 +1155,8 @@ img, svg {
   </div>
   <div class="hero__video">
     <div class="hero__video-frame" id="heroVideo">
-      <iframe
-        src="https://www.youtube.com/embed/PtCzVhUE57s?autoplay=1&mute=1&loop=1&playlist=PtCzVhUE57s&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=5"
-        allow="autoplay; encrypted-media"
-        allowfullscreen
-        loading="lazy"
-      ></iframe>
+      <!-- YouTube IFrame API を使って5秒以降をループ再生 -->
+      <div id="heroYT"></div>
     </div>
     <div class="hero__video-meta">
       <span>REEL 2026</span>
@@ -1551,6 +1550,49 @@ img, svg {
       if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
   });
+
+  // --- YouTube IFrame API — 5秒以降をループ再生 ---
+  // ポリシー: タイトルバー非表示、ループ時も5秒から再開
+  var YT_VIDEO_ID = 'PtCzVhUE57s';
+  var YT_START_SEC = 5;
+
+  // APIスクリプトをロード
+  var ytTag = document.createElement('script');
+  ytTag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(ytTag);
+
+  window.onYouTubeIframeAPIReady = function() {
+    if (!document.getElementById('heroYT')) return;
+    var player = new YT.Player('heroYT', {
+      videoId: YT_VIDEO_ID,
+      playerVars: {
+        autoplay: 1,
+        mute: 1,
+        controls: 0,
+        rel: 0,
+        modestbranding: 1,
+        showinfo: 0,
+        iv_load_policy: 3,
+        disablekb: 1,
+        fs: 0,
+        playsinline: 1,
+        start: YT_START_SEC
+      },
+      events: {
+        onReady: function(e) {
+          e.target.mute();
+          e.target.playVideo();
+        },
+        onStateChange: function(e) {
+          // 動画終了時に5秒地点へシークして再生
+          if (e.data === YT.PlayerState.ENDED) {
+            e.target.seekTo(YT_START_SEC, true);
+            e.target.playVideo();
+          }
+        }
+      }
+    });
+  };
 
 })();
 </script>
