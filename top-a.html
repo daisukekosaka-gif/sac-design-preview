@@ -6,7 +6,7 @@
 <title>SAC — Smart AI Creative</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after {
   margin: 0;
@@ -17,12 +17,20 @@
 :root {
   --black: #0A0A0A;
   --white: #FFFFFF;
+  --ivory: #F4F1EC;
+  --sand: #E9E3D8;
+  --stone: #D6CFC0;
   --gray-100: #F5F5F5;
   --gray-200: #CCCCCC;
   --gray-400: #888888;
   --gray-500: #444444;
   --gray-900: #1A1A1A;
   --gold: #C8A86B;
+
+  /* セクションテーマ色 — bodyに設定、スクロールでトランジション */
+  --theme-bg: #FFFFFF;
+  --theme-fg: #0A0A0A;
+
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --font-en: 'Inter', sans-serif;
   --font-jp: 'Noto Sans JP', sans-serif;
@@ -36,9 +44,10 @@ html {
 
 body {
   font-family: var(--font-jp);
-  color: var(--black);
-  background: var(--white);
+  color: var(--theme-fg);
+  background: var(--theme-bg);
   overflow-x: hidden;
+  transition: background 1.2s var(--ease), color 1.2s var(--ease);
 }
 
 a {
@@ -46,7 +55,7 @@ a {
   text-decoration: none;
 }
 
-img {
+img, svg {
   display: block;
   max-width: 100%;
 }
@@ -62,23 +71,24 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 48px;
-  transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease);
+  padding: 0 40px;
+  transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease), color 1.2s var(--ease);
   border-bottom: 1px solid transparent;
+  mix-blend-mode: normal;
 }
 
 .header.scrolled {
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom-color: var(--gray-200);
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border-bottom-color: rgba(10,10,10,0.08);
 }
 
 .header__logo {
   font-family: var(--font-en);
   font-weight: 700;
   font-size: 18px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
 .header__nav {
@@ -90,11 +100,13 @@ img {
   font-family: var(--font-en);
   font-weight: 400;
   font-size: 11px;
-  letter-spacing: 0.1em;
-  transition: color 0.3s var(--ease);
+  letter-spacing: 0.14em;
+  transition: color 0.3s var(--ease), opacity 0.3s var(--ease);
+  opacity: 0.72;
 }
 
 .header__nav a:hover {
+  opacity: 1;
   color: var(--gold);
 }
 
@@ -113,13 +125,12 @@ img {
   display: block;
   width: 22px;
   height: 1.5px;
-  background: var(--black);
+  background: currentColor;
   transition: transform 0.4s var(--ease), opacity 0.3s var(--ease);
 }
 
 .header__hamburger.active span:nth-child(1) {
   transform: translateY(6.5px) rotate(45deg);
-  background: var(--white);
 }
 
 .header__hamburger.active span:nth-child(2) {
@@ -128,7 +139,6 @@ img {
 
 .header__hamburger.active span:nth-child(3) {
   transform: translateY(-6.5px) rotate(-45deg);
-  background: var(--white);
 }
 
 /* Mobile menu overlay */
@@ -141,7 +151,7 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 40px;
+  gap: 32px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s var(--ease);
@@ -155,157 +165,255 @@ img {
 .mobile-menu a {
   font-family: var(--font-en);
   font-weight: 300;
-  font-size: 24px;
+  font-size: 22px;
   letter-spacing: 0.12em;
   color: var(--white);
   transition: color 0.3s var(--ease);
 }
 
-.mobile-menu a:hover {
-  color: var(--gold);
-}
+.mobile-menu a:hover { color: var(--gold); }
 
-/* ===================== HERO ===================== */
+/* ===================== HERO (dots&lines × mount.jp inspired) ===================== */
 .hero {
   position: relative;
-  height: 100svh;
-  display: flex;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  background: var(--white);
-  overflow: hidden;
+  padding: 120px 40px 120px;
+  background: var(--theme-bg);
 }
 
 .hero__content {
-  flex: 0 0 60%;
-  padding: 0 48px 0 80px;
+  padding: 0 24px 0 24px;
+  max-width: 780px;
   position: relative;
+  z-index: 2;
 }
 
-.hero__gold-line {
-  width: 0;
-  height: 2px;
-  background: var(--gold);
-  margin-bottom: 32px;
-  will-change: width;
+.hero__index {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--gray-400);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.hero__index::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
 }
 
 .hero__title {
-  font-family: var(--font-jp);
-  font-weight: 700;
-  font-size: clamp(42px, 5.5vw, 72px);
-  line-height: 1.35;
-  letter-spacing: 0.02em;
-  opacity: 0;
-  transform: translateY(24px);
+  font-family: var(--font-en);
+  font-weight: 800;
+  font-size: clamp(48px, 7.6vw, 112px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--theme-fg);
+}
+
+.hero__title-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero__title-line .inner {
+  display: inline-block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+.hero__title-line.is-in .inner {
+  transform: translateY(0);
+  transition: transform 1.1s var(--ease);
+}
+
+.hero__title-line:nth-child(2) .inner { transition-delay: 0.12s; }
+
+.hero__title em {
+  font-style: normal;
+  color: var(--gold);
 }
 
 .hero__sub {
-  margin-top: 28px;
-  font-size: 14px;
-  color: var(--gray-400);
-  line-height: 1.8;
+  margin-top: 44px;
+  max-width: 520px;
+  display: grid;
+  gap: 10px;
   opacity: 0;
   transform: translateY(16px);
 }
 
+.hero__sub-en {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--gray-400);
+  text-transform: uppercase;
+}
+
+.hero__sub-jp {
+  font-family: var(--font-jp);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+  color: var(--gray-500);
+}
+
+/* 動画は右側に配置。左側は意図的に余白（mount.jp風） */
 .hero__video {
-  flex: 0 0 40%;
+  position: relative;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 64px 48px 64px 0;
+  justify-content: flex-end;
+  padding-right: 0;
 }
 
 .hero__video-frame {
-  width: 100%;
-  height: 100%;
-  max-height: 78vh;
-  border-radius: 2px;
-  overflow: hidden;
   position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 72vh;
+  overflow: hidden;
+  background: var(--black);
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 1.4s var(--ease) 0.4s, transform 1.4s var(--ease) 0.4s;
+}
+
+.hero__video-frame.is-in {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .hero__video-frame iframe {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 180%;
-  height: 100%;
+  width: 190%;
+  height: 190%;
   transform: translate(-50%, -50%);
   border: none;
   pointer-events: none;
 }
 
-.hero__scroll {
+.hero__video-meta {
   position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  bottom: -32px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  opacity: 0;
-}
-
-.hero__scroll span {
+  gap: 18px;
   font-family: var(--font-en);
-  font-size: 9px;
+  font-weight: 400;
+  font-size: 10px;
   letter-spacing: 0.18em;
   color: var(--gray-400);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.9s var(--ease) 1.1s, transform 0.9s var(--ease) 1.1s;
 }
 
+.hero__video-frame.is-in + .hero__video-meta,
+.hero__video-frame.is-in ~ .hero__video-meta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero__video-meta span::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+  vertical-align: middle;
+  margin-right: 8px;
+  opacity: 0.5;
+}
+
+.hero__scroll {
+  position: absolute;
+  bottom: 28px;
+  left: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--gray-400);
+  opacity: 0;
+  transition: opacity 0.8s var(--ease) 1.3s;
+}
+
+.hero__scroll.is-in { opacity: 1; }
+
 .hero__scroll-line {
-  width: 1px;
-  height: 40px;
-  background: var(--gray-200);
   position: relative;
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: rgba(10,10,10,0.15);
   overflow: hidden;
 }
 
 .hero__scroll-line::after {
   content: '';
   position: absolute;
-  top: -100%;
-  left: 0;
+  top: 0;
+  left: -100%;
   width: 100%;
   height: 100%;
   background: var(--black);
-  animation: scrollLine 2s var(--ease) infinite;
+  animation: scrollLine 2.4s var(--ease) infinite;
 }
 
 @keyframes scrollLine {
-  0% { top: -100%; }
-  50% { top: 0; }
-  100% { top: 100%; }
+  0% { left: -100%; }
+  55% { left: 100%; }
+  100% { left: 100%; }
 }
 
-/* ===================== SECTION COMMON ===================== */
+/* セクション共通 */
 .section-label {
   font-family: var(--font-en);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 10px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   color: var(--gold);
   text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.section-number {
-  font-family: var(--font-en);
-  font-weight: 900;
-  font-size: 100px;
-  color: var(--gold);
-  opacity: 0.1;
-  line-height: 1;
-  user-select: none;
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
 }
 
-/* JS reveal */
 .js-reveal {
   opacity: 0;
   transform: translateY(48px);
-  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
 }
 
 .js-reveal.revealed {
@@ -315,322 +423,351 @@ img {
 
 /* ===================== ABOUT ===================== */
 .about {
-  padding: 140px 60px;
-  background: var(--white);
+  padding: 160px 40px 180px;
+  background: var(--theme-bg);
 }
 
 .about__inner {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 80px;
 }
 
-.about__left {
-  position: relative;
+.about__head {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 48px;
+  align-items: start;
+  margin-bottom: 80px;
 }
 
 .about__lead {
   font-family: var(--font-jp);
-  font-weight: 300;
-  font-size: clamp(22px, 2.8vw, 32px);
-  line-height: 1.7;
-  letter-spacing: 0.04em;
+  font-weight: 500;
+  font-size: clamp(26px, 3.2vw, 42px);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--theme-fg);
+}
+
+.about__lead em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.about__body-wrap {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 48px;
+  align-items: start;
+  margin-bottom: 120px;
+}
+
+.about__body-label {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--gray-400);
+  padding-top: 6px;
 }
 
 .about__body {
-  margin-top: 32px;
-  font-size: 14px;
+  max-width: 680px;
+  font-size: 15px;
   color: var(--gray-500);
-  line-height: 2.2;
+  line-height: 2.1;
+  letter-spacing: 0.02em;
+}
+
+.about__body + .about__body {
+  margin-top: 20px;
+}
+
+/* 線図 — SAC のアプローチを図解（AI × Creator × Business） */
+.about__diagram {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.about__diagram-label {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--gray-400);
+  padding-top: 6px;
+}
+
+.diagram {
+  width: 100%;
+  max-width: 880px;
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
+
+.diagram text {
+  font-family: var(--font-en);
+  letter-spacing: 0.08em;
+}
+
+.diagram .node-label-jp {
+  font-family: var(--font-jp);
+  letter-spacing: 0.04em;
+}
+
+.diagram-circle {
+  fill: none;
+  stroke: var(--theme-fg);
+  stroke-width: 1;
+  opacity: 0.35;
+}
+
+.diagram-circle-bold {
+  fill: var(--theme-fg);
+  opacity: 0.04;
+  stroke: var(--theme-fg);
+  stroke-width: 1.2;
+}
+
+.diagram-line {
+  fill: none;
+  stroke: var(--theme-fg);
+  stroke-width: 1;
+  opacity: 0.25;
+  stroke-dasharray: 3 3;
+}
+
+.diagram-line-solid {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.2;
+  opacity: 0.9;
+}
+
+.diagram-dot {
+  fill: var(--gold);
+}
+
+.diagram-dot-small {
+  fill: var(--theme-fg);
+  opacity: 0.5;
 }
 
 .about__cta {
-  display: inline-block;
-  margin-top: 40px;
+  margin-top: 56px;
+  padding-left: 228px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.about__cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
   font-family: var(--font-en);
   font-weight: 500;
   font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--black);
-  position: relative;
-  padding-bottom: 4px;
+  letter-spacing: 0.18em;
+  padding: 18px 32px;
+  border: 1px solid currentColor;
+  transition: color 0.35s var(--ease), border-color 0.35s var(--ease), background 0.35s var(--ease);
 }
 
-.about__cta::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: var(--black);
-  transition: background 0.3s var(--ease);
-}
-
-.about__cta:hover {
-  color: var(--gold);
-}
-
-.about__cta:hover::after {
-  background: var(--gold);
-}
-
-/* ===================== SERVICE ===================== */
-.service {
-  padding: 120px 60px;
-  background: var(--white);
-}
-
-.service__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 80px;
-}
-
-.service__list {
-  list-style: none;
-}
-
-.service__item {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--gray-200);
-  cursor: default;
-  transition: padding-left 0.4s var(--ease);
-}
-
-.service__item:first-child {
-  border-top: 1px solid var(--gray-200);
-}
-
-.service__item:hover {
-  padding-left: 12px;
-}
-
-.service__item-left {
-  display: flex;
-  align-items: baseline;
-  gap: 20px;
-}
-
-.service__item-num {
-  font-family: var(--font-en);
-  font-weight: 900;
-  font-size: 13px;
-  color: var(--gold);
-  min-width: 24px;
-}
-
-.service__item-name {
-  font-family: var(--font-en);
-  font-weight: 500;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-}
-
-.service__item-desc {
-  font-family: var(--font-jp);
-  font-size: 11px;
-  color: var(--gray-400);
-  text-align: right;
-  white-space: nowrap;
-}
-
-.service__right {
-  padding-top: 20px;
-}
-
-.service__lead {
-  margin-top: 24px;
-  font-family: var(--font-jp);
-  font-weight: 300;
-  font-size: clamp(18px, 2vw, 24px);
-  line-height: 1.8;
+.about__cta a:hover {
+  color: var(--white);
+  background: var(--theme-fg);
+  border-color: var(--theme-fg);
 }
 
 /* ===================== WORKS ===================== */
 .works {
-  background: var(--black);
-  padding: 100px 0 80px;
+  padding: 120px 40px 160px;
+  background: var(--theme-bg);
 }
 
-.works__label {
-  font-family: var(--font-en);
-  font-weight: 300;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  color: var(--gray-200);
-  text-align: center;
-  margin-bottom: 48px;
+.works__head {
+  max-width: 1240px;
+  margin: 0 auto 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
 }
+
+.works__title {
+  font-family: var(--font-en);
+  font-weight: 800;
+  font-size: clamp(40px, 5.4vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.works__title-sub {
+  font-family: var(--font-jp);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--gray-400);
+  margin-top: 16px;
+}
+
+.works__link {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid currentColor;
+  transition: color 0.3s var(--ease);
+}
+
+.works__link:hover { color: var(--gold); }
 
 .works__feature {
   position: relative;
-  height: 65vh;
-  margin: 0 24px;
+  height: 72vh;
+  min-height: 480px;
+  margin: 0 auto;
+  max-width: 1600px;
   overflow: hidden;
   cursor: pointer;
 }
 
-.works__feature-bg {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #1a1a3e, #2d1b4e, #1a2a3e);
-  transition: transform 0.7s var(--ease);
-}
-
-.works__feature:hover .works__feature-bg {
-  transform: scale(1.05);
-}
-
-.works__feature-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
-}
-
-.works__feature-content {
-  position: absolute;
-  bottom: 48px;
-  left: 48px;
-}
-
-.works__feature-cat {
-  font-family: var(--font-en);
-  font-size: 9px;
-  letter-spacing: 0.16em;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.works__feature-title {
-  font-family: var(--font-en);
-  font-weight: 900;
-  font-size: clamp(36px, 4.5vw, 72px);
-  color: var(--white);
-  line-height: 1.1;
-  transition: transform 0.5s var(--ease);
-}
-
-.works__feature:hover .works__feature-title {
-  transform: translateY(-6px);
-}
-
-.works__feature-sub {
-  margin-top: 10px;
-  font-size: 12px;
-  color: rgba(255,255,255,0.4);
-}
-
-.works__grid {
-  display: grid;
-  grid-template-columns: 58% 1fr;
-  gap: 3px;
-  margin: 3px 24px 0;
-}
-
-.works__card {
-  position: relative;
-  height: 45vh;
-  overflow: hidden;
-  cursor: pointer;
-}
-
+.works__feature-bg,
 .works__card-bg {
   position: absolute;
   inset: 0;
-  transition: transform 0.7s var(--ease);
+  background-size: cover;
+  background-position: center;
+  transition: transform 1.4s var(--ease);
 }
 
-.works__card:nth-child(1) .works__card-bg {
-  background: linear-gradient(135deg, #1a2a3e, #0d3b4e);
-}
-
-.works__card:nth-child(2) .works__card-bg {
-  background: linear-gradient(135deg, #2d1b3e, #3e1a2a);
-}
-
+.works__feature:hover .works__feature-bg,
 .works__card:hover .works__card-bg {
   transform: scale(1.05);
 }
 
+.works__feature-bg {
+  background-image: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 45%, #2a1b3d 100%);
+}
+
+.works__feature-overlay,
 .works__card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%);
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 85%);
 }
 
+.works__feature-content,
 .works__card-content {
   position: absolute;
-  bottom: 36px;
-  left: 36px;
+  bottom: 48px;
+  left: 48px;
+  right: 48px;
+  color: var(--white);
 }
 
+.works__feature-cat,
 .works__card-cat {
   font-family: var(--font-en);
-  font-size: 9px;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
   color: var(--gold);
+  margin-bottom: 16px;
   text-transform: uppercase;
-  margin-bottom: 8px;
+}
+
+.works__feature-title {
+  font-family: var(--font-en);
+  font-weight: 800;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.works__feature-sub {
+  font-family: var(--font-jp);
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.04em;
+}
+
+.works__grid {
+  max-width: 1600px;
+  margin: 4px auto 0;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 4px;
+}
+
+.works__card {
+  position: relative;
+  height: 56vh;
+  min-height: 380px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.works__card:nth-child(1) .works__card-bg {
+  background-image: linear-gradient(135deg, #2a1515 0%, #3d1a2a 45%, #1a1a2e 100%);
+}
+
+.works__card:nth-child(2) .works__card-bg {
+  background-image: linear-gradient(135deg, #1a2a1a 0%, #2a3a1a 45%, #3d3a1a 100%);
 }
 
 .works__card-title {
   font-family: var(--font-en);
-  font-weight: 900;
-  font-size: clamp(20px, 2.5vw, 36px);
-  color: var(--white);
-  line-height: 1.15;
-  transition: transform 0.5s var(--ease);
-}
-
-.works__card:hover .works__card-title {
-  transform: translateY(-6px);
+  font-weight: 700;
+  font-size: clamp(26px, 3.4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin-bottom: 10px;
 }
 
 .works__card-sub {
-  margin-top: 6px;
-  font-size: 11px;
-  color: rgba(255,255,255,0.35);
+  font-family: var(--font-jp);
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
 }
 
 .works__cta {
-  text-align: center;
-  margin-top: 56px;
+  max-width: 1600px;
+  margin: 48px auto 0;
+  padding: 0 8px;
+  text-align: right;
 }
 
 .works__cta a {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
   font-family: var(--font-en);
   font-weight: 500;
   font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--gold);
-  border: 1px solid var(--gold);
-  padding: 16px 48px;
-  transition: background 0.4s var(--ease), color 0.4s var(--ease);
+  letter-spacing: 0.18em;
+  padding: 16px 32px;
+  border: 1px solid currentColor;
+  transition: color 0.35s var(--ease), border-color 0.35s var(--ease);
 }
 
-.works__cta a:hover {
-  background: var(--gold);
-  color: var(--black);
-}
+.works__cta a:hover { color: var(--gold); border-color: var(--gold); }
 
 /* ===================== CREATOR ===================== */
 .creator {
-  padding: 120px 60px;
-  background: var(--white);
+  padding: 140px 40px 160px;
+  background: var(--theme-bg);
 }
 
 .creator__inner {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
@@ -639,87 +776,96 @@ img {
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 64px;
-}
-
-.creator__list {
-  display: flex;
-  gap: 48px;
   flex-wrap: wrap;
+  gap: 24px;
 }
 
-.creator__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.creator__avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--gray-200);
-  border: 2px solid transparent;
-  transition: border-color 0.4s var(--ease);
-}
-
-.creator__item:hover .creator__avatar {
-  border-color: var(--gold);
-}
-
-.creator__name {
+.creator__title {
   font-family: var(--font-en);
-  font-weight: 300;
-  font-size: 10px;
+  font-weight: 800;
+  font-size: clamp(40px, 5.4vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.creator__title-sub {
+  font-family: var(--font-jp);
+  font-weight: 400;
+  font-size: 13px;
   letter-spacing: 0.08em;
-}
-
-.creator__role {
-  font-family: var(--font-en);
-  font-weight: 300;
-  font-size: 8px;
   color: var(--gray-400);
-  letter-spacing: 0.06em;
-  margin-top: -6px;
+  margin-top: 16px;
 }
 
 .creator__link {
   font-family: var(--font-en);
   font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--black);
-  position: relative;
+  font-size: 11px;
+  letter-spacing: 0.18em;
   padding-bottom: 4px;
+  border-bottom: 1px solid currentColor;
+  transition: color 0.3s var(--ease);
 }
 
-.creator__link::after {
+.creator__link:hover { color: var(--gold); }
+
+.creator__list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 28px;
+}
+
+.creator__item {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+}
+
+.creator__avatar {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s var(--ease);
+}
+
+.creator__item:hover .creator__avatar {
+  transform: translateY(-6px);
+}
+
+.creator__avatar::after {
   content: '';
   position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: var(--black);
-  transition: background 0.3s var(--ease);
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
 }
 
-.creator__link:hover {
-  color: var(--gold);
+.creator__name {
+  font-family: var(--font-en);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
 }
 
-.creator__link:hover::after {
-  background: var(--gold);
+.creator__role {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--gray-400);
+  text-transform: uppercase;
 }
 
 /* ===================== INFO ===================== */
 .info {
-  padding: 72px 60px;
-  background: var(--gray-100);
+  padding: 100px 40px;
+  background: var(--theme-bg);
 }
 
 .info__inner {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
@@ -730,142 +876,131 @@ img {
   margin-bottom: 40px;
 }
 
+.info__link {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid currentColor;
+  transition: color 0.3s var(--ease);
+}
+
+.info__link:hover { color: var(--gold); }
+
 .info__list {
   list-style: none;
+  border-top: 1px solid rgba(10,10,10,0.1);
 }
 
 .info__item {
   display: flex;
-  align-items: baseline;
   justify-content: space-between;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--gray-200);
+  align-items: center;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(10,10,10,0.1);
+  transition: padding 0.3s var(--ease);
   cursor: pointer;
-  transition: padding-left 0.4s var(--ease);
 }
 
-.info__item:first-child {
-  border-top: 1px solid var(--gray-200);
-}
-
-.info__item:hover {
-  padding-left: 8px;
-}
+.info__item:hover { padding-left: 8px; }
+.info__item:hover .info__title { color: var(--gold); }
+.info__item:hover .info__arrow { transform: translateX(6px); color: var(--gold); }
 
 .info__item-left {
   display: flex;
-  align-items: baseline;
   gap: 32px;
+  align-items: baseline;
 }
 
 .info__date {
   font-family: var(--font-en);
-  font-weight: 300;
+  font-weight: 500;
   font-size: 12px;
+  letter-spacing: 0.1em;
   color: var(--gray-400);
-  white-space: nowrap;
 }
 
 .info__title {
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  transition: color 0.3s var(--ease);
 }
 
 .info__arrow {
   font-family: var(--font-en);
-  font-size: 14px;
+  font-size: 16px;
   color: var(--gray-400);
-  transition: color 0.3s var(--ease);
-  flex-shrink: 0;
-  margin-left: 24px;
-}
-
-.info__item:hover .info__arrow {
-  color: var(--gold);
-}
-
-.info__link {
-  font-family: var(--font-en);
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--black);
-  position: relative;
-  padding-bottom: 4px;
-}
-
-.info__link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: var(--black);
-  transition: background 0.3s var(--ease);
-}
-
-.info__link:hover {
-  color: var(--gold);
-}
-
-.info__link:hover::after {
-  background: var(--gold);
+  transition: transform 0.3s var(--ease), color 0.3s var(--ease);
 }
 
 /* ===================== CONTACT ===================== */
 .contact {
-  padding: 160px 60px;
-  background: var(--black);
+  padding: 180px 40px;
+  background: var(--theme-bg);
   text-align: center;
+}
+
+.contact__inner { max-width: 1000px; margin: 0 auto; }
+
+.contact__label {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: block;
+  text-transform: uppercase;
 }
 
 .contact__title {
   font-family: var(--font-en);
-  font-weight: 900;
-  font-size: clamp(48px, 7vw, 110px);
-  color: var(--white);
-  line-height: 1.1;
+  font-weight: 800;
+  font-size: clamp(48px, 7.6vw, 120px);
+  line-height: 1;
+  letter-spacing: -0.03em;
 }
 
-.contact__title-dot {
-  color: var(--gold);
-}
+.contact__title-dot { color: var(--gold); }
 
 .contact__sub {
-  margin-top: 28px;
+  margin-top: 32px;
   font-size: 14px;
   color: var(--gray-500);
-  line-height: 1.8;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
 }
 
 .contact__btn {
-  display: inline-block;
-  margin-top: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 52px;
   font-family: var(--font-en);
   font-weight: 500;
   font-size: 13px;
-  letter-spacing: 0.14em;
-  color: var(--gold);
-  border: 1px solid var(--gold);
-  padding: 18px 56px;
-  transition: background 0.4s var(--ease), color 0.4s var(--ease);
+  letter-spacing: 0.18em;
+  padding: 20px 56px;
+  border: 1px solid currentColor;
+  transition: color 0.4s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease);
 }
 
 .contact__btn:hover {
-  background: var(--gold);
-  color: var(--black);
+  background: var(--theme-fg);
+  color: var(--theme-bg);
 }
 
 /* ===================== FOOTER ===================== */
 .footer {
   background: var(--black);
-  border-top: 1px solid var(--gray-900);
-  padding: 48px 60px 32px;
+  color: var(--white);
+  padding: 48px 40px 28px;
+  transition: background 1.2s var(--ease);
 }
 
 .footer__inner {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
@@ -875,7 +1010,7 @@ img {
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 32px;
-  padding-bottom: 32px;
+  padding-bottom: 28px;
 }
 
 .footer__brand {
@@ -888,46 +1023,41 @@ img {
   font-family: var(--font-en);
   font-weight: 700;
   font-size: 16px;
-  color: var(--white);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
 .footer__brand-name {
   font-family: var(--font-en);
   font-weight: 300;
   font-size: 10px;
-  color: var(--gray-500);
-  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.06em;
 }
 
-.footer__nav {
-  display: flex;
-  gap: 28px;
-}
+.footer__nav { display: flex; gap: 28px; }
 
 .footer__nav a {
   font-family: var(--font-en);
   font-weight: 300;
   font-size: 10px;
-  color: var(--gray-500);
-  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.14em;
   transition: color 0.3s var(--ease);
 }
 
-.footer__nav a:hover {
-  color: var(--gold);
-}
+.footer__nav a:hover { color: var(--gold); }
 
 .footer__epoch {
   font-family: var(--font-en);
   font-weight: 300;
   font-size: 10px;
-  color: var(--gray-500);
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.06em;
 }
 
 .footer__bottom {
   padding-top: 24px;
-  border-top: 1px solid rgba(68,68,68,0.3);
+  border-top: 1px solid rgba(255,255,255,0.08);
   text-align: center;
 }
 
@@ -935,168 +1065,49 @@ img {
   font-family: var(--font-en);
   font-weight: 300;
   font-size: 10px;
-  color: var(--gray-500);
-  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.06em;
 }
 
 /* ===================== RESPONSIVE ===================== */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; padding: 140px 24px 80px; gap: 40px; }
+  .hero__video-frame { aspect-ratio: 16 / 10; max-height: 50vh; }
+  .hero__scroll { display: none; }
+  .creator__list { grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .about__head, .about__body-wrap, .about__diagram { grid-template-columns: 1fr; gap: 16px; }
+  .about__cta { padding-left: 0; }
+}
+
 @media (max-width: 768px) {
-  .header {
-    padding: 0 24px;
-  }
+  .header { padding: 0 20px; }
+  .header__nav { display: none; }
+  .header__hamburger { display: flex; }
 
-  .header__nav {
-    display: none;
-  }
+  .hero { padding: 120px 20px 60px; }
+  .hero__content { padding: 0; }
+  .hero__title { font-size: clamp(40px, 11vw, 72px); }
 
-  .header__hamburger {
-    display: flex;
-  }
+  .about { padding: 100px 20px; }
+  .works { padding: 80px 20px 100px; }
+  .works__feature { height: 60vh; min-height: 360px; margin: 0; }
+  .works__feature-content, .works__card-content { left: 24px; right: 24px; bottom: 28px; }
+  .works__feature-title { font-size: clamp(30px, 7vw, 48px); }
+  .works__grid { grid-template-columns: 1fr; margin: 4px 0 0; }
+  .works__card { height: 42vh; min-height: 280px; }
 
-  .hero {
-    flex-direction: column;
-    height: auto;
-    min-height: 100svh;
-  }
+  .creator { padding: 80px 20px 100px; }
+  .creator__list { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .creator__header { flex-direction: column; align-items: flex-start; gap: 16px; }
 
-  .hero__content {
-    flex: none;
-    width: 100%;
-    padding: 120px 24px 40px;
-    order: 1;
-  }
+  .info { padding: 60px 20px; }
+  .info__item-left { flex-direction: column; gap: 4px; }
+  .info__arrow { display: none; }
 
-  .hero__video {
-    flex: none;
-    width: 100%;
-    height: 50vh;
-    padding: 0 24px 40px;
-    order: 2;
-  }
+  .contact { padding: 120px 20px; }
 
-  .hero__scroll {
-    display: none;
-  }
-
-  .about {
-    padding: 80px 24px;
-  }
-
-  .about__inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .section-number {
-    font-size: 64px;
-  }
-
-  .service {
-    padding: 80px 24px;
-  }
-
-  .service__inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .service__right {
-    order: -1;
-  }
-
-  .service__item {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .service__item-desc {
-    text-align: left;
-    padding-left: 44px;
-  }
-
-  .works {
-    padding: 60px 0 48px;
-  }
-
-  .works__feature {
-    height: 45vh;
-    margin: 0 12px;
-  }
-
-  .works__grid {
-    grid-template-columns: 1fr;
-    margin: 3px 12px 0;
-  }
-
-  .works__card {
-    height: 35vh;
-  }
-
-  .works__feature-content {
-    bottom: 28px;
-    left: 24px;
-  }
-
-  .works__card-content {
-    bottom: 24px;
-    left: 24px;
-  }
-
-  .creator {
-    padding: 80px 24px;
-  }
-
-  .creator__header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .creator__list {
-    gap: 28px;
-  }
-
-  .info {
-    padding: 48px 24px;
-  }
-
-  .info__header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .info__item {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .info__item-left {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .info__arrow {
-    display: none;
-  }
-
-  .contact {
-    padding: 100px 24px;
-  }
-
-  .footer {
-    padding: 36px 24px 24px;
-  }
-
-  .footer__top {
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .footer__nav {
-    flex-wrap: wrap;
-    gap: 16px;
-  }
+  .footer { padding: 36px 20px 24px; }
+  .footer__top { flex-direction: column; gap: 20px; }
 }
 </style>
 </head>
@@ -1107,128 +1118,172 @@ img {
   <a href="#" class="header__logo">SAC</a>
   <nav class="header__nav">
     <a href="#about">ABOUT</a>
-    <a href="#service">SERVICE</a>
     <a href="#works">WORKS</a>
     <a href="#creator">CREATOR</a>
     <a href="#info">INFO</a>
     <a href="#contact">CONTACT</a>
   </nav>
   <button class="header__hamburger" id="hamburger" aria-label="Menu">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
   </button>
 </header>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#about" class="mobile-menu__link">ABOUT</a>
-  <a href="#service" class="mobile-menu__link">SERVICE</a>
-  <a href="#works" class="mobile-menu__link">WORKS</a>
-  <a href="#creator" class="mobile-menu__link">CREATOR</a>
-  <a href="#info" class="mobile-menu__link">INFO</a>
-  <a href="#contact" class="mobile-menu__link">CONTACT</a>
+  <a href="#about">ABOUT</a>
+  <a href="#works">WORKS</a>
+  <a href="#creator">CREATOR</a>
+  <a href="#info">INFO</a>
+  <a href="#contact">CONTACT</a>
 </div>
 
-<!-- HERO -->
-<section class="hero" id="hero">
+<!-- HERO — dots&lines × mount.jp 風 -->
+<section class="hero" id="hero" data-theme="ivory">
   <div class="hero__content">
-    <div class="hero__gold-line" id="heroLine"></div>
-    <h1 class="hero__title" id="heroTitle">制約を超えて、<br>つくる力を解き放つ。</h1>
-    <p class="hero__sub" id="heroSub">AIとクリエイターの横断で、事業を前に進めるクリエイティブを。</p>
+    <p class="hero__index" id="heroIndex"><span>001 / HERO</span></p>
+    <h1 class="hero__title">
+      <span class="hero__title-line" id="heroLine1"><span class="inner">ONE PROMPT</span></span>
+      <span class="hero__title-line" id="heroLine2"><span class="inner">CHANGE THE <em>WORLD</em>.</span></span>
+    </h1>
+    <div class="hero__sub" id="heroSub">
+      <p class="hero__sub-en">SAC — SMART AI CREATIVE</p>
+      <p class="hero__sub-jp">AIとクリエイターの力で、制作工程そのものを再設計する。<br>制約を超えて、事業を前に進めるクリエイティブを。</p>
+    </div>
   </div>
   <div class="hero__video">
-    <div class="hero__video-frame">
+    <div class="hero__video-frame" id="heroVideo">
       <iframe
-        src="https://www.youtube.com/embed/PtCzVhUE57s?autoplay=1&mute=1&loop=1&playlist=PtCzVhUE57s&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+        src="https://www.youtube.com/embed/PtCzVhUE57s?autoplay=1&mute=1&loop=1&playlist=PtCzVhUE57s&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=5"
         allow="autoplay; encrypted-media"
         allowfullscreen
         loading="lazy"
       ></iframe>
     </div>
+    <div class="hero__video-meta">
+      <span>REEL 2026</span>
+      <span>AI × CREATOR</span>
+    </div>
   </div>
   <div class="hero__scroll" id="heroScroll">
-    <span>SCROLL</span>
     <div class="hero__scroll-line"></div>
+    <span>SCROLL</span>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section class="about" id="about">
+<!-- ABOUT — 文言刷新 + SVG線図 + SERVICE機能を統合 -->
+<section class="about" id="about" data-theme="white">
   <div class="about__inner">
-    <div class="about__left js-reveal">
-      <div class="section-number">01</div>
-      <div class="section-label">ABOUT</div>
-    </div>
-    <div class="about__right js-reveal">
-      <p class="about__lead">AIの力で、制作の工程そのものを再設計する。</p>
-      <p class="about__body">
-        SAC（Smart AI Creative）は、EPOCH Inc.が運営するAIクリエイティブスタジオです。映像、Web、グラフィック、空間演出まで、あらゆるクリエイティブ領域にAIを実装。従来の制作プロセスを根本から見直し、スピードと品質を両立させる新しいものづくりを実現します。
-      </p>
-      <a href="#" class="about__cta">VIEW MORE &rarr;</a>
-    </div>
-  </div>
-</section>
 
-<!-- SERVICE -->
-<section class="service" id="service">
-  <div class="service__inner">
-    <div class="service__left js-reveal">
-      <ul class="service__list">
-        <li class="service__item">
-          <div class="service__item-left">
-            <span class="service__item-num">01</span>
-            <span class="service__item-name">MOVIE PRODUCTION</span>
-          </div>
-          <span class="service__item-desc">AI映像制作で工程を1/5に</span>
-        </li>
-        <li class="service__item">
-          <div class="service__item-left">
-            <span class="service__item-num">02</span>
-            <span class="service__item-name">WEB DESIGN &amp; DEV</span>
-          </div>
-          <span class="service__item-desc">AIドリブンなUX/UI実装</span>
-        </li>
-        <li class="service__item">
-          <div class="service__item-left">
-            <span class="service__item-num">03</span>
-            <span class="service__item-name">GRAPHIC / KEY VISUAL</span>
-          </div>
-          <span class="service__item-desc">AIカンプで撮影を最適化</span>
-        </li>
-        <li class="service__item">
-          <div class="service__item-left">
-            <span class="service__item-num">04</span>
-            <span class="service__item-name">INSTALLATION</span>
-          </div>
-          <span class="service__item-desc">空間×デジタルの体験設計</span>
-        </li>
-        <li class="service__item">
-          <div class="service__item-left">
-            <span class="service__item-num">05</span>
-            <span class="service__item-name">EVENT</span>
-          </div>
-          <span class="service__item-desc">AIを活用したイベント演出</span>
-        </li>
-        <li class="service__item">
-          <div class="service__item-left">
-            <span class="service__item-num">06</span>
-            <span class="service__item-name">ANIMATION</span>
-          </div>
-          <span class="service__item-desc">モーション・アニメーション制作</span>
-        </li>
-      </ul>
+    <!-- 導入コピー -->
+    <div class="about__head">
+      <div class="section-label js-reveal">ABOUT</div>
+      <p class="about__lead js-reveal">
+        AIを、<em>武器</em>にする。<br>
+        クリエイティブに、<em>推進力</em>を。
+      </p>
     </div>
-    <div class="service__right js-reveal">
-      <div class="section-label">SERVICE</div>
-      <p class="service__lead">制作のあらゆる領域で、<br>AIを実装する。</p>
+
+    <!-- 本文 -->
+    <div class="about__body-wrap js-reveal">
+      <div class="about__body-label">PHILOSOPHY</div>
+      <div>
+        <p class="about__body">
+          Smart AI Creative（SAC）は、EPOCH Inc.が運営する、AIネイティブなクリエイティブスタジオです。映像・Web・グラフィック・空間演出・イベント・SNS運用まで、制作のあらゆる領域にAIを実装します。
+        </p>
+        <p class="about__body">
+          私たちは単にAIを「使う」のではなく、事業の成果から逆算し、制作プロセスそのものを再設計することに向き合っています。AIと一流のクリエイターが並走することで、従来の制約を超えた速度・品質・柔軟性を、事業の現場に届けます。
+        </p>
+      </div>
+    </div>
+
+    <!-- 線図（SAC のアプローチ構造） -->
+    <div class="about__diagram js-reveal">
+      <div class="about__diagram-label">APPROACH</div>
+      <svg class="diagram" viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+
+        <!-- 背景グリッドの点 -->
+        <g opacity="0.25">
+          <circle cx="100" cy="100" r="1" class="diagram-dot-small" />
+          <circle cx="100" cy="460" r="1" class="diagram-dot-small" />
+          <circle cx="900" cy="100" r="1" class="diagram-dot-small" />
+          <circle cx="900" cy="460" r="1" class="diagram-dot-small" />
+          <circle cx="500" cy="60" r="1" class="diagram-dot-small" />
+          <circle cx="500" cy="500" r="1" class="diagram-dot-small" />
+        </g>
+
+        <!-- 3つの円（AI / CREATOR / BUSINESS）— 重なりでSACを表現 -->
+        <!-- AI 円 -->
+        <circle cx="360" cy="260" r="180" class="diagram-circle-bold" />
+        <!-- CREATOR 円 -->
+        <circle cx="640" cy="260" r="180" class="diagram-circle-bold" />
+        <!-- BUSINESS 円（下） -->
+        <circle cx="500" cy="380" r="180" class="diagram-circle-bold" />
+
+        <!-- 中心の SAC ノード（3円の交差点） -->
+        <circle cx="500" cy="300" r="44" fill="var(--gold)" opacity="0.08" />
+        <circle cx="500" cy="300" r="26" class="diagram-line-solid" fill="none" />
+        <circle cx="500" cy="300" r="3" class="diagram-dot" />
+
+        <!-- 外側の破線接続 — 事業への推進線 -->
+        <path d="M 500 326 L 500 500" class="diagram-line" />
+        <path d="M 500 500 L 100 500" class="diagram-line" />
+        <path d="M 500 500 L 900 500" class="diagram-line" />
+
+        <!-- ラベル: AI -->
+        <text x="200" y="160" class="node-label" font-size="22" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">AI</text>
+        <text x="200" y="182" class="node-label-jp" font-size="11" font-weight="400" fill="var(--gray-400)" text-anchor="middle">生成・自動化・拡張</text>
+
+        <!-- ラベル: CREATOR -->
+        <text x="800" y="160" class="node-label" font-size="22" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">CREATOR</text>
+        <text x="800" y="182" class="node-label-jp" font-size="11" font-weight="400" fill="var(--gray-400)" text-anchor="middle">発想・演出・品質</text>
+
+        <!-- ラベル: BUSINESS -->
+        <text x="500" y="538" class="node-label" font-size="22" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">BUSINESS</text>
+        <text x="500" y="557" class="node-label-jp" font-size="11" font-weight="400" fill="var(--gray-400)" text-anchor="middle">成果から逆算した運用設計</text>
+
+        <!-- 中央 SAC ラベル -->
+        <text x="500" y="295" font-family="Inter" font-size="16" font-weight="700" fill="var(--theme-fg)" text-anchor="middle" letter-spacing="2">SAC</text>
+        <text x="500" y="316" font-family="Inter" font-size="8" font-weight="500" fill="var(--gold)" text-anchor="middle" letter-spacing="3">SMART AI CREATIVE</text>
+
+        <!-- 外部ドット（6領域: MOVIE / WEB / GRAPHIC / INSTALLATION / EVENT / ANIMATION） -->
+        <g>
+          <circle cx="100" cy="500" r="3" class="diagram-dot" />
+          <text x="100" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">MOVIE</text>
+
+          <circle cx="260" cy="500" r="3" class="diagram-dot-small" />
+          <text x="260" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">WEB</text>
+
+          <circle cx="420" cy="500" r="3" class="diagram-dot-small" />
+          <text x="420" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">GRAPHIC</text>
+
+          <circle cx="580" cy="500" r="3" class="diagram-dot-small" />
+          <text x="580" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">INSTALLATION</text>
+
+          <circle cx="740" cy="500" r="3" class="diagram-dot-small" />
+          <text x="740" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">EVENT</text>
+
+          <circle cx="900" cy="500" r="3" class="diagram-dot" />
+          <text x="900" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">ANIMATION</text>
+        </g>
+
+      </svg>
+    </div>
+
+    <div class="about__cta js-reveal">
+      <a href="#">VIEW MORE →</a>
     </div>
   </div>
 </section>
 
 <!-- WORKS -->
-<section class="works" id="works">
-  <p class="works__label js-reveal">SELECTED WORKS</p>
+<section class="works" id="works" data-theme="sand">
+  <div class="works__head">
+    <div class="js-reveal">
+      <h2 class="works__title">WORKS</h2>
+      <p class="works__title-sub">代表事例 — 映像から体験設計まで</p>
+    </div>
+    <a href="#" class="works__link js-reveal">VIEW ALL WORKS →</a>
+  </div>
 
   <div class="works__feature js-reveal">
     <div class="works__feature-bg"></div>
@@ -1262,39 +1317,42 @@ img {
   </div>
 
   <div class="works__cta js-reveal">
-    <a href="#">VIEW ALL WORKS &rarr;</a>
+    <a href="#">VIEW ALL WORKS →</a>
   </div>
 </section>
 
 <!-- CREATOR -->
-<section class="creator" id="creator">
+<section class="creator" id="creator" data-theme="stone">
   <div class="creator__inner">
-    <div class="creator__header js-reveal">
-      <div class="section-label">CREATOR</div>
-      <a href="#" class="creator__link">VIEW ALL CREATORS &rarr;</a>
+    <div class="creator__header">
+      <div class="js-reveal">
+        <h2 class="creator__title">CREATOR</h2>
+        <p class="creator__title-sub">制作の現場に立つ、スペシャリストたち</p>
+      </div>
+      <a href="#" class="creator__link js-reveal">VIEW ALL CREATORS →</a>
     </div>
-    <div class="creator__list js-reveal">
-      <div class="creator__item">
+    <div class="creator__list">
+      <div class="creator__item js-reveal">
         <div class="creator__avatar"></div>
         <span class="creator__name">CREATOR A</span>
         <span class="creator__role">Director</span>
       </div>
-      <div class="creator__item">
+      <div class="creator__item js-reveal">
         <div class="creator__avatar"></div>
         <span class="creator__name">CREATOR B</span>
         <span class="creator__role">Art Director</span>
       </div>
-      <div class="creator__item">
+      <div class="creator__item js-reveal">
         <div class="creator__avatar"></div>
         <span class="creator__name">CREATOR C</span>
         <span class="creator__role">CG Artist</span>
       </div>
-      <div class="creator__item">
+      <div class="creator__item js-reveal">
         <div class="creator__avatar"></div>
         <span class="creator__name">CREATOR D</span>
         <span class="creator__role">Motion Designer</span>
       </div>
-      <div class="creator__item">
+      <div class="creator__item js-reveal">
         <div class="creator__avatar"></div>
         <span class="creator__name">CREATOR E</span>
         <span class="creator__role">Web Developer</span>
@@ -1304,11 +1362,11 @@ img {
 </section>
 
 <!-- INFO -->
-<section class="info" id="info">
+<section class="info" id="info" data-theme="white">
   <div class="info__inner">
     <div class="info__header js-reveal">
       <div class="section-label">INFO</div>
-      <a href="#" class="info__link">VIEW ALL &rarr;</a>
+      <a href="#" class="info__link">VIEW ALL →</a>
     </div>
     <ul class="info__list js-reveal">
       <li class="info__item">
@@ -1316,32 +1374,33 @@ img {
           <span class="info__date">2026.04.10</span>
           <span class="info__title">Smart AI Creative、Cannes Lions 2026にて事例登壇が決定。</span>
         </div>
-        <span class="info__arrow">&rarr;</span>
+        <span class="info__arrow">→</span>
       </li>
       <li class="info__item">
         <div class="info__item-left">
           <span class="info__date">2026.03.22</span>
           <span class="info__title">AIクリエイティブ特化スタジオ「SAC」を正式ローンチしました。</span>
         </div>
-        <span class="info__arrow">&rarr;</span>
+        <span class="info__arrow">→</span>
       </li>
       <li class="info__item">
         <div class="info__item-left">
           <span class="info__date">2026.02.15</span>
           <span class="info__title">HYATT TABISAKI キャンペーンの制作事例を公開しました。</span>
         </div>
-        <span class="info__arrow">&rarr;</span>
+        <span class="info__arrow">→</span>
       </li>
     </ul>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="js-reveal">
+<section class="contact" id="contact" data-theme="black">
+  <div class="contact__inner js-reveal">
+    <span class="contact__label">CONTACT</span>
     <h2 class="contact__title">LET'S CREATE<br>TOGETHER<span class="contact__title-dot">.</span></h2>
     <p class="contact__sub">お仕事のご依頼・ご相談はお気軽にご連絡ください。</p>
-    <a href="#" class="contact__btn">CONTACT</a>
+    <a href="#" class="contact__btn">CONTACT →</a>
   </div>
 </section>
 
@@ -1355,14 +1414,14 @@ img {
       </div>
       <nav class="footer__nav">
         <a href="#about">ABOUT</a>
-        <a href="#service">SERVICE</a>
         <a href="#works">WORKS</a>
+        <a href="#creator">CREATOR</a>
         <a href="#info">INFO</a>
       </nav>
       <span class="footer__epoch">Powered by EPOCH Inc.</span>
     </div>
     <div class="footer__bottom">
-      <p class="footer__copy">&copy; 2024 SAC / Smart AI Creative. All rights reserved.</p>
+      <p class="footer__copy">© 2024 SAC / Smart AI Creative. All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -1371,77 +1430,102 @@ img {
 (function() {
   'use strict';
 
-  // Header scroll detection
+  // --- Header scroll ---
   var header = document.getElementById('header');
-  var scrollThreshold = 80;
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 80) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  }, { passive: true });
 
-  function onScroll() {
-    if (window.scrollY > scrollThreshold) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // Hero intro animation
-  var heroLine = document.getElementById('heroLine');
-  var heroTitle = document.getElementById('heroTitle');
-  var heroSub = document.getElementById('heroSub');
-  var heroScroll = document.getElementById('heroScroll');
-  var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
-
+  // --- Hero intro ---
   window.addEventListener('load', function() {
-    setTimeout(function() {
-      heroLine.style.transition = 'width 0.8s ' + ease;
-      heroLine.style.width = '40px';
-    }, 300);
+    var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
     setTimeout(function() {
-      heroTitle.style.transition = 'opacity 0.9s ' + ease + ', transform 0.9s ' + ease;
-      heroTitle.style.opacity = '1';
-      heroTitle.style.transform = 'translateY(0)';
-    }, 600);
+      var idx = document.getElementById('heroIndex');
+      if (idx) {
+        idx.style.transition = 'opacity 1s ' + ease + ', transform 1s ' + ease;
+        idx.style.opacity = '1';
+        idx.style.transform = 'translateY(0)';
+      }
+    }, 200);
 
     setTimeout(function() {
-      heroSub.style.transition = 'opacity 0.9s ' + ease + ', transform 0.9s ' + ease;
-      heroSub.style.opacity = '1';
-      heroSub.style.transform = 'translateY(0)';
+      var l1 = document.getElementById('heroLine1');
+      var l2 = document.getElementById('heroLine2');
+      if (l1) l1.classList.add('is-in');
+      if (l2) l2.classList.add('is-in');
+    }, 400);
+
+    setTimeout(function() {
+      var sub = document.getElementById('heroSub');
+      if (sub) {
+        sub.style.transition = 'opacity 1s ' + ease + ', transform 1s ' + ease;
+        sub.style.opacity = '1';
+        sub.style.transform = 'translateY(0)';
+      }
     }, 900);
 
     setTimeout(function() {
-      heroScroll.style.transition = 'opacity 0.8s ' + ease;
-      heroScroll.style.opacity = '1';
-    }, 1300);
+      var v = document.getElementById('heroVideo');
+      if (v) v.classList.add('is-in');
+    }, 500);
+
+    setTimeout(function() {
+      var sc = document.getElementById('heroScroll');
+      if (sc) sc.classList.add('is-in');
+    }, 1400);
   });
 
-  // Intersection Observer for .js-reveal
+  // --- Intersection Observer for reveals ---
   var reveals = document.querySelectorAll('.js-reveal');
-
   if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function(entries) {
+    var revealObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
+          revealObserver.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -40px 0px'
-    });
-
-    reveals.forEach(function(el) {
-      observer.observe(el);
-    });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function(el) { revealObserver.observe(el); });
   } else {
-    reveals.forEach(function(el) {
-      el.classList.add('revealed');
-    });
+    reveals.forEach(function(el) { el.classList.add('revealed'); });
   }
 
-  // Hamburger menu
+  // --- Section theme color transition ---
+  // 各セクションの data-theme に応じて body の背景色/前景色を切替
+  var themes = {
+    ivory:  { bg: '#F4F1EC', fg: '#0A0A0A' },
+    white:  { bg: '#FFFFFF', fg: '#0A0A0A' },
+    sand:   { bg: '#E9E3D8', fg: '#0A0A0A' },
+    stone:  { bg: '#1A1A1A', fg: '#FFFFFF' },
+    black:  { bg: '#0A0A0A', fg: '#FFFFFF' }
+  };
+  var themedSections = document.querySelectorAll('[data-theme]');
+
+  if ('IntersectionObserver' in window) {
+    var themeObserver = new IntersectionObserver(function(entries) {
+      // 最も画面に近いセクションのテーマを採用
+      var best = null;
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+        }
+      });
+      if (best) {
+        var name = best.target.getAttribute('data-theme');
+        var t = themes[name];
+        if (t) {
+          document.documentElement.style.setProperty('--theme-bg', t.bg);
+          document.documentElement.style.setProperty('--theme-fg', t.fg);
+        }
+      }
+    }, { threshold: [0.2, 0.4, 0.6, 0.8] });
+    themedSections.forEach(function(s) { themeObserver.observe(s); });
+  }
+
+  // --- Hamburger ---
   var hamburger = document.getElementById('hamburger');
   var mobileMenu = document.getElementById('mobileMenu');
   var mobileLinks = mobileMenu.querySelectorAll('a');
@@ -1460,14 +1544,11 @@ img {
     });
   });
 
-  // Smooth scroll for anchor links
+  // --- Smooth scroll ---
   document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     anchor.addEventListener('click', function(e) {
-      var target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      var t = document.querySelector(this.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
   });
 
