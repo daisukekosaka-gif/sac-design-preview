@@ -373,7 +373,7 @@ img, svg {
 
 /* ===================== ABOUT ===================== */
 .about {
-  padding: 160px 40px 180px;
+  padding: 96px 40px 96px;
   background: var(--theme-bg);
 }
 
@@ -387,14 +387,14 @@ img, svg {
   grid-template-columns: 180px 1fr;
   gap: 48px;
   align-items: start;
-  margin-bottom: 80px;
+  margin-bottom: 56px;
 }
 
 .about__lead {
   font-family: var(--font-jp);
   font-weight: 500;
-  font-size: clamp(26px, 3.2vw, 42px);
-  line-height: 1.6;
+  font-size: clamp(24px, 2.8vw, 38px);
+  line-height: 1.5;
   letter-spacing: 0.02em;
   color: var(--theme-fg);
 }
@@ -404,12 +404,19 @@ img, svg {
   color: var(--gold);
 }
 
+/* PHILOSOPHY本文 + APPROACH図解 を 2カラムで1画面化 */
+.about__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 56px;
+  align-items: start;
+}
+
 .about__body-wrap {
   display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 48px;
+  grid-template-columns: 88px 1fr;
+  gap: 24px;
   align-items: start;
-  margin-bottom: 120px;
 }
 
 .about__body-label {
@@ -422,23 +429,23 @@ img, svg {
 }
 
 .about__body {
-  max-width: 680px;
-  font-size: 15px;
+  max-width: 520px;
+  font-size: 14px;
   color: var(--gray-500);
-  line-height: 2.1;
+  line-height: 2;
   letter-spacing: 0.02em;
 }
 
 .about__body + .about__body {
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 /* 線図 — SAC のアプローチを図解（AI × Creator × Business） */
 .about__diagram {
-  margin-top: 40px;
+  margin-top: 0;
   display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 48px;
+  grid-template-columns: 88px 1fr;
+  gap: 24px;
   align-items: start;
 }
 
@@ -453,9 +460,19 @@ img, svg {
 
 .diagram {
   width: 100%;
-  max-width: 880px;
-  aspect-ratio: 16 / 9;
+  max-width: 560px;
+  aspect-ratio: 1000 / 520;
   height: auto;
+}
+
+@media (max-width: 900px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .diagram {
+    max-width: 100%;
+  }
 }
 
 .diagram text {
@@ -507,8 +524,8 @@ img, svg {
 }
 
 .about__cta {
-  margin-top: 56px;
-  padding-left: 228px;
+  margin-top: 48px;
+  padding-left: 112px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -1125,95 +1142,73 @@ img, svg {
     <div class="about__head">
       <div class="section-label js-reveal">ABOUT</div>
       <p class="about__lead js-reveal">
-        AIを、<em>武器</em>にする。<br>
-        クリエイティブに、<em>推進力</em>を。
+        クリエイティブ制作における<em>すべての制約</em>を解放する。
       </p>
     </div>
 
-    <!-- 本文 -->
-    <div class="about__body-wrap js-reveal">
-      <div class="about__body-label">PHILOSOPHY</div>
-      <div>
-        <p class="about__body">
-          Smart AI Creative（SAC）は、EPOCH Inc.が運営する、AIネイティブなクリエイティブスタジオです。映像・Web・グラフィック・空間演出・イベント・SNS運用まで、制作のあらゆる領域にAIを実装します。
-        </p>
-        <p class="about__body">
-          私たちは単にAIを「使う」のではなく、事業の成果から逆算し、制作プロセスそのものを再設計することに向き合っています。AIと一流のクリエイターが並走することで、従来の制約を超えた速度・品質・柔軟性を、事業の現場に届けます。
-        </p>
-      </div>
-    </div>
+    <!-- PHILOSOPHY + APPROACH を2カラムで1画面に集約 -->
+    <div class="about__grid js-reveal">
 
-    <!-- 線図（SAC のアプローチ構造） -->
-    <div class="about__diagram js-reveal">
-      <div class="about__diagram-label">APPROACH</div>
-      <svg class="diagram" viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <!-- 本文 -->
+      <div class="about__body-wrap">
+        <div class="about__body-label">PHILOSOPHY</div>
+        <div>
+          <p class="about__body">
+            Smart AI Creative（SAC）は、EPOCH Inc.が運営する、AIネイティブなクリエイティブスタジオです。映像・Web・グラフィック・空間演出・イベント・SNS運用まで、制作のあらゆる領域にAIを実装します。
+          </p>
+          <p class="about__body">
+            私たちは単にAIを「使う」のではなく、事業の成果から逆算し、制作プロセスそのものを再設計することに向き合っています。AIと一流のクリエイターが並走することで、従来の制約を超えた速度・品質・柔軟性を、事業の現場に届けます。
+          </p>
+        </div>
+      </div>
+
+      <!-- 線図（SAC のアプローチ構造） -->
+      <div class="about__diagram">
+        <div class="about__diagram-label">APPROACH</div>
+      <svg class="diagram" viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
 
         <!-- 背景グリッドの点 -->
         <g opacity="0.25">
-          <circle cx="100" cy="100" r="1" class="diagram-dot-small" />
+          <circle cx="100" cy="80" r="1" class="diagram-dot-small" />
           <circle cx="100" cy="460" r="1" class="diagram-dot-small" />
-          <circle cx="900" cy="100" r="1" class="diagram-dot-small" />
+          <circle cx="900" cy="80" r="1" class="diagram-dot-small" />
           <circle cx="900" cy="460" r="1" class="diagram-dot-small" />
-          <circle cx="500" cy="60" r="1" class="diagram-dot-small" />
+          <circle cx="500" cy="40" r="1" class="diagram-dot-small" />
           <circle cx="500" cy="500" r="1" class="diagram-dot-small" />
         </g>
 
         <!-- 3つの円（AI / CREATOR / BUSINESS）— 重なりでSACを表現 -->
-        <!-- AI 円 -->
-        <circle cx="360" cy="260" r="180" class="diagram-circle-bold" />
-        <!-- CREATOR 円 -->
-        <circle cx="640" cy="260" r="180" class="diagram-circle-bold" />
+        <!-- AI 円（左上） -->
+        <circle cx="380" cy="220" r="180" class="diagram-circle-bold" />
+        <!-- CREATOR 円（右上） -->
+        <circle cx="620" cy="220" r="180" class="diagram-circle-bold" />
         <!-- BUSINESS 円（下） -->
-        <circle cx="500" cy="380" r="180" class="diagram-circle-bold" />
+        <circle cx="500" cy="340" r="180" class="diagram-circle-bold" />
 
         <!-- 中心の SAC ノード（3円の交差点） -->
-        <circle cx="500" cy="300" r="44" fill="var(--gold)" opacity="0.08" />
-        <circle cx="500" cy="300" r="26" class="diagram-line-solid" fill="none" />
-        <circle cx="500" cy="300" r="3" class="diagram-dot" />
+        <circle cx="500" cy="270" r="44" fill="var(--gold)" opacity="0.08" />
+        <circle cx="500" cy="270" r="26" class="diagram-line-solid" fill="none" />
+        <circle cx="500" cy="270" r="3" class="diagram-dot" />
 
-        <!-- 外側の破線接続 — 事業への推進線 -->
-        <path d="M 500 326 L 500 500" class="diagram-line" />
-        <path d="M 500 500 L 100 500" class="diagram-line" />
-        <path d="M 500 500 L 900 500" class="diagram-line" />
+        <!-- ラベル: AI（左上の円の外側） -->
+        <text x="230" y="130" class="node-label" font-size="22" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">AI</text>
+        <text x="230" y="152" class="node-label-jp" font-size="11" font-weight="400" fill="var(--gray-400)" text-anchor="middle">生成・自動化・拡張</text>
 
-        <!-- ラベル: AI -->
-        <text x="200" y="160" class="node-label" font-size="22" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">AI</text>
-        <text x="200" y="182" class="node-label-jp" font-size="11" font-weight="400" fill="var(--gray-400)" text-anchor="middle">生成・自動化・拡張</text>
+        <!-- ラベル: CREATOR（右上の円の外側） -->
+        <text x="770" y="130" class="node-label" font-size="22" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">CREATOR</text>
+        <text x="770" y="152" class="node-label-jp" font-size="11" font-weight="400" fill="var(--gray-400)" text-anchor="middle">発想・演出・品質</text>
 
-        <!-- ラベル: CREATOR -->
-        <text x="800" y="160" class="node-label" font-size="22" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">CREATOR</text>
-        <text x="800" y="182" class="node-label-jp" font-size="11" font-weight="400" fill="var(--gray-400)" text-anchor="middle">発想・演出・品質</text>
-
-        <!-- ラベル: BUSINESS -->
-        <text x="500" y="538" class="node-label" font-size="22" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">BUSINESS</text>
-        <text x="500" y="557" class="node-label-jp" font-size="11" font-weight="400" fill="var(--gray-400)" text-anchor="middle">成果から逆算した運用設計</text>
+        <!-- ラベル: BUSINESS（下円の外側） -->
+        <text x="500" y="488" class="node-label" font-size="22" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">BUSINESS</text>
+        <text x="500" y="508" class="node-label-jp" font-size="11" font-weight="400" fill="var(--gray-400)" text-anchor="middle">成果から逆算した運用設計</text>
 
         <!-- 中央 SAC ラベル -->
-        <text x="500" y="295" font-family="Inter" font-size="16" font-weight="700" fill="var(--theme-fg)" text-anchor="middle" letter-spacing="2">SAC</text>
-        <text x="500" y="316" font-family="Inter" font-size="8" font-weight="500" fill="var(--gold)" text-anchor="middle" letter-spacing="3">SMART AI CREATIVE</text>
-
-        <!-- 外部ドット（6領域: MOVIE / WEB / GRAPHIC / INSTALLATION / EVENT / ANIMATION） -->
-        <g>
-          <circle cx="100" cy="500" r="3" class="diagram-dot" />
-          <text x="100" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">MOVIE</text>
-
-          <circle cx="260" cy="500" r="3" class="diagram-dot-small" />
-          <text x="260" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">WEB</text>
-
-          <circle cx="420" cy="500" r="3" class="diagram-dot-small" />
-          <text x="420" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">GRAPHIC</text>
-
-          <circle cx="580" cy="500" r="3" class="diagram-dot-small" />
-          <text x="580" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">INSTALLATION</text>
-
-          <circle cx="740" cy="500" r="3" class="diagram-dot-small" />
-          <text x="740" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">EVENT</text>
-
-          <circle cx="900" cy="500" r="3" class="diagram-dot" />
-          <text x="900" y="528" font-family="Inter" font-size="9" font-weight="500" fill="var(--gray-400)" text-anchor="middle" letter-spacing="2">ANIMATION</text>
-        </g>
+        <text x="500" y="265" font-family="Inter" font-size="16" font-weight="700" fill="var(--theme-fg)" text-anchor="middle" letter-spacing="2">SAC</text>
+        <text x="500" y="286" font-family="Inter" font-size="8" font-weight="500" fill="var(--gold)" text-anchor="middle" letter-spacing="3">SMART AI CREATIVE</text>
 
       </svg>
+      </div>
+
     </div>
 
     <div class="about__cta js-reveal">

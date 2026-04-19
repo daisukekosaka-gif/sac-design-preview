@@ -1023,7 +1023,17 @@
   /* Hero */
   .hero-copy {
     left: 24px;
+    right: 24px;
     bottom: 40px;
+    max-width: calc(100% - 48px);
+  }
+  /* モバイルでは巨大タイポを画面幅に収める */
+  .hero-title-1 {
+    font-size: clamp(44px, 13.2vw, 72px);
+    letter-spacing: -0.02em;
+  }
+  .hero-title-2 {
+    font-size: clamp(26px, 8vw, 44px);
   }
   .hero-brand-vertical {
     right: 18px;
