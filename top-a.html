@@ -1305,6 +1305,45 @@ img, svg {
   gap: 28px;
 }
 
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px 40px;
+}
+
+.footer__nav a {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.72);
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s var(--ease);
+}
+
+.footer__nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s var(--ease);
+}
+
+.footer__nav a:hover {
+  color: var(--white);
+}
+
+.footer__nav a:hover::after {
+  transform: scaleX(1);
+}
+
 .footer__socials {
   list-style: none;
   margin: 0;
@@ -1398,6 +1437,8 @@ img, svg {
   .footer { padding: 40px 20px 28px; }
   .footer__inner { gap: 20px; }
   .footer__socials a { width: 40px; height: 40px; }
+  .footer__nav { gap: 16px 24px; }
+  .footer__nav a { font-size: 10px; letter-spacing: 0.18em; }
 }
 </style>
 </head>
@@ -1757,7 +1798,6 @@ img, svg {
 <section class="contact" id="contact" data-theme="black">
   <div class="contact__inner js-reveal">
     <span class="contact__label">CONTACT</span>
-    <h2 class="contact__title">LET'S CREATE<br>TOGETHER<span class="contact__title-dot">.</span></h2>
     <p class="contact__sub">お仕事のご依頼・ご相談はお気軽にご連絡ください。</p>
     <a href="#" class="contact__btn">CONTACT →</a>
   </div>
@@ -1766,6 +1806,13 @@ img, svg {
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer__inner">
+    <nav class="footer__nav" aria-label="Footer navigation">
+      <a href="#about">ABOUT</a>
+      <a href="#works">WORKS</a>
+      <a href="#creator">CREATOR</a>
+      <a href="#info">INFO</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
     <ul class="footer__socials" aria-label="Social media">
       <li>
         <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
