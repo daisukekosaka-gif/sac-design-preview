@@ -119,68 +119,89 @@ nav .nav-cta:hover { background: var(--accent); transform: translateX(2px); }
 nav .nav-cta .arrow { transition: transform 0.4s var(--ease); }
 nav .nav-cta:hover .arrow { transform: translateX(4px); }
 
-/* ========== HERO ========== */
+/* ========== HERO (Ikeda/Nicolai style) ========== */
 .hero {
   min-height: 100vh; position: relative;
-  padding: 180px var(--pad) 80px;
+  padding: clamp(120px, 18vh, 200px) var(--pad) 80px;
   display: grid; grid-template-columns: 1fr;
   align-content: center; overflow: hidden;
+  background: #070808;
+  color: #f4f5f3;
+  isolation: isolate;
 }
-.hero-mesh {
-  position: absolute;
-  top: 50%; right: -5%; transform: translateY(-50%);
-  width: min(720px, 55vw); aspect-ratio: 1/1;
-  pointer-events: none; z-index: 1; opacity: 0.85;
-  filter: blur(0.4px);
-  animation: meshDrift 22s ease-in-out infinite;
+.hero-canvas {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 0.9;
 }
-@keyframes meshDrift {
-  0%, 100% { transform: translateY(-50%) rotate(0deg) scale(1); }
-  33% { transform: translateY(-54%) rotate(4deg) scale(1.02); }
-  66% { transform: translateY(-48%) rotate(-3deg) scale(0.99); }
+.hero::after {
+  /* vignette + subtle scanline */
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background:
+    radial-gradient(ellipse at 50% 40%, transparent 0%, rgba(0,0,0,0.55) 85%),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,0.02) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
 }
-.hero-mesh svg { width: 100%; height: 100%; display: block; }
+.hero-grid {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at 50% 50%, #000 30%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 30%, transparent 85%);
+}
 
-.hero-inner { position: relative; z-index: 2; max-width: 1200px; }
+.hero-inner { position: relative; z-index: 2; max-width: 1400px; width: 100%; }
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 14px;
   font-family: 'Roboto Mono', monospace;
-  font-size: 12px; font-weight: 400;
-  color: var(--ink-3); margin-bottom: 56px;
-  opacity: 0; animation: fadeUp 1.2s var(--ease) 0.2s forwards;
+  font-size: 11.5px; font-weight: 400;
+  color: rgba(244,245,243,0.55); margin-bottom: clamp(40px, 6vw, 72px);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  opacity: 0; animation: fadeUp 1.2s var(--ease) 0.3s forwards;
 }
 .hero-eyebrow::before {
-  content: ''; width: 32px; height: 1px; background: var(--accent);
+  content: ''; width: 40px; height: 1px; background: rgba(244,245,243,0.35);
 }
 .hero-eyebrow .dot {
   width: 6px; height: 6px; border-radius: 50%;
-  background: var(--accent); animation: pulseDot 2s ease-in-out infinite;
+  background: #f4f5f3; animation: pulseDot 1.8s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(244,245,243,0.7);
 }
 @keyframes pulseDot {
   0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(0.5); opacity: 0.4; }
+  50% { transform: scale(0.55); opacity: 0.4; }
 }
+
 .hero-title {
   font-family: 'Manrope', 'Inter', sans-serif;
-  font-weight: 300;
-  font-size: clamp(42px, 6.5vw, 104px);
-  line-height: 1.02; letter-spacing: -0.035em;
-  color: var(--ink); margin-bottom: 44px;
-  max-width: 22ch;
+  font-weight: 200;
+  font-size: clamp(56px, 11vw, 186px);
+  line-height: 0.9; letter-spacing: -0.045em;
+  color: #f4f5f3;
+  margin-bottom: clamp(32px, 4vw, 56px);
+  max-width: 14ch;
+  text-transform: uppercase;
 }
-.hero-title .word { display: inline-block; overflow: hidden; }
-.hero-title .word span {
+.hero-title .line { display: block; overflow: hidden; }
+.hero-title .line > span {
   display: inline-block;
   transform: translateY(110%);
-  animation: wordUp 1.2s var(--ease) forwards;
+  animation: wordUp 1.3s var(--ease) forwards;
 }
 .hero-title em {
   font-style: normal; font-weight: 400;
-  background: linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 60%, var(--accent) 100%);
+  background: linear-gradient(100deg, #f4f5f3 0%, var(--accent-2) 50%, #f4f5f3 100%);
   background-size: 200% 100%;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: hueShift 10s ease-in-out infinite;
+  animation: hueShift 9s ease-in-out infinite;
+}
+.hero-title .slash {
+  font-weight: 200; color: rgba(244,245,243,0.35);
+  display: inline-block; margin: 0 0.2em;
 }
 @keyframes hueShift {
   0%, 100% { background-position: 0% 50%; }
@@ -191,15 +212,20 @@ nav .nav-cta:hover .arrow { transform: translateX(4px); }
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 .hero-jp {
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 400;
-  font-size: clamp(14px, 1.4vw, 18px);
-  line-height: 2; color: var(--ink-3);
-  max-width: 44ch; margin-bottom: 56px;
+  font-size: clamp(13px, 1.3vw, 16px);
+  line-height: 2;
+  color: rgba(244,245,243,0.6);
+  max-width: 44ch;
+  margin-bottom: clamp(40px, 5vw, 64px);
+  padding-left: 20px;
+  border-left: 1px solid rgba(244,245,243,0.18);
   opacity: 0; animation: fadeUp 1.4s var(--ease) 1.0s forwards;
 }
-.hero-jp strong { color: var(--ink); font-weight: 600; }
+.hero-jp strong { color: #f4f5f3; font-weight: 500; }
 
 .hero-actions {
   display: inline-flex; align-items: center; gap: 24px;
@@ -208,6 +234,18 @@ nav .nav-cta:hover .arrow { transform: translateX(4px); }
 }
 .btn-primary {
   display: inline-flex; align-items: center; gap: 14px;
+  padding: 18px 34px; background: #f4f5f3; color: #070808;
+  border-radius: 100px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px; font-weight: 500;
+  text-decoration: none;
+  transition: background 0.4s var(--ease), gap 0.4s var(--ease), color 0.3s;
+}
+.btn-primary:hover { background: var(--accent-2); color: #070808; gap: 18px; }
+
+/* light variant — use on light sections */
+.btn-primary-dark {
+  display: inline-flex; align-items: center; gap: 14px;
   padding: 18px 34px; background: var(--ink); color: var(--bg);
   border-radius: 100px;
   font-family: 'Manrope', sans-serif;
@@ -215,7 +253,8 @@ nav .nav-cta:hover .arrow { transform: translateX(4px); }
   text-decoration: none;
   transition: background 0.4s var(--ease), gap 0.4s var(--ease);
 }
-.btn-primary:hover { background: var(--accent); gap: 18px; }
+.btn-primary-dark:hover { background: var(--accent); gap: 18px; }
+
 .btn-ghost {
   display: inline-flex; align-items: center; gap: 10px;
   font-family: 'Manrope', sans-serif;
@@ -225,24 +264,26 @@ nav .nav-cta:hover .arrow { transform: translateX(4px); }
   transition: color 0.3s, border-color 0.3s, gap 0.4s var(--ease);
 }
 .btn-ghost:hover { color: var(--accent); border-color: var(--accent); gap: 16px; }
+.btn-ghost.light { color: #f4f5f3; border-bottom-color: rgba(244,245,243,0.6); }
+.btn-ghost.light:hover { color: var(--accent-2); border-bottom-color: var(--accent-2); }
 
 .hero-meta {
   position: absolute; left: var(--pad); right: var(--pad); bottom: 40px;
   display: flex; justify-content: space-between; align-items: flex-end;
   font-family: 'Roboto Mono', monospace;
-  font-size: 11px; color: var(--mute); z-index: 3;
+  font-size: 10.5px; color: rgba(244,245,243,0.5); z-index: 3;
+  letter-spacing: 0.12em; text-transform: uppercase;
   opacity: 0; animation: fadeUp 1.6s var(--ease) 1.6s forwards;
 }
 .hero-meta-scroll {
   display: inline-flex; align-items: center; gap: 14px;
-  text-transform: uppercase; letter-spacing: 0.15em;
 }
 .hero-meta-scroll .line {
-  width: 1px; height: 32px; background: var(--line-2); position: relative; overflow: hidden;
+  width: 1px; height: 32px; background: rgba(244,245,243,0.25); position: relative; overflow: hidden;
 }
 .hero-meta-scroll .line::before {
   content: ''; position: absolute; left: 0; width: 100%; height: 50%;
-  background: var(--accent);
+  background: #f4f5f3;
   animation: scrollBar 2.2s ease-in-out infinite;
 }
 @keyframes scrollBar {
@@ -250,6 +291,27 @@ nav .nav-cta:hover .arrow { transform: translateX(4px); }
 }
 .hero-meta-right { text-align: right; line-height: 1.8; }
 .hero-meta-right span { display: block; }
+.hero-meta-tick {
+  position: absolute; left: 50%; bottom: 40px;
+  transform: translateX(-50%);
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px; color: rgba(244,245,243,0.35);
+  letter-spacing: 0.2em; text-transform: uppercase;
+  display: flex; gap: 14px; align-items: center; z-index: 3;
+  opacity: 0; animation: fadeUp 1.6s var(--ease) 1.8s forwards;
+}
+.hero-meta-tick::before, .hero-meta-tick::after {
+  content: ''; width: 24px; height: 1px; background: rgba(244,245,243,0.2);
+}
+
+/* Nav on hero — invert colors before scroll */
+nav:not(.scrolled) .logo { color: #f4f5f3; }
+nav:not(.scrolled) .logo-mark::before { border-color: rgba(244,245,243,0.8); }
+nav:not(.scrolled) .logo-mark::after { background: #f4f5f3; }
+nav:not(.scrolled) .nav-links a { color: rgba(244,245,243,0.8); }
+nav:not(.scrolled) .nav-links a:hover { color: #fff; }
+nav:not(.scrolled) .nav-cta { background: #f4f5f3; color: #070808; }
+nav:not(.scrolled) .nav-cta:hover { background: var(--accent-2); }
 
 /* ========== SECTION COMMON ========== */
 section { padding: var(--gap) var(--pad); position: relative; }
@@ -786,48 +848,18 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-mesh">
-    <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="g" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#abb8c3" stop-opacity="0.55"/>
-          <stop offset="50%" stop-color="#445e5f" stop-opacity="0.28"/>
-          <stop offset="100%" stop-color="#445e5f" stop-opacity="0"/>
-        </radialGradient>
-        <filter id="blur"><feGaussianBlur stdDeviation="12"/></filter>
-      </defs>
-      <g filter="url(#blur)">
-        <path d="M400,200 C540,180 620,300 580,440 C540,580 380,620 260,560 C140,500 120,340 200,240 C280,140 380,180 400,200 Z" fill="url(#g)">
-          <animate attributeName="d" dur="18s" repeatCount="indefinite"
-            values="
-              M400,200 C540,180 620,300 580,440 C540,580 380,620 260,560 C140,500 120,340 200,240 C280,140 380,180 400,200 Z;
-              M400,180 C560,220 600,360 540,480 C480,600 320,600 220,520 C120,440 140,280 240,220 C320,170 380,140 400,180 Z;
-              M400,200 C540,180 620,300 580,440 C540,580 380,620 260,560 C140,500 120,340 200,240 C280,140 380,180 400,200 Z
-            "/>
-        </path>
-      </g>
-      <g fill="none" stroke="#445e5f" stroke-width="0.6" opacity="0.28">
-        <circle cx="400" cy="400" r="320"/>
-        <circle cx="400" cy="400" r="240"/>
-        <circle cx="400" cy="400" r="160"/>
-        <circle cx="400" cy="400" r="80"/>
-      </g>
-      <g fill="#445e5f" opacity="0.5">
-        <circle cx="400" cy="80"  r="2"/>
-        <circle cx="720" cy="400" r="2"/>
-        <circle cx="400" cy="720" r="2"/>
-        <circle cx="80"  cy="400" r="2"/>
-      </g>
-    </svg>
-  </div>
+  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero-grid"></div>
 
   <div class="hero-inner">
     <div class="hero-eyebrow">
       <span class="dot"></span>
-      <span>SMART AI CREATIVE / TOKYO × AI</span>
+      <span>SMART AI CREATIVE / TOKYO</span>
     </div>
     <h1 class="hero-title">
-      Engineering the future of <em>creative production</em>.
+      <span class="line"><span style="animation-delay:.35s">ONE PROMPT</span></span>
+      <span class="line"><span style="animation-delay:.50s"><em>CHANGE</em></span></span>
+      <span class="line"><span style="animation-delay:.65s">THE WORLD.</span></span>
     </h1>
     <p class="hero-jp">
       <strong>AIで、つくり方からつくり変える。</strong><br>
@@ -838,13 +870,16 @@ footer {
         <span>Discover our platform</span>
         <span class="arrow">→</span>
       </a>
-      <a href="#works" class="btn-ghost">
+      <a href="#works" class="btn-ghost light">
         <span>View Works</span>
         <span>↗</span>
       </a>
     </div>
   </div>
 
+  <div class="hero-meta-tick">
+    <span id="hmTick">DATA STREAM / —</span>
+  </div>
   <div class="hero-meta">
     <div class="hero-meta-scroll">
       <span class="line"></span>
@@ -1257,21 +1292,6 @@ const onScroll = () => {
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-/* Split hero title into words for reveal */
-(function splitHeroTitle(){
-  const h = document.querySelector('.hero-title');
-  if (!h) return;
-  const html = h.innerHTML;
-  const tokens = html.split(/(<em>.*?<\/em>|\s+)/).filter(Boolean);
-  let result = ''; let d = 0;
-  tokens.forEach(t => {
-    if (/^\s+$/.test(t)) { result += ' '; return; }
-    result += `<span class="word"><span style="animation-delay:${(0.35 + d*0.08).toFixed(2)}s">${t}</span></span>`;
-    d++;
-  });
-  h.innerHTML = result;
-})();
-
 /* Live clock */
 const pad = n => String(n).padStart(2,'0');
 const tick = () => {
@@ -1280,27 +1300,174 @@ const tick = () => {
   const date = d.getFullYear()+'.'+pad(d.getMonth()+1)+'.'+pad(d.getDate());
   const ts = document.getElementById('ts');
   const fc = document.getElementById('footerClock');
+  const hm = document.getElementById('hmTick');
   if (ts) ts.textContent = date + ' / ' + time + ' JST';
   if (fc) fc.textContent = date + ' / ' + time;
+  if (hm) {
+    const f = Math.random().toString(16).slice(2, 10).toUpperCase();
+    hm.textContent = 'DATA STREAM / ' + time + ' · ' + f;
+  }
 };
 tick(); setInterval(tick, 1000);
 
-/* Hero mesh mouse-follow parallax */
-(function meshParallax(){
-  const mesh = document.querySelector('.hero-mesh');
-  if (!mesh || matchMedia('(pointer: coarse)').matches) return;
-  let rx = 0, ry = 0, tx = 0, ty = 0;
-  document.addEventListener('mousemove', (e) => {
-    const w = window.innerWidth, h = window.innerHeight;
-    tx = (e.clientX / w - 0.5) * 18;
-    ty = (e.clientY / h - 0.5) * 18;
-  }, { passive: true });
-  (function loop(){
-    rx += (tx - rx) * 0.06;
-    ry += (ty - ry) * 0.06;
-    mesh.style.transform = `translateY(calc(-50% + ${ry}px)) translateX(${rx}px)`;
-    requestAnimationFrame(loop);
-  })();
+/* ===================================================
+   Hero Canvas — Ikeda / Nicolai style flowing streams
+   =================================================== */
+(function ikedaHero(){
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d', { alpha: true });
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  let w = 0, h = 0;
+  const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width  = Math.floor(rect.width  * DPR);
+    canvas.height = Math.floor(rect.height * DPR);
+    canvas.style.width  = rect.width  + 'px';
+    canvas.style.height = rect.height + 'px';
+    w = canvas.width; h = canvas.height;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // STREAM: horizontal sine-modulated lines drifting vertically
+  const streams = [];
+  const STREAM_COUNT = 70;
+  function seedStreams(){
+    streams.length = 0;
+    for (let i = 0; i < STREAM_COUNT; i++){
+      const isAccent = Math.random() > 0.92;
+      streams.push({
+        y: Math.random() * h,
+        vy: (0.12 + Math.random() * 0.6) * DPR,
+        amp: (2 + Math.random() * 14) * DPR,
+        freq: 0.0009 + Math.random() * 0.004,
+        phase: Math.random() * Math.PI * 2,
+        opacity: 0.08 + Math.random() * 0.42,
+        accent: isAccent,
+        segments: 2 + Math.floor(Math.random()*3)
+      });
+    }
+  }
+  seedStreams();
+  window.addEventListener('resize', seedStreams);
+
+  // Vertical tick bars (Nicolai's static frame markers)
+  const ticks = [];
+  for (let i = 0; i < 80; i++){
+    ticks.push({
+      x: Math.random(),
+      h: 2 + Math.random() * 10,
+      opacity: 0.05 + Math.random() * 0.35
+    });
+  }
+
+  // Scanning beam
+  let beamY = -200;
+  let beamSpeed = 0;
+  function triggerBeam(){
+    beamY = -200;
+    beamSpeed = 6 + Math.random() * 6;
+  }
+  setInterval(triggerBeam, 5200);
+
+  // Data bars
+  const bars = [];
+  for (let i = 0; i < 24; i++){
+    bars.push({ v: Math.random(), target: Math.random() });
+  }
+  setInterval(() => {
+    bars.forEach(b => b.target = Math.random());
+  }, 180);
+
+  let t = 0;
+
+  function frame(){
+    // Light fade for trailing
+    ctx.fillStyle = 'rgba(7,8,8,0.28)';
+    ctx.fillRect(0, 0, w, h);
+
+    // --- Horizontal flowing streams ---
+    for (const s of streams){
+      ctx.beginPath();
+      const hex = s.accent ? [171,184,195] : [244,245,243];
+      ctx.strokeStyle = `rgba(${hex[0]},${hex[1]},${hex[2]},${s.opacity})`;
+      ctx.lineWidth = (s.accent ? 1.1 : 0.6) * DPR;
+      const step = 3 * DPR;
+      for (let x = 0; x <= w; x += step){
+        const y = s.y + Math.sin(x * s.freq + s.phase + t * 0.018) * s.amp;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      s.y += s.vy;
+      if (s.y > h + 40) { s.y = -40; s.phase = Math.random()*Math.PI*2; }
+    }
+
+    // --- Bottom data bars (sonogram) ---
+    const barW = w / bars.length;
+    const barMaxH = h * 0.10;
+    for (let i = 0; i < bars.length; i++){
+      const b = bars[i];
+      b.v += (b.target - b.v) * 0.1;
+      const bh = b.v * barMaxH;
+      ctx.fillStyle = `rgba(244,245,243,${0.28 + b.v * 0.4})`;
+      ctx.fillRect(i * barW + 1, h - bh, Math.max(1, barW - 2), bh);
+    }
+
+    // --- Top tick marks ---
+    ctx.fillStyle = 'rgba(244,245,243,0.45)';
+    for (const tk of ticks){
+      ctx.globalAlpha = tk.opacity;
+      ctx.fillRect(tk.x * w, 0, 1 * DPR, tk.h * DPR);
+    }
+    ctx.globalAlpha = 1;
+
+    // --- Scanning beam ---
+    if (beamY < h + 200){
+      beamY += beamSpeed * DPR;
+      const beamGrad = ctx.createLinearGradient(0, beamY - 80*DPR, 0, beamY + 80*DPR);
+      beamGrad.addColorStop(0, 'rgba(171,184,195,0)');
+      beamGrad.addColorStop(0.5, 'rgba(171,184,195,0.55)');
+      beamGrad.addColorStop(1, 'rgba(171,184,195,0)');
+      ctx.fillStyle = beamGrad;
+      ctx.fillRect(0, beamY - 80*DPR, w, 160*DPR);
+      // thin leading line
+      ctx.strokeStyle = 'rgba(244,245,243,0.7)';
+      ctx.lineWidth = 1 * DPR;
+      ctx.beginPath();
+      ctx.moveTo(0, beamY);
+      ctx.lineTo(w, beamY);
+      ctx.stroke();
+    }
+
+    // --- Random glitch bar ---
+    if (Math.random() > 0.993){
+      const gy = Math.random() * h;
+      const gh = (2 + Math.random() * 18) * DPR;
+      ctx.fillStyle = `rgba(244,245,243,${0.12 + Math.random()*0.35})`;
+      ctx.fillRect(0, gy, w, gh);
+    }
+
+    t++;
+    if (!prefersReducedMotion) rafId = requestAnimationFrame(frame);
+  }
+
+  let rafId = requestAnimationFrame(frame);
+
+  // Pause when out of view (perf)
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries){
+      if (e.isIntersecting){
+        if (!rafId && !prefersReducedMotion) rafId = requestAnimationFrame(frame);
+      } else {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+      }
+    }
+  }, { threshold: 0 });
+  io.observe(canvas);
 })();
 </script>
 </body>
