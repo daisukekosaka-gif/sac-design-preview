@@ -36,6 +36,8 @@
   --font-jp: 'Noto Sans JP', sans-serif;
 }
 
+/* テーマ色のトランジションは body の background-color / color 側で行う */
+
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -47,7 +49,54 @@ body {
   color: var(--theme-fg);
   background: var(--theme-bg);
   overflow-x: hidden;
-  transition: background 1.2s var(--ease), color 1.2s var(--ease);
+  transition: background-color 0.9s var(--ease), color 0.9s var(--ease);
+}
+
+/* ===================== AI/PROMPT 背景レイヤー ===================== */
+/* HERO 以外のセクションに敷く、AI/PROMPT を想起させる極薄オーバーレイ */
+.about, .works, .creator, .info, .contact {
+  position: relative;
+  isolation: isolate;
+  transition: background-color 0.9s var(--ease), color 0.9s var(--ease);
+}
+
+.prompt-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.055;
+  color: var(--theme-fg);
+  transform: translate3d(0, var(--ai-bg-y, 0px), 0);
+  transition: opacity 0.9s var(--ease), color 0.9s var(--ease);
+  will-change: transform;
+}
+
+.prompt-bg__text {
+  font-family: 'SF Mono', 'Menlo', monospace;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  fill: currentColor;
+}
+
+.prompt-bg__line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.7;
+}
+
+.prompt-bg__dot {
+  fill: currentColor;
+}
+
+/* 暗背景セクションではコントラスト調整 */
+[data-theme="stone"] .prompt-bg,
+[data-theme="black"] .prompt-bg {
+  opacity: 0.08;
 }
 
 a {
@@ -615,15 +664,19 @@ img, svg {
   border-color: var(--theme-fg);
 }
 
-/* ===================== WORKS (Feature Project style) ===================== */
+/* ===================== WORKS (Feature Project, 1画面グリッド) ===================== */
 .works {
-  padding: 120px 40px 160px;
+  min-height: 100vh;
+  padding: 96px 40px 64px;
   background: var(--theme-bg);
+  display: flex;
+  flex-direction: column;
 }
 
 .works__head {
   max-width: 1600px;
-  margin: 0 auto 48px;
+  width: 100%;
+  margin: 0 auto 36px;
 }
 
 .works__title {
@@ -634,17 +687,28 @@ img, svg {
   letter-spacing: -0.03em;
 }
 
-.works__feature {
-  position: relative;
-  height: 78vh;
-  min-height: 520px;
-  margin: 0 auto 24px;
+.works__grid {
+  flex: 1;
   max-width: 1600px;
-  overflow: hidden;
-  cursor: pointer;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: 1fr;
+  gap: 16px;
+  min-height: 420px;
 }
 
-.works__feature-bg,
+.works__card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+  color: inherit;
+}
+
 .works__card-bg {
   position: absolute;
   inset: 0;
@@ -653,80 +717,42 @@ img, svg {
   transition: transform 1.6s var(--ease);
 }
 
-.works__feature:hover .works__feature-bg,
 .works__card:hover .works__card-bg {
   transform: scale(1.04);
 }
 
-.works__feature-bg {
+.works__card-bg--1 {
   background-image: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 45%, #2a1b3d 100%);
 }
+.works__card-bg--2 {
+  background-image: linear-gradient(135deg, #2a1515 0%, #3d1a2a 45%, #1a1a2e 100%);
+}
+.works__card-bg--3 {
+  background-image: linear-gradient(135deg, #1a2a1a 0%, #2a3a1a 45%, #3d3a1a 100%);
+}
 
-.works__feature-overlay,
 .works__card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0) 75%);
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 45%, rgba(0,0,0,0) 80%);
 }
 
-.works__feature-content,
 .works__card-content {
   position: absolute;
-  bottom: 40px;
-  left: 40px;
-  right: 40px;
+  bottom: 28px;
+  left: 28px;
+  right: 28px;
   color: var(--white);
 }
 
-.works__feature-cat,
 .works__card-cat {
   font-family: var(--font-en);
   font-weight: 500;
   font-size: 10px;
   letter-spacing: 0.22em;
   color: var(--gold);
-  margin-bottom: 16px;
-  text-transform: uppercase;
-}
-
-.works__feature-title {
-  font-family: var(--font-en);
-  font-weight: 800;
-  font-size: clamp(36px, 5vw, 72px);
-  line-height: 1;
-  letter-spacing: -0.02em;
   margin-bottom: 12px;
-}
-
-.works__feature-sub {
-  font-family: var(--font-jp);
-  font-size: 13px;
-  color: rgba(255,255,255,0.7);
-  letter-spacing: 0.04em;
-}
-
-.works__grid {
-  max-width: 1600px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-
-.works__card {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  min-height: 360px;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.works__card:nth-child(1) .works__card-bg {
-  background-image: linear-gradient(135deg, #2a1515 0%, #3d1a2a 45%, #1a1a2e 100%);
-}
-
-.works__card:nth-child(2) .works__card-bg {
-  background-image: linear-gradient(135deg, #1a2a1a 0%, #2a3a1a 45%, #3d3a1a 100%);
+  text-transform: uppercase;
 }
 
 .works__card-title {
@@ -746,7 +772,8 @@ img, svg {
 
 .works__cta {
   max-width: 1600px;
-  margin: 48px auto 0;
+  width: 100%;
+  margin: 28px auto 0;
   padding: 0 8px;
   text-align: right;
 }
@@ -1099,11 +1126,12 @@ img, svg {
 
   .about { padding: 100px 20px; }
   .works { padding: 80px 20px 100px; }
-  .works__feature { height: 60vh; min-height: 360px; margin: 0; }
-  .works__feature-content, .works__card-content { left: 24px; right: 24px; bottom: 28px; }
-  .works__feature-title { font-size: clamp(30px, 7vw, 48px); }
-  .works__grid { grid-template-columns: 1fr; margin: 4px 0 0; }
-  .works__card { height: 42vh; min-height: 280px; }
+  .works { min-height: auto; padding: 80px 24px 64px; }
+  .works__head { margin-bottom: 24px; }
+  .works__grid { grid-template-columns: 1fr; grid-template-rows: auto; gap: 16px; min-height: 0; flex: none; }
+  .works__card { height: 52vh; min-height: 320px; }
+  .works__card-content { left: 24px; right: 24px; bottom: 24px; }
+  .works__card-title { font-size: clamp(26px, 6vw, 36px); }
 
   .creator { padding: 80px 20px 100px; }
   .creator__list { grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -1258,41 +1286,40 @@ img, svg {
   </div><!-- /.about__stage -->
 </section>
 
-<!-- WORKS -->
+<!-- WORKS — 1画面に収める Feature Project グリッド -->
 <section class="works" id="works" data-theme="sand">
   <div class="works__head">
     <h2 class="works__title js-reveal">WORKS</h2>
   </div>
 
-  <div class="works__feature js-reveal">
-    <div class="works__feature-bg"></div>
-    <div class="works__feature-overlay"></div>
-    <div class="works__feature-content">
-      <p class="works__feature-cat">MOVIE PRODUCTION</p>
-      <h3 class="works__feature-title">LAST CALL</h3>
-      <p class="works__feature-sub">公開オーディション番組 OP映像</p>
-    </div>
-  </div>
-
   <div class="works__grid">
-    <div class="works__card js-reveal">
-      <div class="works__card-bg"></div>
+    <a href="#" class="works__card js-reveal">
+      <div class="works__card-bg works__card-bg--1"></div>
+      <div class="works__card-overlay"></div>
+      <div class="works__card-content">
+        <p class="works__card-cat">MOVIE PRODUCTION</p>
+        <h3 class="works__card-title">LAST CALL</h3>
+        <p class="works__card-sub">公開オーディション番組 OP映像</p>
+      </div>
+    </a>
+    <a href="#" class="works__card js-reveal">
+      <div class="works__card-bg works__card-bg--2"></div>
       <div class="works__card-overlay"></div>
       <div class="works__card-content">
         <p class="works__card-cat">MUSIC VIDEO</p>
         <h3 class="works__card-title">HYDE | SOCIAL VIRUS</h3>
         <p class="works__card-sub">Music Video</p>
       </div>
-    </div>
-    <div class="works__card js-reveal">
-      <div class="works__card-bg"></div>
+    </a>
+    <a href="#" class="works__card js-reveal">
+      <div class="works__card-bg works__card-bg--3"></div>
       <div class="works__card-overlay"></div>
       <div class="works__card-content">
         <p class="works__card-cat">BRANDING</p>
         <h3 class="works__card-title">24世紀ラーメン</h3>
         <p class="works__card-sub">ブランディング映像</p>
       </div>
-    </div>
+    </a>
   </div>
 
   <div class="works__cta js-reveal">
@@ -1517,26 +1544,35 @@ img, svg {
   };
   var themedSections = document.querySelectorAll('[data-theme]');
 
-  if ('IntersectionObserver' in window) {
-    var themeObserver = new IntersectionObserver(function(entries) {
-      // 最も画面に近いセクションのテーマを採用
-      var best = null;
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
-        }
-      });
-      if (best) {
-        var name = best.target.getAttribute('data-theme');
-        var t = themes[name];
-        if (t) {
-          document.documentElement.style.setProperty('--theme-bg', t.bg);
-          document.documentElement.style.setProperty('--theme-fg', t.fg);
-        }
-      }
-    }, { threshold: [0.2, 0.4, 0.6, 0.8] });
-    themedSections.forEach(function(s) { themeObserver.observe(s); });
+  // セクション・ヘッドラインが画面上部 28vh のラインに到達した時点で
+  // そのセクションのテーマへ切替。CSS の transition で滑らかに遷移。
+  var currentTheme = null;
+  function pickThemeByScroll() {
+    var refY = window.innerHeight * 0.28;
+    var active = themedSections[0];
+    themedSections.forEach(function(s) {
+      var top = s.getBoundingClientRect().top;
+      if (top - refY <= 0) active = s;
+    });
+    if (!active) return;
+    var name = active.getAttribute('data-theme');
+    if (name === currentTheme) return;
+    var t = themes[name];
+    if (!t) return;
+    currentTheme = name;
+    document.documentElement.style.setProperty('--theme-bg', t.bg);
+    document.documentElement.style.setProperty('--theme-fg', t.fg);
   }
+
+  var themeTicking = false;
+  window.addEventListener('scroll', function() {
+    if (!themeTicking) {
+      requestAnimationFrame(function() { themeTicking = false; pickThemeByScroll(); });
+      themeTicking = true;
+    }
+  }, { passive: true });
+  window.addEventListener('resize', pickThemeByScroll);
+  pickThemeByScroll();
 
   // --- Hamburger ---
   var hamburger = document.getElementById('hamburger');
@@ -1608,6 +1644,68 @@ img, svg {
     });
   };
 
+})();
+</script>
+
+<!-- AI/PROMPT 背景パターン定義（各セクションから url(#promptPattern) で参照） -->
+<svg class="prompt-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
+  <defs>
+    <pattern id="promptPattern" x="0" y="0" width="560" height="460" patternUnits="userSpaceOnUse">
+      <g class="prompt-bg__text">
+        <text x="24" y="48">// prompt: cinematic — golden hour</text>
+        <text x="290" y="118">{ model: "nano-banana" }</text>
+        <text x="56" y="206">--aspect 16:9 --editorial</text>
+        <text x="340" y="282">AI × CREATOR × BUSINESS</text>
+        <text x="28" y="370">// seed 0x42 — style: sac</text>
+        <text x="310" y="420">one prompt, change the world.</text>
+      </g>
+      <g>
+        <path class="prompt-bg__line" d="M 50 60 L 270 126"/>
+        <path class="prompt-bg__line" d="M 80 218 L 330 288"/>
+        <path class="prompt-bg__line" d="M 40 382 L 300 428"/>
+      </g>
+      <g>
+        <circle class="prompt-bg__dot" cx="50" cy="60" r="1.6"/>
+        <circle class="prompt-bg__dot" cx="270" cy="126" r="1.6"/>
+        <circle class="prompt-bg__dot" cx="80" cy="218" r="1.6"/>
+        <circle class="prompt-bg__dot" cx="330" cy="288" r="1.6"/>
+        <circle class="prompt-bg__dot" cx="40" cy="382" r="1.6"/>
+        <circle class="prompt-bg__dot" cx="300" cy="428" r="1.6"/>
+      </g>
+    </pattern>
+  </defs>
+</svg>
+
+<script>
+(function() {
+  'use strict';
+  // 各非HEROセクションに prompt-bg レイヤーを注入し、スクロールでパララックス移動
+  var targets = document.querySelectorAll('.about, .works, .creator, .info, .contact');
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  targets.forEach(function(section) {
+    var svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('class', 'prompt-bg');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+    var rect = document.createElementNS(SVG_NS, 'rect');
+    rect.setAttribute('width', '100%');
+    rect.setAttribute('height', '100%');
+    rect.setAttribute('fill', 'url(#promptPattern)');
+    svg.appendChild(rect);
+    section.insertBefore(svg, section.firstChild);
+  });
+
+  // scroll 量で prompt-bg 全体を translateY（遅延させて奥行き感）
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var y = window.scrollY * 0.18;
+    document.documentElement.style.setProperty('--ai-bg-y', (-y).toFixed(1) + 'px');
+  }
+  window.addEventListener('scroll', function() {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
 })();
 </script>
 
