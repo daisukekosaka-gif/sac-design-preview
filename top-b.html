@@ -374,11 +374,11 @@ nav .nav-cta:hover {
   gap: 40px;
 }
 .hero-main-copy {
-  font-size: clamp(40px, 7vw, 112px);
+  font-size: clamp(32px, 5.2vw, 84px);
   font-weight: 900;
-  line-height: 1.08;
+  line-height: 1.1;
   letter-spacing: -0.02em;
-  max-width: 1200px;
+  max-width: 1400px;
 }
 .hero-main-copy .accent-bar {
   display: inline-block;
@@ -540,27 +540,24 @@ nav .nav-cta:hover {
 
 /* ========== STATEMENT ========== */
 .statement {
-  padding: 200px 40px 180px;
-  max-width: 1400px;
+  padding: 180px 40px 180px;
+  max-width: 1200px;
+  margin: 0 auto;
   position: relative;
 }
-.statement::before {
-  content: '01 / STATEMENT';
-  position: absolute;
-  top: 120px;
-  left: 40px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  color: var(--ink-dim);
-}
 .statement-text {
-  font-size: clamp(24px, 3.4vw, 54px);
+  font-size: clamp(22px, 2.8vw, 42px);
   font-weight: 700;
-  line-height: 1.55;
-  letter-spacing: -0.01em;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
   color: var(--ink);
+  text-indent: 0;
 }
+.statement-text .stmt-block {
+  display: block;
+  margin-bottom: 28px;
+}
+.statement-text .stmt-block:last-child { margin-bottom: 0; }
 .statement-text em {
   font-style: normal;
   background: linear-gradient(100deg, var(--grad-a) 0%, var(--grad-c) 50%, var(--grad-b) 100%);
@@ -628,10 +625,11 @@ nav .nav-cta:hover {
 .works-hzn-title {
   font-family: 'Archivo', sans-serif;
   font-weight: 800;
-  font-size: clamp(64px, 9vw, 150px);
-  line-height: 0.92;
+  font-size: clamp(56px, 7vw, 120px);
+  line-height: 0.95;
   letter-spacing: -0.04em;
   margin-bottom: 32px;
+  white-space: nowrap;
 }
 .works-hzn-title .italic {
   font-style: italic;
@@ -758,17 +756,10 @@ nav .nav-cta:hover {
 
 .hzn-progress {
   position: absolute;
-  bottom: 40px; left: 40px; right: 40px;
+  bottom: 40px; left: 40px; right: 200px;
   height: 1px;
   background: var(--line-2);
   z-index: 4;
-}
-.hzn-progress::after {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 0%;
-  background: linear-gradient(90deg, var(--grad-a), var(--grad-b));
 }
 .hzn-progress-label {
   position: absolute;
@@ -779,6 +770,84 @@ nav .nav-cta:hover {
   text-transform: uppercase;
   color: var(--ink-mid);
   z-index: 4;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.hzn-dots {
+  position: absolute;
+  bottom: 55px; left: 40px;
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+.hzn-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--line-2);
+  transition: background 0.3s, transform 0.3s var(--ease);
+}
+.hzn-dot.active {
+  background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+  transform: scale(1.3);
+}
+.hzn-nav {
+  position: absolute;
+  bottom: 32px;
+  right: 40px;
+  display: flex;
+  gap: 12px;
+  z-index: 5;
+}
+.hzn-nav-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--line-2);
+  color: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  backdrop-filter: blur(6px);
+}
+.hzn-nav-btn:hover {
+  background: linear-gradient(120deg, var(--grad-a), var(--grad-b));
+  border-color: transparent;
+  transform: scale(1.08);
+}
+.hzn-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.hzn-nav-btn:disabled:hover {
+  background: transparent;
+  border-color: var(--line-2);
+  transform: none;
+}
+
+/* tile connector arrow between tiles */
+.work-tile + .work-tile {
+  position: relative;
+}
+.work-tile + .work-tile::before {
+  content: '→';
+  position: absolute;
+  top: 40%;
+  left: -30px;
+  transform: translate(-50%, -50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  color: var(--ink-dim);
+  background: linear-gradient(120deg, var(--grad-a), var(--grad-b));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 /* ========== SERVICE ========== */
@@ -1565,7 +1634,11 @@ footer {
   <div class="hero-stage" id="heroStage">
     <div class="hero-card active">
       <div class="hero-card-img">
-        <div id="heroYT"></div>
+        <iframe
+          src="https://www.youtube.com/embed/PtCzVhUE57s?autoplay=1&mute=1&loop=1&playlist=PtCzVhUE57s&controls=0&showinfo=0&rel=0&modestbranding=1"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
       </div>
     </div>
     <div class="hero-card"><div class="hero-card-img"></div></div>
@@ -1577,8 +1650,8 @@ footer {
 
   <div class="hero-content">
     <h1 class="hero-main-copy" data-scramble>
-      <span class="accent-bar"></span>つくる力を、<br>
-      <em>再定義する</em>。
+      <span class="accent-bar"></span>クリエイティブ制作の制約を、<br>
+      <em>解放する</em>。
     </h1>
     <div class="hero-sub-wrap">
       <div class="hero-sub-line">
@@ -1624,9 +1697,9 @@ footer {
 <!-- STATEMENT -->
 <section class="statement" id="statement">
   <p class="statement-text split-text">
-    私たちは、AIを使って<em>制作工程そのもの</em>を再設計する。
-    映像、Web、グラフィック、SNS——領域を横断しながら、
-    事業に必要なクリエイティブを<em>速く、柔軟に、美しく</em>届ける。
+    <span class="stmt-block">私たちは、AIを使って<em>制作工程そのもの</em>を再設計する。</span>
+    <span class="stmt-block">映像、Web、グラフィック、SNS——領域を横断しながら、</span>
+    <span class="stmt-block">事業に必要なクリエイティブを<em>速く、柔軟に、美しく</em>届ける。</span>
   </p>
 </section>
 
@@ -1635,7 +1708,6 @@ footer {
   <div class="works-hzn-pin">
     <div class="works-hzn-track" id="hznTrack">
       <div class="works-hzn-intro">
-        <span class="works-hzn-label">Selected Works</span>
         <h2 class="works-hzn-title" data-scramble>Works<span class="italic">/25</span></h2>
         <p class="works-hzn-note">
           領域を横断する5つのプロジェクト。<br>
@@ -1701,8 +1773,19 @@ footer {
       </div>
     </div>
 
-    <div class="hzn-progress-label">Works 01 — 05</div>
+    <div class="hzn-progress-label"><span id="hznCurrent">01</span> / 05</div>
+    <div class="hzn-dots" id="hznDots">
+      <div class="hzn-dot active"></div>
+      <div class="hzn-dot"></div>
+      <div class="hzn-dot"></div>
+      <div class="hzn-dot"></div>
+      <div class="hzn-dot"></div>
+    </div>
     <div class="hzn-progress"><span id="hznProgress"></span></div>
+    <div class="hzn-nav">
+      <button class="hzn-nav-btn" id="hznPrev" aria-label="前の事例">←</button>
+      <button class="hzn-nav-btn" id="hznNext" aria-label="次の事例">→</button>
+    </div>
   </div>
 </section>
 
@@ -2148,31 +2231,74 @@ footer {
   const hznSection = document.querySelector('.works-hzn');
   const hznTrack = document.getElementById('hznTrack');
   const hznProgress = document.getElementById('hznProgress');
+  const hznDots = document.querySelectorAll('.hzn-dot');
+  const hznCurrent = document.getElementById('hznCurrent');
+  const hznPrev = document.getElementById('hznPrev');
+  const hznNext = document.getElementById('hznNext');
   if (hznSection && hznTrack && window.matchMedia('(min-width: 1025px)').matches) {
+    let scrollDist = 0;
+    let tileAnchors = [];
+
     function setupHzn() {
-      const scrollDist = hznTrack.scrollWidth - window.innerWidth + 120;
-      // section height = 100vh + scrollDist (sticky ではみ出し分)
+      scrollDist = hznTrack.scrollWidth - window.innerWidth + 120;
       hznSection.style.height = (window.innerHeight + scrollDist) + 'px';
-      // progress bar setup
       if (hznProgress) {
         hznProgress.style.cssText = 'position:absolute;left:0;top:0;bottom:0;width:0%;background:linear-gradient(90deg,var(--grad-a),var(--grad-b));';
       }
-      window.addEventListener('scroll', () => {
-        const rect = hznSection.getBoundingClientRect();
-        const top = -rect.top;
-        const max = scrollDist;
-        const p = Math.max(0, Math.min(1, top / max));
-        hznTrack.style.transform = 'translateX(' + (-p * scrollDist) + 'px)';
-        if (hznProgress) hznProgress.style.width = (p * 100) + '%';
-      }, { passive: true });
+      // タイル先頭 x を計算 (track 内座標)
+      const tiles = hznTrack.querySelectorAll('.work-tile');
+      const trackLeft = hznTrack.getBoundingClientRect().left;
+      tileAnchors = Array.from(tiles).map(t => {
+        const r = t.getBoundingClientRect();
+        return r.left - trackLeft; // track 内 x
+      });
     }
-    // 画像フォント等のロード完了後にセットアップ
-    window.addEventListener('load', setupHzn);
+
+    function updateFromScroll() {
+      const rect = hznSection.getBoundingClientRect();
+      const top = -rect.top;
+      const p = Math.max(0, Math.min(1, top / scrollDist));
+      hznTrack.style.transform = 'translateX(' + (-p * scrollDist) + 'px)';
+      if (hznProgress) hznProgress.style.width = (p * 100) + '%';
+
+      // current tile = track 中央に近いタイル
+      const centerX = p * scrollDist + window.innerWidth / 2;
+      let bestIdx = 0, bestD = Infinity;
+      tileAnchors.forEach((x, i) => {
+        const d = Math.abs(x + 230 - centerX); // tile 460 の半分
+        if (d < bestD) { bestD = d; bestIdx = i; }
+      });
+      hznDots.forEach((d, i) => d.classList.toggle('active', i === bestIdx));
+      if (hznCurrent) hznCurrent.textContent = String(bestIdx + 1).padStart(2, '0');
+      if (hznPrev) hznPrev.disabled = bestIdx <= 0;
+      if (hznNext) hznNext.disabled = bestIdx >= tileAnchors.length - 1;
+    }
+
+    function scrollToTile(idx) {
+      if (!tileAnchors.length) return;
+      idx = Math.max(0, Math.min(tileAnchors.length - 1, idx));
+      const trackX = Math.max(0, tileAnchors[idx] - window.innerWidth * 0.15);
+      const p = Math.min(1, trackX / scrollDist);
+      const sectionTop = hznSection.offsetTop;
+      window.scrollTo({ top: sectionTop + p * scrollDist, behavior: 'smooth' });
+    }
+
+    hznPrev && hznPrev.addEventListener('click', () => {
+      const activeIdx = Array.from(hznDots).findIndex(d => d.classList.contains('active'));
+      scrollToTile(activeIdx - 1);
+    });
+    hznNext && hznNext.addEventListener('click', () => {
+      const activeIdx = Array.from(hznDots).findIndex(d => d.classList.contains('active'));
+      scrollToTile(activeIdx + 1);
+    });
+
+    window.addEventListener('load', () => { setupHzn(); updateFromScroll(); });
     window.addEventListener('resize', () => {
-      // reset height so scrollWidth is accurate
       hznSection.style.height = '';
       setupHzn();
+      updateFromScroll();
     });
+    window.addEventListener('scroll', updateFromScroll, { passive: true });
   }
 
   // ===== Hero mouse parallax =====
@@ -2193,33 +2319,6 @@ footer {
     }
   }
 
-  // ===== YouTube IFrame API (start=5, loop from 5s) =====
-  var YT_VIDEO_ID = 'PtCzVhUE57s';
-  var YT_START_SEC = 5;
-  var ytTag = document.createElement('script');
-  ytTag.src = 'https://www.youtube.com/iframe_api';
-  document.head.appendChild(ytTag);
-  window.onYouTubeIframeAPIReady = function() {
-    if (!document.getElementById('heroYT')) return;
-    new YT.Player('heroYT', {
-      videoId: YT_VIDEO_ID,
-      playerVars: {
-        autoplay: 1, mute: 1, controls: 0, rel: 0,
-        modestbranding: 1, showinfo: 0, iv_load_policy: 3,
-        disablekb: 1, fs: 0, playsinline: 1,
-        start: YT_START_SEC
-      },
-      events: {
-        onReady: function(e) { e.target.mute(); e.target.playVideo(); },
-        onStateChange: function(e) {
-          if (e.data === YT.PlayerState.ENDED) {
-            e.target.seekTo(YT_START_SEC, true);
-            e.target.playVideo();
-          }
-        }
-      }
-    });
-  };
 })();
 </script>
 
