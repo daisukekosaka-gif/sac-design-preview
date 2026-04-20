@@ -875,7 +875,22 @@ nav .nav-cta:hover {
   height: 100%;
   transition: transform 1s var(--ease);
 }
-.work-tile:hover .work-tile-img-inner { transform: scale(1.06); }
+.work-tile-img-inner.is-photo {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.95) contrast(1.02);
+}
+.work-tile:hover .work-tile-img-inner { transform: scale(1.06); filter: saturate(1.05) contrast(1.06); }
+.work-tile-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
 
 .work-tile:nth-child(2) .work-tile-img-inner {
   background:
@@ -1425,17 +1440,29 @@ nav .nav-cta:hover {
 .creator-card:nth-child(even):hover { transform: translateY(32px) rotate(0.5deg); }
 .creator-photo {
   width: 320px;
-  height: 420px;
+  aspect-ratio: 3/4;
   margin-bottom: 24px;
   overflow: hidden;
   position: relative;
+  background: #0a1213;
 }
 .creator-photo-inner {
   width: 100%;
   height: 100%;
   transition: transform 1s var(--ease);
 }
-.creator-card:hover .creator-photo-inner { transform: scale(1.05); }
+.creator-photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1s var(--ease), filter 0.8s var(--ease);
+  filter: saturate(0.92) contrast(1.02);
+}
+.creator-card:hover .creator-photo-inner,
+.creator-card:hover .creator-photo-img { transform: scale(1.05); filter: saturate(1.05) contrast(1.05); }
 .creator-photo-num {
   position: absolute;
   top: 16px; left: 16px;
@@ -1941,33 +1968,33 @@ footer {
       <div class="work-tile">
         <div class="work-tile-img">
           <div class="work-tile-num">01 / FEATURED</div>
-          <div class="work-tile-img-inner"></div>
+          <img class="work-tile-img-inner is-photo" src="assets/images/works/lastcall.jpg" alt="LAST CALL" loading="lazy" style="object-position: 50% 35%;">
         </div>
         <div class="work-tile-info">
-          <div class="work-tile-meta">Brand Movie — 2025</div>
-          <div class="work-tile-title">ブランドの原点を、<br>映像で再構築する</div>
+          <div class="work-tile-meta">Movie Production — 2024</div>
+          <div class="work-tile-title">LAST CALL<br>公開オーディション番組 OP映像</div>
         </div>
       </div>
 
       <div class="work-tile">
         <div class="work-tile-img">
           <div class="work-tile-num">02</div>
-          <div class="work-tile-img-inner"></div>
+          <img class="work-tile-img-inner is-photo" src="assets/images/works/hyde.jpg" alt="HYDE | SOCIAL VIRUS" loading="lazy" style="object-position: 50% 30%;">
         </div>
         <div class="work-tile-info">
-          <div class="work-tile-meta">EC / Web — 2025</div>
-          <div class="work-tile-title">購買体験を一新する<br>EC設計</div>
+          <div class="work-tile-meta">Music Video — 2024</div>
+          <div class="work-tile-title">HYDE | SOCIAL VIRUS<br>Music Video</div>
         </div>
       </div>
 
       <div class="work-tile">
         <div class="work-tile-img">
           <div class="work-tile-num">03</div>
-          <div class="work-tile-img-inner"></div>
+          <img class="work-tile-img-inner is-photo" src="assets/images/works/ramen.jpg" alt="24世紀ラーメン" loading="lazy" style="object-position: 50% 50%;">
         </div>
         <div class="work-tile-info">
-          <div class="work-tile-meta">Graphic / Branding — 2024</div>
-          <div class="work-tile-title">パッケージから始まる<br>ブランド体験</div>
+          <div class="work-tile-meta">Branding — 2024</div>
+          <div class="work-tile-title">24世紀ラーメン<br>ブランディング映像</div>
         </div>
       </div>
 
@@ -2106,47 +2133,42 @@ footer {
     <div class="creator-card">
       <div class="creator-photo">
         <span class="creator-photo-num">01</span>
-        <div class="creator-photo-inner" style="background: radial-gradient(at 50% 30%, rgba(255,61,0,0.4), #1a1a1a);"></div>
+        <img class="creator-photo-img" src="assets/images/creators/tsunehashi.jpg" alt="ツネハシタケシ" loading="lazy">
       </div>
-      <div class="creator-role">Director / Filmmaker</div>
-      <div class="creator-name">田中 大輔</div>
-      <div class="creator-specialty">映像ディレクション、ブランドストーリーテリング</div>
+      <div class="creator-role">Director / Designer</div>
+      <div class="creator-name">ツネハシタケシ</div>
     </div>
     <div class="creator-card">
       <div class="creator-photo">
         <span class="creator-photo-num">02</span>
-        <div class="creator-photo-inner" style="background: radial-gradient(at 30% 40%, rgba(139,47,226,0.4), #1d1d1d);"></div>
+        <img class="creator-photo-img" src="assets/images/creators/ochiai.png" alt="落合 剛之" loading="lazy">
       </div>
-      <div class="creator-role">Art Director</div>
-      <div class="creator-name">鈴木 美咲</div>
-      <div class="creator-specialty">ブランドデザイン、世界観構築</div>
+      <div class="creator-role">Director</div>
+      <div class="creator-name">落合 剛之</div>
     </div>
     <div class="creator-card">
       <div class="creator-photo">
         <span class="creator-photo-num">03</span>
-        <div class="creator-photo-inner" style="background: radial-gradient(at 60% 60%, rgba(0,212,255,0.3), #1f1f1f);"></div>
+        <img class="creator-photo-img" src="assets/images/creators/bird.jpg" alt="Bird" loading="lazy">
       </div>
-      <div class="creator-role">AI Creative Engineer</div>
-      <div class="creator-name">佐藤 健一</div>
-      <div class="creator-specialty">AI 実装、ワークフロー設計</div>
+      <div class="creator-role">AI Creator</div>
+      <div class="creator-name">Bird</div>
     </div>
     <div class="creator-card">
       <div class="creator-photo">
         <span class="creator-photo-num">04</span>
-        <div class="creator-photo-inner" style="background: radial-gradient(at 40% 20%, rgba(255,46,99,0.4), #222);"></div>
+        <img class="creator-photo-img" src="assets/images/creators/gane.jpg" alt="gane.WAV" loading="lazy">
       </div>
-      <div class="creator-role">Web Designer</div>
-      <div class="creator-name">高橋 理恵</div>
-      <div class="creator-specialty">UI / UX デザイン、インタラクション設計</div>
+      <div class="creator-role">AI Creator</div>
+      <div class="creator-name">gane.WAV</div>
     </div>
     <div class="creator-card">
       <div class="creator-photo">
         <span class="creator-photo-num">05</span>
-        <div class="creator-photo-inner" style="background: radial-gradient(at 50% 70%, rgba(15,210,122,0.3), #1c1c1c);"></div>
+        <img class="creator-photo-img" src="assets/images/creators/aoki.webp" alt="AoKi¹⁰⁴" loading="lazy">
       </div>
-      <div class="creator-role">Motion Designer</div>
-      <div class="creator-name">山田 翔太</div>
-      <div class="creator-specialty">モーショングラフィックス、VFX</div>
+      <div class="creator-role">AI Creator</div>
+      <div class="creator-name">AoKi¹⁰⁴</div>
     </div>
   </div>
 </section>
