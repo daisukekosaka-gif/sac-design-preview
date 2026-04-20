@@ -412,7 +412,7 @@ img, svg {
 .about__lead {
   font-family: var(--font-jp);
   font-weight: 500;
-  font-size: clamp(24px, 2.8vw, 38px);
+  font-size: clamp(22px, 2.4vw, 34px);
   line-height: 1.45;
   letter-spacing: 0.01em;
   color: var(--theme-fg);
@@ -615,20 +615,15 @@ img, svg {
   border-color: var(--theme-fg);
 }
 
-/* ===================== WORKS ===================== */
+/* ===================== WORKS (Feature Project style) ===================== */
 .works {
   padding: 120px 40px 160px;
   background: var(--theme-bg);
 }
 
 .works__head {
-  max-width: 1240px;
-  margin: 0 auto 64px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 24px;
-  flex-wrap: wrap;
+  max-width: 1600px;
+  margin: 0 auto 48px;
 }
 
 .works__title {
@@ -639,32 +634,11 @@ img, svg {
   letter-spacing: -0.03em;
 }
 
-.works__title-sub {
-  font-family: var(--font-jp);
-  font-weight: 400;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  color: var(--gray-400);
-  margin-top: 16px;
-}
-
-.works__link {
-  font-family: var(--font-en);
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  padding-bottom: 4px;
-  border-bottom: 1px solid currentColor;
-  transition: color 0.3s var(--ease);
-}
-
-.works__link:hover { color: var(--gold); }
-
 .works__feature {
   position: relative;
-  height: 72vh;
-  min-height: 480px;
-  margin: 0 auto;
+  height: 78vh;
+  min-height: 520px;
+  margin: 0 auto 24px;
   max-width: 1600px;
   overflow: hidden;
   cursor: pointer;
@@ -676,12 +650,12 @@ img, svg {
   inset: 0;
   background-size: cover;
   background-position: center;
-  transition: transform 1.4s var(--ease);
+  transition: transform 1.6s var(--ease);
 }
 
 .works__feature:hover .works__feature-bg,
 .works__card:hover .works__card-bg {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .works__feature-bg {
@@ -692,15 +666,15 @@ img, svg {
 .works__card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 85%);
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0) 75%);
 }
 
 .works__feature-content,
 .works__card-content {
   position: absolute;
-  bottom: 48px;
-  left: 48px;
-  right: 48px;
+  bottom: 40px;
+  left: 40px;
+  right: 40px;
   color: var(--white);
 }
 
@@ -733,16 +707,16 @@ img, svg {
 
 .works__grid {
   max-width: 1600px;
-  margin: 4px auto 0;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 4px;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
 
 .works__card {
   position: relative;
-  height: 56vh;
-  min-height: 380px;
+  aspect-ratio: 4 / 3;
+  min-height: 360px;
   overflow: hidden;
   cursor: pointer;
 }
@@ -1287,11 +1261,7 @@ img, svg {
 <!-- WORKS -->
 <section class="works" id="works" data-theme="sand">
   <div class="works__head">
-    <div class="js-reveal">
-      <h2 class="works__title">WORKS</h2>
-      <p class="works__title-sub">代表事例 — 映像から体験設計まで</p>
-    </div>
-    <a href="#" class="works__link js-reveal">VIEW ALL WORKS →</a>
+    <h2 class="works__title js-reveal">WORKS</h2>
   </div>
 
   <div class="works__feature js-reveal">
