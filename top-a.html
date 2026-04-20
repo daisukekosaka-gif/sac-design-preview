@@ -739,6 +739,26 @@ img, svg {
   filter: saturate(1) brightness(1);
 }
 
+/* 実サムネイル <img> — 画像が見きれないよう要点を中央〜上寄りに */
+.works__slide-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  transition: transform 2s var(--ease), filter 0.6s var(--ease);
+  filter: saturate(0.92) brightness(0.9);
+  z-index: -2;
+  display: block;
+  background: #0a0a0a;
+}
+
+.works__slide:hover .works__slide-img {
+  transform: scale(1.04);
+  filter: saturate(1) brightness(1);
+}
+
 .works__slide-bg--1 {
   background-image:
     radial-gradient(ellipse at 30% 20%, rgba(200,168,107,0.22), transparent 60%),
@@ -981,6 +1001,34 @@ img, svg {
 }
 
 .creator__link:hover { color: var(--gold); }
+
+/* 下部CTA（右上のVIEW ALLと入れ替え） */
+.creator__cta {
+  margin-top: 56px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.creator__cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  padding: 14px 22px;
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 35%, transparent);
+  border-radius: 999px;
+  color: var(--theme-fg);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.creator__cta-link:hover {
+  background: var(--theme-fg);
+  color: var(--theme-bg);
+  border-color: var(--theme-fg);
+}
 
 .creator__list {
   display: grid;
@@ -1438,7 +1486,7 @@ img, svg {
   <div class="works__head">
     <h2 class="works__title js-reveal">WORKS</h2>
     <div class="works__meta js-reveal">
-      <span class="works__counter"><span id="worksIndex">01</span> <span class="works__counter-sep">/</span> <span id="worksTotal">03</span></span>
+      <span class="works__counter"><span id="worksIndex">01</span> <span class="works__counter-sep">/</span> <span id="worksTotal">05</span></span>
     </div>
   </div>
 
@@ -1449,7 +1497,7 @@ img, svg {
 
     <div class="works__track" id="worksTrack" tabindex="0">
       <a href="#" class="works__slide" data-index="0">
-        <div class="works__slide-bg works__slide-bg--1"></div>
+        <img class="works__slide-img" src="assets/images/works/lastcall.jpg" alt="LAST CALL" loading="lazy" decoding="async" style="object-position: 50% 35%;">
         <div class="works__slide-overlay"></div>
         <div class="works__slide-meta">
           <span class="works__slide-num">01</span>
@@ -1465,7 +1513,7 @@ img, svg {
         </span>
       </a>
       <a href="#" class="works__slide" data-index="1">
-        <div class="works__slide-bg works__slide-bg--2"></div>
+        <img class="works__slide-img" src="assets/images/works/hyde.jpg" alt="HYDE | SOCIAL VIRUS" loading="lazy" decoding="async" style="object-position: 50% 30%;">
         <div class="works__slide-overlay"></div>
         <div class="works__slide-meta">
           <span class="works__slide-num">02</span>
@@ -1481,7 +1529,7 @@ img, svg {
         </span>
       </a>
       <a href="#" class="works__slide" data-index="2">
-        <div class="works__slide-bg works__slide-bg--3"></div>
+        <img class="works__slide-img" src="assets/images/works/ramen.jpg" alt="24世紀ラーメン" loading="lazy" decoding="async" style="object-position: 50% 50%;">
         <div class="works__slide-overlay"></div>
         <div class="works__slide-meta">
           <span class="works__slide-num">03</span>
@@ -1490,6 +1538,38 @@ img, svg {
         <div class="works__slide-content">
           <h3 class="works__slide-title">24世紀ラーメン</h3>
           <p class="works__slide-sub">ブランディング映像</p>
+        </div>
+        <span class="works__slide-cta" aria-hidden="true">
+          VIEW PROJECT
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="works__slide" data-index="3">
+        <div class="works__slide-bg works__slide-bg--1"></div>
+        <div class="works__slide-overlay"></div>
+        <div class="works__slide-meta">
+          <span class="works__slide-num">04</span>
+          <span class="works__slide-cat">COMING SOON</span>
+        </div>
+        <div class="works__slide-content">
+          <h3 class="works__slide-title">PROJECT 04</h3>
+          <p class="works__slide-sub">New release 2026</p>
+        </div>
+        <span class="works__slide-cta" aria-hidden="true">
+          VIEW PROJECT
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="works__slide" data-index="4">
+        <div class="works__slide-bg works__slide-bg--2"></div>
+        <div class="works__slide-overlay"></div>
+        <div class="works__slide-meta">
+          <span class="works__slide-num">05</span>
+          <span class="works__slide-cat">COMING SOON</span>
+        </div>
+        <div class="works__slide-content">
+          <h3 class="works__slide-title">PROJECT 05</h3>
+          <p class="works__slide-sub">New release 2026</p>
         </div>
         <span class="works__slide-cta" aria-hidden="true">
           VIEW PROJECT
@@ -1508,6 +1588,8 @@ img, svg {
       <button type="button" class="works__dot is-active" data-goto="0" aria-label="Slide 1"><span></span></button>
       <button type="button" class="works__dot" data-goto="1" aria-label="Slide 2"><span></span></button>
       <button type="button" class="works__dot" data-goto="2" aria-label="Slide 3"><span></span></button>
+      <button type="button" class="works__dot" data-goto="3" aria-label="Slide 4"><span></span></button>
+      <button type="button" class="works__dot" data-goto="4" aria-label="Slide 5"><span></span></button>
     </div>
     <a href="#" class="works__view-all">VIEW ALL WORKS
       <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1523,7 +1605,6 @@ img, svg {
         <h2 class="creator__title">CREATOR</h2>
         <p class="creator__title-sub">制作の現場に立つ、スペシャリストたち</p>
       </div>
-      <a href="#" class="creator__link js-reveal">VIEW ALL CREATORS →</a>
     </div>
     <div class="creator__list">
       <div class="creator__item js-reveal">
@@ -1551,6 +1632,11 @@ img, svg {
         <span class="creator__name">CREATOR E</span>
         <span class="creator__role">Web Developer</span>
       </div>
+    </div>
+    <div class="creator__cta js-reveal">
+      <a href="#" class="creator__cta-link">VIEW ALL CREATORS
+        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
   </div>
 </section>
