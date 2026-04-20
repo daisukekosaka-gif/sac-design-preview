@@ -426,8 +426,8 @@ img, svg {
 .about__lead {
   font-family: var(--font-jp);
   font-weight: 500;
-  /* フォントサイズを補間: 初期 ~64px → 最終 ~34px */
-  font-size: calc(34px + 30px * (1 - var(--lead-p)));
+  /* 拡縮なし: 固定サイズのままパララックス */
+  font-size: clamp(28px, 3.4vw, 42px);
   line-height: 1.45;
   letter-spacing: 0.01em;
   color: var(--theme-fg);
