@@ -1332,22 +1332,44 @@ tick(); setInterval(tick, 1000);
   resize();
   window.addEventListener('resize', resize);
 
-  // STREAM: horizontal sine-modulated lines drifting vertically
+  // STREAM: oriented sine-modulated lines drifting perpendicular to their direction
+  // Angles biased to cardinal + diagonals so composition keeps the Ikeda grid feel,
+  // but each stream moves independently — some horizontal, some vertical, some diagonal.
   const streams = [];
-  const STREAM_COUNT = 70;
+  const STREAM_COUNT = 90;
+  const ANGLE_POOL = [
+    0, 0, 0,                           // horizontal lines (drift up/down)
+    Math.PI/2, Math.PI/2, Math.PI/2,   // vertical lines (drift left/right)
+    Math.PI/4, -Math.PI/4,             // ±45° diagonals
+    Math.PI/3, -Math.PI/3,             // ±60° diagonals
+    Math.PI/6, -Math.PI/6              // ±30° diagonals
+  ];
   function seedStreams(){
     streams.length = 0;
+    const diag = Math.hypot(w, h);
     for (let i = 0; i < STREAM_COUNT; i++){
-      const isAccent = Math.random() > 0.92;
+      const base = ANGLE_POOL[(Math.random() * ANGLE_POOL.length) | 0];
+      const jitter = (Math.random() - 0.5) * 0.18;    // slight angle variance
+      const angle = base + jitter;
+      const dx = Math.cos(angle);
+      const dy = Math.sin(angle);
+      const flip = Math.random() < 0.5 ? -1 : 1;       // random up/down, left/right
+      const px = -dy * flip;                           // perpendicular drift direction
+      const py =  dx * flip;
+      const isAccent = Math.random() > 0.9;
       streams.push({
-        y: Math.random() * h,
-        vy: (0.12 + Math.random() * 0.6) * DPR,
-        amp: (2 + Math.random() * 14) * DPR,
-        freq: 0.0009 + Math.random() * 0.004,
+        cx: Math.random() * w,
+        cy: Math.random() * h,
+        dx, dy, px, py,
+        angle,
+        speed: (0.12 + Math.random() * 0.9) * DPR,
+        amp: (1.5 + Math.random() * 14) * DPR,
+        freq: 0.0008 + Math.random() * 0.0045,
         phase: Math.random() * Math.PI * 2,
-        opacity: 0.08 + Math.random() * 0.42,
+        omega: (Math.random() < 0.5 ? -1 : 1) * (0.008 + Math.random()*0.028),
+        opacity: 0.08 + Math.random() * 0.45,
         accent: isAccent,
-        segments: 2 + Math.floor(Math.random()*3)
+        len: diag * (0.9 + Math.random() * 0.8)        // long enough to span canvas
       });
     }
   }
@@ -1389,21 +1411,37 @@ tick(); setInterval(tick, 1000);
     ctx.fillStyle = 'rgba(7,8,8,0.28)';
     ctx.fillRect(0, 0, w, h);
 
-    // --- Horizontal flowing streams ---
+    // --- Oriented flowing streams (horizontal / vertical / diagonal / random drift) ---
     for (const s of streams){
       ctx.beginPath();
       const hex = s.accent ? [171,184,195] : [244,245,243];
       ctx.strokeStyle = `rgba(${hex[0]},${hex[1]},${hex[2]},${s.opacity})`;
       ctx.lineWidth = (s.accent ? 1.1 : 0.6) * DPR;
+
       const step = 3 * DPR;
-      for (let x = 0; x <= w; x += step){
-        const y = s.y + Math.sin(x * s.freq + s.phase + t * 0.018) * s.amp;
-        if (x === 0) ctx.moveTo(x, y);
+      const segs = Math.ceil(s.len / step);
+      // perpendicular unit vector for sine offset
+      const nx = -s.dy, ny = s.dx;
+      for (let i = 0; i <= segs; i++){
+        const p = (i / segs - 0.5) * s.len;                       // position along line
+        const sine = Math.sin(p * s.freq + s.phase + t * s.omega) * s.amp;
+        const x = s.cx + s.dx * p + nx * sine;
+        const y = s.cy + s.dy * p + ny * sine;
+        if (i === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
       ctx.stroke();
-      s.y += s.vy;
-      if (s.y > h + 40) { s.y = -40; s.phase = Math.random()*Math.PI*2; }
+
+      // drift perpendicular to line direction (so streams sweep across the canvas)
+      s.cx += s.px * s.speed;
+      s.cy += s.py * s.speed;
+
+      // wrap around on either axis
+      const margin = s.amp * 2 + 80 * DPR;
+      if (s.cx < -margin){ s.cx = w + margin; s.phase = Math.random()*Math.PI*2; }
+      else if (s.cx > w + margin){ s.cx = -margin; s.phase = Math.random()*Math.PI*2; }
+      if (s.cy < -margin){ s.cy = h + margin; s.phase = Math.random()*Math.PI*2; }
+      else if (s.cy > h + margin){ s.cy = -margin; s.phase = Math.random()*Math.PI*2; }
     }
 
     // --- Bottom data bars (sonogram) ---
