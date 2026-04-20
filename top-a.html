@@ -400,26 +400,36 @@ img, svg {
   margin: 0 auto;
 }
 
-/* ABOUT 見出し: 初期は大きく中央寄り → スクロールで定位置へ縮小 */
+/* ABOUT 見出し: 初期はネイティブに大きな文字をセンタリング、
+   スクロールで上部へスライドしながら自然なサイズへ。
+   - translateY: 中央 → 上部（32vh→0）
+   - padding:    左右に余白を寄せて中央揃え → 最終は解除
+   - 区切ラベル ABOUT は最終位置で徐々に出現 */
 .about__head {
   display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 48px;
+  grid-template-columns: calc(180px * var(--lead-p)) 1fr;
+  column-gap: calc(48px * var(--lead-p));
   align-items: start;
   margin-bottom: 56px;
-  transform-origin: left top;
-  transform:
-    translateY(calc(26vh * (1 - var(--lead-p))))
-    scale(calc(1 + 1.2 * (1 - var(--lead-p))));
+  padding: 0 calc(8% * (1 - var(--lead-p)));
+  transform: translateY(calc(32vh * (1 - var(--lead-p))));
   will-change: transform;
+}
+
+/* 初期状態では ABOUT ラベル用の列を潰し、内容は隠す */
+.about__head .section-label {
+  opacity: var(--lead-p);
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .about__lead {
   font-family: var(--font-jp);
   font-weight: 500;
-  font-size: clamp(24px, 2.8vw, 38px);
-  line-height: 1.5;
-  letter-spacing: 0.02em;
+  /* フォントサイズを補間: 初期 ~64px → 最終 ~34px */
+  font-size: calc(34px + 30px * (1 - var(--lead-p)));
+  line-height: 1.45;
+  letter-spacing: 0.01em;
   color: var(--theme-fg);
 }
 
@@ -518,7 +528,14 @@ img, svg {
   .about__head {
     grid-template-columns: 88px 1fr;
     gap: 16px;
+    padding: 0;
     transform: none;
+  }
+  .about__head .section-label {
+    opacity: 1;
+  }
+  .about__lead {
+    font-size: clamp(24px, 5.4vw, 32px);
   }
   .about__grid {
     grid-template-columns: 1fr;
@@ -1508,10 +1525,13 @@ img, svg {
       var scrolled = Math.max(0, -rect.top);
       var p = clamp01(scrolled / total); // 0..1
 
-      // 進捗配分: lead 0→0.45 / approach 0.25→0.65 / philosophy 0.55→0.95
-      var leadP = smoothstep(0.00, 0.45, p);
-      var apP   = smoothstep(0.25, 0.65, p);
-      var phP   = smoothstep(0.55, 0.95, p);
+      // 進捗配分:
+      //   lead       0→0.40   リードを先にスライドアップ & 縮小
+      //   approach   0.38→0.70 リード着地後に APPROACH がフェードイン
+      //   philosophy 0.62→0.95 さらに遅れて PHILOSOPHY が登場
+      var leadP = smoothstep(0.00, 0.40, p);
+      var apP   = smoothstep(0.38, 0.70, p);
+      var phP   = smoothstep(0.62, 0.95, p);
 
       aboutSection.style.setProperty('--lead-p', leadP.toFixed(3));
       aboutSection.style.setProperty('--ap-p',   apP.toFixed(3));
