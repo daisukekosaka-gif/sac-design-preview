@@ -52,51 +52,9 @@ body {
   transition: background-color 0.9s var(--ease), color 0.9s var(--ease);
 }
 
-/* ===================== AI/PROMPT 背景レイヤー ===================== */
-/* HERO 以外のセクションに敷く、AI/PROMPT を想起させる極薄オーバーレイ */
+/* 各セクションのテーマ切替トランジション */
 .about, .works, .creator, .info, .contact {
-  position: relative;
-  isolation: isolate;
   transition: background-color 0.9s var(--ease), color 0.9s var(--ease);
-}
-
-.prompt-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.08;
-  color: var(--theme-fg);
-  transform: translate3d(0, var(--ai-bg-y, 0px), 0);
-  transition: opacity 0.9s var(--ease), color 0.9s var(--ease);
-  will-change: transform;
-}
-
-.prompt-bg__text {
-  font-family: 'SF Mono', 'Menlo', monospace;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  fill: currentColor;
-}
-
-.prompt-bg__line {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1;
-  stroke-dasharray: 3 3;
-  opacity: 0.7;
-}
-
-.prompt-bg__dot {
-  fill: currentColor;
-}
-
-/* 暗背景セクションではコントラスト調整 */
-[data-theme="stone"] .prompt-bg,
-[data-theme="black"] .prompt-bg {
-  opacity: 0.12;
 }
 
 a {
@@ -1644,68 +1602,6 @@ img, svg {
     });
   };
 
-})();
-</script>
-
-<!-- AI/PROMPT 背景パターン定義（各セクションから url(#promptPattern) で参照） -->
-<svg class="prompt-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
-  <defs>
-    <pattern id="promptPattern" x="0" y="0" width="560" height="460" patternUnits="userSpaceOnUse">
-      <g class="prompt-bg__text">
-        <text x="24" y="48">// prompt: cinematic — golden hour</text>
-        <text x="290" y="118">{ model: "nano-banana" }</text>
-        <text x="56" y="206">--aspect 16:9 --editorial</text>
-        <text x="340" y="282">AI × CREATOR × BUSINESS</text>
-        <text x="28" y="370">// seed 0x42 — style: sac</text>
-        <text x="310" y="420">one prompt, change the world.</text>
-      </g>
-      <g>
-        <path class="prompt-bg__line" d="M 50 60 L 270 126"/>
-        <path class="prompt-bg__line" d="M 80 218 L 330 288"/>
-        <path class="prompt-bg__line" d="M 40 382 L 300 428"/>
-      </g>
-      <g>
-        <circle class="prompt-bg__dot" cx="50" cy="60" r="1.6"/>
-        <circle class="prompt-bg__dot" cx="270" cy="126" r="1.6"/>
-        <circle class="prompt-bg__dot" cx="80" cy="218" r="1.6"/>
-        <circle class="prompt-bg__dot" cx="330" cy="288" r="1.6"/>
-        <circle class="prompt-bg__dot" cx="40" cy="382" r="1.6"/>
-        <circle class="prompt-bg__dot" cx="300" cy="428" r="1.6"/>
-      </g>
-    </pattern>
-  </defs>
-</svg>
-
-<script>
-(function() {
-  'use strict';
-  // 各非HEROセクションに prompt-bg レイヤーを注入し、スクロールでパララックス移動
-  var targets = document.querySelectorAll('.about, .works, .creator, .info, .contact');
-  var SVG_NS = 'http://www.w3.org/2000/svg';
-  targets.forEach(function(section) {
-    var svg = document.createElementNS(SVG_NS, 'svg');
-    svg.setAttribute('class', 'prompt-bg');
-    svg.setAttribute('aria-hidden', 'true');
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-    var rect = document.createElementNS(SVG_NS, 'rect');
-    rect.setAttribute('width', '100%');
-    rect.setAttribute('height', '100%');
-    rect.setAttribute('fill', 'url(#promptPattern)');
-    svg.appendChild(rect);
-    section.insertBefore(svg, section.firstChild);
-  });
-
-  // scroll 量で prompt-bg 全体を translateY（遅延させて奥行き感）
-  var ticking = false;
-  function update() {
-    ticking = false;
-    var y = window.scrollY * 0.18;
-    document.documentElement.style.setProperty('--ai-bg-y', (-y).toFixed(1) + 'px');
-  }
-  window.addEventListener('scroll', function() {
-    if (!ticking) { requestAnimationFrame(update); ticking = true; }
-  }, { passive: true });
-  update();
 })();
 </script>
 
