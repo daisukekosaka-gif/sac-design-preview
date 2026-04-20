@@ -376,41 +376,74 @@ section { padding: var(--gap) var(--pad); position: relative; }
 .about-philosophy p:last-of-type { margin-bottom: 0; }
 .about-philosophy .btn-ghost { margin-top: 36px; }
 
+/* Bento-style 2x2 grid: item1 spans full row, items 2&3 split row 2 */
 .approach {
-  display: grid; grid-template-columns: 1fr;
-  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
 }
 .approach-item {
-  padding: 36px 0;
-  display: grid; grid-template-columns: 40px 1fr;
-  gap: 24px; align-items: start;
-  border-bottom: 1px solid var(--line);
   position: relative;
+  background: var(--bg);
+  padding: clamp(28px, 3vw, 44px);
+  cursor: pointer;
+  min-height: 220px;
+  transition: background 0.5s var(--ease);
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 32px;
 }
+.approach-item:nth-child(1) {
+  grid-column: 1 / -1;                     /* AI card spans full width */
+  min-height: 260px;
+}
+.approach-item:hover { background: var(--bg-2); }
 .approach-item::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-  width: 1px; background: var(--accent);
-  transform: scaleY(0); transform-origin: top;
-  transition: transform 0.7s var(--ease), opacity 0.5s var(--ease);
-  opacity: 0.6;
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.7s var(--ease);
 }
-.approach-item:hover::before { transform: scaleY(1); opacity: 1; }
-.approach-ico { width: 32px; height: 32px; transition: transform 0.6s var(--ease); }
-.approach-item:hover .approach-ico { transform: translateX(4px); }
-.approach-ico svg { width: 100%; height: 100%; stroke: var(--accent); fill: none; stroke-width: 1.4; }
+.approach-item:hover::before { transform: scaleX(1); }
+
+.approach-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 20px;
+}
+.approach-num {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px; font-weight: 400;
+  color: var(--mute); letter-spacing: 0.12em;
+}
+.approach-ico {
+  width: 36px; height: 36px;
+  transition: transform 0.7s var(--ease);
+}
+.approach-item:hover .approach-ico { transform: translate(2px, -2px) rotate(3deg); }
+.approach-ico svg { width: 100%; height: 100%; stroke: var(--accent); fill: none; stroke-width: 1.3; }
+
 .approach-copy h4 {
   font-family: 'Manrope', sans-serif;
-  font-size: 20px; font-weight: 500;
-  color: var(--ink); margin-bottom: 8px;
-  letter-spacing: -0.015em;
+  font-size: clamp(18px, 1.6vw, 24px);
+  font-weight: 500;
+  color: var(--ink); margin-bottom: 10px;
+  letter-spacing: -0.018em;
   transition: color 0.4s var(--ease);
 }
 .approach-item:hover .approach-copy h4 { color: var(--accent); }
 .approach-copy p {
   font-family: 'Noto Sans JP', sans-serif;
-  font-size: 13.5px; font-weight: 400; line-height: 1.85;
-  color: var(--ink-3); max-width: 42ch;
+  font-size: 13.5px; font-weight: 400; line-height: 1.9;
+  color: var(--ink-3);
 }
+/* AI card gets slightly larger title since it spans full width */
+.approach-item:nth-child(1) .approach-copy h4 {
+  font-size: clamp(22px, 2vw, 30px);
+}
+.approach-item:nth-child(1) .approach-copy p { max-width: 56ch; }
 
 /* ========== PLATFORM / SERVICE ========== */
 .platform {
@@ -812,6 +845,8 @@ footer {
   .hero-meta { position: static; margin-top: 56px; flex-direction: column; align-items: flex-start; gap: 20px; }
   .about-head, .platform-head, .works-head, .creator-head, .info-head { grid-template-columns: 1fr; gap: 28px; }
   .about-body { grid-template-columns: 1fr; gap: 48px; }
+  .approach { grid-template-columns: 1fr; }
+  .approach-item:nth-child(1) { grid-column: auto; }
   .platform-cards { grid-template-columns: 1fr; }
   .works-grid-2 { grid-template-columns: 1fr; }
   .creator-list { grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -917,12 +952,15 @@ footer {
 
     <div class="approach reveal-stagger">
       <div class="approach-item">
-        <div class="approach-ico">
-          <svg viewBox="0 0 32 32">
-            <circle cx="16" cy="16" r="10"/>
-            <path d="M16 4 L16 28 M4 16 L28 16"/>
-            <circle cx="16" cy="16" r="2.5" fill="#445e5f" stroke="none"/>
-          </svg>
+        <div class="approach-head">
+          <span class="approach-num">01 / AI</span>
+          <div class="approach-ico">
+            <svg viewBox="0 0 32 32">
+              <circle cx="16" cy="16" r="10"/>
+              <path d="M16 4 L16 28 M4 16 L28 16"/>
+              <circle cx="16" cy="16" r="2.5" fill="#445e5f" stroke="none"/>
+            </svg>
+          </div>
         </div>
         <div class="approach-copy">
           <h4>AI — Generative / Automation</h4>
@@ -930,12 +968,15 @@ footer {
         </div>
       </div>
       <div class="approach-item">
-        <div class="approach-ico">
-          <svg viewBox="0 0 32 32">
-            <path d="M4 26 L16 6 L28 26 Z"/>
-            <path d="M10 18 L22 18"/>
-            <circle cx="16" cy="22" r="1.8" fill="#445e5f" stroke="none"/>
-          </svg>
+        <div class="approach-head">
+          <span class="approach-num">02 / CREATOR</span>
+          <div class="approach-ico">
+            <svg viewBox="0 0 32 32">
+              <path d="M4 26 L16 6 L28 26 Z"/>
+              <path d="M10 18 L22 18"/>
+              <circle cx="16" cy="22" r="1.8" fill="#445e5f" stroke="none"/>
+            </svg>
+          </div>
         </div>
         <div class="approach-copy">
           <h4>Creator — Vision / Craft</h4>
@@ -943,11 +984,14 @@ footer {
         </div>
       </div>
       <div class="approach-item">
-        <div class="approach-ico">
-          <svg viewBox="0 0 32 32">
-            <rect x="4" y="8" width="24" height="16"/>
-            <path d="M10 14 L14 18 L22 10"/>
-          </svg>
+        <div class="approach-head">
+          <span class="approach-num">03 / BUSINESS</span>
+          <div class="approach-ico">
+            <svg viewBox="0 0 32 32">
+              <rect x="4" y="8" width="24" height="16"/>
+              <path d="M10 14 L14 18 L22 10"/>
+            </svg>
+          </div>
         </div>
         <div class="approach-copy">
           <h4>Business — Outcome-driven</h4>
