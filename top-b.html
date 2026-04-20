@@ -418,26 +418,27 @@ nav .nav-cta:hover {
 
 .hero-meta {
   position: absolute;
-  top: 50%;
-  left: 40px;
-  transform: translateY(-50%) rotate(-90deg);
-  transform-origin: 0 0;
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 4;
-  display: flex;
-  gap: 24px;
+  display: inline-flex;
+  gap: 14px;
   align-items: center;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--ink-mid);
   white-space: nowrap;
 }
-.hero-meta::before {
+.hero-meta::before,
+.hero-meta::after {
   content: '';
   width: 40px;
   height: 1px;
   background: var(--ink-mid);
+  opacity: 0.5;
 }
 
 .hero-indicators {
@@ -1841,13 +1842,6 @@ footer {
       クリエイティブ制作の制約を、<br>
       <em>解放する</em>。
     </h1>
-    <div class="hero-sub-wrap">
-      <div class="hero-sub-line">
-        AI × Creative — Beyond Limits<br>
-        映像・Web・グラフィック・SNS<br>
-        ひとつの制作チームで、すべてを。
-      </div>
-    </div>
   </div>
 
   <div class="hero-indicators" id="heroIndicators">
@@ -2546,6 +2540,53 @@ footer {
     }
   }
 
+  // ===== Scroll-linked hero background transition (brightness/saturate/hue) =====
+  if (!reduce) {
+    const heroEl = document.querySelector('.hero');
+    const heroStage = document.getElementById('heroStage');
+    if (heroEl && heroStage) {
+      // ランディング: フル彩度 → スクロール進行でやや暗く+色相シフト
+      function updateHeroFx() {
+        const vh = window.innerHeight;
+        const y = Math.max(0, Math.min(1, window.scrollY / vh));
+        const brightness = 1 - y * 0.45;                 // 1 → 0.55
+        const saturate = 1 + y * 0.6;                    // 1 → 1.6
+        const hue = y * 40;                              // 0deg → +40deg
+        heroStage.style.filter = 'brightness(' + brightness.toFixed(3) + ') saturate(' + saturate.toFixed(3) + ') hue-rotate(' + hue.toFixed(1) + 'deg)';
+      }
+      updateHeroFx();
+      window.addEventListener('scroll', updateHeroFx, { passive: true });
+    }
+
+    // 全体トーン: scrollY ベースで body の CSS variable を線形補間
+    // ページ全長に対する進行度で --bg (cream/dark) と --ink を徐々にずらす
+    const bodyEl = document.body;
+    const TONES = [
+      // {stop, bg, ink-mid}
+      { stop: 0.0,  bg: [6, 10, 11],    mid: [154, 163, 162] }, // 墨黒
+      { stop: 0.35, bg: [10, 18, 19],   mid: [160, 170, 170] }, // 深緑寄り
+      { stop: 0.65, bg: [14, 10, 22],   mid: [170, 160, 180] }, // 紫寄り
+      { stop: 1.0,  bg: [6, 10, 11],    mid: [154, 163, 162] }
+    ];
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function lerpRgb(a, b, t) {
+      return [Math.round(lerp(a[0], b[0], t)), Math.round(lerp(a[1], b[1], t)), Math.round(lerp(a[2], b[2], t))];
+    }
+    function applyTone() {
+      const totalH = document.body.scrollHeight - window.innerHeight;
+      const p = Math.max(0, Math.min(1, window.scrollY / totalH));
+      // find segment
+      let i = 0;
+      while (i < TONES.length - 2 && p > TONES[i + 1].stop) i++;
+      const a = TONES[i], b = TONES[i + 1];
+      const t = (p - a.stop) / (b.stop - a.stop);
+      const bg = lerpRgb(a.bg, b.bg, t);
+      bodyEl.style.backgroundColor = 'rgb(' + bg[0] + ',' + bg[1] + ',' + bg[2] + ')';
+    }
+    applyTone();
+    window.addEventListener('scroll', applyTone, { passive: true });
+    window.addEventListener('resize', applyTone, { passive: true });
+  }
 })();
 </script>
 
