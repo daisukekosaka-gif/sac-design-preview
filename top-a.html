@@ -404,45 +404,15 @@ img, svg {
   color: var(--gold);
 }
 
-/* PHILOSOPHY本文 + APPROACH図解 を 2カラムで1画面化 */
+/* APPROACH図解（初期表示）＋ PHILOSOPHY本文（スクロールで表示）を縦積み */
 .about__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: 56px;
-  align-items: start;
+  display: block;
 }
 
-.about__body-wrap {
-  display: grid;
-  grid-template-columns: 88px 1fr;
-  gap: 24px;
-  align-items: start;
-}
-
-.about__body-label {
-  font-family: var(--font-en);
-  font-weight: 500;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  color: var(--gray-400);
-  padding-top: 6px;
-}
-
-.about__body {
-  max-width: 520px;
-  font-size: 14px;
-  color: var(--gray-500);
-  line-height: 2;
-  letter-spacing: 0.02em;
-}
-
-.about__body + .about__body {
-  margin-top: 16px;
-}
-
-/* 線図 — SAC のアプローチを図解（AI × Creator × Business） */
+/* APPROACH — 初期表示ブロック。中央寄せで大きく */
 .about__diagram {
-  margin-top: 0;
+  margin: 0 auto;
+  max-width: 980px;
   display: grid;
   grid-template-columns: 88px 1fr;
   gap: 24px;
@@ -460,15 +430,59 @@ img, svg {
 
 .diagram {
   width: 100%;
-  max-width: 560px;
+  max-width: 720px;
   aspect-ratio: 1000 / 520;
   height: auto;
+  margin: 0 auto;
+}
+
+/* APPROACH と PHILOSOPHY の間に余白を取り、スクロールで PHILOSOPHY が現れる動線をつくる */
+.about__philosophy {
+  margin: 22vh auto 0;
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.about__body-label {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--gray-400);
+  padding-top: 6px;
+}
+
+.about__body {
+  max-width: 680px;
+  font-size: 15px;
+  color: var(--gray-500);
+  line-height: 2.1;
+  letter-spacing: 0.02em;
+}
+
+.about__body + .about__body {
+  margin-top: 20px;
+}
+
+/* PHILOSOPHY reveal: 通常の js-reveal より少し強めの遷移量 */
+.about__philosophy.js-reveal {
+  transform: translateY(72px);
+}
+.about__philosophy.js-reveal.revealed {
+  transform: translateY(0);
 }
 
 @media (max-width: 900px) {
-  .about__grid {
+  .about__diagram,
+  .about__philosophy {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 16px;
+  }
+  .about__philosophy {
+    margin-top: 14vh;
   }
   .diagram {
     max-width: 100%;
@@ -1146,23 +1160,10 @@ img, svg {
       </p>
     </div>
 
-    <!-- PHILOSOPHY + APPROACH を2カラムで1画面に集約 -->
-    <div class="about__grid js-reveal">
+    <!-- APPROACH（初期表示） → PHILOSOPHY（スクロールで表示） を縦積み -->
+    <div class="about__grid">
 
-      <!-- 本文 -->
-      <div class="about__body-wrap">
-        <div class="about__body-label">PHILOSOPHY</div>
-        <div>
-          <p class="about__body">
-            Smart AI Creative（SAC）は、EPOCH Inc.が運営する、AIネイティブなクリエイティブスタジオです。映像・Web・グラフィック・空間演出・イベント・SNS運用まで、制作のあらゆる領域にAIを実装します。
-          </p>
-          <p class="about__body">
-            私たちは単にAIを「使う」のではなく、事業の成果から逆算し、制作プロセスそのものを再設計することに向き合っています。AIと一流のクリエイターが並走することで、従来の制約を超えた速度・品質・柔軟性を、事業の現場に届けます。
-          </p>
-        </div>
-      </div>
-
-      <!-- 線図（SAC のアプローチ構造） -->
+      <!-- 線図（SAC のアプローチ構造）— 先に表示 -->
       <div class="about__diagram">
         <div class="about__diagram-label">APPROACH</div>
       <svg class="diagram" viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
@@ -1207,6 +1208,19 @@ img, svg {
         <text x="500" y="286" font-family="Inter" font-size="8" font-weight="500" fill="var(--gold)" text-anchor="middle" letter-spacing="3">SMART AI CREATIVE</text>
 
       </svg>
+      </div>
+
+      <!-- 本文（PHILOSOPHY）— スクロールで表示 -->
+      <div class="about__philosophy js-reveal">
+        <div class="about__body-label">PHILOSOPHY</div>
+        <div>
+          <p class="about__body">
+            Smart AI Creative（SAC）は、EPOCH Inc.が運営する、AIネイティブなクリエイティブスタジオです。映像・Web・グラフィック・空間演出・イベント・SNS運用まで、制作のあらゆる領域にAIを実装します。
+          </p>
+          <p class="about__body">
+            私たちは単にAIを「使う」のではなく、事業の成果から逆算し、制作プロセスそのものを再設計することに向き合っています。AIと一流のクリエイターが並走することで、従来の制約を超えた速度・品質・柔軟性を、事業の現場に届けます。
+          </p>
+        </div>
       </div>
 
     </div>
