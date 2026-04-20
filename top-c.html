@@ -362,15 +362,16 @@ section { padding: var(--gap) var(--pad); position: relative; }
   font-style: normal; font-weight: 400; color: var(--accent);
 }
 .about-body {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 6vw, 100px);
+  display: grid; grid-template-columns: minmax(280px, 42ch) 1fr;
+  gap: clamp(32px, 4vw, 72px);
   max-width: var(--content); margin: 0 auto;
+  align-items: start;
 }
 .about-philosophy p {
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 15px; font-weight: 400;
   line-height: 2; color: var(--ink-2);
-  margin-bottom: 20px; max-width: 38ch;
+  margin-bottom: 20px;
 }
 .about-philosophy p:last-of-type { margin-bottom: 0; }
 .about-philosophy .btn-ghost { margin-top: 36px; }
@@ -385,24 +386,26 @@ section { padding: var(--gap) var(--pad); position: relative; }
   gap: 24px; align-items: start;
   border-bottom: 1px solid var(--line);
   position: relative;
-  transition: padding 0.5s var(--ease);
 }
-.approach-item:hover { padding-left: 12px; }
 .approach-item::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0;
   width: 1px; background: var(--accent);
   transform: scaleY(0); transform-origin: top;
-  transition: transform 0.6s var(--ease);
+  transition: transform 0.7s var(--ease), opacity 0.5s var(--ease);
+  opacity: 0.6;
 }
-.approach-item:hover::before { transform: scaleY(1); }
-.approach-ico { width: 32px; height: 32px; }
+.approach-item:hover::before { transform: scaleY(1); opacity: 1; }
+.approach-ico { width: 32px; height: 32px; transition: transform 0.6s var(--ease); }
+.approach-item:hover .approach-ico { transform: translateX(4px); }
 .approach-ico svg { width: 100%; height: 100%; stroke: var(--accent); fill: none; stroke-width: 1.4; }
 .approach-copy h4 {
   font-family: 'Manrope', sans-serif;
   font-size: 20px; font-weight: 500;
   color: var(--ink); margin-bottom: 8px;
   letter-spacing: -0.015em;
+  transition: color 0.4s var(--ease);
 }
+.approach-item:hover .approach-copy h4 { color: var(--accent); }
 .approach-copy p {
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 13.5px; font-weight: 400; line-height: 1.85;
