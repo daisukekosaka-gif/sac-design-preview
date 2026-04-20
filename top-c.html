@@ -351,10 +351,12 @@ section { padding: var(--gap) var(--pad); position: relative; }
 }
 .about-lead {
   font-family: 'Manrope', 'Noto Sans JP', sans-serif;
-  font-size: clamp(28px, 3.6vw, 56px);
-  font-weight: 300; line-height: 1.12;
-  letter-spacing: -0.028em; color: var(--ink);
-  max-width: 18ch;
+  font-size: clamp(24px, 3.2vw, 48px);
+  font-weight: 300; line-height: 1.2;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+.about-lead .row {
+  display: block; white-space: nowrap;
 }
 .about-lead em {
   font-style: normal; font-weight: 400; color: var(--accent);
@@ -891,7 +893,8 @@ footer {
       <span class="section-num">— Philosophy</span>
     </div>
     <h2 class="about-lead">
-      クリエイティブ制作における<br><em>すべての制約</em>を、解放する。
+      <span class="row">クリエイティブ制作における</span>
+      <span class="row"><em>すべての制約</em>を、解放する。</span>
     </h2>
   </div>
 
