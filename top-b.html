@@ -298,6 +298,14 @@ nav .nav-cta:hover {
   inset: 0;
   z-index: 1;
 }
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.75;
+}
 .hero-card {
   position: absolute;
   inset: 0;
@@ -374,12 +382,11 @@ nav .nav-cta:hover {
   gap: 40px;
 }
 .hero-main-copy {
-  font-size: clamp(24px, 3.8vw, 64px);
+  font-size: clamp(36px, 5.8vw, 96px);
   font-weight: 900;
-  line-height: 1.2;
+  line-height: 1.15;
   letter-spacing: -0.02em;
-  max-width: none;
-  white-space: nowrap;
+  max-width: 1400px;
 }
 .hero-main-copy .accent-bar {
   display: inline-block;
@@ -393,11 +400,12 @@ nav .nav-cta:hover {
 }
 .hero-main-copy em {
   font-style: normal;
-  background: linear-gradient(110deg, var(--grad-a) 0%, var(--grad-c) 40%, var(--grad-b) 80%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradShift 8s ease-in-out infinite;
+  color: var(--ink);
+  background-image: linear-gradient(100deg, var(--grad-a), var(--grad-c) 50%, var(--grad-b));
+  background-size: 100% 0.14em;
+  background-repeat: no-repeat;
+  background-position: 0 95%;
+  padding: 0 0.08em;
 }
 @keyframes gradShift {
   0%, 100% { background-position: 0% 50%; }
@@ -541,24 +549,59 @@ nav .nav-cta:hover {
 
 /* ========== STATEMENT ========== */
 .statement {
-  padding: 180px 40px 180px;
-  max-width: 1200px;
+  padding: 200px 40px;
+  max-width: 1280px;
   margin: 0 auto;
   position: relative;
 }
-.statement-text {
-  font-size: clamp(22px, 2.8vw, 42px);
+.statement-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  margin-bottom: 56px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.statement-eyebrow::before {
+  content: '01';
+  color: var(--grad-a);
   font-weight: 700;
-  line-height: 1.85;
+}
+.statement-text {
+  font-size: clamp(24px, 3.2vw, 48px);
+  font-weight: 700;
+  line-height: 1.7;
   letter-spacing: 0.01em;
   color: var(--ink);
-  text-indent: 0;
 }
 .statement-text .stmt-block {
   display: block;
-  margin-bottom: 28px;
+  margin-bottom: 12px;
 }
 .statement-text .stmt-block:last-child { margin-bottom: 0; }
+/* em は色 + 下線グラデで確実表示 (background-clip: text で消える問題を回避) */
+.statement-text em {
+  font-style: normal;
+  color: var(--ink);
+  position: relative;
+  padding: 0 0.08em;
+  background-image: linear-gradient(100deg, var(--grad-a), var(--grad-c) 55%, var(--grad-b));
+  background-repeat: no-repeat;
+  background-size: 100% 0.14em;
+  background-position: 0 95%;
+}
+.statement-text em::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: -0.08em; bottom: -0.08em;
+  background: linear-gradient(100deg, rgba(255,61,0,0.08), rgba(139,47,226,0.08));
+  z-index: -1;
+  border-radius: 2px;
+}
 .statement-text em {
   font-style: normal;
   background: linear-gradient(100deg, var(--grad-a) 0%, var(--grad-c) 50%, var(--grad-b) 100%);
@@ -1647,11 +1690,14 @@ footer {
     <div class="hero-card"><div class="hero-card-img"></div></div>
   </div>
 
+  <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
+
   <div class="hero-meta">SMART AI CREATIVE — SINCE 2024</div>
 
   <div class="hero-content">
     <h1 class="hero-main-copy" data-scramble>
-      <span class="accent-bar"></span>クリエイティブ制作の制約を、<em>解放する</em>。
+      <span class="accent-bar"></span>クリエイティブ制作の制約を、<br>
+      <em>解放する</em>。
     </h1>
     <div class="hero-sub-wrap">
       <div class="hero-sub-line">
@@ -1696,6 +1742,7 @@ footer {
 
 <!-- STATEMENT -->
 <section class="statement" id="statement">
+  <div class="statement-eyebrow">Statement</div>
   <p class="statement-text split-text">
     <span class="stmt-block">私たちは、AIを使って<em>制作工程そのもの</em>を再設計する。</span>
     <span class="stmt-block">映像、Web、グラフィック、SNS——領域を横断しながら、</span>
@@ -2115,6 +2162,8 @@ footer {
     const html = el.innerHTML;
     const tmp = document.createElement('div');
     tmp.innerHTML = html;
+    // EM/STRONG等はまとめて1つのユニットとして扱う（内部テキストは分割しない）
+    const KEEP_INTACT = new Set(['EM', 'STRONG', 'B', 'I', 'MARK']);
     function wrap(node) {
       if (node.nodeType === 3) {
         const frag = document.createDocumentFragment();
@@ -2125,8 +2174,11 @@ footer {
           frag.appendChild(s);
         });
         node.parentNode.replaceChild(frag, node);
-      } else if (node.nodeType === 1 && node.tagName !== 'BR') {
+      } else if (node.nodeType === 1 && node.tagName !== 'BR' && !KEEP_INTACT.has(node.tagName)) {
         Array.from(node.childNodes).forEach(wrap);
+      } else if (node.nodeType === 1 && KEEP_INTACT.has(node.tagName)) {
+        // EM自体を 1 split-word としてラップ（元のスタイルは保持）
+        node.classList.add('split-word');
       }
     }
     Array.from(tmp.childNodes).forEach(wrap);
@@ -2148,12 +2200,13 @@ footer {
 
   // ===== TEXT SCRAMBLE =====
   const SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#_0123456789';
+  const SCRAMBLE_SKIP = new Set(['EM', 'STRONG', 'B', 'I', 'MARK', 'BR']);
   function scrambleText(el) {
     // walk text nodes, build span tree
     const nodes = [];
     (function walk(n){
       if (n.nodeType === 3) { nodes.push(n); }
-      else if (n.nodeType === 1 && n.tagName !== 'BR') {
+      else if (n.nodeType === 1 && !SCRAMBLE_SKIP.has(n.tagName)) {
         Array.from(n.childNodes).forEach(walk);
       }
     })(el);
@@ -2300,6 +2353,114 @@ footer {
     });
     window.addEventListener('scroll', updateFromScroll, { passive: true });
   }
+
+  // ===== HERO PARTICLES — flowing canvas =====
+  (function initParticles(){
+    if (reduce) return;
+    const canvas = document.getElementById('heroParticles');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const COLORS = [
+      { r: 255, g: 61,  b: 0   },  // orange
+      { r: 139, g: 47,  b: 226 },  // purple
+      { r: 255, g: 46,  b: 99  },  // magenta
+      { r: 0,   g: 212, b: 255 },  // cyan
+      { r: 15,  g: 210, b: 122 }   // green
+    ];
+    const PN = window.matchMedia('(max-width: 768px)').matches ? 42 : 90;
+    let particles = [];
+    let mx = -9999, my = -9999;
+
+    function resize() {
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function make() {
+      particles = new Array(PN).fill(0).map(() => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: 1 + Math.random() * 2.6,
+        col: COLORS[Math.floor(Math.random() * COLORS.length)],
+        phase: Math.random() * Math.PI * 2
+      }));
+    }
+    resize(); make();
+    window.addEventListener('resize', () => { resize(); make(); });
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        mx = e.clientX - rect.left;
+        my = e.clientY - rect.top;
+      });
+      hero.addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
+    }
+
+    let t = 0;
+    function frame() {
+      t += 0.012;
+      ctx.clearRect(0, 0, w, h);
+      // connection lines
+      ctx.lineWidth = 0.5;
+      for (let i = 0; i < particles.length; i++) {
+        const a = particles[i];
+        for (let j = i + 1; j < particles.length; j++) {
+          const b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 140) {
+            const alpha = (1 - d / 140) * 0.14;
+            ctx.strokeStyle = 'rgba(' + a.col.r + ',' + a.col.g + ',' + a.col.b + ',' + alpha + ')';
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+      // particles
+      particles.forEach(p => {
+        // flow-field-ish drift
+        p.vx += Math.cos(p.y * 0.004 + t + p.phase) * 0.012;
+        p.vy += Math.sin(p.x * 0.004 + t + p.phase) * 0.012;
+        // mouse repel
+        const dxm = p.x - mx, dym = p.y - my;
+        const dm = Math.sqrt(dxm*dxm + dym*dym);
+        if (dm < 180) {
+          const f = (180 - dm) / 180;
+          p.vx += (dxm / dm) * f * 0.6;
+          p.vy += (dym / dm) * f * 0.6;
+        }
+        // damping
+        p.vx *= 0.96; p.vy *= 0.96;
+        p.x += p.vx; p.y += p.vy;
+        // wrap
+        if (p.x < -20) p.x = w + 20;
+        if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20;
+        if (p.y > h + 20) p.y = -20;
+        // glow
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5);
+        grad.addColorStop(0, 'rgba(' + p.col.r + ',' + p.col.g + ',' + p.col.b + ',0.9)');
+        grad.addColorStop(1, 'rgba(' + p.col.r + ',' + p.col.g + ',' + p.col.b + ',0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
+        ctx.fill();
+        // core
+        ctx.fillStyle = 'rgba(' + p.col.r + ',' + p.col.g + ',' + p.col.b + ',1)';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 0.6, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
 
   // ===== Hero mouse parallax =====
   if (!reduce && window.matchMedia('(min-width: 1025px)').matches) {
