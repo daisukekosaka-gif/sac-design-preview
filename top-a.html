@@ -1029,17 +1029,40 @@ img, svg {
   border-color: var(--theme-fg);
 }
 
-.creator__list {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 28px;
+/* カルーセル化されたクリエイターリスト */
+.creator__carousel {
+  position: relative;
+  margin: 0 -40px; /* はみ出し表現のため親padding分を相殺 */
 }
 
+.creator__list {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 2px 40px;
+  cursor: grab;
+  outline: none;
+}
+
+.creator__list::-webkit-scrollbar { display: none; }
+.creator__list.is-dragging { cursor: grabbing; scroll-behavior: auto; }
+
 .creator__item {
+  /* 4.3枚ぶんを画面に見せ、右端が少し切れて続きを示唆する */
+  flex: 0 0 calc((100% - 80px) / 4.3);
+  min-width: 200px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   cursor: pointer;
+  scroll-snap-align: start;
+  text-decoration: none;
+  color: inherit;
 }
 
 .creator__avatar {
@@ -1051,8 +1074,25 @@ img, svg {
   transition: transform 0.5s var(--ease);
 }
 
+.creator__avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 1.2s var(--ease), filter 0.6s var(--ease);
+  filter: saturate(0.95) brightness(0.92);
+}
+
 .creator__item:hover .creator__avatar {
   transform: translateY(-6px);
+}
+
+.creator__item:hover .creator__avatar img {
+  transform: scale(1.04);
+  filter: saturate(1) brightness(1);
 }
 
 .creator__avatar::after {
@@ -1060,6 +1100,43 @@ img, svg {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Prev/Next ナビゲーション */
+.creator__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 25%, transparent);
+  background: color-mix(in oklab, var(--theme-bg) 65%, transparent);
+  color: var(--theme-fg);
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.creator__nav:hover {
+  background: var(--theme-fg);
+  color: var(--theme-bg);
+  border-color: var(--theme-fg);
+  transform: translateY(-50%) scale(1.06);
+}
+
+.creator__nav--prev { left: 8px; }
+.creator__nav--next { right: 8px; }
+
+.creator__nav[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 .creator__name {
@@ -1296,7 +1373,7 @@ img, svg {
   .hero__title-wrap { left: 24px; right: 24px; bottom: 32px; }
   .hero__title { font-size: clamp(54px, 10.5vw, 120px); white-space: nowrap; }
   .hero__scroll { top: 96px; right: 32px; }
-  .creator__list { grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .creator__item { flex-basis: calc((100% - 56px) / 4); }
   .about__head, .about__body-wrap, .about__diagram { grid-template-columns: 1fr; gap: 16px; }
   .about__cta { padding-left: 0; }
 }
@@ -1327,9 +1404,14 @@ img, svg {
   .works__slide-cta { display: none; }
   .works__nav { display: none; }
 
-  .creator { padding: 80px 20px 100px; }
-  .creator__list { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-  .creator__header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .creator { padding: 80px 0 100px; }
+  .creator__inner { padding: 0; }
+  .creator__header { padding: 0 20px; flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 32px; }
+  .creator__carousel { margin: 0; }
+  .creator__list { gap: 14px; padding: 2px 20px; }
+  .creator__item { flex-basis: 68%; min-width: 0; }
+  .creator__nav { display: none; }
+  .creator__cta { padding: 0 20px; margin-top: 32px; }
 
   .info { padding: 60px 20px; }
   .info__item-left { flex-direction: column; gap: 4px; }
@@ -1602,36 +1684,57 @@ img, svg {
     <div class="creator__header">
       <div class="js-reveal">
         <h2 class="creator__title">CREATOR</h2>
-        <p class="creator__title-sub">制作の現場に立つ、スペシャリストたち</p>
       </div>
     </div>
-    <div class="creator__list">
-      <div class="creator__item js-reveal">
-        <div class="creator__avatar"></div>
-        <span class="creator__name">CREATOR A</span>
-        <span class="creator__role">Director</span>
+
+    <div class="creator__carousel">
+      <button class="creator__nav creator__nav--prev" type="button" aria-label="Previous" id="creatorPrev">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 4 L7 12 L15 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="creator__list" id="creatorList" tabindex="0">
+        <a href="#" class="creator__item">
+          <div class="creator__avatar">
+            <img src="assets/images/creators/tsunehashi.jpg" alt="ツネハシタケシ" loading="lazy" decoding="async">
+          </div>
+          <span class="creator__name">ツネハシタケシ</span>
+          <span class="creator__role">Director / Designer</span>
+        </a>
+        <a href="#" class="creator__item">
+          <div class="creator__avatar">
+            <img src="assets/images/creators/ochiai.png" alt="落合 剛之" loading="lazy" decoding="async">
+          </div>
+          <span class="creator__name">落合 剛之</span>
+          <span class="creator__role">Director</span>
+        </a>
+        <a href="#" class="creator__item">
+          <div class="creator__avatar">
+            <img src="assets/images/creators/bird.jpg" alt="Bird" loading="lazy" decoding="async">
+          </div>
+          <span class="creator__name">Bird</span>
+          <span class="creator__role">AI Creator</span>
+        </a>
+        <a href="#" class="creator__item">
+          <div class="creator__avatar">
+            <img src="assets/images/creators/gane.jpg" alt="gane.WAV" loading="lazy" decoding="async">
+          </div>
+          <span class="creator__name">gane.WAV</span>
+          <span class="creator__role">AI Creator</span>
+        </a>
+        <a href="#" class="creator__item">
+          <div class="creator__avatar">
+            <img src="assets/images/creators/aoki.webp" alt="AoKi¹⁰⁴" loading="lazy" decoding="async">
+          </div>
+          <span class="creator__name">AoKi¹⁰⁴</span>
+          <span class="creator__role">AI Creator</span>
+        </a>
       </div>
-      <div class="creator__item js-reveal">
-        <div class="creator__avatar"></div>
-        <span class="creator__name">CREATOR B</span>
-        <span class="creator__role">Art Director</span>
-      </div>
-      <div class="creator__item js-reveal">
-        <div class="creator__avatar"></div>
-        <span class="creator__name">CREATOR C</span>
-        <span class="creator__role">CG Artist</span>
-      </div>
-      <div class="creator__item js-reveal">
-        <div class="creator__avatar"></div>
-        <span class="creator__name">CREATOR D</span>
-        <span class="creator__role">Motion Designer</span>
-      </div>
-      <div class="creator__item js-reveal">
-        <div class="creator__avatar"></div>
-        <span class="creator__name">CREATOR E</span>
-        <span class="creator__role">Web Developer</span>
-      </div>
+
+      <button class="creator__nav creator__nav--next" type="button" aria-label="Next" id="creatorNext">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 4 L17 12 L9 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
+
     <div class="creator__cta js-reveal">
       <a href="#" class="creator__cta-link">VIEW ALL CREATORS
         <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2140,6 +2243,110 @@ img, svg {
   setInitialPosition();
   window.addEventListener('load', setInitialPosition);
   window.addEventListener('resize', setInitialPosition);
+})();
+
+/* CREATOR Carousel — シンプルなページング（ドラッグ/矢印/キーボード） */
+(function() {
+  'use strict';
+  var list = document.getElementById('creatorList');
+  if (!list) return;
+  var prevBtn = document.getElementById('creatorPrev');
+  var nextBtn = document.getElementById('creatorNext');
+
+  var animFrame = null;
+  function animateTo(target, duration) {
+    if (animFrame) cancelAnimationFrame(animFrame);
+    var prevSnap = list.style.scrollSnapType;
+    var prevBehavior = list.style.scrollBehavior;
+    list.style.scrollSnapType = 'none';
+    list.style.scrollBehavior = 'auto';
+    var start = list.scrollLeft;
+    var change = target - start;
+    var startTime = performance.now();
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+    function step(now) {
+      var t = Math.min(1, (now - startTime) / duration);
+      list.scrollLeft = start + change * easeOutCubic(t);
+      if (t < 1) {
+        animFrame = requestAnimationFrame(step);
+      } else {
+        animFrame = null;
+        list.style.scrollSnapType = prevSnap;
+        list.style.scrollBehavior = prevBehavior;
+      }
+    }
+    animFrame = requestAnimationFrame(step);
+  }
+
+  function pageWidth() {
+    // 1アイテム幅 + gap ≒ 1ページ送り量（約1枚ずつ）
+    var first = list.querySelector('.creator__item');
+    if (!first) return 200;
+    var gap = parseFloat(getComputedStyle(list).columnGap || getComputedStyle(list).gap) || 20;
+    return first.offsetWidth + gap;
+  }
+
+  function goBy(direction) {
+    var target = list.scrollLeft + direction * pageWidth();
+    var max = list.scrollWidth - list.clientWidth;
+    if (target < 0) target = 0;
+    if (target > max) target = max;
+    animateTo(target, 550);
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function() { goBy(-1); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { goBy(1); });
+
+  list.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goBy(-1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goBy(1); }
+  });
+
+  // Drag to scroll
+  var isDown = false, startX = 0, startScroll = 0, moved = 0;
+  list.addEventListener('pointerdown', function(e) {
+    isDown = true; moved = 0;
+    startX = e.clientX;
+    startScroll = list.scrollLeft;
+    list.classList.add('is-dragging');
+    list.setPointerCapture(e.pointerId);
+  });
+  list.addEventListener('pointermove', function(e) {
+    if (!isDown) return;
+    var dx = e.clientX - startX;
+    moved = Math.max(moved, Math.abs(dx));
+    list.scrollLeft = startScroll - dx;
+  });
+  function endDrag() {
+    if (!isDown) return;
+    isDown = false;
+    list.classList.remove('is-dragging');
+  }
+  list.addEventListener('pointerup', endDrag);
+  list.addEventListener('pointercancel', endDrag);
+  list.addEventListener('pointerleave', endDrag);
+
+  // ドラッグ直後の誤クリックを抑止
+  list.querySelectorAll('.creator__item').forEach(function(a) {
+    a.addEventListener('click', function(e) { if (moved > 8) e.preventDefault(); });
+  });
+
+  // ボタンの disable 状態をスクロール位置で更新
+  function updateNavState() {
+    if (!prevBtn || !nextBtn) return;
+    var max = list.scrollWidth - list.clientWidth;
+    prevBtn.toggleAttribute('disabled', list.scrollLeft <= 1);
+    nextBtn.toggleAttribute('disabled', list.scrollLeft >= max - 1);
+  }
+  var navTicking = false;
+  list.addEventListener('scroll', function() {
+    if (!navTicking) {
+      requestAnimationFrame(function() { navTicking = false; updateNavState(); });
+      navTicking = true;
+    }
+  }, { passive: true });
+  window.addEventListener('resize', updateNavState);
+  updateNavState();
 })();
 </script>
 
