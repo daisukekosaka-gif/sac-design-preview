@@ -400,33 +400,18 @@ img, svg {
   margin: 0 auto;
 }
 
-/* ABOUT 見出し: 初期はネイティブに大きな文字をセンタリング、
-   スクロールで上部へスライドしながら自然なサイズへ。
-   - translateY: 中央 → 上部（32vh→0）
-   - padding:    左右に余白を寄せて中央揃え → 最終は解除
-   - 区切ラベル ABOUT は最終位置で徐々に出現 */
+/* ABOUT 見出し: 固定表示（アニメーションなし） */
 .about__head {
   display: grid;
-  grid-template-columns: calc(180px * var(--lead-p)) 1fr;
-  column-gap: calc(48px * var(--lead-p));
+  grid-template-columns: 180px 1fr;
+  column-gap: 48px;
   align-items: start;
   margin-bottom: 56px;
-  padding: 0 calc(8% * (1 - var(--lead-p)));
-  transform: translateY(calc(32vh * (1 - var(--lead-p))));
-  will-change: transform;
-}
-
-/* 初期状態では ABOUT ラベル用の列を潰し、内容は隠す */
-.about__head .section-label {
-  opacity: var(--lead-p);
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 .about__lead {
   font-family: var(--font-jp);
   font-weight: 500;
-  /* 拡縮なし: 固定サイズのままパララックス */
   font-size: clamp(28px, 3.4vw, 42px);
   line-height: 1.45;
   letter-spacing: 0.01em;
