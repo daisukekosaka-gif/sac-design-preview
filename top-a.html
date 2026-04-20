@@ -719,8 +719,7 @@ img, svg {
   box-shadow: 0 2px 30px rgba(0,0,0,0.06);
 }
 
-.works__slide:first-child { margin-left: max(0px, calc((100% - min(68%, 880px)) / 2)); }
-.works__slide:last-child  { margin-right: max(0px, calc((100% - min(68%, 880px)) / 2)); }
+/* 循環化のため left/right margin は付けない（両端にクローンが存在する） */
 
 .works__slide:hover { box-shadow: 0 16px 60px rgba(0,0,0,0.22); }
 
@@ -1545,15 +1544,15 @@ img, svg {
         </span>
       </a>
       <a href="#" class="works__slide" data-index="3">
-        <div class="works__slide-bg works__slide-bg--1"></div>
+        <img class="works__slide-img" src="assets/images/works/pj04.jpg" alt="ZEUS Wifi for GLOBAL" loading="lazy" decoding="async" style="object-position: 50% 40%;">
         <div class="works__slide-overlay"></div>
         <div class="works__slide-meta">
           <span class="works__slide-num">04</span>
-          <span class="works__slide-cat">COMING SOON</span>
+          <span class="works__slide-cat">AI DIGITAL TWIN</span>
         </div>
         <div class="works__slide-content">
-          <h3 class="works__slide-title">PROJECT 04</h3>
-          <p class="works__slide-sub">New release 2026</p>
+          <h3 class="works__slide-title">ZEUS Wifi for GLOBAL</h3>
+          <p class="works__slide-sub">多忙なガンバレルーヤを、AIでデジタルツイン化！？</p>
         </div>
         <span class="works__slide-cta" aria-hidden="true">
           VIEW PROJECT
@@ -1561,15 +1560,15 @@ img, svg {
         </span>
       </a>
       <a href="#" class="works__slide" data-index="4">
-        <div class="works__slide-bg works__slide-bg--2"></div>
+        <img class="works__slide-img" src="assets/images/works/pj05.jpg" alt="Caption by Hyatt 兜町 東京" loading="lazy" decoding="async" style="object-position: 50% 45%;">
         <div class="works__slide-overlay"></div>
         <div class="works__slide-meta">
           <span class="works__slide-num">05</span>
-          <span class="works__slide-cat">COMING SOON</span>
+          <span class="works__slide-cat">CAMPAIGN</span>
         </div>
         <div class="works__slide-content">
-          <h3 class="works__slide-title">PROJECT 05</h3>
-          <p class="works__slide-sub">New release 2026</p>
+          <h3 class="works__slide-title">Caption by Hyatt 兜町 東京</h3>
+          <p class="works__slide-sub">旅先で出会った人ツアー</p>
         </div>
         <span class="works__slide-cta" aria-hidden="true">
           VIEW PROJECT
@@ -1927,8 +1926,26 @@ img, svg {
   'use strict';
   var track = document.getElementById('worksTrack');
   if (!track) return;
-  var slides = Array.prototype.slice.call(track.querySelectorAll('.works__slide'));
-  if (!slides.length) return;
+  var originalSlides = Array.prototype.slice.call(track.querySelectorAll('.works__slide'));
+  if (!originalSlides.length) return;
+
+  // === 循環カルーセル: 先頭と末尾にクローンを配置 ===
+  var N = originalSlides.length;
+  var firstClone = originalSlides[0].cloneNode(true);
+  var lastClone  = originalSlides[N - 1].cloneNode(true);
+  firstClone.classList.add('is-clone');
+  lastClone.classList.add('is-clone');
+  firstClone.setAttribute('aria-hidden', 'true');
+  lastClone.setAttribute('aria-hidden', 'true');
+  firstClone.removeAttribute('data-index');
+  lastClone.removeAttribute('data-index');
+  // [lastClone, 0, 1, 2, 3, 4, firstClone]
+  track.insertBefore(lastClone, originalSlides[0]);
+  track.appendChild(firstClone);
+
+  // 実スライド配列（本体のみ）とループ用の全配列
+  var slides = originalSlides;           // UI 同期用
+  var allSlides = Array.prototype.slice.call(track.querySelectorAll('.works__slide')); // 7枚
 
   var prevBtn = document.getElementById('worksPrev');
   var nextBtn = document.getElementById('worksNext');
@@ -1936,14 +1953,15 @@ img, svg {
   var totalEl = document.getElementById('worksTotal');
   var dots    = Array.prototype.slice.call(document.querySelectorAll('.works__dot'));
 
-  if (totalEl) totalEl.textContent = String(slides.length).padStart(2, '0');
+  if (totalEl) totalEl.textContent = String(N).padStart(2, '0');
 
   function pad2(n) { return String(n).padStart(2, '0'); }
 
-  function currentIndex() {
+  // allSlides の中で現在中央に最も近いスライドの「allSlides 上の index」
+  function currentAllIndex() {
     var center = track.scrollLeft + track.clientWidth / 2;
     var best = 0, bestDist = Infinity;
-    slides.forEach(function(s, i) {
+    allSlides.forEach(function(s, i) {
       var c = s.offsetLeft + s.offsetWidth / 2;
       var d = Math.abs(c - center);
       if (d < bestDist) { bestDist = d; best = i; }
@@ -1951,18 +1969,59 @@ img, svg {
     return best;
   }
 
+  // 本体スライド index（0..N-1）へ変換
+  // allSlides の並びは [lastClone, 0, 1, ..., N-1, firstClone]
+  function currentIndex() {
+    var ai = currentAllIndex();
+    if (ai === 0) return N - 1;            // lastClone
+    if (ai === allSlides.length - 1) return 0; // firstClone
+    return ai - 1;
+  }
+
+  // allSlides index から X 座標目標値へ
+  function targetXForAllIndex(ai) {
+    var s = allSlides[ai];
+    return s.offsetLeft + s.offsetWidth / 2 - track.clientWidth / 2;
+  }
+
+  // クローンに着地したら対応する実スライドへ瞬時ジャンプ（アニメーション無し）
+  function settleIfOnClone() {
+    var ai = currentAllIndex();
+    if (ai === 0) {
+      // lastClone → 末尾の実スライドへ
+      jumpToAllIndex(allSlides.length - 2); // 最後の実スライド
+    } else if (ai === allSlides.length - 1) {
+      // firstClone → 先頭の実スライドへ
+      jumpToAllIndex(1);
+    }
+  }
+
+  function jumpToAllIndex(ai) {
+    var prevSnap = track.style.scrollSnapType;
+    var prevBehavior = track.style.scrollBehavior;
+    track.style.scrollSnapType = 'none';
+    track.style.scrollBehavior = 'auto';
+    track.scrollLeft = targetXForAllIndex(ai);
+    // 同期的にリセット
+    requestAnimationFrame(function() {
+      track.style.scrollSnapType = prevSnap;
+      track.style.scrollBehavior = prevBehavior;
+      updateUI();
+    });
+  }
+
   function updateUI() {
     var i = currentIndex();
     if (idxEl) idxEl.textContent = pad2(i + 1);
     dots.forEach(function(d, di) { d.classList.toggle('is-active', di === i); });
-    if (prevBtn) prevBtn.toggleAttribute('disabled', i === 0);
-    if (nextBtn) nextBtn.toggleAttribute('disabled', i === slides.length - 1);
+    // 循環カルーセルなのでボタンは常に有効
+    if (prevBtn) prevBtn.removeAttribute('disabled');
+    if (nextBtn) nextBtn.removeAttribute('disabled');
   }
 
   var animFrame = null;
-  function animateTo(target, duration) {
+  function animateTo(target, duration, onDone) {
     if (animFrame) cancelAnimationFrame(animFrame);
-    // snap + smooth-scroll を一時解除（rAFでピクセル単位に scrollLeft を書き込むため）
     var prevSnap = track.style.scrollSnapType;
     var prevBehavior = track.style.scrollBehavior;
     track.style.scrollSnapType = 'none';
@@ -1981,16 +2040,31 @@ img, svg {
         animFrame = null;
         track.style.scrollSnapType = prevSnap;
         track.style.scrollBehavior = prevBehavior;
+        if (onDone) onDone();
       }
     }
     animFrame = requestAnimationFrame(step);
   }
 
-  function goTo(i) {
-    i = Math.max(0, Math.min(slides.length - 1, i));
-    var s = slides[i];
-    var target = s.offsetLeft + s.offsetWidth / 2 - track.clientWidth / 2;
-    animateTo(target, 650);
+  // dot クリック: 本体 index 0..N-1 → 対応するクローン込み allIndex
+  function goTo(realIndex) {
+    // realIndex は 0..N-1 想定（dotクリック用）
+    var ai = realIndex + 1; // allSlides 上では +1
+    animateTo(targetXForAllIndex(ai), 650);
+  }
+
+  // 次/前 — 循環処理はクローンに進んだ後、着地でシームレスにジャンプ
+  function goNext() {
+    var ai = currentAllIndex();
+    var nextAi = ai + 1;
+    if (nextAi > allSlides.length - 1) nextAi = allSlides.length - 1;
+    animateTo(targetXForAllIndex(nextAi), 650, settleIfOnClone);
+  }
+  function goPrev() {
+    var ai = currentAllIndex();
+    var nextAi = ai - 1;
+    if (nextAi < 0) nextAi = 0;
+    animateTo(targetXForAllIndex(nextAi), 650, settleIfOnClone);
   }
 
   // scroll-driven UI update (throttled)
@@ -2002,19 +2076,19 @@ img, svg {
     }
   }, { passive: true });
 
-  // prev / next
-  if (prevBtn) prevBtn.addEventListener('click', function() { goTo(currentIndex() - 1); });
-  if (nextBtn) nextBtn.addEventListener('click', function() { goTo(currentIndex() + 1); });
+  // prev / next — 循環
+  if (prevBtn) prevBtn.addEventListener('click', goPrev);
+  if (nextBtn) nextBtn.addEventListener('click', goNext);
 
   // dots
   dots.forEach(function(d) {
     d.addEventListener('click', function() { goTo(parseInt(d.dataset.goto, 10)); });
   });
 
-  // keyboard (when track focused or carousel in viewport & user uses arrows)
+  // keyboard — 循環
   track.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(currentIndex() - 1); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(currentIndex() + 1); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goPrev(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
   });
 
   // drag to scroll (pointer events; clicks pass through when no drag)
@@ -2036,20 +2110,36 @@ img, svg {
     if (!isDown) return;
     isDown = false;
     track.classList.remove('is-dragging');
-    // snap to nearest slide
-    goTo(currentIndex());
+    // 現在のallIndexへアニメーションでスナップ、着地でクローン解決
+    var ai = currentAllIndex();
+    animateTo(targetXForAllIndex(ai), 450, settleIfOnClone);
   }
   track.addEventListener('pointerup', endDrag);
   track.addEventListener('pointercancel', endDrag);
   track.addEventListener('pointerleave', endDrag);
 
   // prevent accidental click navigation right after drag
-  slides.forEach(function(s) {
+  allSlides.forEach(function(s) {
     s.addEventListener('click', function(e) { if (moved > 8) e.preventDefault(); });
   });
 
-  // initial UI
-  updateUI();
+  // 初期位置: allIndex=1（= 実スライド 0番目 LAST CALL）をセンターに
+  function setInitialPosition() {
+    var prevSnap = track.style.scrollSnapType;
+    var prevBehavior = track.style.scrollBehavior;
+    track.style.scrollSnapType = 'none';
+    track.style.scrollBehavior = 'auto';
+    track.scrollLeft = targetXForAllIndex(1);
+    requestAnimationFrame(function() {
+      track.style.scrollSnapType = prevSnap;
+      track.style.scrollBehavior = prevBehavior;
+      updateUI();
+    });
+  }
+  // レイアウト確定後に設定（画像 decode 後も含め二段で保険）
+  setInitialPosition();
+  window.addEventListener('load', setInitialPosition);
+  window.addEventListener('resize', setInitialPosition);
 })();
 </script>
 
