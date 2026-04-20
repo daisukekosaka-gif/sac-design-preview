@@ -952,6 +952,135 @@ img, svg {
   border-color: var(--theme-fg);
 }
 
+/* ===================== SERVICE LINEUP ===================== */
+.service {
+  padding: 140px 40px 160px;
+  background: var(--theme-bg);
+}
+
+.service__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.service__header {
+  max-width: 880px;
+  margin: 0 auto 72px;
+  text-align: center;
+}
+
+.service__label {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.service__title {
+  font-family: var(--font-en);
+  font-weight: 800;
+  font-size: clamp(40px, 5.4vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+.service__lead {
+  font-family: var(--font-jp);
+  font-size: 14px;
+  line-height: 2;
+  letter-spacing: 0.04em;
+  color: var(--gray-500);
+}
+
+.service__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid color-mix(in oklab, var(--theme-fg) 12%, transparent);
+}
+
+.service__item {
+  display: grid;
+  grid-template-columns: 80px 1fr 60px;
+  gap: 40px;
+  align-items: center;
+  padding: 36px 16px;
+  border-bottom: 1px solid color-mix(in oklab, var(--theme-fg) 12%, transparent);
+  cursor: pointer;
+  transition: background 0.4s var(--ease), padding 0.4s var(--ease);
+}
+
+.service__item:hover {
+  background: color-mix(in oklab, var(--theme-fg) 4%, transparent);
+  padding-left: 28px;
+}
+
+.service__num {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+}
+
+.service__body {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: 48px;
+  align-items: baseline;
+}
+
+.service__name-en {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: clamp(22px, 2.6vw, 32px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.service__name-jp {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-jp);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--gray-400);
+}
+
+.service__desc {
+  font-family: var(--font-jp);
+  font-size: 13px;
+  line-height: 2;
+  letter-spacing: 0.04em;
+  color: var(--gray-500);
+}
+
+.service__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 25%, transparent);
+  color: var(--theme-fg);
+  transition: transform 0.4s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease);
+  justify-self: end;
+}
+
+.service__item:hover .service__arrow {
+  background: var(--theme-fg);
+  color: var(--theme-bg);
+  border-color: var(--theme-fg);
+  transform: translateX(6px);
+}
+
 /* ===================== CREATOR ===================== */
 .creator {
   padding: 140px 40px 160px;
@@ -1543,6 +1672,14 @@ img, svg {
   .works__slide-cta { display: none; }
   .works__nav { display: none; }
 
+  .service { padding: 80px 20px 100px; }
+  .service__header { margin-bottom: 48px; }
+  .service__item { grid-template-columns: 48px 1fr; gap: 16px; padding: 24px 0; }
+  .service__item:hover { padding-left: 0; }
+  .service__body { grid-template-columns: 1fr; gap: 12px; }
+  .service__arrow { display: none; }
+  .service__name-en { font-size: clamp(20px, 5.5vw, 26px); }
+
   .creator { padding: 80px 0 100px; }
   .creator__inner { padding: 0; }
   .creator__header { padding: 0 20px; flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 32px; }
@@ -1579,6 +1716,7 @@ img, svg {
   <nav class="header__nav">
     <a href="#about">ABOUT</a>
     <a href="#works">WORKS</a>
+    <a href="#service">SERVICE</a>
     <a href="#creator">CREATOR</a>
     <a href="#info">INFO</a>
     <a href="#contact">CONTACT</a>
@@ -1592,6 +1730,7 @@ img, svg {
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about">ABOUT</a>
   <a href="#works">WORKS</a>
+  <a href="#service">SERVICE</a>
   <a href="#creator">CREATOR</a>
   <a href="#info">INFO</a>
   <a href="#contact">CONTACT</a>
@@ -1825,6 +1964,78 @@ img, svg {
   </div>
 </section>
 
+<!-- SERVICE -->
+<section class="service" id="service" data-theme="ivory">
+  <div class="service__inner">
+    <header class="service__header js-reveal">
+      <span class="service__label">SERVICE</span>
+      <h2 class="service__title">LINEUP</h2>
+      <p class="service__lead">
+        映像・Web・グラフィック・空間・AIクリエイティブ。<br>
+        あらゆる制作領域で、AIと人間の最適なコラボレーションを設計します。
+      </p>
+    </header>
+
+    <ol class="service__list">
+      <li class="service__item js-reveal">
+        <span class="service__num">01</span>
+        <div class="service__body">
+          <h3 class="service__name-en">VIDEO PRODUCTION</h3>
+          <p class="service__name-jp">映像制作</p>
+          <p class="service__desc">ブランドフィルム、CM、MV、ショートフォーム。AIを活用したポストプロダクションと生成映像技術で、制作速度と品質を両立します。</p>
+        </div>
+        <span class="service__arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </li>
+      <li class="service__item js-reveal">
+        <span class="service__num">02</span>
+        <div class="service__body">
+          <h3 class="service__name-en">WEB DESIGN</h3>
+          <p class="service__name-jp">ウェブデザイン</p>
+          <p class="service__desc">コーポレートサイト、LP、ECからWebアプリまで。情報設計からUI/UX、実装、AIによる最適化までを一気通貫で手掛けます。</p>
+        </div>
+        <span class="service__arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </li>
+      <li class="service__item js-reveal">
+        <span class="service__num">03</span>
+        <div class="service__body">
+          <h3 class="service__name-en">GRAPHIC DESIGN</h3>
+          <p class="service__name-jp">グラフィックデザイン</p>
+          <p class="service__desc">VI、パッケージ、広告ビジュアル、エディトリアル。AIのバリエーション生成と人間の審美眼を掛け合わせ、核心を鮮烈に可視化します。</p>
+        </div>
+        <span class="service__arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </li>
+      <li class="service__item js-reveal">
+        <span class="service__num">04</span>
+        <div class="service__body">
+          <h3 class="service__name-en">INSTALLATION</h3>
+          <p class="service__name-jp">インスタレーション</p>
+          <p class="service__desc">体験型アート、インタラクティブ展示、プロジェクションマッピング。AIとリアル空間を融合させ、没入体験を設計します。</p>
+        </div>
+        <span class="service__arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </li>
+      <li class="service__item js-reveal">
+        <span class="service__num">05</span>
+        <div class="service__body">
+          <h3 class="service__name-en">AI CREATIVE</h3>
+          <p class="service__name-jp">AIクリエイティブ</p>
+          <p class="service__desc">AI活用戦略の立案、ワークフロー設計、クリエイター向けトレーニング、カスタムモデル開発までをワンストップで支援します。</p>
+        </div>
+        <span class="service__arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </li>
+    </ol>
+  </div>
+</section>
+
 <!-- CREATOR -->
 <section class="creator" id="creator" data-theme="stone">
   <div class="creator__inner">
@@ -1975,6 +2186,7 @@ img, svg {
 
         <div class="footer__col footer__col--right">
           <ul>
+            <li><a href="#service">SERVICE</a></li>
             <li><a href="#info">INFO</a></li>
             <li><a href="#contact">CONTACT</a></li>
           </ul>
