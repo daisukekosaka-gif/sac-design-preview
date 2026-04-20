@@ -495,15 +495,22 @@ section { padding: var(--gap) var(--pad); position: relative; }
   border-radius: 4px; background: var(--ink);
   cursor: pointer;
 }
-.works-feature-bg {
+.works-feature-img, .works-card-img {
   position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 40%, rgba(171,184,195,0.25) 0%, transparent 55%),
-    radial-gradient(ellipse at 75% 70%, rgba(68,94,95,0.45) 0%, transparent 60%),
-    linear-gradient(135deg, #2a3a3b 0%, #141d1e 100%);
-  transition: transform 1.2s var(--ease);
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  transition: transform 1.4s var(--ease), filter 1s var(--ease);
+  filter: saturate(0.95) contrast(1.02);
 }
-.works-feature:hover .works-feature-bg { transform: scale(1.04); }
+.works-feature:hover .works-feature-img,
+.works-card:hover .works-card-img { transform: scale(1.05); filter: saturate(1) contrast(1.05); }
+.works-feature-overlay, .works-card-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(to top, rgba(7,8,8,0.72) 0%, rgba(7,8,8,0.18) 45%, transparent 70%),
+    linear-gradient(to right, rgba(7,8,8,0.35) 0%, transparent 40%);
+  pointer-events: none;
+}
 .works-feature-grid {
   position: absolute; inset: 0; pointer-events: none; opacity: 0.08;
   background-image:
@@ -550,21 +557,6 @@ section { padding: var(--gap) var(--pad); position: relative; }
   position: relative; aspect-ratio: 4/3; overflow: hidden;
   border-radius: 4px; cursor: pointer; background: var(--ink);
 }
-.works-card-bg {
-  position: absolute; inset: 0;
-  transition: transform 1.2s var(--ease);
-}
-.works-card:nth-child(1) .works-card-bg {
-  background:
-    radial-gradient(ellipse at 60% 40%, rgba(171,184,195,0.3), transparent 60%),
-    linear-gradient(160deg, #3a2a2e 0%, #1a1012 100%);
-}
-.works-card:nth-child(2) .works-card-bg {
-  background:
-    radial-gradient(ellipse at 40% 50%, rgba(68,94,95,0.45), transparent 60%),
-    linear-gradient(160deg, #243533 0%, #0f1615 100%);
-}
-.works-card:hover .works-card-bg { transform: scale(1.05); }
 .works-card-content {
   position: absolute; left: 28px; bottom: 28px; color: var(--bg); z-index: 2;
 }
@@ -606,26 +598,29 @@ section { padding: var(--gap) var(--pad); position: relative; }
 .creator-list {
   max-width: var(--content); margin: 0 auto;
   display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px;
+  align-items: start;
 }
 .creator-item { cursor: pointer; transition: transform 0.6s var(--ease); }
 .creator-item:hover { transform: translateY(-4px); }
 .creator-photo {
-  position: relative; aspect-ratio: 3/4; overflow: hidden;
+  position: relative; overflow: hidden;
   border-radius: 4px; background: var(--bg-2);
   margin-bottom: 20px;
+  /* aspect-ratio is set per-item inline to preserve each thumbnail's native ratio */
 }
-.creator-photo-inner {
-  position: absolute; inset: 0;
-  background: linear-gradient(170deg, #cdd0c9 0%, #9aa29c 100%);
-  filter: grayscale(1) contrast(1.04);
+.creator-photo-img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
   transition: transform 1.4s var(--ease), filter 1s var(--ease);
+  filter: grayscale(0.35) contrast(1.02);
 }
-.creator-photo-inner::after {
+.creator-item:hover .creator-photo-img {
+  transform: scale(1.04); filter: grayscale(0);
+}
+.creator-photo::after {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(34,47,48,0.3));
-}
-.creator-item:hover .creator-photo-inner {
-  transform: scale(1.06); filter: grayscale(0.4);
+  background: linear-gradient(180deg, transparent 60%, rgba(34,47,48,0.28));
+  pointer-events: none;
 }
 .creator-photo-meta {
   position: absolute; top: 14px; left: 14px; right: 14px;
@@ -1046,8 +1041,8 @@ footer {
 
   <div class="works-wrap">
     <article class="works-feature reveal">
-      <div class="works-feature-bg"></div>
-      <div class="works-feature-grid"></div>
+      <img class="works-feature-img" src="assets/works/lastcall.jpg" alt="LAST CALL" loading="lazy">
+      <div class="works-feature-overlay"></div>
       <div class="works-feature-meta">
         <div>— Featured project</div>
         <div>2026 / EPOCH × SAC</div>
@@ -1061,8 +1056,8 @@ footer {
 
     <div class="works-grid-2 reveal-stagger">
       <article class="works-card">
-        <div class="works-card-bg"></div>
-        <div class="works-feature-grid"></div>
+        <img class="works-card-img" src="assets/works/hyde.jpg" alt="HYDE | SOCIAL VIRUS" loading="lazy">
+        <div class="works-card-overlay"></div>
         <div class="works-card-content">
           <div class="works-card-cat">— Music Video</div>
           <h4 class="works-card-title">HYDE | SOCIAL VIRUS</h4>
@@ -1070,8 +1065,8 @@ footer {
         </div>
       </article>
       <article class="works-card">
-        <div class="works-card-bg"></div>
-        <div class="works-feature-grid"></div>
+        <img class="works-card-img" src="assets/works/24.jpg" alt="24世紀ラーメン" loading="lazy">
+        <div class="works-card-overlay"></div>
         <div class="works-card-content">
           <div class="works-card-cat">— Branding</div>
           <h4 class="works-card-title">24世紀ラーメン</h4>
@@ -1110,45 +1105,45 @@ footer {
   </div>
 
   <div class="creator-list reveal-stagger">
-    <div class="creator-item">
-      <div class="creator-photo">
+    <a class="creator-item" href="https://www.epoch-inc.jp/member/tsunehashi" target="_blank" rel="noopener" style="text-decoration:none; color:inherit;">
+      <div class="creator-photo" style="aspect-ratio: 1200/799;">
         <div class="creator-photo-meta"><span>— 01</span><span>DIR</span></div>
-        <div class="creator-photo-inner"></div>
+        <img class="creator-photo-img" src="assets/creators/tsunehashi.jpg" alt="ツネハシタケシ" loading="lazy">
       </div>
-      <h4 class="creator-name">Creator A</h4>
+      <h4 class="creator-name">ツネハシタケシ</h4>
+      <span class="creator-role">— Creative Director</span>
+    </a>
+    <a class="creator-item" href="https://www.epoch-inc.jp/member/ochiai" target="_blank" rel="noopener" style="text-decoration:none; color:inherit;">
+      <div class="creator-photo" style="aspect-ratio: 1200/629;">
+        <div class="creator-photo-meta"><span>— 02</span><span>DIR</span></div>
+        <img class="creator-photo-img" src="assets/creators/ochiai.png" alt="落合 剛之" loading="lazy">
+      </div>
+      <h4 class="creator-name">落合 剛之</h4>
       <span class="creator-role">— Director</span>
+    </a>
+    <div class="creator-item">
+      <div class="creator-photo" style="aspect-ratio: 1/1;">
+        <div class="creator-photo-meta"><span>— 03</span><span>AI</span></div>
+        <img class="creator-photo-img" src="assets/creators/bird.jpg" alt="Bird" loading="lazy">
+      </div>
+      <h4 class="creator-name">Bird</h4>
+      <span class="creator-role">— AI Creator</span>
     </div>
     <div class="creator-item">
-      <div class="creator-photo">
-        <div class="creator-photo-meta"><span>— 02</span><span>AD</span></div>
-        <div class="creator-photo-inner" style="background:linear-gradient(170deg,#b7beb8,#838b86);"></div>
+      <div class="creator-photo" style="aspect-ratio: 1/1;">
+        <div class="creator-photo-meta"><span>— 04</span><span>AI</span></div>
+        <img class="creator-photo-img" src="assets/creators/gane.jpg" alt="gane.WAV" loading="lazy">
       </div>
-      <h4 class="creator-name">Creator B</h4>
-      <span class="creator-role">— Art Director</span>
+      <h4 class="creator-name">gane.WAV</h4>
+      <span class="creator-role">— AI Creator</span>
     </div>
     <div class="creator-item">
-      <div class="creator-photo">
-        <div class="creator-photo-meta"><span>— 03</span><span>CG</span></div>
-        <div class="creator-photo-inner" style="background:linear-gradient(170deg,#c6c9c2,#8f948e);"></div>
+      <div class="creator-photo" style="aspect-ratio: 1/1;">
+        <div class="creator-photo-meta"><span>— 05</span><span>AI</span></div>
+        <img class="creator-photo-img" src="assets/creators/aoki.webp" alt="AoKi¹⁰⁴" loading="lazy">
       </div>
-      <h4 class="creator-name">Creator C</h4>
-      <span class="creator-role">— CG Artist</span>
-    </div>
-    <div class="creator-item">
-      <div class="creator-photo">
-        <div class="creator-photo-meta"><span>— 04</span><span>MTN</span></div>
-        <div class="creator-photo-inner" style="background:linear-gradient(170deg,#c1c4bd,#878c85);"></div>
-      </div>
-      <h4 class="creator-name">Creator D</h4>
-      <span class="creator-role">— Motion Designer</span>
-    </div>
-    <div class="creator-item">
-      <div class="creator-photo">
-        <div class="creator-photo-meta"><span>— 05</span><span>DEV</span></div>
-        <div class="creator-photo-inner" style="background:linear-gradient(170deg,#b4bab3,#7c8279);"></div>
-      </div>
-      <h4 class="creator-name">Creator E</h4>
-      <span class="creator-role">— Web Developer</span>
+      <h4 class="creator-name">AoKi¹⁰⁴</h4>
+      <span class="creator-role">— AI Creator</span>
     </div>
   </div>
 </section>
