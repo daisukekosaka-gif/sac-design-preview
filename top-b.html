@@ -762,6 +762,26 @@ nav .nav-cta:hover {
   margin-right: 0.1em;
   font-weight: 500;
 }
+/* ========== STATEMENT PARALLAX ========== */
+.plx {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
+  will-change: transform, opacity;
+}
+.plx.in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+/* entered 後は scroll JS が transform を直接書き換え */
+.plx-engaged {
+  transition: none;
+}
+/* マーキー背景にも縦方向パララックス（wrapperに translateY、内側 row は既存 translateX anim 維持） */
+.stmt-bg-row-wrap {
+  will-change: transform;
+}
+
 .split-word {
   display: inline-block;
   opacity: 0;
@@ -1907,44 +1927,50 @@ footer {
 <section class="statement" id="statement">
   <!-- 背景レイヤードマーキー -->
   <div class="stmt-bg" aria-hidden="true">
-    <div class="stmt-bg-row r1">
-      <span>REDEFINE CREATIVE — REDEFINE CREATIVE — REDEFINE CREATIVE — REDEFINE CREATIVE —</span>
+    <div class="stmt-bg-row-wrap" data-plx="-0.18">
+      <div class="stmt-bg-row r1">
+        <span>REDEFINE CREATIVE — REDEFINE CREATIVE — REDEFINE CREATIVE — REDEFINE CREATIVE —</span>
+      </div>
     </div>
-    <div class="stmt-bg-row r2">
-      <span>AI × CREATIVE — AI × CREATIVE — AI × CREATIVE — AI × CREATIVE — AI × CREATIVE —</span>
+    <div class="stmt-bg-row-wrap" data-plx="0.24">
+      <div class="stmt-bg-row r2">
+        <span>AI × CREATIVE — AI × CREATIVE — AI × CREATIVE — AI × CREATIVE — AI × CREATIVE —</span>
+      </div>
     </div>
-    <div class="stmt-bg-row r3">
-      <span>FAST — FLEXIBLE — BEAUTIFUL — FAST — FLEXIBLE — BEAUTIFUL — FAST — FLEXIBLE — BEAUTIFUL —</span>
+    <div class="stmt-bg-row-wrap" data-plx="-0.12">
+      <div class="stmt-bg-row r3">
+        <span>FAST — FLEXIBLE — BEAUTIFUL — FAST — FLEXIBLE — BEAUTIFUL — FAST — FLEXIBLE — BEAUTIFUL —</span>
+      </div>
     </div>
   </div>
 
   <div class="stmt-inner">
-    <div class="stmt-eyebrow">Our Statement</div>
+    <div class="stmt-eyebrow plx" data-plx="0.06">Our Statement</div>
 
     <div class="statement-text">
       <!-- 第1行: 私たちは、AIを使って「制作工程そのもの」を再設計する。 -->
-      <div class="stmt-line stmt-line-1">
+      <div class="stmt-line stmt-line-1 plx" data-plx="0.08">
         <span>私たちは、AI を使って</span>
-        <span class="stmt-big">制作工程そのもの</span>
-        <span>を<span class="stmt-big-white">再設計する。</span></span>
+        <span class="stmt-big plx-child" data-plx="-0.14">制作工程そのもの</span>
+        <span>を<span class="stmt-big-white plx-child" data-plx="0.1">再設計する。</span></span>
       </div>
 
-      <!-- 第2行: 領域横断チップ -->
-      <div class="stmt-line stmt-line-2">
+      <!-- 第2行: 領域横断 -->
+      <div class="stmt-line stmt-line-2 plx" data-plx="0.05">
         <span>映像・Web・グラフィック・SNS ——</span>
         <span>領域を横断しながら、</span>
       </div>
 
       <!-- 第3行: 速く・柔軟に・美しく 三連 -->
-      <div class="stmt-line stmt-line-3">
+      <div class="stmt-line stmt-line-3 plx" data-plx="0.07">
         <span>事業に必要なクリエイティブを、</span>
       </div>
-      <div class="stmt-trio">
-        <span class="kw"><span class="kw-num">01</span>速く。</span>
-        <span class="kw"><span class="kw-num">02</span>柔軟に。</span>
-        <span class="kw"><span class="kw-num">03</span>美しく。</span>
+      <div class="stmt-trio plx" data-plx="0.18">
+        <span class="kw" data-plx-child="0.05"><span class="kw-num">01</span>速く。</span>
+        <span class="kw" data-plx-child="-0.04"><span class="kw-num">02</span>柔軟に。</span>
+        <span class="kw" data-plx-child="0.08"><span class="kw-num">03</span>美しく。</span>
       </div>
-      <div class="stmt-line stmt-line-3">
+      <div class="stmt-line stmt-line-3 plx" data-plx="0.1">
         <span>届ける。</span>
       </div>
     </div>
@@ -2559,6 +2585,64 @@ footer {
         const copy = hero.querySelector('.hero-main-copy');
         if (copy) copy.style.transform = '';
       });
+    }
+  }
+
+  // ===== STATEMENT PARALLAX =====
+  if (!reduce) {
+    const stmtSection = document.querySelector('.statement');
+    if (stmtSection) {
+      const plxItems = Array.from(stmtSection.querySelectorAll('[data-plx]'));
+      const plxChildren = Array.from(stmtSection.querySelectorAll('[data-plx-child]'));
+
+      // 入場アニメ: セクションが viewport に入ったら .in を付ける
+      const entryIO = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          plxItems.filter(el => el.classList.contains('plx')).forEach((el, i) => {
+            setTimeout(() => el.classList.add('in'), i * 80);
+          });
+          // 入場後にtransitionを切る（scroll連動のtransformをスムーズに）
+          setTimeout(() => {
+            plxItems.forEach(el => { if (el.classList.contains('plx')) el.classList.add('plx-engaged'); });
+          }, 1400);
+          entryIO.unobserve(e.target);
+        });
+      }, { threshold: 0.15 });
+      entryIO.observe(stmtSection);
+
+      // scroll 連動: セクション中心を基準に -1..+1 の進行値を計算し、各要素の translateY を更新
+      let ticking = false;
+      function tick() {
+        ticking = false;
+        const rect = stmtSection.getBoundingClientRect();
+        const vh = window.innerHeight;
+        // セクション中心が viewport 中心より上:-、下:+
+        const center = rect.top + rect.height / 2 - vh / 2;
+        const norm = center / (vh / 2 + rect.height / 2); // -1..1付近
+        const p = Math.max(-1.2, Math.min(1.2, norm));
+
+        plxItems.forEach(el => {
+          if (el.classList.contains('plx') && !el.classList.contains('in')) return; // 入場前はtouchしない
+          const speed = parseFloat(el.dataset.plx) || 0;
+          const y = p * speed * 160; // 最大約 ±160px × speed
+          el.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0)';
+        });
+        plxChildren.forEach(el => {
+          const speed = parseFloat(el.dataset.plxChild) || 0;
+          const y = p * speed * 120;
+          el.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0)';
+        });
+      }
+      function onScroll() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(tick);
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      tick();
     }
   }
 
