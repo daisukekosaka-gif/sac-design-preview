@@ -765,22 +765,64 @@ nav .nav-cta:hover {
 /* ========== STATEMENT PARALLAX ========== */
 .plx {
   opacity: 0;
-  transform: translate3d(0, 40px, 0);
-  transition: opacity 1s var(--ease), transform 1s var(--ease);
-  will-change: transform, opacity;
+  transform: translate3d(0, 80px, 0) scale(0.96);
+  filter: blur(10px);
+  transition:
+    opacity 1.2s var(--ease),
+    transform 1.2s var(--ease),
+    filter 1.2s var(--ease);
+  will-change: transform, opacity, filter;
 }
 .plx.in {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+/* 大型キーワードは入場時に強めの変化 */
+.stmt-big.plx-child,
+.stmt-big-white.plx-child {
+  opacity: 0;
+  transform: translate3d(0, 60px, 0) scale(0.92);
+  filter: blur(14px);
+  transition:
+    opacity 1.4s var(--ease),
+    transform 1.4s var(--ease),
+    filter 1.4s var(--ease);
+  will-change: transform, opacity, filter;
+}
+.stmt-big.plx-child.in-child,
+.stmt-big-white.plx-child.in-child {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
 }
 /* entered 後は scroll JS が transform を直接書き換え */
 .plx-engaged {
-  transition: none;
+  transition: filter 0.3s var(--ease);
 }
-/* マーキー背景にも縦方向パララックス（wrapperに translateY、内側 row は既存 translateX anim 維持） */
+/* マーキー背景にも縦方向パララックス */
 .stmt-bg-row-wrap {
   will-change: transform;
 }
+/* stmt-trio の kw はワード単位でリビールしたい */
+.stmt-trio .kw {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+.stmt-trio.plx:not(.in) .kw {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0) scale(0.9);
+  filter: blur(12px);
+}
+.stmt-trio.plx.in .kw {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+  transition: opacity 1s var(--ease), transform 1s var(--ease), filter 1s var(--ease);
+}
+.stmt-trio.plx.in .kw:nth-child(1) { transition-delay: 0.05s; }
+.stmt-trio.plx.in .kw:nth-child(2) { transition-delay: 0.2s; }
+.stmt-trio.plx.in .kw:nth-child(3) { transition-delay: 0.35s; }
 
 .split-word {
   display: inline-block;
@@ -1965,10 +2007,10 @@ footer {
       <div class="stmt-line stmt-line-3 plx" data-plx="0.07">
         <span>事業に必要なクリエイティブを、</span>
       </div>
-      <div class="stmt-trio plx" data-plx="0.18">
-        <span class="kw" data-plx-child="0.05"><span class="kw-num">01</span>速く。</span>
-        <span class="kw" data-plx-child="-0.04"><span class="kw-num">02</span>柔軟に。</span>
-        <span class="kw" data-plx-child="0.08"><span class="kw-num">03</span>美しく。</span>
+      <div class="stmt-trio plx" data-plx="0.28">
+        <span class="kw"><span class="kw-num">01</span>よりリアルに。</span>
+        <span class="kw"><span class="kw-num">02</span>より柔軟に。</span>
+        <span class="kw"><span class="kw-num">03</span>より美しく。</span>
       </div>
       <div class="stmt-line stmt-line-3 plx" data-plx="0.1">
         <span>届ける。</span>
@@ -2593,22 +2635,27 @@ footer {
     const stmtSection = document.querySelector('.statement');
     if (stmtSection) {
       const plxItems = Array.from(stmtSection.querySelectorAll('[data-plx]'));
-      const plxChildren = Array.from(stmtSection.querySelectorAll('[data-plx-child]'));
+      const plxChildren = Array.from(stmtSection.querySelectorAll('.plx-child'));
 
       // 入場アニメ: セクションが viewport に入ったら .in を付ける
       const entryIO = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (!e.isIntersecting) return;
+          // 親要素を大きめstaggerで
           plxItems.filter(el => el.classList.contains('plx')).forEach((el, i) => {
-            setTimeout(() => el.classList.add('in'), i * 80);
+            setTimeout(() => el.classList.add('in'), i * 150);
           });
-          // 入場後にtransitionを切る（scroll連動のtransformをスムーズに）
+          // 子要素（stmt-big 系）は遅れて登場
+          plxChildren.filter(el => el.classList.contains('plx-child')).forEach((el, i) => {
+            setTimeout(() => el.classList.add('in-child'), 300 + i * 220);
+          });
+          // 入場後にtransitionを切る
           setTimeout(() => {
             plxItems.forEach(el => { if (el.classList.contains('plx')) el.classList.add('plx-engaged'); });
-          }, 1400);
+          }, 2000);
           entryIO.unobserve(e.target);
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.12 });
       entryIO.observe(stmtSection);
 
       // scroll 連動: セクション中心を基準に -1..+1 の進行値を計算し、各要素の translateY を更新
@@ -2623,14 +2670,10 @@ footer {
         const p = Math.max(-1.2, Math.min(1.2, norm));
 
         plxItems.forEach(el => {
-          if (el.classList.contains('plx') && !el.classList.contains('in')) return; // 入場前はtouchしない
+          if (el.classList.contains('plx') && !el.classList.contains('in')) return;
+          if (el.classList.contains('plx-child') && !el.classList.contains('in-child')) return;
           const speed = parseFloat(el.dataset.plx) || 0;
-          const y = p * speed * 160; // 最大約 ±160px × speed
-          el.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0)';
-        });
-        plxChildren.forEach(el => {
-          const speed = parseFloat(el.dataset.plxChild) || 0;
-          const y = p * speed * 120;
+          const y = p * speed * 320; // 振幅2倍
           el.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0)';
         });
       }
