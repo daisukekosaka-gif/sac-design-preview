@@ -975,6 +975,9 @@ img, svg {
   max-width: 880px;
   margin: 0 auto 40px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .service__label {
@@ -985,7 +988,7 @@ img, svg {
   color: var(--gold);
   text-transform: uppercase;
   display: inline-block;
-  margin-bottom: 10px;
+  margin: 28px 0 14px; /* LINEUPアンダーラインの下に配置 */
 }
 
 .service__title {
@@ -1035,12 +1038,12 @@ img, svg {
   list-style: none;
 }
 
-/* カード全体をリンク化、右下にアクションボタン */
+/* カード全体をリンク化、右上にアクションボタン */
 .service__link {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 24px 18px 60px; /* 下部は service__action 分を空ける */
+  padding: 60px 18px 20px; /* 上部は service__action 分を空ける */
   border: 1px solid color-mix(in oklab, var(--theme-fg) 12%, transparent);
   border-radius: 6px;
   background: color-mix(in oklab, var(--theme-fg) 2%, transparent);
@@ -1049,21 +1052,19 @@ img, svg {
   text-decoration: none;
   color: inherit;
   height: 100%;
-  transition: background 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 
 .service__link:hover {
   background: color-mix(in oklab, var(--theme-fg) 6%, transparent);
   border-color: color-mix(in oklab, var(--theme-fg) 30%, transparent);
-  transform: translateY(-4px);
-  box-shadow: 0 14px 34px rgba(10, 10, 10, 0.08);
 }
 
-/* 右下の円形アクションボタン */
+/* 右上の円形アクションボタン */
 .service__action {
   position: absolute;
   right: 16px;
-  bottom: 14px;
+  top: 14px;
   width: 38px;
   height: 38px;
   border-radius: 999px;
@@ -1073,22 +1074,14 @@ img, svg {
   align-items: center;
   justify-content: center;
   background: transparent;
-  transition: background 0.35s var(--ease), color 0.35s var(--ease), border-color 0.35s var(--ease), transform 0.35s var(--ease);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 
-.service__action svg {
-  transition: transform 0.35s var(--ease);
-}
-
+/* hover は色変化のみ */
 .service__link:hover .service__action {
   background: var(--gold);
   border-color: var(--gold);
   color: #0a0a0a;
-  transform: scale(1.1);
-}
-
-.service__link:hover .service__action svg {
-  transform: translateX(4px);
 }
 
 .service__num {
@@ -2065,8 +2058,8 @@ img, svg {
 <section class="service" id="service" data-theme="ivory">
   <div class="service__inner">
     <header class="service__header js-reveal">
-      <span class="service__label">SERVICE</span>
       <h2 class="service__title">LINEUP</h2>
+      <span class="service__label">SERVICE</span>
       <p class="service__lead">
         映像・Web・グラフィック・空間・AIクリエイティブ。<br>
         あらゆる制作領域で、AIと人間の最適なコラボレーションを設計します。
