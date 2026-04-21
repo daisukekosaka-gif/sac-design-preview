@@ -1254,10 +1254,10 @@ img, svg {
   z-index: 1;
 }
 
-/* Prev/Next ナビゲーション */
+/* Prev/Next ナビゲーション（写真の高さ中央に配置） */
 .creator__nav {
   position: absolute;
-  top: 50%;
+  top: var(--creator-nav-top, 50%);
   transform: translateY(-50%);
   width: 44px;
   height: 44px;
@@ -1287,11 +1287,6 @@ img, svg {
 .creator__nav[disabled] {
   opacity: 0.3;
   pointer-events: none;
-}
-
-/* スクロール不要（5枚全員がビューポート内に収まる）場合は矢印を完全に隠す */
-.creator__carousel[data-scrollable="false"] .creator__nav {
-  display: none;
 }
 
 .creator__name {
@@ -2798,10 +2793,17 @@ img, svg {
     var max = list.scrollWidth - list.clientWidth;
     prevBtn.toggleAttribute('disabled', list.scrollLeft <= 1);
     nextBtn.toggleAttribute('disabled', list.scrollLeft >= max - 1);
-    // 全員がビューポートに収まる（スクロール不要）場合はナビを非表示にする
+  }
+
+  // ナビ矢印を写真(.creator__avatar)の高さ中央に配置
+  function updateNavPosition() {
     var carousel = list.parentElement;
-    if (carousel) {
-      carousel.setAttribute('data-scrollable', max > 1 ? 'true' : 'false');
+    if (!carousel) return;
+    var avatar = list.querySelector('.creator__avatar');
+    if (!avatar) return;
+    var h = avatar.offsetHeight;
+    if (h > 0) {
+      carousel.style.setProperty('--creator-nav-top', (h / 2) + 'px');
     }
   }
   var navTicking = false;
@@ -2811,8 +2813,18 @@ img, svg {
       navTicking = true;
     }
   }, { passive: true });
-  window.addEventListener('resize', updateNavState);
+  window.addEventListener('resize', function() {
+    updateNavState();
+    updateNavPosition();
+  });
+  window.addEventListener('load', updateNavPosition);
+  // 画像の decode 完了後にも再計測（初期表示時に高さ 0 になるのを防ぐ）
+  list.querySelectorAll('.creator__avatar img').forEach(function(img) {
+    if (img.complete) return;
+    img.addEventListener('load', updateNavPosition, { once: true });
+  });
   updateNavState();
+  updateNavPosition();
 })();
 </script>
 
