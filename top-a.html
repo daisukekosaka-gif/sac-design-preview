@@ -431,10 +431,10 @@ img, svg {
   color: var(--gold);
 }
 
-/* PHILOSOPHY + APPROACH — APPROACH を主役にする比率 */
+/* PHILOSOPHY + APPROACH — APPROACHは右寄せ、PHILOSOPHYに余白を譲る */
 .about__grid {
   display: grid;
-  grid-template-columns: minmax(320px, 0.85fr) minmax(0, 2.4fr);
+  grid-template-columns: minmax(420px, 1.4fr) minmax(0, 2fr);
   gap: 32px;
   align-items: stretch; /* philosophy列を図解の高さまで伸ばす */
 }
@@ -454,14 +454,15 @@ img, svg {
 
 .about__diagram-label {
   display: block;
-  margin-bottom: 12px;
+  width: 85%;
+  max-width: 1120px;
+  margin: 0 0 12px auto; /* 図解と同じ右寄せ位置 */
   padding-left: 12px;
   font-family: var(--font-en);
   font-weight: 500;
   font-size: 10px;
   letter-spacing: 0.22em;
   color: var(--gray-400);
-  align-self: flex-start; /* ラベルは左端のまま */
 }
 
 .diagram {
@@ -476,8 +477,8 @@ img, svg {
 .about__philosophy {
   order: 1;
   display: grid;
-  grid-template-columns: 80px minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
   align-items: start;
   height: 100%; /* グリッドのstretchを受けて図解高さまで伸びる */
   opacity: var(--ph-p);
@@ -498,11 +499,12 @@ img, svg {
   letter-spacing: 0.22em;
   color: var(--gray-400);
   padding-top: 6px;
+  white-space: nowrap;
 }
 
 .about__body {
-  max-width: 420px;
-  font-size: 13px;
+  max-width: 560px;
+  font-size: 14px;
   color: var(--gray-500);
   line-height: 2;
   letter-spacing: 0.02em;
