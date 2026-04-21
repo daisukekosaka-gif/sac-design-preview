@@ -96,14 +96,6 @@ img, svg {
   font-weight: 700;
   font-size: 18px;
   letter-spacing: 0.08em;
-  position: relative;
-  display: inline-block;
-  transition: letter-spacing 0.5s var(--ease), transform 0.5s var(--ease);
-}
-
-.header__logo:hover {
-  letter-spacing: 0.14em;
-  transform: translateY(-1px);
 }
 
 .header__nav {
@@ -116,32 +108,13 @@ img, svg {
   font-weight: 400;
   font-size: 11px;
   letter-spacing: 0.14em;
-  position: relative;
-  padding: 6px 0;
   transition: color 0.3s var(--ease), opacity 0.3s var(--ease);
   opacity: 0.72;
-}
-
-.header__nav a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -2px;
-  height: 1px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.5s var(--ease);
 }
 
 .header__nav a:hover {
   opacity: 1;
   color: var(--gold);
-}
-
-.header__nav a:hover::after {
-  transform: scaleX(1);
 }
 
 .header__hamburger {
@@ -648,31 +621,13 @@ img, svg {
   letter-spacing: 0.18em;
   padding: 18px 32px;
   border: 1px solid currentColor;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  transition: color 0.35s var(--ease), border-color 0.35s var(--ease), letter-spacing 0.35s var(--ease);
-}
-
-/* 左→右にスライドする塗りつぶしレイヤー */
-.about__cta a::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--theme-fg);
-  transform: translateX(-101%);
-  transition: transform 0.45s var(--ease);
-  z-index: -1;
+  transition: color 0.35s var(--ease), border-color 0.35s var(--ease), background 0.35s var(--ease);
 }
 
 .about__cta a:hover {
-  color: var(--theme-bg);
+  color: var(--white);
+  background: var(--theme-fg);
   border-color: var(--theme-fg);
-  letter-spacing: 0.22em;
-}
-
-.about__cta a:hover::before {
-  transform: translateX(0);
 }
 
 /* ===================== WORKS (Refined Carousel) ===================== */
@@ -860,11 +815,6 @@ img, svg {
   left: 32px;
   right: 32px;
   color: var(--white);
-  transition: transform 0.6s var(--ease);
-}
-
-.works__slide:hover .works__slide-content {
-  transform: translateY(-6px);
 }
 
 .works__slide-title {
@@ -881,11 +831,6 @@ img, svg {
   font-size: 12px;
   letter-spacing: 0.06em;
   color: rgba(255,255,255,0.7);
-  transition: color 0.4s var(--ease);
-}
-
-.works__slide:hover .works__slide-sub {
-  color: var(--gold);
 }
 
 .works__slide-cta {
@@ -1006,22 +951,13 @@ img, svg {
   border: 1px solid color-mix(in oklab, var(--theme-fg) 35%, transparent);
   border-radius: 999px;
   color: var(--theme-fg);
-  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease), letter-spacing 0.3s var(--ease);
-}
-
-.works__view-all svg {
-  transition: transform 0.3s var(--ease);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 
 .works__view-all:hover {
   background: var(--theme-fg);
   color: var(--theme-bg);
   border-color: var(--theme-fg);
-  letter-spacing: 0.26em;
-}
-
-.works__view-all:hover svg {
-  transform: translateX(4px);
 }
 
 /* ===================== SERVICE LINEUP (Compact) ===================== */
@@ -1089,33 +1025,13 @@ img, svg {
   background: color-mix(in oklab, var(--theme-fg) 2%, transparent);
   cursor: pointer;
   position: relative;
-  overflow: hidden;
-  transition: background 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
-}
-
-/* 上端のゴールドアクセント — hoverで左→右にスライドイン */
-.service__item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.6s var(--ease);
+  transition: background 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease);
 }
 
 .service__item:hover {
   background: color-mix(in oklab, var(--theme-fg) 6%, transparent);
   border-color: color-mix(in oklab, var(--theme-fg) 30%, transparent);
-  transform: translateY(-6px);
-  box-shadow: 0 14px 34px rgba(10, 10, 10, 0.08);
-}
-
-.service__item:hover::before {
-  transform: scaleX(1);
+  transform: translateY(-4px);
 }
 
 .service__num {
@@ -1124,11 +1040,6 @@ img, svg {
   font-size: 10px;
   letter-spacing: 0.22em;
   color: var(--gold);
-  transition: letter-spacing 0.4s var(--ease);
-}
-
-.service__item:hover .service__num {
-  letter-spacing: 0.32em;
 }
 
 .service__body {
@@ -1144,11 +1055,6 @@ img, svg {
   font-size: 15px;
   line-height: 1.2;
   letter-spacing: -0.005em;
-  transition: color 0.3s var(--ease);
-}
-
-.service__item:hover .service__name-en {
-  color: var(--gold);
 }
 
 .service__name-jp {
@@ -1264,22 +1170,13 @@ img, svg {
   border: 1px solid color-mix(in oklab, var(--theme-fg) 35%, transparent);
   border-radius: 999px;
   color: var(--theme-fg);
-  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease), letter-spacing 0.3s var(--ease);
-}
-
-.creator__cta-link svg {
-  transition: transform 0.3s var(--ease);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 
 .creator__cta-link:hover {
   background: var(--theme-fg);
   color: var(--theme-bg);
   border-color: var(--theme-fg);
-  letter-spacing: 0.26em;
-}
-
-.creator__cta-link:hover svg {
-  transform: translateX(4px);
 }
 
 /* カルーセル化されたクリエイターリスト */
@@ -1397,12 +1294,6 @@ img, svg {
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.08em;
-  transition: color 0.4s var(--ease), letter-spacing 0.4s var(--ease);
-}
-
-.creator__item:hover .creator__name {
-  color: var(--gold);
-  letter-spacing: 0.12em;
 }
 
 .creator__role {
@@ -1412,11 +1303,6 @@ img, svg {
   letter-spacing: 0.18em;
   color: var(--gray-400);
   text-transform: uppercase;
-  transition: color 0.4s var(--ease);
-}
-
-.creator__item:hover .creator__role {
-  color: rgba(255,255,255,0.72);
 }
 
 /* ===================== INFO ===================== */
@@ -1674,32 +1560,11 @@ img, svg {
   font-size: 15px;
   letter-spacing: 0.05em;
   color: var(--white);
-  display: inline-block;
-  position: relative;
-  padding-left: 0;
-  transition: color 0.3s var(--ease), padding-left 0.3s var(--ease), letter-spacing 0.3s var(--ease);
-}
-
-.footer__col ul a::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 0;
-  height: 1px;
-  background: var(--gold);
-  transform: translateY(-50%);
-  transition: width 0.3s var(--ease);
+  transition: color 0.3s var(--ease), opacity 0.3s var(--ease);
 }
 
 .footer__col ul a:hover {
   color: var(--gold);
-  padding-left: 18px;
-  letter-spacing: 0.08em;
-}
-
-.footer__col ul a:hover::before {
-  width: 12px;
 }
 
 /* 右端カラム（INFO / COMPANY / RECRUIT / CONTACT相当） */
@@ -1752,20 +1617,11 @@ img, svg {
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
-  transition: color 0.3s var(--ease), transform 0.3s var(--ease), letter-spacing 0.3s var(--ease);
-}
-
-.footer__socials a svg {
-  transition: transform 0.4s var(--ease);
+  transition: color 0.3s var(--ease);
 }
 
 .footer__socials a:hover {
   color: var(--gold);
-  letter-spacing: 0.12em;
-}
-
-.footer__socials a:hover svg {
-  transform: scale(1.15) rotate(-5deg);
 }
 
 /* Back to top — 円形アイコンボタン */
