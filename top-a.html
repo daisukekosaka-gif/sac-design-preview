@@ -431,11 +431,11 @@ img, svg {
   color: var(--gold);
 }
 
-/* PHILOSOPHY + APPROACH — APPROACH 側をさらに広げる */
+/* PHILOSOPHY + APPROACH — APPROACH を主役にする比率 */
 .about__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr);
-  gap: 40px;
+  grid-template-columns: minmax(320px, 0.85fr) minmax(0, 2.4fr);
+  gap: 32px;
   align-items: start;
 }
 
@@ -445,8 +445,8 @@ img, svg {
   margin: 0;
   max-width: none;
   display: grid;
-  grid-template-columns: 88px 1fr;
-  gap: 24px;
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: 20px;
   align-items: start;
   opacity: var(--ap-p);
   transform: translateY(calc(56px * (1 - var(--ap-p))));
@@ -464,8 +464,8 @@ img, svg {
 
 .diagram {
   width: 100%;
-  max-width: 1040px;
-  aspect-ratio: 1000 / 520;
+  max-width: 1280px;
+  aspect-ratio: 1000 / 580;
   height: auto;
   margin: 0 auto;
 }
@@ -474,8 +474,8 @@ img, svg {
 .about__philosophy {
   order: 1;
   display: grid;
-  grid-template-columns: 88px 1fr;
-  gap: 24px;
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: 20px;
   align-items: start;
   opacity: var(--ph-p);
   transform: translateY(calc(56px * (1 - var(--ph-p))));
@@ -492,8 +492,8 @@ img, svg {
 }
 
 .about__body {
-  max-width: 520px;
-  font-size: 14px;
+  max-width: 420px;
+  font-size: 13px;
   color: var(--gray-500);
   line-height: 2;
   letter-spacing: 0.02em;
@@ -1810,7 +1810,7 @@ img, svg {
       <!-- 線図（SAC のアプローチ構造）— 先に表示 -->
       <div class="about__diagram">
         <div class="about__diagram-label">APPROACH</div>
-      <svg class="diagram" viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <svg class="diagram" viewBox="0 0 1000 580" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
 
         <!-- 背景グリッドの点 -->
         <g opacity="0.25">
@@ -1822,34 +1822,34 @@ img, svg {
           <circle cx="500" cy="500" r="1" class="diagram-dot-small" />
         </g>
 
-        <!-- 3つの円（AI / CREATOR / BUSINESS）— 重なりでSACを表現 -->
+        <!-- 3つの円（AI / CREATOR / BUSINESS）— 重なりでSACを表現。半径を拡大し視認性を強化 -->
         <!-- AI 円（左上） -->
-        <circle cx="380" cy="220" r="180" class="diagram-circle-bold" />
+        <circle cx="360" cy="210" r="210" class="diagram-circle-bold" />
         <!-- CREATOR 円（右上） -->
-        <circle cx="620" cy="220" r="180" class="diagram-circle-bold" />
+        <circle cx="640" cy="210" r="210" class="diagram-circle-bold" />
         <!-- BUSINESS 円（下） -->
-        <circle cx="500" cy="340" r="180" class="diagram-circle-bold" />
+        <circle cx="500" cy="350" r="210" class="diagram-circle-bold" />
 
         <!-- 中心の SAC ノード（3円の交差点） -->
-        <circle cx="500" cy="270" r="44" fill="var(--gold)" opacity="0.08" />
-        <circle cx="500" cy="270" r="26" class="diagram-line-solid" fill="none" />
-        <circle cx="500" cy="270" r="3" class="diagram-dot" />
+        <circle cx="500" cy="260" r="54" fill="var(--gold)" opacity="0.08" />
+        <circle cx="500" cy="260" r="32" class="diagram-line-solid" fill="none" />
+        <circle cx="500" cy="260" r="3.5" class="diagram-dot" />
 
         <!-- ラベル: AI（左上の円の外側） -->
-        <text x="230" y="128" class="node-label" font-size="30" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">AI</text>
-        <text x="230" y="156" class="node-label-jp" font-size="14" font-weight="400" fill="var(--gray-400)" text-anchor="middle">生成・自動化・拡張</text>
+        <text x="190" y="108" class="node-label" font-size="36" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">AI</text>
+        <text x="190" y="140" class="node-label-jp" font-size="16" font-weight="400" fill="var(--gray-400)" text-anchor="middle">生成・自動化・拡張</text>
 
         <!-- ラベル: CREATOR（右上の円の外側） -->
-        <text x="770" y="128" class="node-label" font-size="30" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">CREATOR</text>
-        <text x="770" y="156" class="node-label-jp" font-size="14" font-weight="400" fill="var(--gray-400)" text-anchor="middle">発想・演出・品質</text>
+        <text x="810" y="108" class="node-label" font-size="36" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">CREATOR</text>
+        <text x="810" y="140" class="node-label-jp" font-size="16" font-weight="400" fill="var(--gray-400)" text-anchor="middle">発想・演出・品質</text>
 
         <!-- ラベル: BUSINESS（下円の外側） -->
-        <text x="500" y="486" class="node-label" font-size="30" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">BUSINESS</text>
-        <text x="500" y="512" class="node-label-jp" font-size="14" font-weight="400" fill="var(--gray-400)" text-anchor="middle">成果から逆算した運用設計</text>
+        <text x="500" y="510" class="node-label" font-size="36" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">BUSINESS</text>
+        <text x="500" y="540" class="node-label-jp" font-size="16" font-weight="400" fill="var(--gray-400)" text-anchor="middle">成果から逆算した運用設計</text>
 
         <!-- 中央 SAC ラベル -->
-        <text x="500" y="264" font-family="Inter" font-size="20" font-weight="700" fill="var(--theme-fg)" text-anchor="middle" letter-spacing="2">SAC</text>
-        <text x="500" y="289" font-family="Inter" font-size="10" font-weight="500" fill="var(--gold)" text-anchor="middle" letter-spacing="3">SMART AI CREATIVE</text>
+        <text x="500" y="254" font-family="Inter" font-size="24" font-weight="700" fill="var(--theme-fg)" text-anchor="middle" letter-spacing="2">SAC</text>
+        <text x="500" y="282" font-family="Inter" font-size="11" font-weight="500" fill="var(--gold)" text-anchor="middle" letter-spacing="3">SMART AI CREATIVE</text>
 
       </svg>
       </div>
