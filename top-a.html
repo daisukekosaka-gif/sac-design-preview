@@ -64,6 +64,7 @@ body {
   isolation: isolate;
 }
 
+/* 流線演出は [data-theme="stone"] / [data-theme="black"] のみに出現 */
 .flux-canvas {
   position: absolute;
   inset: 0;
@@ -71,14 +72,7 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.35; /* 暗背景: ほのかな存在感 */
-}
-
-/* 明るい背景ではさらに抑える */
-[data-theme="white"] .flux-canvas,
-[data-theme="ivory"] .flux-canvas,
-[data-theme="sand"] .flux-canvas {
-  opacity: 0.2;
+  opacity: 0.22; /* コンテンツの視認性を損なわない控えめなトーン */
 }
 
 a {
@@ -2993,7 +2987,8 @@ img, svg {
     Math.PI / 6, -Math.PI / 6
   ];
 
-  var targets = document.querySelectorAll('.about, .works, .service, .creator, .info, .contact');
+  // 流線演出は暗背景セクション(CREATOR / CONTACT)のみ
+  var targets = document.querySelectorAll('[data-theme="stone"], [data-theme="black"]');
   if (!targets.length) return;
 
   var scenes = [];
@@ -3032,8 +3027,8 @@ img, svg {
   function seed(scene) {
     scene.streams = [];
     var diag = Math.hypot(scene.w, scene.h);
-    // 控えめ: 本数半減
-    var count = Math.max(14, Math.min(40, Math.floor(diag / 80)));
+    // 視認性を守るため更に抑制: 8〜22本程度
+    var count = Math.max(8, Math.min(22, Math.floor(diag / 160)));
     for (var i = 0; i < count; i++) {
       var base = ANGLE_POOL[Math.floor(Math.random() * ANGLE_POOL.length)];
       var angle = base + (Math.random() - 0.5) * 0.18;
