@@ -1723,9 +1723,14 @@ img, svg {
   transform: translateY(-2px);
 }
 
-/* ---- BOTTOM: コピーライト（左下） ---- */
+/* ---- BOTTOM: コピーライト + AIクレジット ---- */
 .footer__bottom {
   margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
 }
 
 .footer__copy {
@@ -1734,6 +1739,17 @@ img, svg {
   font-size: 11px;
   color: rgba(255,255,255,0.5);
   letter-spacing: 0.1em;
+  margin: 0;
+}
+
+/* 控えめなAIクレジット */
+.footer__credit {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 10px;
+  color: rgba(255,255,255,0.32);
+  letter-spacing: 0.08em;
   margin: 0;
 }
 
@@ -2354,9 +2370,10 @@ img, svg {
       </a>
     </div>
 
-    <!-- BOTTOM: コピーライト -->
+    <!-- BOTTOM: コピーライト + AIクレジット -->
     <div class="footer__bottom">
       <p class="footer__copy">© EPOCH Inc.</p>
+      <p class="footer__credit">This website is entirely crafted with AI.</p>
     </div>
   </div>
 </footer>
