@@ -1576,20 +1576,14 @@ img, svg {
 .footer__brand {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 96px;
-  height: 96px;
-  border: 1px solid rgba(255,255,255,0.22);
-  transform: rotate(45deg);
   color: var(--white);
 }
 
 .footer__logo {
   font-family: var(--font-en);
   font-weight: 700;
-  font-size: 20px;
+  font-size: 24px;
   letter-spacing: 0.08em;
-  transform: rotate(-45deg);
 }
 
 .footer__nav {
@@ -1656,6 +1650,12 @@ img, svg {
   border-top: 1px solid rgba(255,255,255,0.08);
 }
 
+.footer__address-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .footer__address {
   font-family: var(--font-jp);
   font-style: normal;
@@ -1663,6 +1663,35 @@ img, svg {
   line-height: 1.9;
   color: rgba(255,255,255,0.7);
   letter-spacing: 0.04em;
+}
+
+/* MAP リンク — 住所の直下に控えめに */
+.footer__map {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.85);
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.footer__map svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.footer__map:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.footer__map:hover svg {
+  transform: translate(2px, -2px);
 }
 
 .footer__socials {
@@ -2329,10 +2358,18 @@ img, svg {
 
     <!-- MIDDLE: 住所 / SNS / BACK TO TOP -->
     <div class="footer__middle">
-      <address class="footer__address">
-        〒141-0021 東京都品川区上大崎3-14-1<br>
-        中丸ハウス B棟
-      </address>
+      <div class="footer__address-wrap">
+        <address class="footer__address">
+          〒141-0021 東京都品川区上大崎3-14-1<br>
+          中丸ハウス B棟
+        </address>
+        <a href="https://maps.app.goo.gl/tKVmTAiDvhVb9SHV6" target="_blank" rel="noopener" class="footer__map">
+          MAP
+          <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
 
       <ul class="footer__socials" aria-label="Social media">
         <li>
