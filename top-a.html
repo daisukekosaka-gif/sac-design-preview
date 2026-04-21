@@ -1325,49 +1325,27 @@ img, svg {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 5; /* リスト(画像)の上に確実に重ねる */
+  z-index: 5;
   pointer-events: auto;
-  transition:
-    transform 0.4s var(--ease),
-    background 0.4s var(--ease),
-    border-color 0.4s var(--ease),
-    color 0.4s var(--ease),
-    box-shadow 0.4s var(--ease);
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease);
 }
 
 .creator__nav svg {
   width: 20px;
   height: 20px;
-  transition: transform 0.4s var(--ease);
 }
 
-/* ===== hover: ゴールド背景に色反転、ボタン拡大、矢印が方向スライド ===== */
+/* ===== hover: 色だけ変化（サイズ・影・矢印スライドなし） ===== */
 .creator__nav:hover {
   background: var(--gold);
   border-color: var(--gold);
   color: #0a0a0a;
-  transform: translateY(-50%) scale(1.18);
-  box-shadow: 0 14px 34px rgba(200, 168, 107, 0.55);
-}
-
-.creator__nav--prev:hover svg {
-  transform: translateX(-5px);
-}
-
-.creator__nav--next:hover svg {
-  transform: translateX(5px);
-}
-
-/* 押下時 */
-.creator__nav:active {
-  transform: translateY(-50%) scale(1.02);
-  transition-duration: 0.1s;
 }
 
 .creator__nav[disabled] {
   opacity: 0.45;
   cursor: not-allowed;
-  /* pointer-events は残し、hover の視覚フィードバックだけは発火させる */
+  /* pointer-events は残し、hover の色変化は発火させる */
 }
 
 .creator__nav--prev { left: 8px; }
