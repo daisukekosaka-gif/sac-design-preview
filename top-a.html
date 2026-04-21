@@ -1203,9 +1203,9 @@ img, svg {
 .creator__list.is-dragging { cursor: grabbing; scroll-behavior: auto; }
 
 .creator__item {
-  /* 4.3枚ぶんを画面に見せ、右端が少し切れて続きを示唆する */
-  flex: 0 0 calc((100% - 80px) / 4.3);
-  min-width: 200px;
+  /* デスクトップでは5枚を均等配分して全員を同時表示 */
+  flex: 0 0 calc((100% - 80px) / 5);
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -1287,6 +1287,11 @@ img, svg {
 .creator__nav[disabled] {
   opacity: 0.3;
   pointer-events: none;
+}
+
+/* スクロール不要（5枚全員がビューポート内に収まる）場合は矢印を完全に隠す */
+.creator__carousel[data-scrollable="false"] .creator__nav {
+  display: none;
 }
 
 .creator__name {
@@ -2793,6 +2798,11 @@ img, svg {
     var max = list.scrollWidth - list.clientWidth;
     prevBtn.toggleAttribute('disabled', list.scrollLeft <= 1);
     nextBtn.toggleAttribute('disabled', list.scrollLeft >= max - 1);
+    // 全員がビューポートに収まる（スクロール不要）場合はナビを非表示にする
+    var carousel = list.parentElement;
+    if (carousel) {
+      carousel.setAttribute('data-scrollable', max > 1 ? 'true' : 'false');
+    }
   }
   var navTicking = false;
   list.addEventListener('scroll', function() {
