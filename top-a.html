@@ -71,15 +71,14 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.85;
+  opacity: 0.35; /* 暗背景: ほのかな存在感 */
 }
 
-/* 暗い背景のセクションは fg 色が白寄りなので通常描画で OK。
-   明るい背景では線が目立ちすぎないよう少し落とす */
+/* 明るい背景ではさらに抑える */
 [data-theme="white"] .flux-canvas,
 [data-theme="ivory"] .flux-canvas,
 [data-theme="sand"] .flux-canvas {
-  opacity: 0.55;
+  opacity: 0.2;
 }
 
 a {
@@ -3033,8 +3032,8 @@ img, svg {
   function seed(scene) {
     scene.streams = [];
     var diag = Math.hypot(scene.w, scene.h);
-    // セクション面積に応じて本数調整（見た目を均一に）
-    var count = Math.max(36, Math.min(90, Math.floor(diag / 40)));
+    // 控えめ: 本数半減
+    var count = Math.max(14, Math.min(40, Math.floor(diag / 80)));
     for (var i = 0; i < count; i++) {
       var base = ANGLE_POOL[Math.floor(Math.random() * ANGLE_POOL.length)];
       var angle = base + (Math.random() - 0.5) * 0.18;
@@ -3048,13 +3047,13 @@ img, svg {
         dy: dy,
         px: -dy * flip,
         py: dx * flip,
-        speed: (0.1 + Math.random() * 0.7) * DPR,
-        amp: (1.5 + Math.random() * 12) * DPR,
+        speed: (0.08 + Math.random() * 0.5) * DPR,
+        amp: (1.0 + Math.random() * 9) * DPR,
         freq: 0.0008 + Math.random() * 0.0045,
         phase: Math.random() * Math.PI * 2,
-        omega: (Math.random() < 0.5 ? -1 : 1) * (0.006 + Math.random() * 0.024),
-        opacity: 0.08 + Math.random() * 0.5,
-        accent: Math.random() > 0.9,
+        omega: (Math.random() < 0.5 ? -1 : 1) * (0.005 + Math.random() * 0.018),
+        opacity: 0.05 + Math.random() * 0.28, // ライン自体の不透明度も下げる
+        accent: Math.random() > 0.95,         // アクセント線も減らす
         len: diag * (0.9 + Math.random() * 0.7)
       });
     }
@@ -3089,7 +3088,7 @@ img, svg {
         var st = s.streams[i];
         var op = st.opacity;
         ctx.strokeStyle = 'rgba(' + s.colorCache + ',' + op + ')';
-        ctx.lineWidth = (st.accent ? 1.1 : 0.55) * DPR;
+        ctx.lineWidth = (st.accent ? 0.9 : 0.4) * DPR; /* 細めに */
         ctx.beginPath();
         var nx = -st.dy, ny = st.dx;
         var segs = Math.ceil(st.len / step);
