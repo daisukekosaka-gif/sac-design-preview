@@ -57,46 +57,29 @@ body {
   transition: background-color 0.9s var(--ease), color 0.9s var(--ease);
 }
 
-/* ===================== FLUX (Ryoji Ikeda 風 流線型バックグラウンド) ===================== */
-.flux {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.flux__svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.flux__line {
-  fill: none;
-  stroke: var(--theme-fg);
-  stroke-linecap: round;
-  transition: stroke 0.9s var(--ease), d 1.2s var(--ease);
-}
-
-/* セクション全体にpositioning context、コンテンツを前面に */
+/* ===================== FLUX CANVAS (Ikeda 風 流線バックグラウンド) ===================== */
+/* isolation でスタッキング文脈を作り、canvas を z-index:-1 で子の背景に配置 */
 .about, .works, .service, .creator, .info, .contact {
   position: relative;
   isolation: isolate;
 }
 
-.about > *:not(.flux),
-.works > *:not(.flux),
-.service > *:not(.flux),
-.creator > *:not(.flux),
-.info > *:not(.flux),
-.contact > *:not(.flux) {
-  position: relative;
-  z-index: 1;
+.flux-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.85;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .flux__line { transition: none; }
+/* 暗い背景のセクションは fg 色が白寄りなので通常描画で OK。
+   明るい背景では線が目立ちすぎないよう少し落とす */
+[data-theme="white"] .flux-canvas,
+[data-theme="ivory"] .flux-canvas,
+[data-theme="sand"] .flux-canvas {
+  opacity: 0.55;
 }
 
 a {
@@ -2995,130 +2978,195 @@ img, svg {
 </script>
 
 <script>
-/* FLUX — Ryoji Ikeda 風の流線型バックグラウンド
-   ・HERO 以外の各セクションに .flux レイヤーを注入
-   ・複数のベジエ曲線をランダム生成、セクション入場時に形と色味を切替
-   ・色はセクションの --theme-fg を継承するため、テーマ切替に連動 */
+/* FLUX CANVAS — top-c と同様の Ikeda / Nicolai スタイル流線
+   ・HERO以外の各セクションに <canvas class="flux-canvas"> を挿入
+   ・波打つ線が流れ、IntersectionObserver で可視セクションのみ描画
+   ・色はセクションの --theme-fg（テーマ切替に同期） */
 (function() {
   'use strict';
-  var SVG_NS = 'http://www.w3.org/2000/svg';
-  var VIEW_W = 1000;
-  var VIEW_H = 400;
-  var LINE_COUNT = 14;
-  // パターンバリエーション（先に定義：regenerate 実行時に参照するため）
-  var PATTERNS = ['parallel', 'braided', 'pulse', 'drift'];
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ANGLE_POOL = [
+    0, 0, 0,
+    Math.PI / 2, Math.PI / 2, Math.PI / 2,
+    Math.PI / 4, -Math.PI / 4,
+    Math.PI / 3, -Math.PI / 3,
+    Math.PI / 6, -Math.PI / 6
+  ];
 
   var targets = document.querySelectorAll('.about, .works, .service, .creator, .info, .contact');
   if (!targets.length) return;
 
-  // 各セクションに flux レイヤーを挿入
+  var scenes = [];
+
   targets.forEach(function(section) {
-    var flux = buildFluxLayer();
-    section.insertBefore(flux, section.firstChild);
-    regenerate(flux);
+    var canvas = document.createElement('canvas');
+    canvas.className = 'flux-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    section.insertBefore(canvas, section.firstChild);
+    var ctx = canvas.getContext('2d', { alpha: true });
+    var scene = {
+      section: section,
+      canvas: canvas,
+      ctx: ctx,
+      streams: [],
+      w: 0, h: 0,
+      visible: false,
+      colorCache: 'rgba(255,255,255,1)'
+    };
+    resize(scene);
+    seed(scene);
+    updateColor(scene);
+    scenes.push(scene);
   });
 
-  // 視界に入ったら形と色を再生成（セクション毎にランダム切替）
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var flux = entry.target.querySelector(':scope > .flux');
-          if (flux) regenerate(flux);
-        }
+  function resize(scene) {
+    var rect = scene.section.getBoundingClientRect();
+    var w = rect.width, h = rect.height;
+    if (w <= 0 || h <= 0) { w = 320; h = 240; }
+    scene.canvas.width = Math.floor(w * DPR);
+    scene.canvas.height = Math.floor(h * DPR);
+    scene.w = scene.canvas.width;
+    scene.h = scene.canvas.height;
+  }
+
+  function seed(scene) {
+    scene.streams = [];
+    var diag = Math.hypot(scene.w, scene.h);
+    // セクション面積に応じて本数調整（見た目を均一に）
+    var count = Math.max(36, Math.min(90, Math.floor(diag / 40)));
+    for (var i = 0; i < count; i++) {
+      var base = ANGLE_POOL[Math.floor(Math.random() * ANGLE_POOL.length)];
+      var angle = base + (Math.random() - 0.5) * 0.18;
+      var dx = Math.cos(angle);
+      var dy = Math.sin(angle);
+      var flip = Math.random() < 0.5 ? -1 : 1;
+      scene.streams.push({
+        cx: Math.random() * scene.w,
+        cy: Math.random() * scene.h,
+        dx: dx,
+        dy: dy,
+        px: -dy * flip,
+        py: dx * flip,
+        speed: (0.1 + Math.random() * 0.7) * DPR,
+        amp: (1.5 + Math.random() * 12) * DPR,
+        freq: 0.0008 + Math.random() * 0.0045,
+        phase: Math.random() * Math.PI * 2,
+        omega: (Math.random() < 0.5 ? -1 : 1) * (0.006 + Math.random() * 0.024),
+        opacity: 0.08 + Math.random() * 0.5,
+        accent: Math.random() > 0.9,
+        len: diag * (0.9 + Math.random() * 0.7)
       });
-    }, { threshold: 0.15 });
-    targets.forEach(function(s) { io.observe(s); });
-  }
-
-  function buildFluxLayer() {
-    var layer = document.createElement('div');
-    layer.className = 'flux';
-    layer.setAttribute('aria-hidden', 'true');
-
-    var svg = document.createElementNS(SVG_NS, 'svg');
-    svg.setAttribute('class', 'flux__svg');
-    svg.setAttribute('viewBox', '0 0 ' + VIEW_W + ' ' + VIEW_H);
-    svg.setAttribute('preserveAspectRatio', 'none');
-
-    for (var i = 0; i < LINE_COUNT; i++) {
-      var p = document.createElementNS(SVG_NS, 'path');
-      p.setAttribute('class', 'flux__line');
-      svg.appendChild(p);
     }
-    layer.appendChild(svg);
-    return layer;
   }
 
-  function regenerate(fluxEl) {
-    var paths = fluxEl.querySelectorAll('.flux__line');
-    var pattern = PATTERNS[Math.floor(Math.random() * PATTERNS.length)];
-    var baseDensity = 0.5 + Math.random() * 0.5; // 0.5〜1.0
-    var baseAmp = 20 + Math.random() * 80;       // 振幅
+  // テーマ色（rgb string）を取得して rgba テンプレートに変換
+  function updateColor(scene) {
+    var fg = getComputedStyle(scene.section).color; // theme-fg
+    var m = fg.match(/\d+/g);
+    if (m && m.length >= 3) {
+      scene.colorCache = m[0] + ',' + m[1] + ',' + m[2];
+    }
+  }
 
-    paths.forEach(function(p, i) {
-      var y = ((i + 0.5) / paths.length) * VIEW_H;
-      var amp, strokeW, op;
+  var t = 0;
+  function frame() {
+    t++;
+    scenes.forEach(function(s) {
+      if (!s.visible) return;
+      var ctx = s.ctx;
+      var w = s.w, h = s.h;
 
-      switch (pattern) {
-        case 'parallel': // 整然とした平行な波
-          amp = baseAmp * 0.6;
-          strokeW = 0.4 + Math.random() * 0.6;
-          op = 0.18 + Math.random() * 0.15;
-          break;
-        case 'braided': // 線が編み込まれるように
-          amp = baseAmp * (1.0 + Math.random() * 0.8);
-          strokeW = 0.3 + Math.random() * 0.5;
-          op = 0.22 + Math.random() * 0.22;
-          break;
-        case 'pulse': // 中心が膨らむ脈動
-          var distFromMid = Math.abs(i - paths.length / 2) / (paths.length / 2);
-          amp = baseAmp * (1 - distFromMid) * 1.2;
-          strokeW = 0.4 + Math.random() * 0.8;
-          op = 0.15 + (1 - distFromMid) * 0.3;
-          break;
-        default: // drift — 緩やかに漂う
-          amp = baseAmp * 0.8;
-          strokeW = 0.3 + Math.random() * 0.7;
-          op = 0.15 + Math.random() * 0.25;
-      }
+      // 残像フェード（背景色は問わず alpha clear でトレイル）
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = 'rgba(0,0,0,0.18)';
+      ctx.fillRect(0, 0, w, h);
+      ctx.restore();
 
-      p.setAttribute('d', buildPath(y, amp, baseDensity));
-      p.style.strokeWidth = strokeW.toFixed(2);
-      p.style.opacity = op.toFixed(3);
-      // 一部の線を破線にしてIkeda的テクスチャを演出
-      if (Math.random() < 0.18) {
-        p.style.strokeDasharray = (2 + Math.random() * 4).toFixed(1) + ' ' + (6 + Math.random() * 10).toFixed(1);
-      } else {
-        p.style.strokeDasharray = 'none';
+      var step = 3 * DPR;
+      for (var i = 0; i < s.streams.length; i++) {
+        var st = s.streams[i];
+        var op = st.opacity;
+        ctx.strokeStyle = 'rgba(' + s.colorCache + ',' + op + ')';
+        ctx.lineWidth = (st.accent ? 1.1 : 0.55) * DPR;
+        ctx.beginPath();
+        var nx = -st.dy, ny = st.dx;
+        var segs = Math.ceil(st.len / step);
+        for (var j = 0; j <= segs; j++) {
+          var p = (j / segs - 0.5) * st.len;
+          var sine = Math.sin(p * st.freq + st.phase + t * st.omega) * st.amp;
+          var x = st.cx + st.dx * p + nx * sine;
+          var y = st.cy + st.dy * p + ny * sine;
+          if (j === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // drift
+        st.cx += st.px * st.speed;
+        st.cy += st.py * st.speed;
+        var margin = st.amp * 2 + 80 * DPR;
+        if (st.cx < -margin) { st.cx = w + margin; st.phase = Math.random() * Math.PI * 2; }
+        else if (st.cx > w + margin) { st.cx = -margin; st.phase = Math.random() * Math.PI * 2; }
+        if (st.cy < -margin) { st.cy = h + margin; st.phase = Math.random() * Math.PI * 2; }
+        else if (st.cy > h + margin) { st.cy = -margin; st.phase = Math.random() * Math.PI * 2; }
       }
     });
+    // frame 再帰はドライバに任せる（rAF / hidden時はsetInterval）
   }
 
-  function buildPath(y, amp, density) {
-    var segments = Math.max(3, Math.round(4 + density * 6));
-    var pts = [];
-    for (var i = 0; i <= segments; i++) {
-      var x = (i / segments) * VIEW_W;
-      var offset = y + (Math.random() - 0.5) * 2 * amp;
-      // 両端は中央線に近づけて、端がきれいに消える
-      if (i === 0 || i === segments) offset = y + (Math.random() - 0.5) * amp * 0.2;
-      pts.push({ x: x, y: offset });
+  // ドライバ: 表示状態に応じて rAF / setInterval を切替
+  var fallbackTimer = null;
+  function tick() {
+    frame();
+    if (prefersReducedMotion) return;
+    if (document.hidden) {
+      if (!fallbackTimer) fallbackTimer = setInterval(frame, 50);
+    } else {
+      if (fallbackTimer) { clearInterval(fallbackTimer); fallbackTimer = null; }
+      requestAnimationFrame(tick);
     }
-    var d = 'M ' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
-    for (var j = 1; j < pts.length; j++) {
-      var a = pts[j - 1], b = pts[j];
-      var dx = b.x - a.x;
-      var cp1x = a.x + dx * 0.4;
-      var cp1y = a.y;
-      var cp2x = b.x - dx * 0.4;
-      var cp2y = b.y;
-      d += ' C ' + cp1x.toFixed(1) + ' ' + cp1y.toFixed(1)
-         + ', ' + cp2x.toFixed(1) + ' ' + cp2y.toFixed(1)
-         + ', ' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);
-    }
-    return d;
   }
+  if (!prefersReducedMotion) tick();
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      if (!fallbackTimer && !prefersReducedMotion) fallbackTimer = setInterval(frame, 50);
+    } else {
+      if (fallbackTimer) { clearInterval(fallbackTimer); fallbackTimer = null; }
+      if (!prefersReducedMotion) requestAnimationFrame(tick);
+    }
+  });
+
+  // 視界に入ったシーンのみ描画（scroll イベント駆動）
+  function updateVisibility() {
+    var vh = window.innerHeight;
+    scenes.forEach(function(s) {
+      var r = s.canvas.getBoundingClientRect();
+      s.visible = r.bottom > -200 && r.top < vh + 200;
+    });
+  }
+  window.addEventListener('scroll', updateVisibility, { passive: true });
+  updateVisibility();
+
+  // テーマ切替検知：bodyの color 変化をポーリング風にチェック
+  var lastFg = '';
+  setInterval(function() {
+    var fg = getComputedStyle(document.body).color;
+    if (fg !== lastFg) {
+      lastFg = fg;
+      scenes.forEach(updateColor);
+    }
+  }, 400);
+
+  // リサイズ時に再構成
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      scenes.forEach(function(s) { resize(s); seed(s); });
+    }, 200);
+  });
 })();
 </script>
 
