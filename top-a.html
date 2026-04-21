@@ -990,11 +990,26 @@ img, svg {
 
 .service__title {
   font-family: var(--font-en);
-  font-weight: 800;
-  font-size: clamp(28px, 3.6vw, 48px);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  margin-bottom: 12px;
+  font-weight: 900;
+  font-size: clamp(56px, 8vw, 124px);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  margin-bottom: 20px;
+  /* ゴールドのアンダーラインアクセント */
+  display: inline-block;
+  position: relative;
+}
+
+.service__title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
 }
 
 .service__lead {
@@ -1016,22 +1031,64 @@ img, svg {
 }
 
 .service__item {
+  position: relative;
+  list-style: none;
+}
+
+/* カード全体をリンク化、右下にアクションボタン */
+.service__link {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 24px 18px;
+  padding: 24px 18px 60px; /* 下部は service__action 分を空ける */
   border: 1px solid color-mix(in oklab, var(--theme-fg) 12%, transparent);
   border-radius: 6px;
   background: color-mix(in oklab, var(--theme-fg) 2%, transparent);
   cursor: pointer;
   position: relative;
-  transition: background 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease);
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  transition: background 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
 
-.service__item:hover {
+.service__link:hover {
   background: color-mix(in oklab, var(--theme-fg) 6%, transparent);
   border-color: color-mix(in oklab, var(--theme-fg) 30%, transparent);
   transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(10, 10, 10, 0.08);
+}
+
+/* 右下の円形アクションボタン */
+.service__action {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 28%, transparent);
+  color: var(--theme-fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: background 0.35s var(--ease), color 0.35s var(--ease), border-color 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.service__action svg {
+  transition: transform 0.35s var(--ease);
+}
+
+.service__link:hover .service__action {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #0a0a0a;
+  transform: scale(1.1);
+}
+
+.service__link:hover .service__action svg {
+  transform: translateX(4px);
 }
 
 .service__num {
@@ -2040,44 +2097,69 @@ img, svg {
 
     <ol class="service__list">
       <li class="service__item js-reveal">
-        <span class="service__num">01</span>
-        <div class="service__body">
-          <h3 class="service__name-en">MOVIE</h3>
-          <p class="service__name-jp">映像制作</p>
-          <p class="service__desc">ブランドフィルム、CM、MV、ショートフォーム。AIを活用したポストプロダクションと生成映像技術で、制作速度と品質を両立します。</p>
-        </div>
+        <a href="#works" class="service__link" aria-label="MOVIE カテゴリの事例を見る">
+          <span class="service__num">01</span>
+          <div class="service__body">
+            <h3 class="service__name-en">MOVIE</h3>
+            <p class="service__name-jp">映像制作</p>
+            <p class="service__desc">ブランドフィルム、CM、MV、ショートフォーム。AIを活用したポストプロダクションと生成映像技術で、制作速度と品質を両立します。</p>
+          </div>
+          <span class="service__action" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
       </li>
       <li class="service__item js-reveal">
-        <span class="service__num">02</span>
-        <div class="service__body">
-          <h3 class="service__name-en">WEB DESIGN</h3>
-          <p class="service__name-jp">ウェブデザイン</p>
-          <p class="service__desc">コーポレートサイト、LP、ECからWebアプリまで。情報設計からUI/UX、実装、AIによる最適化までを一気通貫で手掛けます。</p>
-        </div>
+        <a href="#works" class="service__link" aria-label="WEB DESIGN カテゴリの事例を見る">
+          <span class="service__num">02</span>
+          <div class="service__body">
+            <h3 class="service__name-en">WEB DESIGN</h3>
+            <p class="service__name-jp">ウェブデザイン</p>
+            <p class="service__desc">コーポレートサイト、LP、ECからWebアプリまで。情報設計からUI/UX、実装、AIによる最適化までを一気通貫で手掛けます。</p>
+          </div>
+          <span class="service__action" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
       </li>
       <li class="service__item js-reveal">
-        <span class="service__num">03</span>
-        <div class="service__body">
-          <h3 class="service__name-en">GRAPHIC DESIGN</h3>
-          <p class="service__name-jp">グラフィックデザイン</p>
-          <p class="service__desc">VI、パッケージ、広告ビジュアル、エディトリアル。AIのバリエーション生成と人間の審美眼を掛け合わせ、核心を鮮烈に可視化します。</p>
-        </div>
+        <a href="#works" class="service__link" aria-label="GRAPHIC DESIGN カテゴリの事例を見る">
+          <span class="service__num">03</span>
+          <div class="service__body">
+            <h3 class="service__name-en">GRAPHIC DESIGN</h3>
+            <p class="service__name-jp">グラフィックデザイン</p>
+            <p class="service__desc">VI、パッケージ、広告ビジュアル、エディトリアル。AIのバリエーション生成と人間の審美眼を掛け合わせ、核心を鮮烈に可視化します。</p>
+          </div>
+          <span class="service__action" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
       </li>
       <li class="service__item js-reveal">
-        <span class="service__num">04</span>
-        <div class="service__body">
-          <h3 class="service__name-en">INSTALLATION</h3>
-          <p class="service__name-jp">インスタレーション</p>
-          <p class="service__desc">体験型アート、インタラクティブ展示、プロジェクションマッピング。AIとリアル空間を融合させ、没入体験を設計します。</p>
-        </div>
+        <a href="#works" class="service__link" aria-label="INSTALLATION カテゴリの事例を見る">
+          <span class="service__num">04</span>
+          <div class="service__body">
+            <h3 class="service__name-en">INSTALLATION</h3>
+            <p class="service__name-jp">インスタレーション</p>
+            <p class="service__desc">体験型アート、インタラクティブ展示、プロジェクションマッピング。AIとリアル空間を融合させ、没入体験を設計します。</p>
+          </div>
+          <span class="service__action" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
       </li>
       <li class="service__item js-reveal">
-        <span class="service__num">05</span>
-        <div class="service__body">
-          <h3 class="service__name-en">SNS</h3>
-          <p class="service__name-jp">SNS運用・コンテンツ制作</p>
-          <p class="service__desc">SNSアカウントの運用設計からコンテンツ制作、AIを活用した投稿バリエーション生成・分析まで、成果に繋がるSNS運用を支援します。</p>
-        </div>
+        <a href="#works" class="service__link" aria-label="SNS カテゴリの事例を見る">
+          <span class="service__num">05</span>
+          <div class="service__body">
+            <h3 class="service__name-en">SNS</h3>
+            <p class="service__name-jp">SNS運用・コンテンツ制作</p>
+            <p class="service__desc">SNSアカウントの運用設計からコンテンツ制作、AIを活用した投稿バリエーション生成・分析まで、成果に繋がるSNS運用を支援します。</p>
+          </div>
+          <span class="service__action" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
       </li>
     </ol>
   </div>
