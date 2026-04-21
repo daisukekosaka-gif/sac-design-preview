@@ -988,7 +988,7 @@ img, svg {
   color: var(--gold);
   text-transform: uppercase;
   display: inline-block;
-  margin: 28px 0 14px; /* LINEUPアンダーラインの下に配置 */
+  margin: 0 0 14px; /* LINEUPタイトルの上に配置 */
 }
 
 .service__title {
@@ -1042,8 +1042,8 @@ img, svg {
 .service__link {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 60px 18px 20px; /* 上部は service__action 分を空ける */
+  gap: 8px;
+  padding: 24px 64px 20px 18px; /* 右側は service__action 分を空ける */
   border: 1px solid color-mix(in oklab, var(--theme-fg) 12%, transparent);
   border-radius: 6px;
   background: color-mix(in oklab, var(--theme-fg) 2%, transparent);
@@ -1060,11 +1060,11 @@ img, svg {
   border-color: color-mix(in oklab, var(--theme-fg) 30%, transparent);
 }
 
-/* 右上の円形アクションボタン */
+/* 右側の円形アクションボタン — MOVIE等のタイトル行と同じ高さに配置 */
 .service__action {
   position: absolute;
   right: 16px;
-  top: 14px;
+  top: 34px; /* service__name-en の垂直中央と揃う位置 */
   width: 38px;
   height: 38px;
   border-radius: 999px;
@@ -2071,8 +2071,8 @@ img, svg {
 <section class="service" id="service" data-theme="ivory">
   <div class="service__inner">
     <header class="service__header js-reveal">
-      <h2 class="service__title">LINEUP</h2>
       <span class="service__label">SERVICE</span>
+      <h2 class="service__title">LINEUP</h2>
       <p class="service__lead">
         映像・Web・グラフィック・空間・AIクリエイティブ。<br>
         あらゆる制作領域で、AIと人間の最適なコラボレーションを設計します。
