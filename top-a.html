@@ -444,37 +444,21 @@ img, svg {
   order: 2;
   margin: 0;
   max-width: none;
-  display: grid;
-  grid-template-columns: 80px minmax(0, 1fr);
-  gap: 20px;
-  align-items: start;
+  display: block; /* ラベルを図解の上に横組みで配置 */
   opacity: var(--ap-p);
   transform: translateY(calc(56px * (1 - var(--ap-p))));
   will-change: opacity, transform;
 }
 
 .about__diagram-label {
-  padding-top: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.about__diagram-label-title {
+  display: block;
+  margin-bottom: 12px;
+  padding-left: 12px;
   font-family: var(--font-en);
   font-weight: 500;
   font-size: 10px;
   letter-spacing: 0.22em;
   color: var(--gray-400);
-}
-
-.about__diagram-label-sub {
-  font-family: var(--font-jp);
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 2;
-  letter-spacing: 0.04em;
-  color: var(--gray-500);
 }
 
 .diagram {
@@ -1822,10 +1806,7 @@ img, svg {
 
       <!-- 線図（SAC のアプローチ構造）— 先に表示 -->
       <div class="about__diagram">
-        <div class="about__diagram-label">
-          <span class="about__diagram-label-title">APPROACH</span>
-          <span class="about__diagram-label-sub">AI × CREATOR × BUSINESS<br>三位一体の制作体制で、<br>事業成果から逆算した<br>クリエイティブを届ける。</span>
-        </div>
+        <div class="about__diagram-label">APPROACH</div>
       <svg class="diagram" viewBox="0 0 1000 580" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
 
         <!-- 背景グリッドの点 -->
