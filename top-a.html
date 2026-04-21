@@ -454,12 +454,27 @@ img, svg {
 }
 
 .about__diagram-label {
+  padding-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.about__diagram-label-title {
   font-family: var(--font-en);
   font-weight: 500;
   font-size: 10px;
   letter-spacing: 0.22em;
   color: var(--gray-400);
-  padding-top: 6px;
+}
+
+.about__diagram-label-sub {
+  font-family: var(--font-jp);
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 2;
+  letter-spacing: 0.04em;
+  color: var(--gray-500);
 }
 
 .diagram {
@@ -593,14 +608,12 @@ img, svg {
   opacity: 0.5;
 }
 
+/* VIEW MORE は PHILOSOPHY 本文直下に配置。左カラムの空白を詰める */
 .about__cta {
-  margin-top: 48px;
-  padding-left: 112px;
+  margin-top: 28px;
   display: flex;
   align-items: center;
   gap: 16px;
-  opacity: var(--ph-p);
-  transition: opacity 0.2s var(--ease);
 }
 
 .about__cta a {
@@ -1809,7 +1822,10 @@ img, svg {
 
       <!-- 線図（SAC のアプローチ構造）— 先に表示 -->
       <div class="about__diagram">
-        <div class="about__diagram-label">APPROACH</div>
+        <div class="about__diagram-label">
+          <span class="about__diagram-label-title">APPROACH</span>
+          <span class="about__diagram-label-sub">AI × CREATOR × BUSINESS<br>三位一体の制作体制で、<br>事業成果から逆算した<br>クリエイティブを届ける。</span>
+        </div>
       <svg class="diagram" viewBox="0 0 1000 580" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
 
         <!-- 背景グリッドの点 -->
@@ -1857,20 +1873,19 @@ img, svg {
       <!-- 本文（PHILOSOPHY）— スクロールで表示 -->
       <div class="about__philosophy">
         <div class="about__body-label">PHILOSOPHY</div>
-        <div>
+        <div class="about__philosophy-body">
           <p class="about__body">
             Smart AI Creative（SAC）は、EPOCH Inc.が運営する、AIネイティブなクリエイティブスタジオです。映像・Web・グラフィック・空間演出・イベント・SNS運用まで、制作のあらゆる領域にAIを実装します。
           </p>
           <p class="about__body">
             私たちは単にAIを「使う」のではなく、事業の成果から逆算し、制作プロセスそのものを再設計することに向き合っています。AIと一流のクリエイターが並走することで、従来の制約を超えた速度・品質・柔軟性を、事業の現場に届けます。
           </p>
+          <div class="about__cta">
+            <a href="#">VIEW MORE →</a>
+          </div>
         </div>
       </div>
 
-    </div>
-
-    <div class="about__cta">
-      <a href="#">VIEW MORE →</a>
     </div>
   </div>
   </div><!-- /.about__stage -->
