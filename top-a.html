@@ -431,22 +431,20 @@ img, svg {
   color: var(--gold);
 }
 
-/* PHILOSOPHY + APPROACH — APPROACHは右寄せ、PHILOSOPHYに余白を譲る */
+/* PHILOSOPHY + APPROACH — 本文幅と図解幅のバランスをとる */
 .about__grid {
   display: grid;
-  grid-template-columns: minmax(420px, 1.4fr) minmax(0, 2fr);
+  grid-template-columns: minmax(440px, 1.3fr) minmax(0, 2fr);
   gap: 32px;
   align-items: stretch; /* philosophy列を図解の高さまで伸ばす */
 }
 
-/* APPROACH — スクロール1段階目で表示。図解は右寄せ配置 */
+/* APPROACH — スクロール1段階目で表示。右列全幅を使って図解を最大化 */
 .about__diagram {
   order: 2;
   margin: 0;
   max-width: none;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end; /* 図解を右寄せ */
+  display: block; /* stretchでフル幅 */
   opacity: var(--ap-p);
   transform: translateY(calc(56px * (1 - var(--ap-p))));
   will-change: opacity, transform;
@@ -454,10 +452,8 @@ img, svg {
 
 .about__diagram-label {
   display: block;
-  width: 85%;
-  max-width: 1120px;
-  margin: 0 0 12px auto; /* 図解と同じ右寄せ位置 */
-  padding-left: 12px;
+  margin: 0 0 12px 0;
+  padding-top: 6px; /* PHILOSOPHYラベルと同じY位置に揃える */
   font-family: var(--font-en);
   font-weight: 500;
   font-size: 10px;
@@ -466,11 +462,11 @@ img, svg {
 }
 
 .diagram {
-  width: 85%;
-  max-width: 1120px;
+  width: 100%;
+  max-width: 1280px;
   aspect-ratio: 1000 / 580;
   height: auto;
-  margin: 0 0 0 auto; /* 右寄せ */
+  margin: 0 auto; /* 中央寄せ・全幅 */
 }
 
 /* PHILOSOPHY — スクロール2段階目で表示 */
