@@ -436,15 +436,17 @@ img, svg {
   display: grid;
   grid-template-columns: minmax(320px, 0.85fr) minmax(0, 2.4fr);
   gap: 32px;
-  align-items: start;
+  align-items: stretch; /* philosophy列を図解の高さまで伸ばす */
 }
 
-/* APPROACH — スクロール1段階目で表示 */
+/* APPROACH — スクロール1段階目で表示。図解は右寄せ配置 */
 .about__diagram {
   order: 2;
   margin: 0;
   max-width: none;
-  display: block; /* ラベルを図解の上に横組みで配置 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 図解を右寄せ */
   opacity: var(--ap-p);
   transform: translateY(calc(56px * (1 - var(--ap-p))));
   will-change: opacity, transform;
@@ -459,14 +461,15 @@ img, svg {
   font-size: 10px;
   letter-spacing: 0.22em;
   color: var(--gray-400);
+  align-self: flex-start; /* ラベルは左端のまま */
 }
 
 .diagram {
-  width: 100%;
-  max-width: 1280px;
+  width: 85%;
+  max-width: 1120px;
   aspect-ratio: 1000 / 580;
   height: auto;
-  margin: 0 auto;
+  margin: 0 0 0 auto; /* 右寄せ */
 }
 
 /* PHILOSOPHY — スクロール2段階目で表示 */
@@ -476,9 +479,16 @@ img, svg {
   grid-template-columns: 80px minmax(0, 1fr);
   gap: 20px;
   align-items: start;
+  height: 100%; /* グリッドのstretchを受けて図解高さまで伸びる */
   opacity: var(--ph-p);
   transform: translateY(calc(56px * (1 - var(--ph-p))));
   will-change: opacity, transform;
+}
+
+.about__philosophy-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .about__body-label {
@@ -592,9 +602,10 @@ img, svg {
   opacity: 0.5;
 }
 
-/* VIEW MORE は PHILOSOPHY 本文直下に配置。左カラムの空白を詰める */
+/* VIEW MORE はカラム下端に固定（APPROACH図解の下端ラインに揃う） */
 .about__cta {
-  margin-top: 28px;
+  margin-top: auto;
+  padding-top: 28px;
   display: flex;
   align-items: center;
   gap: 16px;
