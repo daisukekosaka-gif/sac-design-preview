@@ -1259,8 +1259,8 @@ img, svg {
   position: absolute;
   top: var(--creator-nav-top, 50%);
   transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 999px;
   border: 1px solid color-mix(in oklab, var(--theme-fg) 25%, transparent);
   background: color-mix(in oklab, var(--theme-bg) 65%, transparent);
@@ -1271,14 +1271,58 @@ img, svg {
   justify-content: center;
   cursor: pointer;
   z-index: 3;
-  transition: transform 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease);
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.45s var(--ease),
+    background 0.4s var(--ease),
+    border-color 0.4s var(--ease),
+    color 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
+}
+
+/* ゴールドの円が中心から外側に広がる塗りつぶしレイヤー */
+.creator__nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--gold);
+  transform: scale(0);
+  transition: transform 0.5s var(--ease);
+  z-index: -1;
+}
+
+/* SVG 矢印自身にも微細な動きを */
+.creator__nav svg {
+  transition: transform 0.45s var(--ease);
 }
 
 .creator__nav:hover {
-  background: var(--theme-fg);
-  color: var(--theme-bg);
-  border-color: var(--theme-fg);
-  transform: translateY(-50%) scale(1.06);
+  background: transparent; /* ::before に塗りを譲る */
+  border-color: var(--gold);
+  color: #0a0a0a;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 10px 28px rgba(200, 168, 107, 0.35);
+}
+
+.creator__nav:hover::before {
+  transform: scale(1);
+}
+
+/* 矢印の方向にスライド */
+.creator__nav--prev:hover svg {
+  transform: translateX(-3px);
+}
+
+.creator__nav--next:hover svg {
+  transform: translateX(3px);
+}
+
+/* 押下時の反応 */
+.creator__nav:active {
+  transform: translateY(-50%) scale(0.96);
+  transition-duration: 0.15s;
 }
 
 .creator__nav--prev { left: 8px; }
