@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKS — SAC / Smart AI Creative</title>
+<meta name="description" content="SACが手がける実績。映像、ウェブ、グラフィック、インスタレーション、SNS。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===================== TOKENS ===================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --ivory: #F4F1EC;
+  --sand: #E9E3D8;
+  --stone: #D6CFC0;
+  --gray-100: #F5F5F5;
+  --gray-200: #CCCCCC;
+  --gray-400: #888888;
+  --gray-500: #444444;
+  --gray-900: #1A1A1A;
+  --gold: #C8A86B;
+  --theme-bg: #FFFFFF;
+  --theme-fg: #0A0A0A;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-en: 'Inter', sans-serif;
+  --font-jp: 'Noto Sans JP', sans-serif;
+}
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-jp);
+  color: var(--theme-fg);
+  background: var(--theme-bg);
+  overflow-x: hidden;
+  transition: background-color 0.9s var(--ease), color 0.9s var(--ease);
+}
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+button { background: none; border: none; cursor: pointer; color: inherit; font: inherit; }
+::selection { background: var(--gold); color: var(--black); }
+
+/* ===================== HEADER ===================== */
+.header { position: fixed; top: 0; left: 0; width: 100%; height: 72px; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.header.scrolled { background: rgba(255,255,255,0.88); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); border-bottom-color: rgba(10,10,10,0.08); }
+.header__logo { font-family: var(--font-en); font-weight: 700; font-size: 18px; letter-spacing: 0.08em; }
+.header__nav { display: flex; gap: 36px; }
+.header__nav a { font-family: var(--font-en); font-weight: 400; font-size: 11px; letter-spacing: 0.14em; opacity: 0.72; transition: color 0.3s var(--ease), opacity 0.3s var(--ease); }
+.header__nav a:hover, .header__nav a[aria-current="page"] { opacity: 1; color: var(--gold); }
+.header__hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; z-index: 1100; }
+.header__hamburger span { display: block; width: 22px; height: 1.5px; background: currentColor; transition: transform 0.4s var(--ease), opacity 0.3s var(--ease); }
+.header__hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.header__hamburger.active span:nth-child(2) { opacity: 0; }
+.header__hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-menu { position: fixed; inset: 0; background: var(--black); z-index: 1050; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease); }
+.mobile-menu.active { opacity: 1; pointer-events: auto; }
+.mobile-menu a { font-family: var(--font-en); font-weight: 300; font-size: 22px; letter-spacing: 0.12em; color: var(--white); transition: color 0.3s var(--ease); }
+.mobile-menu a:hover { color: var(--gold); }
+
+/* ===================== UTILITIES ===================== */
+.section-label { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+.section-label::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
+.js-reveal { opacity: 0; transform: translateY(48px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.js-reveal.revealed { opacity: 1; transform: translateY(0); }
+
+/* ===================== BREADCRUMB ===================== */
+.breadcrumb {
+  padding: 92px 40px 0;
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-400);
+}
+.breadcrumb a { transition: color 0.3s var(--ease); }
+.breadcrumb a:hover { color: var(--gold); }
+.breadcrumb span.sep { opacity: 0.35; }
+.breadcrumb [aria-current="page"] { color: var(--theme-fg); }
+
+/* ===================== HERO ===================== */
+.w-hero { padding: 48px 40px 80px; position: relative; }
+.w-hero__inner {
+  max-width: 1600px; margin: 0 auto;
+  display: grid; grid-template-columns: 80px 1fr 420px;
+  gap: 48px; align-items: end;
+  min-height: 60vh;
+}
+.w-hero__vlabel {
+  writing-mode: vertical-rl;
+  font-family: var(--font-jp); font-weight: 500; font-size: 13px;
+  letter-spacing: 0.6em; color: var(--gray-400);
+  height: 160px;
+  align-self: end;
+  margin-bottom: 40px;
+}
+.w-hero__vlabel strong { color: var(--theme-fg); font-weight: 700; }
+
+.w-hero__title {
+  font-family: var(--font-en); font-weight: 900;
+  font-size: clamp(72px, 15vw, 220px);
+  line-height: 0.82; letter-spacing: -0.055em;
+  color: var(--theme-fg);
+  margin-bottom: 28px;
+  position: relative;
+}
+.w-hero__title .dot { color: var(--gold); }
+.w-hero__title .strike {
+  position: absolute; left: 0; bottom: 0.35em;
+  width: 28%; height: 3px; background: var(--gold);
+  transform-origin: left;
+  animation: strikeIn 1.2s var(--ease) 0.4s both;
+}
+@keyframes strikeIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.w-hero__sub {
+  font-family: var(--font-en); font-weight: 500; font-size: 13px;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gray-400);
+  margin-bottom: 6px;
+}
+.w-hero__lead {
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 2; letter-spacing: 0.06em;
+  color: var(--gray-500);
+  max-width: 520px;
+  padding-bottom: 20px;
+}
+.w-hero__lead strong { color: var(--theme-fg); font-weight: 700; }
+
+.w-hero__stats {
+  display: flex; flex-direction: column; gap: 18px;
+  padding: 28px 0 40px 28px;
+  border-left: 1px solid rgba(10,10,10,0.12);
+  align-self: end;
+}
+.w-hero__stat {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 24px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gray-400);
+}
+.w-hero__stat b { font-weight: 700; font-size: 32px; letter-spacing: -0.02em; color: var(--theme-fg); }
+.w-hero__stat.gold b { color: var(--gold); }
+
+/* ===================== CATEGORY NAV ===================== */
+.w-cats {
+  position: sticky; top: 72px; z-index: 50;
+  background: rgba(244,241,236,0.92);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  border-top: 1px solid rgba(10,10,10,0.06);
+  border-bottom: 1px solid rgba(10,10,10,0.06);
+}
+.w-cats__inner {
+  max-width: 1600px; margin: 0 auto;
+  padding: 18px 40px;
+  display: flex; gap: 32px; align-items: center;
+  overflow-x: auto; scrollbar-width: none;
+}
+.w-cats__inner::-webkit-scrollbar { display: none; }
+.w-cats__head {
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+  white-space: nowrap;
+  padding-right: 12px;
+  border-right: 1px solid rgba(10,10,10,0.12);
+}
+.w-cat {
+  position: relative;
+  display: inline-flex; flex-direction: column; gap: 4px;
+  padding: 8px 2px;
+  opacity: 0.5;
+  transition: opacity 0.4s var(--ease);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.w-cat.active { opacity: 1; }
+.w-cat:hover { opacity: 0.9; }
+.w-cat__en {
+  font-family: var(--font-en); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+}
+.w-cat__jp {
+  font-family: var(--font-jp); font-weight: 400; font-size: 10px;
+  letter-spacing: 0.12em; color: var(--gray-400);
+  opacity: 0; transform: translateY(-4px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.w-cat.active .w-cat__jp { opacity: 1; transform: translateY(0); }
+.w-cat.active::after {
+  content: ""; position: absolute; left: 0; bottom: -1px;
+  width: 100%; height: 2px; background: var(--gold);
+  transform-origin: left; animation: catIn 0.5s var(--ease);
+}
+@keyframes catIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.w-cats__counter {
+  margin-left: auto;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.22em; color: var(--gray-400);
+  white-space: nowrap;
+}
+.w-cats__counter b { color: var(--gold); font-weight: 600; }
+
+/* ===================== GALLERY ===================== */
+.w-gallery {
+  padding: 140px 40px 120px;
+  position: relative;
+}
+.w-gallery__inner {
+  max-width: 1600px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 24px;
+  row-gap: 120px;
+}
+
+.w-item {
+  position: relative;
+  grid-column: span 12;
+  display: block;
+}
+.w-item[data-layout="wide"]        { grid-column: span 9; }
+.w-item[data-layout="wide-right"]  { grid-column: 4 / span 9; }
+.w-item[data-layout="mid"]         { grid-column: span 6; }
+.w-item[data-layout="mid-offset"]  { grid-column: 7 / span 6; transform: translateY(-80px); }
+.w-item[data-layout="portrait"]    { grid-column: 9 / span 4; transform: translateY(-120px); }
+.w-item[data-layout="portrait-l"]  { grid-column: 2 / span 4; }
+.w-item[data-layout="cinema"]      { grid-column: span 11; }
+.w-item[data-layout="small"]       { grid-column: span 4; transform: translateY(60px); }
+.w-item[data-layout="small-r"]     { grid-column: 9 / span 4; transform: translateY(60px); }
+.w-item[data-layout="tall"]        { grid-column: 3 / span 4; }
+
+.w-item__media {
+  position: relative; overflow: hidden; border-radius: 2px;
+  background: var(--ivory);
+}
+.w-item[data-layout="wide"] .w-item__media,
+.w-item[data-layout="wide-right"] .w-item__media { aspect-ratio: 16 / 9; }
+.w-item[data-layout="mid"] .w-item__media,
+.w-item[data-layout="mid-offset"] .w-item__media { aspect-ratio: 4 / 3; }
+.w-item[data-layout="portrait"] .w-item__media,
+.w-item[data-layout="portrait-l"] .w-item__media { aspect-ratio: 3 / 4; }
+.w-item[data-layout="cinema"] .w-item__media { aspect-ratio: 21 / 9; }
+.w-item[data-layout="small"] .w-item__media,
+.w-item[data-layout="small-r"] .w-item__media { aspect-ratio: 1 / 1; }
+.w-item[data-layout="tall"] .w-item__media { aspect-ratio: 9 / 13; }
+
+.w-item__img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 40%;
+  filter: saturate(0.7) brightness(0.96);
+  transition: transform 1.5s var(--ease), filter 1.2s var(--ease);
+}
+.w-item:hover .w-item__img { transform: scale(1.045); filter: saturate(1) brightness(1); }
+
+.w-item__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(10,10,10,0.45));
+  opacity: 0;
+  transition: opacity 0.8s var(--ease);
+  pointer-events: none;
+}
+.w-item:hover .w-item__overlay { opacity: 1; }
+
+.w-item__meta {
+  position: absolute; left: 18px; top: 18px;
+  display: flex; gap: 16px; align-items: center;
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.32);
+  z-index: 2;
+}
+.w-item__num { color: var(--gold); }
+
+.w-item__cta {
+  position: absolute; right: 18px; bottom: 18px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: var(--gold); color: var(--black);
+  font-family: var(--font-en); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  border-radius: 999px;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  pointer-events: none;
+  z-index: 2;
+}
+.w-item:hover .w-item__cta { opacity: 1; transform: translateY(0); }
+
+/* gold hairline */
+.w-item__media::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 0; height: 2px; background: var(--gold);
+  transition: width 0.9s var(--ease);
+  z-index: 2;
+}
+.w-item:hover .w-item__media::after { width: 100%; }
+
+.w-item__foot {
+  margin-top: 20px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 20px;
+}
+.w-item__title {
+  font-family: var(--font-en); font-weight: 700;
+  font-size: clamp(20px, 1.8vw, 30px);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  transition: color 0.3s var(--ease);
+}
+.w-item:hover .w-item__title { color: var(--gold); }
+.w-item__jp {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-jp); font-weight: 500; font-size: 13px;
+  letter-spacing: 0.06em; color: var(--gray-500);
+}
+.w-item__date {
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.22em; color: var(--gold);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* placeholder */
+.sac-placeholder {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #F4F1EC 0%, #FFFFFF 60%, #E9E3D8 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.sac-placeholder::before {
+  content: "SAC";
+  font-family: var(--font-en); font-weight: 900;
+  font-size: clamp(44px, 7vw, 120px);
+  letter-spacing: 0.02em; color: var(--theme-fg); opacity: 0.85;
+}
+.sac-placeholder::after {
+  content: ""; position: absolute; right: 22px; bottom: 22px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--gold);
+}
+.sac-placeholder__label {
+  position: absolute; left: 16px; top: 16px;
+  font-family: var(--font-en); font-weight: 500; font-size: 9px;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--gray-400);
+}
+
+/* Hidden by category filter */
+.w-item[data-hidden="true"] { display: none; }
+
+/* ===================== MORE VIEW ===================== */
+.w-more {
+  padding: 40px 40px 120px;
+  text-align: center;
+}
+.w-more__btn {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 52px;
+  border: 1px solid rgba(10,10,10,0.35);
+  font-family: var(--font-en); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  border-radius: 999px;
+  background: transparent;
+  transition: background 0.5s var(--ease), color 0.5s var(--ease), border-color 0.5s var(--ease), transform 0.5s var(--ease);
+  color: var(--theme-fg);
+}
+.w-more__btn:hover { background: var(--theme-fg); color: var(--white); border-color: var(--theme-fg); transform: translateY(-3px); }
+.w-more__btn[disabled] { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+.w-more__btn svg { transition: transform 0.5s var(--ease); }
+.w-more__btn:hover svg { transform: translateY(4px); }
+.w-more__counter {
+  display: block;
+  margin-top: 24px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray-400);
+}
+.w-more__counter b { color: var(--gold); font-weight: 600; font-size: 14px; letter-spacing: 0.1em; }
+
+/* ===================== PAGE CTA ===================== */
+.page-cta { background: var(--black); color: var(--white); padding: 180px 40px; text-align: center; position: relative; overflow: hidden; }
+.page-cta::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 60% at 50% 30%, rgba(200,168,107,0.06), transparent 70%); pointer-events: none; }
+.page-cta__inner { max-width: 1100px; margin: 0 auto; position: relative; }
+.page-cta__label {
+  color: var(--gold); margin-bottom: 40px;
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+}
+.page-cta__label::before { content:""; width:28px; height:1px; background: currentColor; opacity:0.8;}
+.page-cta__title {
+  font-family: var(--font-en); font-weight: 800;
+  font-size: clamp(48px, 8vw, 128px); line-height: 1; letter-spacing: -0.03em;
+  margin-bottom: 36px;
+}
+.page-cta__title .dot { color: var(--gold); }
+.page-cta__sub {
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(15px, 1.4vw, 18px); line-height: 2; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.78); max-width: 640px; margin: 0 auto 56px;
+}
+.page-cta__buttons { display: inline-flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
+.btn-primary {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 46px;
+  background: var(--gold); color: var(--black);
+  font-family: var(--font-en); font-weight: 600; font-size: 13px;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  border-radius: 999px;
+  box-shadow: 0 12px 32px rgba(200,168,107,0.28), 0 2px 8px rgba(0,0,0,0.28);
+  transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+}
+.btn-primary::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, #E3C893 0%, #C8A86B 55%, #A88550 100%); transform: translateX(-101%); transition: transform 0.9s var(--ease); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(200,168,107,0.38); }
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary > * { position: relative; z-index: 1; }
+.btn-primary svg { transition: transform 0.6s var(--ease); }
+.btn-primary:hover svg { transform: translateX(6px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 40px;
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #fff;
+  font-family: var(--font-en); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  border-radius: 999px;
+  transition: background 0.5s var(--ease), color 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+.btn-ghost:hover { background: #fff; color: var(--black); border-color: #fff; }
+.btn-ghost svg { transition: transform 0.6s var(--ease); }
+.btn-ghost:hover svg { transform: translateX(6px); }
+
+/* ===================== FOOTER ===================== */
+.footer { background: var(--black); color: var(--white); padding: 88px 40px 32px; }
+.footer__inner { max-width: 1440px; margin: 0 auto; }
+.footer__top { display: grid; grid-template-columns: 200px 1fr; gap: 48px; padding-bottom: 96px; }
+.footer__logo { font-family: var(--font-en); font-weight: 700; font-size: 24px; letter-spacing: 0.08em; color: #fff; }
+.footer__nav { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 32px; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.footer__col-title { font-family: var(--font-en); font-weight: 800; font-size: 24px; letter-spacing: 0.02em; margin-bottom: 20px; }
+.footer__col ul a { font-family: var(--font-en); font-weight: 700; font-size: 15px; letter-spacing: 0.05em; transition: color 0.3s var(--ease); }
+.footer__col ul a:hover { color: var(--gold); }
+.footer__col--right { text-align: right; min-width: 140px; }
+.footer__col--right ul a { font-size: 16px; letter-spacing: 0.04em; }
+.footer__middle { display: grid; grid-template-columns: 1fr auto auto; gap: 48px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.08); align-items: start; }
+.footer__address { font-family: var(--font-jp); font-style: normal; font-size: 13px; line-height: 1.9; color: rgba(255,255,255,0.7); }
+.footer__map { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 3px; transition: color 0.3s var(--ease), border-color 0.3s var(--ease); }
+.footer__map:hover { color: var(--gold); border-color: var(--gold); }
+.footer__map svg { transition: transform 0.4s var(--ease); }
+.footer__map:hover svg { transform: translate(3px, -3px); }
+.footer__socials { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer__socials a { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-en); font-weight: 400; font-size: 12px; letter-spacing: 0.08em; color: rgba(255,255,255,0.72); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s var(--ease); }
+.footer__socials a:hover { color: var(--gold); }
+.footer__back { width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: #fff; transition: background 0.4s var(--ease), color 0.4s var(--ease), transform 0.4s var(--ease), border-color 0.4s var(--ease); }
+.footer__back:hover { background: var(--gold); color: var(--black); border-color: var(--gold); transform: translateY(-3px); }
+.footer__bottom { margin-top: 64px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; }
+.footer__copy { font-family: var(--font-en); font-weight: 300; font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+.footer__credit { font-family: var(--font-en); font-weight: 300; font-style: italic; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.32); }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1200px) {
+  .w-hero__inner { grid-template-columns: 60px 1fr 320px; gap: 28px; }
+}
+@media (max-width: 900px) {
+  .header { padding: 0 20px; }
+  .header__nav { display: none; }
+  .header__hamburger { display: flex; }
+  .breadcrumb { padding: 88px 20px 0; font-size: 10px; letter-spacing: 0.14em; gap: 10px; }
+  .w-hero { padding: 40px 20px 64px; }
+  .w-hero__inner { grid-template-columns: 1fr; gap: 32px; min-height: auto; }
+  .w-hero__vlabel { writing-mode: horizontal-tb; height: auto; margin-bottom: 0; letter-spacing: 0.3em; }
+  .w-hero__stats { padding: 24px 0 0 0; border-left: none; border-top: 1px solid rgba(10,10,10,0.1); }
+  .w-cats__inner { padding: 14px 20px; gap: 22px; }
+  .w-cats__head, .w-cats__counter { display: none; }
+  .w-gallery { padding: 80px 20px 60px; row-gap: 72px; }
+  .w-gallery__inner { column-gap: 16px; row-gap: 72px; }
+  .w-item[data-layout] { grid-column: span 12 !important; transform: none !important; }
+  .w-more { padding: 24px 20px 80px; }
+  .page-cta { padding: 120px 20px; }
+  .footer { padding: 72px 20px 32px; }
+  .footer__top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 56px; }
+  .footer__nav { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .footer__col--right { text-align: left; }
+  .footer__middle { grid-template-columns: 1fr; gap: 28px; }
+  .footer__bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
+}
+@media (max-width: 540px) {
+  .w-item__foot { flex-direction: column; gap: 8px; }
+  .page-cta__buttons { flex-direction: column; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <a href="index.html" class="header__logo">SAC</a>
+  <nav class="header__nav">
+    <a href="index.html#about">ABOUT</a>
+    <a href="works-index.html" aria-current="page">WORKS</a>
+    <a href="index.html#service">SERVICE</a>
+    <a href="creator-index.html">CREATOR</a>
+    <a href="index.html#info">INFO</a>
+    <a href="index.html#contact">CONTACT</a>
+  </nav>
+  <button class="header__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#about">ABOUT</a>
+  <a href="works-index.html">WORKS</a>
+  <a href="index.html#service">SERVICE</a>
+  <a href="creator-index.html">CREATOR</a>
+  <a href="index.html#info">INFO</a>
+  <a href="index.html#contact">CONTACT</a>
+</div>
+
+<!-- ============ BREADCRUMB ============ -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="index.html">HOME</a>
+  <span class="sep">/</span>
+  <span aria-current="page">WORKS</span>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="w-hero" id="top">
+  <div class="w-hero__inner">
+    <div class="w-hero__vlabel">SAC <strong>SELECTED WORKS</strong> ARCHIVE</div>
+    <div class="w-hero__main">
+      <p class="w-hero__sub">SELECTED WORKS / 2020 — 2025</p>
+      <h1 class="w-hero__title js-reveal">WORKS<span class="dot">.</span><span class="strike" aria-hidden="true"></span></h1>
+      <p class="w-hero__lead js-reveal">
+        <strong>作品は、名簿に並べるものではない。</strong><br>
+        一つひとつ、依頼の形も、関わったチームも違う。<br>
+        その記録を、展示のように並べてみます。
+      </p>
+    </div>
+    <div class="w-hero__stats js-reveal">
+      <div class="w-hero__stat"><span>TOTAL WORKS</span><b>042</b></div>
+      <div class="w-hero__stat gold"><span>LATEST</span><b>2025.04</b></div>
+      <div class="w-hero__stat"><span>CATEGORIES</span><b>06</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATEGORY NAV ============ -->
+<div class="w-cats" id="cats">
+  <div class="w-cats__inner">
+    <span class="w-cats__head">CATEGORY</span>
+    <button class="w-cat active" data-cat="all"><span class="w-cat__en">ALL</span><span class="w-cat__jp">すべて</span></button>
+    <button class="w-cat" data-cat="movie"><span class="w-cat__en">MOVIE</span><span class="w-cat__jp">映像</span></button>
+    <button class="w-cat" data-cat="web"><span class="w-cat__en">WEB DESIGN</span><span class="w-cat__jp">ウェブ</span></button>
+    <button class="w-cat" data-cat="graphic"><span class="w-cat__en">GRAPHIC DESIGN</span><span class="w-cat__jp">グラフィック</span></button>
+    <button class="w-cat" data-cat="installation"><span class="w-cat__en">INSTALLATION</span><span class="w-cat__jp">インスタレーション</span></button>
+    <button class="w-cat" data-cat="sns"><span class="w-cat__en">SNS</span><span class="w-cat__jp">SNS運用</span></button>
+    <button class="w-cat" data-cat="other"><span class="w-cat__en">OTHER</span><span class="w-cat__jp">その他</span></button>
+    <span class="w-cats__counter" id="catsCounter"><b>010</b> / 042</span>
+  </div>
+</div>
+
+<!-- ============ GALLERY ============ -->
+<section class="w-gallery">
+  <div class="w-gallery__inner" id="gallery">
+    <!-- 10 works initial -->
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="movie" data-layout="wide">
+      <div class="w-item__media">
+        <img class="w-item__img" src="assets/works/lastcall.jpg" alt="LAST CALL" loading="lazy" style="object-position:50% 35%;">
+        <div class="w-item__overlay"></div>
+        <div class="w-item__meta"><span class="w-item__num">001</span><span>MOVIE</span></div>
+        <span class="w-item__cta">VIEW →</span>
+      </div>
+      <div class="w-item__foot">
+        <div>
+          <h3 class="w-item__title">LAST CALL<span class="w-item__jp">公開オーディション番組 OP映像</span></h3>
+        </div>
+        <span class="w-item__date">2025.02</span>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="movie" data-layout="portrait">
+      <div class="w-item__media">
+        <img class="w-item__img" src="assets/works/hyde.jpg" alt="HYDE | SOCIAL VIRUS" loading="lazy" style="object-position:50% 30%;">
+        <div class="w-item__overlay"></div>
+        <div class="w-item__meta"><span class="w-item__num">002</span><span>MOVIE</span></div>
+        <span class="w-item__cta">VIEW →</span>
+      </div>
+      <div class="w-item__foot">
+        <div>
+          <h3 class="w-item__title">HYDE / SOCIAL VIRUS<span class="w-item__jp">Music Video</span></h3>
+        </div>
+        <span class="w-item__date">2024.11</span>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="graphic" data-layout="mid">
+      <div class="w-item__media">
+        <img class="w-item__img" src="assets/works/24.jpg" alt="24世紀ラーメン" loading="lazy" style="object-position:50% 50%;">
+        <div class="w-item__overlay"></div>
+        <div class="w-item__meta"><span class="w-item__num">003</span><span>GRAPHIC DESIGN</span></div>
+        <span class="w-item__cta">VIEW →</span>
+      </div>
+      <div class="w-item__foot">
+        <div>
+          <h3 class="w-item__title">24世紀ラーメン<span class="w-item__jp">ブランドアイデンティティ</span></h3>
+        </div>
+        <span class="w-item__date">2024.09</span>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="web" data-layout="small-r">
+      <div class="w-item__media">
+        <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
+        <div class="w-item__overlay"></div>
+        <div class="w-item__meta"><span class="w-item__num">004</span><span>WEB DESIGN</span></div>
+        <span class="w-item__cta">VIEW →</span>
+      </div>
+      <div class="w-item__foot">
+        <div>
+          <h3 class="w-item__title">ZEUS Wifi for GLOBAL<span class="w-item__jp">コーポレート / サービスサイト</span></h3>
+        </div>
+        <span class="w-item__date">2024.08</span>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="installation" data-layout="cinema">
+      <div class="w-item__media">
+        <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
+        <div class="w-item__overlay"></div>
+        <div class="w-item__meta"><span class="w-item__num">005</span><span>INSTALLATION</span></div>
+        <span class="w-item__cta">VIEW →</span>
+      </div>
+      <div class="w-item__foot">
+        <div>
+          <h3 class="w-item__title">Caption by Hyatt 兜町 東京<span class="w-item__jp">インスタレーション / ビジュアル演出</span></h3>
+        </div>
+        <span class="w-item__date">2024.06</span>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="sns" data-layout="small">
+      <div class="w-item__media">
+        <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
+        <div class="w-item__overlay"></div>
+        <div class="w-item__meta"><span class="w-item__num">006</span><span>SNS</span></div>
+        <span class="w-item__cta">VIEW →</span>
+      </div>
+      <div class="w-item__foot">
+        <div>
+          <h3 class="w-item__title">BRAND SNS OPERATION<span class="w-item__jp">月次運用 / コンテンツ制作</span></h3>
+        </div>
+        <span class="w-item__date">2024.05</span>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="movie" data-layout="wide-right">
+      <div class="w-item__media">
+        <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
+        <div class="w-item__overlay"></div>
+        <div class="w-item__meta"><span class="w-item__num">007</span><span>MOVIE</span></div>
+        <span class="w-item__cta">VIEW →</span>
+      </div>
+      <div class="w-item__foot">
+        <div>
+          <h3 class="w-item__title">PROJECT ECHO<span class="w-item__jp">ブランドフィルム</span></h3>
+        </div>
+        <span class="w-item__date">2024.03</span>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="graphic" data-layout="portrait-l">
+      <div class="w-item__media">
+        <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
+        <div class="w-item__overlay"></div>
+        <div class="w-item__meta"><span class="w-item__num">008</span><span>GRAPHIC</span></div>
+        <span class="w-item__cta">VIEW →</span>
+      </div>
+      <div class="w-item__foot">
+        <div>
+          <h3 class="w-item__title">TYPE/UNLEARN<span class="w-item__jp">展覧会 メインビジュアル</span></h3>
+        </div>
+        <span class="w-item__date">2024.02</span>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="web" data-layout="mid-offset">
+      <div class="w-item__media">
+        <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
+        <div class="w-item__overlay"></div>
+        <div class="w-item__meta"><span class="w-item__num">009</span><span>WEB</span></div>
+        <span class="w-item__cta">VIEW →</span>
+      </div>
+      <div class="w-item__foot">
+        <div>
+          <h3 class="w-item__title">NEW ORDER LAB<span class="w-item__jp">プロダクトLP</span></h3>
+        </div>
+        <span class="w-item__date">2023.12</span>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="other" data-layout="tall">
+      <div class="w-item__media">
+        <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
+        <div class="w-item__overlay"></div>
+        <div class="w-item__meta"><span class="w-item__num">010</span><span>OTHER</span></div>
+        <span class="w-item__cta">VIEW →</span>
+      </div>
+      <div class="w-item__foot">
+        <div>
+          <h3 class="w-item__title">INTERNAL R&amp;D<span class="w-item__jp">AIツール検証プロジェクト</span></h3>
+        </div>
+        <span class="w-item__date">2023.10</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ============ MORE VIEW ============ -->
+<div class="w-more">
+  <button class="w-more__btn" id="moreBtn">
+    <span>MORE VIEW</span>
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+      <path d="M12 5v14M5 12l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <span class="w-more__counter" id="moreCounter"><b>010</b> / 042 DISPLAYED</span>
+</div>
+
+<!-- ============ PAGE CTA ============ -->
+<section class="page-cta">
+  <div class="page-cta__inner">
+    <span class="page-cta__label">COMMISSION</span>
+    <h2 class="page-cta__title">MAKE IT NEXT<span class="dot">.</span></h2>
+    <p class="page-cta__sub">
+      気になる一本があれば、その先も見せられます。<br>
+      構想段階からのご相談、座組の組成、予算帯のすり合わせも。
+    </p>
+    <div class="page-cta__buttons">
+      <a href="index.html#contact" class="btn-primary">
+        <span>作品について相談する</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="creator-index.html" class="btn-ghost">
+        <span>クリエイターを見る</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <a href="index.html" class="footer__brand" aria-label="SAC"><span class="footer__logo">SAC</span></a>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__col"><h3 class="footer__col-title">ABOUT</h3><ul><li><a href="index.html#about">PHILOSOPHY</a></li><li><a href="index.html#about">APPROACH</a></li><li><a href="index.html#about">COMPANY</a></li></ul></div>
+        <div class="footer__col"><h3 class="footer__col-title">WORKS</h3><ul><li><a href="works-index.html">ALL WORKS</a></li><li><a href="works-index.html">MOVIE</a></li><li><a href="works-index.html">WEB DESIGN</a></li><li><a href="works-index.html">GRAPHIC</a></li></ul></div>
+        <div class="footer__col"><h3 class="footer__col-title">CREATOR</h3><ul><li><a href="creator-index.html#movie-director">DIRECTOR</a></li><li><a href="creator-index.html#art-director">ART DIRECTOR</a></li><li><a href="creator-index.html">ALL CREATORS</a></li></ul></div>
+        <div class="footer__col footer__col--right"><ul><li><a href="index.html#service">SERVICE</a></li><li><a href="index.html#info">INFO</a></li><li><a href="index.html#contact">CONTACT</a></li></ul></div>
+      </nav>
+    </div>
+    <div class="footer__middle">
+      <div class="footer__address-wrap">
+        <address class="footer__address">〒141-0021 東京都品川区上大崎3-14-1<br>中丸ハウス B棟</address>
+        <a href="https://maps.app.goo.gl/tKVmTAiDvhVb9SHV6" target="_blank" rel="noopener" class="footer__map">MAP<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <ul class="footer__socials" aria-label="Social media">
+        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></li>
+        <li><a href="https://x.com/" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.53 3H20.5l-6.52 7.45L21.75 21h-6.03l-4.72-6.16L5.6 21H2.63l6.98-7.98L2.25 3h6.18l4.27 5.64L17.53 3Zm-1.06 16.2h1.66L7.63 4.7H5.85l10.62 14.5Z"/></svg><span>X (Twitter)</span></a></li>
+        <li><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h-3a4 4 0 0 0-4 4v3H4v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3V3Z"/></svg><span>Facebook</span></a></li>
+      </ul>
+      <a href="#top" class="footer__back" aria-label="Back to top"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© EPOCH Inc.</p>
+      <p class="footer__credit">This website is entirely crafted with AI.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  // Header
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  // Mobile menu
+  var hamburger = document.getElementById('hamburger');
+  var mobile = document.getElementById('mobileMenu');
+  if (hamburger && mobile) {
+    hamburger.addEventListener('click', function(){
+      hamburger.classList.toggle('active');
+      mobile.classList.toggle('active');
+      document.body.style.overflow = mobile.classList.contains('active') ? 'hidden' : '';
+    });
+    mobile.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ hamburger.classList.remove('active'); mobile.classList.remove('active'); document.body.style.overflow=''; });
+    });
+  }
+
+  // Reveal
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('revealed'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.js-reveal').forEach(function(el){ observer.observe(el); });
+
+  // -------- Works data (additional pool beyond initial 10 in DOM) --------
+  // Layoutパターンはこのプールを読み込むたびにループ。CMS移行時は data-layout をサーバー側で制御可能。
+  var LAYOUTS = ['wide','portrait','mid','small-r','cinema','small','wide-right','portrait-l','mid-offset','tall'];
+  var MORE_POOL = [
+    { num:'011', cat:'movie',        catLabel:'MOVIE',          title:'SILENT BLOOM',     jp:'ブランドムービー',            date:'2023.08' },
+    { num:'012', cat:'web',          catLabel:'WEB DESIGN',     title:'ATLAS STUDIOS',    jp:'コーポレートサイト',          date:'2023.07' },
+    { num:'013', cat:'graphic',      catLabel:'GRAPHIC',        title:'KOGETSU PKG',      jp:'パッケージデザイン',          date:'2023.05' },
+    { num:'014', cat:'sns',          catLabel:'SNS',            title:'PLAIN DAILY',      jp:'SNSキャンペーン',            date:'2023.04' },
+    { num:'015', cat:'installation', catLabel:'INSTALLATION',   title:'ECHO CHAMBER',     jp:'体験型インスタレーション',     date:'2023.02' },
+    { num:'016', cat:'movie',        catLabel:'MOVIE',          title:'NORTH TOKYO MV',   jp:'ミュージックビデオ',          date:'2022.12' },
+    { num:'017', cat:'web',          catLabel:'WEB',            title:'SHIZUKU LP',       jp:'プロダクトLP',               date:'2022.10' },
+    { num:'018', cat:'other',        catLabel:'OTHER',          title:'R&D TYPE ENGINE',  jp:'社内ツール',                 date:'2022.09' },
+    { num:'019', cat:'graphic',      catLabel:'GRAPHIC',        title:'FOLD MAGAZINE',    jp:'エディトリアル',              date:'2022.08' },
+    { num:'020', cat:'movie',        catLabel:'MOVIE',          title:'DRIVE THROUGH',    jp:'ショートフォーム',            date:'2022.06' }
+  ];
+
+  var gallery = document.getElementById('gallery');
+  var moreBtn = document.getElementById('moreBtn');
+  var moreCounter = document.getElementById('moreCounter');
+  var catsCounter = document.getElementById('catsCounter');
+  var TOTAL = 42;
+  var loaded = gallery.querySelectorAll('.w-item').length;
+
+  function svgArrow(){ return '<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
+
+  function buildItem(d, idx){
+    var layout = LAYOUTS[idx % LAYOUTS.length];
+    var el = document.createElement('a');
+    el.className = 'w-item js-reveal';
+    el.setAttribute('data-cat', d.cat);
+    el.setAttribute('data-layout', layout);
+    el.href = 'works-detail.html';
+    el.innerHTML =
+      '<div class="w-item__media">'
+      + '<div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>'
+      + '<div class="w-item__overlay"></div>'
+      + '<div class="w-item__meta"><span class="w-item__num">'+d.num+'</span><span>'+d.catLabel+'</span></div>'
+      + '<span class="w-item__cta">VIEW →</span>'
+      + '</div>'
+      + '<div class="w-item__foot"><div><h3 class="w-item__title">'+d.title+'<span class="w-item__jp">'+d.jp+'</span></h3></div><span class="w-item__date">'+d.date+'</span></div>';
+    return el;
+  }
+
+  function applyFilter(){
+    var active = document.querySelector('.w-cat.active').getAttribute('data-cat');
+    var items = gallery.querySelectorAll('.w-item');
+    var visible = 0;
+    items.forEach(function(el){
+      var ok = (active === 'all') || (el.getAttribute('data-cat') === active);
+      el.setAttribute('data-hidden', ok ? 'false' : 'true');
+      if (ok) visible++;
+    });
+    catsCounter.innerHTML = '<b>'+String(visible).padStart(3,'0')+'</b> / '+TOTAL;
+    moreCounter.innerHTML = '<b>'+String(loaded).padStart(3,'0')+'</b> / '+TOTAL+' DISPLAYED';
+  }
+
+  // MORE VIEW
+  moreBtn.addEventListener('click', function(){
+    var batch = MORE_POOL.splice(0, 10);
+    if (!batch.length){
+      moreBtn.setAttribute('disabled','');
+      moreBtn.querySelector('span').textContent = 'NO MORE WORKS';
+      return;
+    }
+    batch.forEach(function(d, i){
+      var el = buildItem(d, loaded + i);
+      gallery.appendChild(el);
+      observer.observe(el);
+    });
+    loaded = gallery.querySelectorAll('.w-item').length;
+    applyFilter();
+    if (!MORE_POOL.length){
+      moreBtn.setAttribute('disabled','');
+      moreBtn.querySelector('span').textContent = 'NO MORE WORKS';
+    }
+  });
+
+  // Category filter
+  document.querySelectorAll('.w-cat').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.w-cat').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      applyFilter();
+      var rect = gallery.getBoundingClientRect();
+      var y = rect.top + window.scrollY - 140;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  });
+
+  applyFilter();
+
+  // Smooth scroll for # anchors
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var tgt = document.querySelector(id);
+      if (!tgt) return;
+      e.preventDefault();
+      var y = tgt.getBoundingClientRect().top + window.scrollY - 140;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

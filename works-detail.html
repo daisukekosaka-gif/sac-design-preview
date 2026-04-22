@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAST CALL — WORKS — SAC</title>
+<meta name="description" content="LAST CALL — 公開オーディション番組OP映像。SAC WORKS詳細。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===================== TOKENS ===================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black:#0A0A0A; --white:#FFFFFF; --ivory:#F4F1EC; --sand:#E9E3D8; --stone:#D6CFC0;
+  --gray-100:#F5F5F5; --gray-200:#CCCCCC; --gray-400:#888888; --gray-500:#444444; --gray-900:#1A1A1A;
+  --gold:#C8A86B;
+  --theme-bg:#FFFFFF; --theme-fg:#0A0A0A;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+  --font-en:'Inter',sans-serif; --font-jp:'Noto Sans JP',sans-serif;
+}
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--font-jp); color: var(--theme-fg); background: var(--theme-bg); overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+button { background: none; border: none; cursor: pointer; color: inherit; font: inherit; }
+::selection { background: var(--gold); color: var(--black); }
+
+/* ===================== HEADER ===================== */
+.header { position: fixed; top: 0; left: 0; width: 100%; height: 72px; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease); border-bottom: 1px solid transparent; }
+.header.scrolled { background: rgba(255,255,255,0.88); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); border-bottom-color: rgba(10,10,10,0.08); }
+.header__logo { font-family: var(--font-en); font-weight: 700; font-size: 18px; letter-spacing: 0.08em; }
+.header__nav { display: flex; gap: 36px; }
+.header__nav a { font-family: var(--font-en); font-weight: 400; font-size: 11px; letter-spacing: 0.14em; opacity: 0.72; transition: color 0.3s var(--ease), opacity 0.3s var(--ease); }
+.header__nav a:hover, .header__nav a[aria-current="page"] { opacity: 1; color: var(--gold); }
+.header__hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; z-index: 1100; }
+.header__hamburger span { display: block; width: 22px; height: 1.5px; background: currentColor; transition: transform 0.4s var(--ease), opacity 0.3s var(--ease); }
+.header__hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.header__hamburger.active span:nth-child(2) { opacity: 0; }
+.header__hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { position: fixed; inset: 0; background: var(--black); z-index: 1050; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease); }
+.mobile-menu.active { opacity: 1; pointer-events: auto; }
+.mobile-menu a { font-family: var(--font-en); font-weight: 300; font-size: 22px; letter-spacing: 0.12em; color: var(--white); }
+
+.js-reveal { opacity: 0; transform: translateY(48px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.js-reveal.revealed { opacity: 1; transform: translateY(0); }
+
+/* ===================== BREADCRUMB ===================== */
+.breadcrumb { padding: 92px 40px 0; display: flex; align-items: center; gap: 14px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-400); }
+.breadcrumb a { transition: color 0.3s var(--ease); }
+.breadcrumb a:hover { color: var(--gold); }
+.breadcrumb span.sep { opacity: 0.35; }
+.breadcrumb [aria-current="page"] { color: var(--theme-fg); }
+
+/* ===================== PROJECT HEADER ===================== */
+.wd-head { padding: 48px 40px 60px; }
+.wd-head__inner { max-width: 1600px; margin: 0 auto; }
+.wd-head__meta {
+  display: flex; gap: 20px; align-items: center;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.26em; text-transform: uppercase; color: var(--gray-400);
+  margin-bottom: 32px;
+}
+.wd-head__meta b { color: var(--gold); font-weight: 600; }
+.wd-head__title {
+  font-family: var(--font-en); font-weight: 800;
+  font-size: clamp(56px, 13vw, 200px);
+  line-height: 0.86; letter-spacing: -0.055em;
+  color: var(--theme-fg);
+  margin-bottom: 28px;
+}
+.wd-head__title .dot { color: var(--gold); }
+.wd-head__jp {
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(18px, 2vw, 28px);
+  letter-spacing: 0.06em; color: var(--gray-500);
+  margin-bottom: 40px;
+}
+.wd-head__creator {
+  display: flex; align-items: center; gap: 16px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(10,10,10,0.1);
+  width: fit-content;
+}
+.wd-head__creator__avatar { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; background: #1a1a1a; }
+.wd-head__creator__avatar img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+.wd-head__creator__text { display: flex; flex-direction: column; gap: 2px; }
+.wd-head__creator__label { font-family: var(--font-en); font-weight: 500; font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gray-400); }
+.wd-head__creator__name {
+  display: inline-flex; gap: 10px; align-items: baseline;
+  font-family: var(--font-jp); font-weight: 700; font-size: 15px;
+  letter-spacing: 0.04em; color: var(--theme-fg);
+  transition: color 0.3s var(--ease);
+}
+.wd-head__creator__name:hover { color: var(--gold); }
+.wd-head__creator__name small { font-family: var(--font-en); font-weight: 400; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray-400); }
+
+/* ===================== CAROUSEL ===================== */
+.wd-carousel { background: var(--ivory); padding: 80px 0 100px; position: relative; }
+.wd-carousel__stage {
+  position: relative;
+  height: 76vh;
+  min-height: 520px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.wd-carousel__viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.wd-slide {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: min(1100px, 82vw);
+  height: 80%;
+  transform: translate(-50%, -50%) scale(0.88);
+  opacity: 0.1;
+  transition: opacity 0.8s var(--ease), transform 0.9s var(--ease), filter 0.9s var(--ease);
+  filter: blur(2px);
+  pointer-events: none;
+}
+.wd-slide.active {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+  z-index: 3;
+}
+.wd-slide.prev { transform: translate(calc(-50% - 52vw), -50%) scale(0.8); opacity: 0.22; z-index: 2; filter: blur(1px); }
+.wd-slide.next { transform: translate(calc(-50% + 52vw), -50%) scale(0.8); opacity: 0.22; z-index: 2; filter: blur(1px); }
+
+.wd-slide__media {
+  width: 100%; height: 100%;
+  background: var(--theme-bg);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px -40px rgba(10,10,10,0.35);
+}
+.wd-slide__media img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  background: var(--ivory);
+}
+.wd-slide__media[data-type="video"]::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,10,10,0.0), rgba(10,10,10,0.35));
+  pointer-events: none;
+  z-index: 1;
+}
+.wd-slide__media[data-type="video"]::after {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: 84px; height: 84px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 50%;
+  background: rgba(10,10,10,0.28);
+  z-index: 2;
+}
+.wd-slide__play {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-40%, -50%);
+  border-left: 16px solid #fff;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  z-index: 3;
+}
+
+.wd-slide__cap {
+  position: absolute; left: 24px; bottom: 20px;
+  display: flex; gap: 18px; align-items: center;
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+  z-index: 4;
+}
+.wd-slide__cap b { color: var(--gold); font-weight: 600; }
+
+.wd-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(10,10,10,0.4);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--theme-fg);
+  z-index: 10;
+  transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.wd-nav--prev { left: 40px; }
+.wd-nav--next { right: 40px; }
+.wd-nav:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+.wd-nav:disabled { opacity: 0.3; pointer-events: none; }
+
+.wd-carousel__foot {
+  max-width: 1600px; margin: 40px auto 0; padding: 0 40px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.wd-dots { display: flex; gap: 10px; align-items: center; }
+.wd-dot { width: 28px; height: 2px; background: rgba(10,10,10,0.2); transition: background 0.4s var(--ease), transform 0.4s var(--ease); }
+.wd-dot.active { background: var(--gold); transform: scaleY(2); }
+.wd-counter {
+  font-family: var(--font-en); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.26em; text-transform: uppercase; color: var(--gray-400);
+}
+.wd-counter b { color: var(--gold); font-weight: 600; }
+
+/* ===================== OVERVIEW ===================== */
+.wd-overview { padding: 160px 40px 120px; }
+.wd-overview__inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr; gap: 96px; align-items: start; }
+.wd-overview__num {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 32px;
+}
+.wd-overview__num::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+.wd-overview__title { font-family: var(--font-en); font-weight: 800; font-size: clamp(40px, 5vw, 72px); line-height: 1; letter-spacing: -0.03em; margin-bottom: 16px; }
+.wd-overview__title .dot { color: var(--gold); }
+.wd-overview__jp { font-family: var(--font-jp); font-weight: 500; font-size: 14px; letter-spacing: 0.22em; color: var(--gray-400); margin-bottom: 40px; }
+.wd-overview__body p { font-family: var(--font-jp); font-weight: 400; font-size: 15px; line-height: 2.1; letter-spacing: 0.04em; color: var(--gray-500); }
+.wd-overview__body p + p { margin-top: 24px; }
+.wd-overview__body strong { color: var(--theme-fg); font-weight: 700; }
+
+.wd-facts {
+  border: 1px solid rgba(10,10,10,0.1);
+  padding: 40px;
+  display: flex; flex-direction: column; gap: 28px;
+  background: var(--ivory);
+}
+.wd-fact__label { font-family: var(--font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.wd-fact__value { font-family: var(--font-jp); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; }
+.wd-fact__value small { display: block; margin-top: 4px; font-family: var(--font-en); font-weight: 400; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-400); }
+
+/* ===================== STAFF CREDIT ===================== */
+.wd-staff { background: var(--ivory); padding: 160px 40px; }
+.wd-staff__inner { max-width: 1100px; margin: 0 auto; }
+.wd-staff__title { font-family: var(--font-en); font-weight: 800; font-size: clamp(36px, 5vw, 72px); line-height: 1; letter-spacing: -0.03em; margin-bottom: 8px; }
+.wd-staff__title .dot { color: var(--gold); }
+.wd-staff__jp { font-family: var(--font-jp); font-weight: 500; font-size: 14px; letter-spacing: 0.22em; color: var(--gray-400); margin-bottom: 64px; }
+.wd-staff__list { display: grid; grid-template-columns: 220px 1fr; row-gap: 32px; column-gap: 40px; }
+.wd-staff__role { font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); padding-top: 3px; }
+.wd-staff__names { font-family: var(--font-jp); font-weight: 500; font-size: 16px; letter-spacing: 0.02em; color: var(--theme-fg); line-height: 1.8; border-bottom: 1px solid rgba(10,10,10,0.08); padding-bottom: 20px; }
+.wd-staff__names:last-child { border-bottom: none; }
+
+/* ===================== RELATED WORKS (BY CREATOR) ===================== */
+.wd-related { padding: 160px 40px 100px; }
+.wd-related__inner { max-width: 1440px; margin: 0 auto; }
+.wd-related__head {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 40px; padding-bottom: 40px; margin-bottom: 72px;
+  border-bottom: 1px solid rgba(10,10,10,0.12);
+}
+.wd-related__num { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+.wd-related__num::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+.wd-related__title { font-family: var(--font-en); font-weight: 800; font-size: clamp(30px, 5vw, 76px); line-height: 0.95; letter-spacing: -0.02em; }
+.wd-related__title .dot { color: var(--gold); }
+.wd-related__jp { font-family: var(--font-jp); font-weight: 500; font-size: 14px; letter-spacing: 0.22em; color: var(--gray-400); margin-top: 10px; display: block; }
+.wd-related__view {
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: color 0.3s var(--ease);
+  flex-shrink: 0;
+}
+.wd-related__view:hover { color: var(--gold); }
+
+.wd-rel-item {
+  display: grid; grid-template-columns: 80px 1fr;
+  gap: 40px; align-items: end;
+  padding: 40px 0;
+  border-bottom: 1px solid rgba(10,10,10,0.08);
+  transition: padding 0.5s var(--ease);
+}
+.wd-rel-item:hover { padding-left: 16px; }
+.wd-rel-item__num { font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.26em; color: var(--gold); padding-bottom: 12px; }
+.wd-rel-item__body { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: end; }
+.wd-rel-item__info {}
+.wd-rel-item__cat { font-family: var(--font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 8px; display: block; }
+.wd-rel-item__title {
+  font-family: var(--font-en); font-weight: 700;
+  font-size: clamp(22px, 2.4vw, 38px);
+  letter-spacing: -0.01em; line-height: 1.1;
+  transition: color 0.3s var(--ease);
+}
+.wd-rel-item:hover .wd-rel-item__title { color: var(--gold); }
+.wd-rel-item__jp { display: block; margin-top: 6px; font-family: var(--font-jp); font-weight: 500; font-size: 13px; letter-spacing: 0.06em; color: var(--gray-500); }
+.wd-rel-item__date { font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; color: var(--gray-400); padding-bottom: 6px; }
+.wd-rel-item__thumb {
+  aspect-ratio: 16/9; overflow: hidden; background: var(--ivory);
+  margin-top: 24px;
+  grid-column: 1 / -1;
+  position: relative;
+}
+.wd-rel-item__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s var(--ease); }
+.wd-rel-item:hover .wd-rel-item__thumb img { transform: scale(1.03); }
+.wd-rel-item__thumb::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 0; height: 2px; background: var(--gold);
+  transition: width 0.9s var(--ease);
+}
+.wd-rel-item:hover .wd-rel-item__thumb::after { width: 100%; }
+/* 交互インデント */
+.wd-rel-item:nth-child(even) { margin-left: 80px; }
+
+/* ===================== SAC WORKS (cinema scope) ===================== */
+.wd-sac { background: var(--gray-900); color: #fff; padding: 160px 40px 120px; }
+.wd-sac__inner { max-width: 1440px; margin: 0 auto; }
+.wd-sac__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; padding-bottom: 32px; margin-bottom: 72px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+.wd-sac__num { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+.wd-sac__num::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+.wd-sac__title { font-family: var(--font-en); font-weight: 800; font-size: clamp(30px, 5vw, 76px); line-height: 0.95; letter-spacing: -0.02em; }
+.wd-sac__title .dot { color: var(--gold); }
+.wd-sac__jp { font-family: var(--font-jp); font-weight: 500; font-size: 14px; letter-spacing: 0.22em; color: rgba(255,255,255,0.55); margin-top: 10px; display: block; }
+
+.wd-sac-item {
+  position: relative;
+  display: block;
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  margin-bottom: 80px;
+  background: #000;
+}
+.wd-sac-item:last-child { margin-bottom: 0; }
+.wd-sac-item:nth-child(odd) { margin-left: 120px; }
+.wd-sac-item:nth-child(even) { margin-right: 120px; }
+
+.wd-sac-item__img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: saturate(0.6) brightness(0.75);
+  transition: transform 1.6s var(--ease), filter 1s var(--ease);
+}
+.wd-sac-item:hover .wd-sac-item__img { transform: scale(1.04); filter: saturate(1) brightness(0.9); }
+
+.wd-sac-item__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+  pointer-events: none;
+}
+.wd-sac-item__bignum {
+  position: absolute; left: 32px; bottom: 20px;
+  font-family: var(--font-en); font-weight: 900;
+  font-size: clamp(48px, 8vw, 132px);
+  line-height: 1; color: #fff; opacity: 0.22;
+  letter-spacing: -0.02em;
+}
+.wd-sac-item__cat {
+  position: absolute; left: 32px; top: 32px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold);
+}
+.wd-sac-item__date {
+  position: absolute; right: 32px; top: 32px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.22em; color: rgba(255,255,255,0.7);
+}
+.wd-sac-item__title {
+  position: absolute; right: 32px; bottom: 40px;
+  max-width: 60%;
+  text-align: right;
+  font-family: var(--font-en); font-weight: 700;
+  font-size: clamp(22px, 3vw, 48px);
+  line-height: 1.08; letter-spacing: -0.01em; color: #fff;
+}
+.wd-sac-item__jp {
+  display: block; margin-top: 8px;
+  font-family: var(--font-jp); font-weight: 500; font-size: 13px;
+  letter-spacing: 0.06em; color: rgba(255,255,255,0.7);
+}
+.wd-sac-item::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 0; height: 3px; background: var(--gold);
+  transition: width 1s var(--ease);
+  z-index: 3;
+}
+.wd-sac-item:hover::after { width: 100%; }
+
+/* ===================== FLOATS / CHAT / PAGE CTA ===================== */
+.to-top { position: fixed; right: 28px; bottom: 28px; z-index: 500; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.88); border: 1px solid rgba(10,10,10,0.18); color: var(--theme-fg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), background 0.4s var(--ease), color 0.4s var(--ease); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.to-top.active { opacity: 1; pointer-events: auto; }
+.to-top:hover { background: var(--gold); color: var(--black); border-color: var(--gold); transform: translateY(-4px); }
+
+.chat-widget { position: fixed; right: 28px; bottom: 92px; z-index: 500; display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px; background: var(--theme-fg); color: var(--white); border-radius: 999px; font-family: var(--font-en); font-weight: 600; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; box-shadow: 0 12px 32px rgba(0,0,0,0.18); transition: transform 0.5s var(--ease); }
+.chat-widget:hover { transform: translateY(-3px); }
+.chat-widget__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(200,168,107,0.18); animation: chatPulse 2.2s ease-in-out infinite; }
+@keyframes chatPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(200,168,107,0.35); }
+  50% { box-shadow: 0 0 0 8px rgba(200,168,107,0); }
+}
+.chat-modal { position: fixed; inset: 0; z-index: 800; background: rgba(10,10,10,0.68); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s var(--ease); }
+.chat-modal.active { opacity: 1; pointer-events: auto; }
+.chat-modal__box { width: min(520px, 92vw); max-height: 86vh; background: var(--white); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transform: translateY(24px) scale(0.98); transition: transform 0.5s var(--ease); box-shadow: 0 30px 60px rgba(0,0,0,0.35); }
+.chat-modal.active .chat-modal__box { transform: translateY(0) scale(1); }
+.chat-modal__header { padding: 20px 24px; border-bottom: 1px solid rgba(10,10,10,0.08); display: flex; justify-content: space-between; align-items: center; }
+.chat-modal__title { font-family: var(--font-en); font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; }
+.chat-modal__title small { display: block; font-family: var(--font-jp); font-weight: 400; font-size: 11px; letter-spacing: 0.04em; color: var(--gray-400); text-transform: none; margin-top: 4px; }
+.chat-modal__close { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gray-400); }
+.chat-modal__body { padding: 24px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; flex: 1; background: var(--gray-100); }
+.chat-bubble { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-family: var(--font-jp); font-weight: 400; font-size: 13px; line-height: 1.7; }
+.chat-bubble--in { background: #fff; align-self: flex-start; border-top-left-radius: 4px; }
+.chat-bubble--out { background: var(--theme-fg); color: var(--white); align-self: flex-end; border-top-right-radius: 4px; }
+.chat-presets { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.chat-presets button { font-family: var(--font-jp); font-weight: 400; font-size: 12px; padding: 8px 14px; border: 1px solid rgba(10,10,10,0.12); border-radius: 999px; background: #fff; transition: border-color 0.3s var(--ease), color 0.3s var(--ease); }
+.chat-presets button:hover { border-color: var(--gold); color: var(--gold); }
+.chat-modal__foot { padding: 16px 20px; border-top: 1px solid rgba(10,10,10,0.08); display: flex; gap: 12px; }
+.chat-modal__input { flex: 1; padding: 12px 16px; border: 1px solid rgba(10,10,10,0.12); border-radius: 999px; font-family: var(--font-jp); font-size: 13px; background: var(--gray-100); }
+.chat-modal__input:focus { outline: none; border-color: var(--gold); background: #fff; }
+.chat-modal__send { padding: 12px 22px; background: var(--gold); color: var(--black); border-radius: 999px; font-family: var(--font-en); font-weight: 600; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+
+.page-cta { background: var(--black); color: var(--white); padding: 200px 40px; text-align: center; position: relative; overflow: hidden; }
+.page-cta::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 60% at 50% 30%, rgba(200,168,107,0.08), transparent 70%); pointer-events: none; }
+.page-cta__inner { max-width: 1100px; margin: 0 auto; position: relative; }
+.page-cta__label { color: var(--gold); margin-bottom: 40px; display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; }
+.page-cta__label::before { content:""; width:28px; height:1px; background: currentColor; opacity:0.8; }
+.page-cta__title { font-family: var(--font-en); font-weight: 800; font-size: clamp(48px, 8vw, 128px); line-height: 1; letter-spacing: -0.03em; margin-bottom: 36px; }
+.page-cta__title .dot { color: var(--gold); }
+.page-cta__sub { font-family: var(--font-jp); font-weight: 500; font-size: clamp(15px, 1.4vw, 18px); line-height: 2; letter-spacing: 0.06em; color: rgba(255,255,255,0.78); max-width: 700px; margin: 0 auto 56px; }
+.page-cta__buttons { display: inline-flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
+.btn-primary { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 14px; padding: 22px 46px; background: var(--gold); color: var(--black); font-family: var(--font-en); font-weight: 600; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; border-radius: 999px; box-shadow: 0 12px 32px rgba(200,168,107,0.28), 0 2px 8px rgba(0,0,0,0.28); transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease); }
+.btn-primary::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg,#E3C893,#C8A86B,#A88550); transform: translateX(-101%); transition: transform 0.9s var(--ease); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(200,168,107,0.38); }
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary > * { position: relative; z-index: 1; }
+.btn-primary svg { transition: transform 0.6s var(--ease); }
+.btn-primary:hover svg { transform: translateX(6px); }
+.btn-ghost { display: inline-flex; align-items: center; gap: 14px; padding: 22px 40px; border: 1px solid rgba(255,255,255,0.35); color: #fff; font-family: var(--font-en); font-weight: 500; font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; border-radius: 999px; transition: background 0.5s var(--ease), color 0.5s var(--ease), border-color 0.5s var(--ease); }
+.btn-ghost:hover { background: #fff; color: var(--black); border-color: #fff; }
+.btn-ghost svg { transition: transform 0.6s var(--ease); }
+.btn-ghost:hover svg { transform: translateX(6px); }
+
+/* ===================== FOOTER ===================== */
+.footer { background: var(--black); color: var(--white); padding: 88px 40px 32px; }
+.footer__inner { max-width: 1440px; margin: 0 auto; }
+.footer__top { display: grid; grid-template-columns: 200px 1fr; gap: 48px; padding-bottom: 96px; }
+.footer__logo { font-family: var(--font-en); font-weight: 700; font-size: 24px; letter-spacing: 0.08em; color: #fff; }
+.footer__nav { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 32px; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.footer__col-title { font-family: var(--font-en); font-weight: 800; font-size: 24px; letter-spacing: 0.02em; margin-bottom: 20px; }
+.footer__col ul a { font-family: var(--font-en); font-weight: 700; font-size: 15px; letter-spacing: 0.05em; transition: color 0.3s var(--ease); }
+.footer__col ul a:hover { color: var(--gold); }
+.footer__col--right { text-align: right; min-width: 140px; }
+.footer__col--right ul a { font-size: 16px; letter-spacing: 0.04em; }
+.footer__middle { display: grid; grid-template-columns: 1fr auto auto; gap: 48px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.08); align-items: start; }
+.footer__address { font-family: var(--font-jp); font-style: normal; font-size: 13px; line-height: 1.9; color: rgba(255,255,255,0.7); }
+.footer__map { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 3px; transition: color 0.3s var(--ease), border-color 0.3s var(--ease); }
+.footer__map:hover { color: var(--gold); border-color: var(--gold); }
+.footer__map svg { transition: transform 0.4s var(--ease); }
+.footer__map:hover svg { transform: translate(3px, -3px); }
+.footer__socials { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer__socials a { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-en); font-weight: 400; font-size: 12px; letter-spacing: 0.08em; color: rgba(255,255,255,0.72); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s var(--ease); }
+.footer__socials a:hover { color: var(--gold); }
+.footer__back { width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: #fff; transition: background 0.4s var(--ease), color 0.4s var(--ease), transform 0.4s var(--ease), border-color 0.4s var(--ease); }
+.footer__back:hover { background: var(--gold); color: var(--black); border-color: var(--gold); transform: translateY(-3px); }
+.footer__bottom { margin-top: 64px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; }
+.footer__copy { font-family: var(--font-en); font-weight: 300; font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+.footer__credit { font-family: var(--font-en); font-weight: 300; font-style: italic; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.32); }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1024px) {
+  .wd-overview__inner { grid-template-columns: 1fr; gap: 48px; }
+  .wd-staff__list { grid-template-columns: 160px 1fr; }
+}
+@media (max-width: 900px) {
+  .header { padding: 0 20px; }
+  .header__nav { display: none; }
+  .header__hamburger { display: flex; }
+  .breadcrumb { padding: 88px 20px 0; font-size: 10px; letter-spacing: 0.14em; gap: 10px; flex-wrap: wrap; }
+  .wd-head { padding: 32px 20px 48px; }
+  .wd-carousel { padding: 48px 0 64px; }
+  .wd-carousel__stage { height: 60vh; min-height: 360px; }
+  .wd-slide { width: 86vw; }
+  .wd-slide.prev, .wd-slide.next { display: none; }
+  .wd-nav--prev { left: 16px; width: 44px; height: 44px; }
+  .wd-nav--next { right: 16px; width: 44px; height: 44px; }
+  .wd-carousel__foot { padding: 0 20px; flex-direction: column; gap: 16px; align-items: flex-start; }
+  .wd-overview { padding: 100px 20px 80px; }
+  .wd-staff { padding: 100px 20px; }
+  .wd-staff__list { grid-template-columns: 1fr; gap: 18px; }
+  .wd-staff__role { padding-top: 0; }
+  .wd-staff__names { padding-bottom: 16px; }
+  .wd-related { padding: 100px 20px 80px; }
+  .wd-rel-item { grid-template-columns: 1fr; gap: 16px; padding: 28px 0; }
+  .wd-rel-item__body { grid-template-columns: 1fr; gap: 16px; }
+  .wd-rel-item:nth-child(even) { margin-left: 0; }
+  .wd-sac { padding: 100px 20px; }
+  .wd-sac-item { margin-bottom: 48px; aspect-ratio: 16/9; }
+  .wd-sac-item:nth-child(odd), .wd-sac-item:nth-child(even) { margin-left: 0; margin-right: 0; }
+  .wd-sac-item__title { right: 20px; bottom: 24px; max-width: 78%; }
+  .wd-sac-item__bignum { left: 20px; bottom: 14px; font-size: clamp(40px, 12vw, 80px); }
+  .wd-sac-item__cat, .wd-sac-item__date { left: 20px; top: 20px; }
+  .wd-sac-item__date { right: 20px; left: auto; }
+  .page-cta { padding: 140px 20px; }
+  .footer { padding: 72px 20px 32px; }
+  .footer__top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 56px; }
+  .footer__nav { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .footer__col--right { text-align: left; }
+  .footer__middle { grid-template-columns: 1fr; gap: 28px; }
+  .footer__bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
+}
+@media (max-width: 540px) {
+  .page-cta__buttons { flex-direction: column; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <a href="index.html" class="header__logo">SAC</a>
+  <nav class="header__nav">
+    <a href="index.html#about">ABOUT</a>
+    <a href="works-index.html" aria-current="page">WORKS</a>
+    <a href="index.html#service">SERVICE</a>
+    <a href="creator-index.html">CREATOR</a>
+    <a href="index.html#info">INFO</a>
+    <a href="index.html#contact">CONTACT</a>
+  </nav>
+  <button class="header__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#about">ABOUT</a>
+  <a href="works-index.html">WORKS</a>
+  <a href="index.html#service">SERVICE</a>
+  <a href="creator-index.html">CREATOR</a>
+  <a href="index.html#info">INFO</a>
+  <a href="index.html#contact">CONTACT</a>
+</div>
+
+<!-- ============ BREADCRUMB ============ -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="index.html">HOME</a>
+  <span class="sep">/</span>
+  <a href="works-index.html">WORKS</a>
+  <span class="sep">/</span>
+  <span aria-current="page">LAST CALL</span>
+</nav>
+
+<!-- ============ PROJECT HEADER ============ -->
+<section class="wd-head" id="top">
+  <div class="wd-head__inner">
+    <p class="wd-head__meta"><span>PROJECT <b>/</b> 2025.02</span><span>MOVIE <b>/</b> OP SEQUENCE</span></p>
+    <h1 class="wd-head__title js-reveal">LAST CALL<span class="dot">.</span></h1>
+    <p class="wd-head__jp js-reveal">公開オーディション番組 オープニング映像</p>
+    <a href="creator-detail.html" class="wd-head__creator js-reveal">
+      <div class="wd-head__creator__avatar"><img src="assets/creators/tsunehashi.jpg" alt=""></div>
+      <div class="wd-head__creator__text">
+        <span class="wd-head__creator__label">DIRECTED BY</span>
+        <span class="wd-head__creator__name">ツネハシ タケシ <small>TSUNEHASHI T.</small></span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ============ CAROUSEL ============ -->
+<section class="wd-carousel">
+  <div class="wd-carousel__stage">
+    <button class="wd-nav wd-nav--prev" id="prevBtn" aria-label="前の作品">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="wd-carousel__viewport" id="viewport" tabindex="0">
+      <div class="wd-slide active" data-index="0">
+        <div class="wd-slide__media">
+          <img src="assets/works/lastcall.jpg" alt="LAST CALL — Key Visual" loading="lazy">
+          <span class="wd-slide__cap"><b>01 / 05</b><span>KEY VISUAL</span></span>
+        </div>
+      </div>
+      <div class="wd-slide next" data-index="1">
+        <div class="wd-slide__media" data-type="video">
+          <img src="assets/works/lastcall.jpg" alt="LAST CALL — OP Movie" loading="lazy" style="object-position:50% 60%;">
+          <span class="wd-slide__play" aria-hidden="true"></span>
+          <span class="wd-slide__cap"><b>02 / 05</b><span>OP MOVIE — 60SEC</span></span>
+        </div>
+      </div>
+      <div class="wd-slide" data-index="2">
+        <div class="wd-slide__media">
+          <div style="width:100%; height:100%; background:linear-gradient(135deg,#F4F1EC 0%,#E9E3D8 100%); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:var(--font-en); font-weight:900; font-size:clamp(48px,7vw,120px); color:var(--theme-fg); opacity:0.6;">SCENE 02</span>
+          </div>
+          <span class="wd-slide__cap"><b>03 / 05</b><span>STILL</span></span>
+        </div>
+      </div>
+      <div class="wd-slide" data-index="3">
+        <div class="wd-slide__media" data-type="video">
+          <div style="width:100%; height:100%; background:linear-gradient(135deg,#0A0A0A,#1A1A1A); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:var(--font-en); font-weight:900; font-size:clamp(40px,6vw,100px); color:#fff; opacity:0.3;">TEASER</span>
+          </div>
+          <span class="wd-slide__play" aria-hidden="true"></span>
+          <span class="wd-slide__cap"><b>04 / 05</b><span>TEASER — 15SEC</span></span>
+        </div>
+      </div>
+      <div class="wd-slide" data-index="4">
+        <div class="wd-slide__media">
+          <div style="width:100%; height:100%; background:linear-gradient(135deg,#F4F1EC,#FFFFFF 60%,#E9E3D8); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:var(--font-en); font-weight:900; font-size:clamp(48px,7vw,120px); color:var(--theme-fg); opacity:0.55;">ARTWORK</span>
+          </div>
+          <span class="wd-slide__cap"><b>05 / 05</b><span>KEY ARTWORK</span></span>
+        </div>
+      </div>
+    </div>
+    <button class="wd-nav wd-nav--next" id="nextBtn" aria-label="次の作品">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+  <div class="wd-carousel__foot">
+    <div class="wd-dots" id="dots">
+      <button class="wd-dot active" data-to="0" aria-label="1"></button>
+      <button class="wd-dot" data-to="1" aria-label="2"></button>
+      <button class="wd-dot" data-to="2" aria-label="3"></button>
+      <button class="wd-dot" data-to="3" aria-label="4"></button>
+      <button class="wd-dot" data-to="4" aria-label="5"></button>
+    </div>
+    <span class="wd-counter"><b id="slideCurrent">01</b> / <span id="slideTotal">05</span></span>
+  </div>
+</section>
+
+<!-- ============ OVERVIEW ============ -->
+<section class="wd-overview">
+  <div class="wd-overview__inner">
+    <div>
+      <span class="wd-overview__num">OVERVIEW / 01</span>
+      <h2 class="wd-overview__title">INTRO<span class="dot">.</span></h2>
+      <p class="wd-overview__jp">概要</p>
+      <div class="wd-overview__body js-reveal">
+        <p>
+          公開オーディション番組『LAST CALL』のオープニング映像一式。
+          <strong>「最後の呼び声」を合図に、個が表舞台に立つ瞬間</strong>を、
+          60秒のOP / 15秒のティザー / キービジュアル / アートワークの4形態で設計した。
+        </p>
+        <p>
+          撮影素材とAI生成映像をハイブリッドに組み、人物のテクスチャと光のノイズを
+          意図的に残すことで、番組が持つ「未完成の凄み」を視覚に翻訳している。
+          OP、番組宣伝、SNS展開、会場インスタレーション、全ての面で運用しても崩れない
+          スケーラブルなアセット設計。
+        </p>
+        <p>
+          ディレクション：ツネハシ タケシ／SAC。AI映像チームとの協働制作。
+        </p>
+      </div>
+    </div>
+    <aside class="wd-facts js-reveal">
+      <div class="wd-fact">
+        <p class="wd-fact__label">YEAR</p>
+        <p class="wd-fact__value">2025<small>February</small></p>
+      </div>
+      <div class="wd-fact">
+        <p class="wd-fact__label">CATEGORY</p>
+        <p class="wd-fact__value">MOVIE / BRANDING<small>OP Sequence</small></p>
+      </div>
+      <div class="wd-fact">
+        <p class="wd-fact__label">CLIENT</p>
+        <p class="wd-fact__value">LAST CALL PROJECT<small>Production Committee</small></p>
+      </div>
+      <div class="wd-fact">
+        <p class="wd-fact__label">SAC ROLE</p>
+        <p class="wd-fact__value">Creative Direction / AI Post<small>End-to-End</small></p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ STAFF CREDIT ============ -->
+<section class="wd-staff">
+  <div class="wd-staff__inner">
+    <h2 class="wd-staff__title js-reveal">STAFF<span class="dot">.</span></h2>
+    <p class="wd-staff__jp js-reveal">スタッフクレジット</p>
+    <div class="wd-staff__list js-reveal">
+      <span class="wd-staff__role">Executive Producer</span>
+      <p class="wd-staff__names">山田 智樹</p>
+
+      <span class="wd-staff__role">Producer</span>
+      <p class="wd-staff__names">緒方 莉子 / 井上 健</p>
+
+      <span class="wd-staff__role">Director</span>
+      <p class="wd-staff__names">ツネハシ タケシ</p>
+
+      <span class="wd-staff__role">AI Creative Direction</span>
+      <p class="wd-staff__names">Bird / gane.WAV</p>
+
+      <span class="wd-staff__role">Cinematography</span>
+      <p class="wd-staff__names">北川 あゆみ</p>
+
+      <span class="wd-staff__role">Editor</span>
+      <p class="wd-staff__names">林田 潤</p>
+
+      <span class="wd-staff__role">Sound Design</span>
+      <p class="wd-staff__names">菊池 蓮 / 広瀬 奈緒</p>
+
+      <span class="wd-staff__role">Art Direction</span>
+      <p class="wd-staff__names">AoKi¹⁰⁴</p>
+
+      <span class="wd-staff__role">Color Grading</span>
+      <p class="wd-staff__names">落合 剛之</p>
+
+      <span class="wd-staff__role">Production Assistant</span>
+      <p class="wd-staff__names">SAC Production Team</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BY THIS CREATOR ============ -->
+<section class="wd-related">
+  <div class="wd-related__inner">
+    <div class="wd-related__head js-reveal">
+      <div>
+        <span class="wd-related__num">RELATED / 02</span>
+        <h2 class="wd-related__title">BY TSUNEHASHI<span class="dot">.</span></h2>
+        <span class="wd-related__jp">このクリエイターの他の仕事</span>
+      </div>
+      <a href="creator-detail.html" class="wd-related__view">
+        <span>VIEW PROFILE</span>
+        <svg viewBox="0 0 24 24" width="12" height="12"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <a href="works-detail.html" class="wd-rel-item js-reveal">
+      <span class="wd-rel-item__num">— 01</span>
+      <div class="wd-rel-item__body">
+        <div class="wd-rel-item__info">
+          <span class="wd-rel-item__cat">MUSIC VIDEO</span>
+          <h3 class="wd-rel-item__title">HYDE / SOCIAL VIRUS<span class="wd-rel-item__jp">Music Video</span></h3>
+        </div>
+        <span class="wd-rel-item__date">2024.11</span>
+        <div class="wd-rel-item__thumb"><img src="assets/works/hyde.jpg" alt="" loading="lazy" style="object-position:50% 30%;"></div>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="wd-rel-item js-reveal">
+      <span class="wd-rel-item__num">— 02</span>
+      <div class="wd-rel-item__body">
+        <div class="wd-rel-item__info">
+          <span class="wd-rel-item__cat">BRANDING</span>
+          <h3 class="wd-rel-item__title">24世紀ラーメン<span class="wd-rel-item__jp">ブランドキャンペーン</span></h3>
+        </div>
+        <span class="wd-rel-item__date">2024.09</span>
+        <div class="wd-rel-item__thumb"><img src="assets/works/24.jpg" alt="" loading="lazy"></div>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="wd-rel-item js-reveal">
+      <span class="wd-rel-item__num">— 03</span>
+      <div class="wd-rel-item__body">
+        <div class="wd-rel-item__info">
+          <span class="wd-rel-item__cat">BRAND FILM</span>
+          <h3 class="wd-rel-item__title">PROJECT ECHO<span class="wd-rel-item__jp">90secブランドフィルム</span></h3>
+        </div>
+        <span class="wd-rel-item__date">2024.03</span>
+        <div class="wd-rel-item__thumb">
+          <div style="width:100%; height:100%; background:linear-gradient(135deg,#F4F1EC,#E9E3D8); display:flex; align-items:center; justify-content:center;"><span style="font-family:var(--font-en); font-weight:900; font-size:clamp(32px,5vw,80px); color:var(--theme-fg); opacity:0.7;">SAC</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="wd-rel-item js-reveal">
+      <span class="wd-rel-item__num">— 04</span>
+      <div class="wd-rel-item__body">
+        <div class="wd-rel-item__info">
+          <span class="wd-rel-item__cat">SHORT FILM</span>
+          <h3 class="wd-rel-item__title">SILENT BLOOM<span class="wd-rel-item__jp">4min ショートフィルム</span></h3>
+        </div>
+        <span class="wd-rel-item__date">2023.08</span>
+        <div class="wd-rel-item__thumb">
+          <div style="width:100%; height:100%; background:linear-gradient(135deg,#1A1A1A,#0A0A0A); display:flex; align-items:center; justify-content:center;"><span style="font-family:var(--font-en); font-weight:900; font-size:clamp(32px,5vw,80px); color:#fff; opacity:0.25;">SILENT</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a href="works-detail.html" class="wd-rel-item js-reveal">
+      <span class="wd-rel-item__num">— 05</span>
+      <div class="wd-rel-item__body">
+        <div class="wd-rel-item__info">
+          <span class="wd-rel-item__cat">SHORT FORM</span>
+          <h3 class="wd-rel-item__title">DRIVE THROUGH<span class="wd-rel-item__jp">SNS用ショートフォーム</span></h3>
+        </div>
+        <span class="wd-rel-item__date">2022.06</span>
+        <div class="wd-rel-item__thumb">
+          <div style="width:100%; height:100%; background:linear-gradient(135deg,#E9E3D8,#FFFFFF); display:flex; align-items:center; justify-content:center;"><span style="font-family:var(--font-en); font-weight:900; font-size:clamp(32px,5vw,80px); color:var(--theme-fg); opacity:0.6;">SAC</span></div>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ============ SAC WORKS (cinema scope) ============ -->
+<section class="wd-sac">
+  <div class="wd-sac__inner">
+    <div class="wd-sac__head js-reveal">
+      <div>
+        <span class="wd-sac__num">LATEST / 03</span>
+        <h2 class="wd-sac__title">SAC WORKS<span class="dot">.</span></h2>
+        <span class="wd-sac__jp">SAC 全体の最新仕事</span>
+      </div>
+      <a href="works-index.html" class="wd-related__view" style="color:rgba(255,255,255,0.78);">
+        <span>VIEW ALL</span>
+        <svg viewBox="0 0 24 24" width="12" height="12"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <a href="works-detail.html" class="wd-sac-item js-reveal">
+      <div style="width:100%; height:100%; background:linear-gradient(135deg,#2A2A2A,#0A0A0A);"></div>
+      <div class="wd-sac-item__overlay"></div>
+      <span class="wd-sac-item__cat">INSTALLATION</span>
+      <span class="wd-sac-item__date">2024.06</span>
+      <span class="wd-sac-item__bignum">011</span>
+      <h3 class="wd-sac-item__title">CAPTION BY HYATT<span class="wd-sac-item__jp">兜町 東京 — ビジュアル演出</span></h3>
+    </a>
+
+    <a href="works-detail.html" class="wd-sac-item js-reveal">
+      <img class="wd-sac-item__img" src="assets/works/hyde.jpg" alt="" loading="lazy">
+      <div class="wd-sac-item__overlay"></div>
+      <span class="wd-sac-item__cat">MUSIC VIDEO</span>
+      <span class="wd-sac-item__date">2024.11</span>
+      <span class="wd-sac-item__bignum">002</span>
+      <h3 class="wd-sac-item__title">HYDE / SOCIAL VIRUS<span class="wd-sac-item__jp">Music Video</span></h3>
+    </a>
+
+    <a href="works-detail.html" class="wd-sac-item js-reveal">
+      <img class="wd-sac-item__img" src="assets/works/24.jpg" alt="" loading="lazy">
+      <div class="wd-sac-item__overlay"></div>
+      <span class="wd-sac-item__cat">BRANDING</span>
+      <span class="wd-sac-item__date">2024.09</span>
+      <span class="wd-sac-item__bignum">003</span>
+      <h3 class="wd-sac-item__title">24C RAMEN<span class="wd-sac-item__jp">ブランドキャンペーン</span></h3>
+    </a>
+
+    <a href="works-detail.html" class="wd-sac-item js-reveal">
+      <div style="width:100%; height:100%; background:linear-gradient(135deg,#1A1A1A 0%,#2A2A2A 100%);"></div>
+      <div class="wd-sac-item__overlay"></div>
+      <span class="wd-sac-item__cat">WEB DESIGN</span>
+      <span class="wd-sac-item__date">2024.08</span>
+      <span class="wd-sac-item__bignum">004</span>
+      <h3 class="wd-sac-item__title">ZEUS WIFI FOR GLOBAL<span class="wd-sac-item__jp">サービスサイト</span></h3>
+    </a>
+
+    <a href="works-detail.html" class="wd-sac-item js-reveal">
+      <div style="width:100%; height:100%; background:linear-gradient(135deg,#0A0A0A,#1A1A1A 60%,#2A2A2A);"></div>
+      <div class="wd-sac-item__overlay"></div>
+      <span class="wd-sac-item__cat">SNS</span>
+      <span class="wd-sac-item__date">2024.05</span>
+      <span class="wd-sac-item__bignum">006</span>
+      <h3 class="wd-sac-item__title">BRAND SNS OPERATION<span class="wd-sac-item__jp">月次運用 / コンテンツ制作</span></h3>
+    </a>
+  </div>
+</section>
+
+<!-- ============ PAGE CTA ============ -->
+<section class="page-cta">
+  <div class="page-cta__inner">
+    <span class="page-cta__label">COMMISSION</span>
+    <h2 class="page-cta__title">ENTRUST IT<span class="dot">.</span></h2>
+    <p class="page-cta__sub">
+      この一本のように、あなたのプロジェクトも任せてみませんか。<br>
+      作品ごとに、最適なチームをSAC側で編成します。
+    </p>
+    <div class="page-cta__buttons">
+      <a href="index.html#contact" class="btn-primary">
+        <span>この作品について相談する</span>
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="works-index.html" class="btn-ghost">
+        <span>他の作品を見る</span>
+        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <a href="index.html" class="footer__brand" aria-label="SAC"><span class="footer__logo">SAC</span></a>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__col"><h3 class="footer__col-title">ABOUT</h3><ul><li><a href="index.html#about">PHILOSOPHY</a></li><li><a href="index.html#about">APPROACH</a></li><li><a href="index.html#about">COMPANY</a></li></ul></div>
+        <div class="footer__col"><h3 class="footer__col-title">WORKS</h3><ul><li><a href="works-index.html">ALL WORKS</a></li><li><a href="works-index.html">MOVIE</a></li><li><a href="works-index.html">WEB DESIGN</a></li><li><a href="works-index.html">GRAPHIC</a></li></ul></div>
+        <div class="footer__col"><h3 class="footer__col-title">CREATOR</h3><ul><li><a href="creator-index.html#movie-director">DIRECTOR</a></li><li><a href="creator-index.html#art-director">ART DIRECTOR</a></li><li><a href="creator-index.html">ALL CREATORS</a></li></ul></div>
+        <div class="footer__col footer__col--right"><ul><li><a href="index.html#service">SERVICE</a></li><li><a href="index.html#info">INFO</a></li><li><a href="index.html#contact">CONTACT</a></li></ul></div>
+      </nav>
+    </div>
+    <div class="footer__middle">
+      <div class="footer__address-wrap">
+        <address class="footer__address">〒141-0021 東京都品川区上大崎3-14-1<br>中丸ハウス B棟</address>
+        <a href="https://maps.app.goo.gl/tKVmTAiDvhVb9SHV6" target="_blank" rel="noopener" class="footer__map">MAP<svg viewBox="0 0 24 24" width="12" height="12"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <ul class="footer__socials" aria-label="Social media">
+        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></li>
+        <li><a href="https://x.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.53 3H20.5l-6.52 7.45L21.75 21h-6.03l-4.72-6.16L5.6 21H2.63l6.98-7.98L2.25 3h6.18l4.27 5.64L17.53 3Zm-1.06 16.2h1.66L7.63 4.7H5.85l10.62 14.5Z"/></svg><span>X (Twitter)</span></a></li>
+        <li><a href="https://www.facebook.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h-3a4 4 0 0 0-4 4v3H4v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3V3Z"/></svg><span>Facebook</span></a></li>
+      </ul>
+      <a href="#top" class="footer__back" aria-label="Back to top"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© EPOCH Inc.</p>
+      <p class="footer__credit">This website is entirely crafted with AI.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ FLOATS ============ -->
+<a href="#top" class="to-top" id="toTop" aria-label="ページ上部へ戻る">
+  <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+<button class="chat-widget" id="chatOpen" aria-label="CHATで相談">
+  <span class="chat-widget__dot"></span>
+  <span>WORKSについて相談</span>
+</button>
+<div class="chat-modal" id="chatModal" role="dialog" aria-modal="true">
+  <div class="chat-modal__box">
+    <div class="chat-modal__header">
+      <div class="chat-modal__title">SAC PROJECT DESK<small>このWORKSについて気軽に相談する</small></div>
+      <button class="chat-modal__close" id="chatClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="chat-modal__body" id="chatBody">
+      <div class="chat-bubble chat-bubble--in">こんにちは、SACです。この『LAST CALL』のような仕事をご検討ですか？ お気軽にどうぞ。</div>
+      <div class="chat-presets">
+        <button data-preset="似た映像を作りたい">似た映像を作りたい</button>
+        <button data-preset="スタッフの詳細を知りたい">スタッフの詳細を知りたい</button>
+        <button data-preset="予算感を教えてほしい">予算感を教えてほしい</button>
+        <button data-preset="納期について">納期について</button>
+      </div>
+    </div>
+    <form class="chat-modal__foot" id="chatForm">
+      <input type="text" class="chat-modal__input" id="chatInput" placeholder="メッセージを書く…" autocomplete="off">
+      <button type="submit" class="chat-modal__send">送る</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var header = document.getElementById('header');
+  var toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('scrolled', window.scrollY > 80);
+    toTop.classList.toggle('active', window.scrollY > 400);
+  }, { passive: true });
+
+  var hamburger = document.getElementById('hamburger');
+  var mobile = document.getElementById('mobileMenu');
+  if (hamburger && mobile) {
+    hamburger.addEventListener('click', function(){
+      hamburger.classList.toggle('active');
+      mobile.classList.toggle('active');
+      document.body.style.overflow = mobile.classList.contains('active') ? 'hidden' : '';
+    });
+    mobile.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ hamburger.classList.remove('active'); mobile.classList.remove('active'); document.body.style.overflow=''; });
+    });
+  }
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('revealed'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.js-reveal').forEach(function(el){ observer.observe(el); });
+
+  // CAROUSEL
+  var slides = document.querySelectorAll('.wd-slide');
+  var dots = document.querySelectorAll('.wd-dot');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var current = 0;
+  var total = slides.length;
+  document.getElementById('slideTotal').textContent = String(total).padStart(2,'0');
+
+  function render(){
+    slides.forEach(function(s, i){
+      s.classList.remove('active','prev','next');
+      if (i === current) s.classList.add('active');
+      else if (i === (current - 1 + total) % total) s.classList.add('prev');
+      else if (i === (current + 1) % total) s.classList.add('next');
+    });
+    dots.forEach(function(d, i){ d.classList.toggle('active', i === current); });
+    document.getElementById('slideCurrent').textContent = String(current+1).padStart(2,'0');
+  }
+  function next(){ current = (current + 1) % total; render(); }
+  function prev(){ current = (current - 1 + total) % total; render(); }
+  function go(i){ current = i; render(); }
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+  dots.forEach(function(d){ d.addEventListener('click', function(){ go(parseInt(d.getAttribute('data-to'),10)); }); });
+
+  // keyboard
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'ArrowRight') next();
+  });
+  // swipe
+  var viewport = document.getElementById('viewport');
+  var startX = 0, moved = 0;
+  viewport.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; moved = 0; }, { passive: true });
+  viewport.addEventListener('touchmove', function(e){ moved = e.touches[0].clientX - startX; }, { passive: true });
+  viewport.addEventListener('touchend', function(){ if (Math.abs(moved) > 60) { if (moved < 0) next(); else prev(); } });
+  render();
+
+  // CHAT
+  var chatOpen = document.getElementById('chatOpen');
+  var chatClose = document.getElementById('chatClose');
+  var chatModal = document.getElementById('chatModal');
+  var chatBody = document.getElementById('chatBody');
+  var chatForm = document.getElementById('chatForm');
+  var chatInput = document.getElementById('chatInput');
+  function open(){ chatModal.classList.add('active'); document.body.style.overflow='hidden'; setTimeout(function(){ chatInput.focus(); }, 300); }
+  function close(){ chatModal.classList.remove('active'); document.body.style.overflow=''; }
+  chatOpen.addEventListener('click', open);
+  chatClose.addEventListener('click', close);
+  chatModal.addEventListener('click', function(e){ if (e.target === chatModal) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  function addBubble(text, dir){
+    var b = document.createElement('div');
+    b.className = 'chat-bubble chat-bubble--' + dir;
+    b.textContent = text;
+    chatBody.appendChild(b);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+  function respond(){ setTimeout(function(){ addBubble('ありがとうございます。担当から折り返しご連絡します。', 'in'); }, 700); }
+  chatForm.addEventListener('submit', function(e){ e.preventDefault(); var v = chatInput.value.trim(); if (!v) return; addBubble(v, 'out'); chatInput.value=''; respond(); });
+  document.querySelectorAll('.chat-presets button').forEach(function(btn){
+    btn.addEventListener('click', function(){ addBubble(btn.getAttribute('data-preset'), 'out'); respond(); });
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var tgt = document.querySelector(id);
+      if (!tgt) return;
+      e.preventDefault();
+      var y = tgt.getBoundingClientRect().top + window.scrollY - 120;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

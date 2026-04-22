@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ツネハシ タケシ — CREATOR — SAC</title>
+<meta name="description" content="ツネハシタケシ / Movie Director / AI Creative Director. SACのクリエイター営業ページ。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===================== TOKENS ===================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black:#0A0A0A; --white:#FFFFFF; --ivory:#F4F1EC; --sand:#E9E3D8; --stone:#D6CFC0;
+  --gray-100:#F5F5F5; --gray-200:#CCCCCC; --gray-400:#888888; --gray-500:#444444; --gray-900:#1A1A1A;
+  --gold:#C8A86B;
+  --theme-bg:#FFFFFF; --theme-fg:#0A0A0A;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+  --font-en:'Inter',sans-serif; --font-jp:'Noto Sans JP',sans-serif;
+}
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--font-jp); color: var(--theme-fg); background: var(--theme-bg); overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+button { background: none; border: none; cursor: pointer; color: inherit; font: inherit; }
+::selection { background: var(--gold); color: var(--black); }
+
+/* ===================== HEADER (shared) ===================== */
+.header { position: fixed; top: 0; left: 0; width: 100%; height: 72px; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease); border-bottom: 1px solid transparent; }
+.header.scrolled { background: rgba(255,255,255,0.88); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); border-bottom-color: rgba(10,10,10,0.08); }
+.header__logo { font-family: var(--font-en); font-weight: 700; font-size: 18px; letter-spacing: 0.08em; }
+.header__nav { display: flex; gap: 36px; }
+.header__nav a { font-family: var(--font-en); font-weight: 400; font-size: 11px; letter-spacing: 0.14em; opacity: 0.72; transition: color 0.3s var(--ease), opacity 0.3s var(--ease); }
+.header__nav a:hover, .header__nav a[aria-current="page"] { opacity: 1; color: var(--gold); }
+.header__hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; z-index: 1100; }
+.header__hamburger span { display: block; width: 22px; height: 1.5px; background: currentColor; transition: transform 0.4s var(--ease), opacity 0.3s var(--ease); }
+.header__hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.header__hamburger.active span:nth-child(2) { opacity: 0; }
+.header__hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { position: fixed; inset: 0; background: var(--black); z-index: 1050; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease); }
+.mobile-menu.active { opacity: 1; pointer-events: auto; }
+.mobile-menu a { font-family: var(--font-en); font-weight: 300; font-size: 22px; letter-spacing: 0.12em; color: var(--white); }
+
+.js-reveal { opacity: 0; transform: translateY(48px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.js-reveal.revealed { opacity: 1; transform: translateY(0); }
+.section-label { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+.section-label::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
+
+/* ===================== BREADCRUMB ===================== */
+.breadcrumb { padding: 92px 40px 0; display: flex; align-items: center; gap: 14px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-400); }
+.breadcrumb a { transition: color 0.3s var(--ease); }
+.breadcrumb a:hover { color: var(--gold); }
+.breadcrumb span.sep { opacity: 0.35; }
+.breadcrumb [aria-current="page"] { color: var(--theme-fg); }
+.breadcrumb .jp { font-family: var(--font-jp); font-weight: 500; letter-spacing: 0.04em; font-size: 12px; text-transform: none; }
+
+/* ===================== CREATOR HERO ===================== */
+.cd-hero { padding: 48px 40px 120px; background: var(--ivory); position: relative; overflow: hidden; }
+.cd-hero__inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 72px; align-items: end; min-height: 80vh; position: relative; }
+
+.cd-hero__left { padding-bottom: 20px; }
+.cd-hero__role {
+  font-family: var(--font-en); font-weight: 600; font-size: 12px;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 40px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.cd-hero__role::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+.cd-hero__name-jp {
+  font-family: var(--font-jp); font-weight: 700;
+  font-size: clamp(56px, 10vw, 144px);
+  line-height: 0.95; letter-spacing: -0.02em;
+  color: var(--theme-fg);
+  margin-bottom: 20px;
+}
+.cd-hero__name-en {
+  font-family: var(--font-en); font-weight: 500; font-size: 15px;
+  letter-spacing: 0.26em; text-transform: uppercase; color: var(--gray-400);
+  margin-bottom: 48px;
+}
+.cd-hero__catch {
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(18px, 2vw, 26px);
+  line-height: 1.8; letter-spacing: 0.04em;
+  color: var(--theme-fg);
+  max-width: 560px;
+  border-left: 2px solid var(--gold);
+  padding-left: 24px;
+}
+
+.cd-hero__right { position: relative; align-self: stretch; }
+.cd-hero__portrait {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #1a1a1a;
+  box-shadow: 0 40px 80px -30px rgba(10,10,10,0.22);
+  transform: translateY(60px);
+}
+.cd-hero__portrait img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 20%;
+  filter: grayscale(0.1);
+}
+.cd-hero__portrait::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(10,10,10,0.4));
+}
+.cd-hero__portrait-caption {
+  position: absolute; left: 20px; bottom: 20px; right: 20px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  color: #fff;
+}
+.cd-hero__portrait-caption__id {
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+.cd-hero__portrait-caption__name {
+  font-family: var(--font-en); font-weight: 700; font-size: 14px; letter-spacing: 0.12em;
+  color: var(--gold);
+}
+
+/* vertical label */
+.cd-hero__vlabel {
+  position: absolute; left: 40px; top: 92px;
+  writing-mode: vertical-rl;
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.36em; text-transform: uppercase; color: var(--gray-400);
+}
+
+/* ===================== STICKY CTA BAR ===================== */
+.cd-bar {
+  position: sticky; top: 72px; z-index: 60;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border-top: 1px solid rgba(10,10,10,0.08);
+  border-bottom: 1px solid rgba(10,10,10,0.08);
+}
+.cd-bar__inner {
+  max-width: 1440px; margin: 0 auto;
+  padding: 14px 40px;
+  display: flex; align-items: center; gap: 32px;
+}
+.cd-bar__who { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.cd-bar__avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #1a1a1a; overflow: hidden; flex-shrink: 0;
+}
+.cd-bar__avatar img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+.cd-bar__label {
+  font-family: var(--font-en); font-weight: 600; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+}
+.cd-bar__label small {
+  display: block;
+  font-family: var(--font-jp); font-weight: 400; font-size: 10px;
+  letter-spacing: 0.08em; color: var(--gray-400); text-transform: none;
+  margin-top: 2px;
+}
+.cd-bar__sns { display: flex; gap: 4px; align-items: center; margin-left: auto; }
+.cd-bar__sns a {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(10,10,10,0.12);
+  color: var(--gray-500);
+  transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.cd-bar__sns a:hover { background: var(--theme-fg); color: var(--white); border-color: var(--theme-fg); transform: translateY(-2px); }
+.cd-bar__cta {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 30px;
+  background: var(--gold); color: var(--black);
+  font-family: var(--font-en); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  border-radius: 999px;
+  box-shadow: 0 10px 28px rgba(200,168,107,0.3);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.cd-bar__cta::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg,#E3C893,#C8A86B,#A88550); transform: translateX(-101%); transition: transform 0.8s var(--ease); }
+.cd-bar__cta:hover { transform: translateY(-2px); }
+.cd-bar__cta:hover::before { transform: translateX(0); }
+.cd-bar__cta > * { position: relative; z-index: 1; }
+
+/* ===================== PROFILE ===================== */
+.cd-profile { padding: 160px 40px 140px; }
+.cd-profile__inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 96px; }
+.cd-profile__left {}
+.cd-profile__num {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 32px;
+}
+.cd-profile__num::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+.cd-profile__title {
+  font-family: var(--font-en); font-weight: 800;
+  font-size: clamp(44px, 6vw, 88px);
+  line-height: 0.95; letter-spacing: -0.03em;
+  margin-bottom: 16px;
+}
+.cd-profile__title .dot { color: var(--gold); }
+.cd-profile__jp {
+  font-family: var(--font-jp); font-weight: 500; font-size: 15px;
+  letter-spacing: 0.22em; color: var(--gray-400);
+  margin-bottom: 40px;
+}
+.cd-profile__body p {
+  font-family: var(--font-jp); font-weight: 400;
+  font-size: 15px; line-height: 2.1; letter-spacing: 0.04em;
+  color: var(--gray-500);
+}
+.cd-profile__body p + p { margin-top: 24px; }
+.cd-profile__body strong { color: var(--theme-fg); font-weight: 700; }
+
+.cd-timeline {
+  border-left: 1px solid rgba(10,10,10,0.1);
+  padding-left: 32px;
+  position: relative;
+}
+.cd-timeline__title {
+  font-family: var(--font-en); font-weight: 600; font-size: 12px;
+  letter-spacing: 0.26em; text-transform: uppercase; color: var(--gray-400);
+  margin-bottom: 40px;
+}
+.cd-timeline__item {
+  position: relative;
+  padding-bottom: 32px;
+}
+.cd-timeline__item::before {
+  content: "";
+  position: absolute; left: -36px; top: 6px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold);
+}
+.cd-timeline__year {
+  font-family: var(--font-en); font-weight: 600; font-size: 12px;
+  letter-spacing: 0.22em; color: var(--gold);
+  margin-bottom: 8px;
+}
+.cd-timeline__head {
+  font-family: var(--font-jp); font-weight: 700; font-size: 17px;
+  letter-spacing: 0.02em; margin-bottom: 6px;
+}
+.cd-timeline__desc {
+  font-family: var(--font-jp); font-weight: 400; font-size: 13px;
+  line-height: 1.85; letter-spacing: 0.04em; color: var(--gray-500);
+}
+
+/* ===================== SELECTED WORKS ===================== */
+.cd-works { background: var(--ivory); padding: 160px 40px 180px; position: relative; }
+.cd-works__inner { max-width: 1440px; margin: 0 auto; }
+.cd-works__head {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: end; gap: 40px;
+  padding-bottom: 40px; margin-bottom: 120px;
+  border-bottom: 1px solid rgba(10,10,10,0.12);
+}
+.cd-works__num {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 24px;
+}
+.cd-works__num::before { content: ""; width: 24px; height: 1px; background: currentColor; }
+.cd-works__title {
+  font-family: var(--font-en); font-weight: 800;
+  font-size: clamp(44px, 7vw, 112px);
+  line-height: 0.92; letter-spacing: -0.03em;
+}
+.cd-works__title .dot { color: var(--gold); }
+.cd-works__jp {
+  font-family: var(--font-jp); font-weight: 500; font-size: 14px;
+  letter-spacing: 0.22em; color: var(--gray-400);
+  margin-top: 12px;
+  display: block;
+}
+.cd-works__count {
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.22em; color: var(--gray-400);
+  text-align: right;
+}
+.cd-works__count b { color: var(--gold); font-weight: 700; font-size: 14px; letter-spacing: 0.1em; }
+
+/* Work block base */
+.work-block {
+  margin-bottom: 200px;
+  position: relative;
+}
+.work-block:last-of-type { margin-bottom: 0; }
+.work-block__num {
+  font-family: var(--font-en); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.26em; color: var(--gold);
+  margin-bottom: 14px;
+  display: inline-block;
+}
+.work-block__title {
+  font-family: var(--font-en); font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.05; letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+.work-block__jp {
+  font-family: var(--font-jp); font-weight: 500; font-size: 15px;
+  letter-spacing: 0.06em; color: var(--gray-500);
+  margin-bottom: 20px;
+}
+.work-block__desc {
+  font-family: var(--font-jp); font-weight: 400; font-size: 14px;
+  line-height: 2; letter-spacing: 0.04em;
+  color: var(--gray-500);
+  max-width: 520px;
+}
+.work-block__meta {
+  margin-top: 28px;
+  display: flex; gap: 32px;
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--gray-400);
+}
+.work-block__meta b { color: var(--theme-fg); font-weight: 600; letter-spacing: 0.08em; }
+
+.work-block img, .work-block iframe, .work-block video {
+  display: block;
+  width: 100%;
+  border-radius: 2px;
+}
+.work-block__media img, .work-block__media video {
+  object-fit: cover;
+  background: #1a1a1a;
+}
+
+/* Layout 01 — full wide (image) */
+.work-block[data-layout="full-wide"] {
+  display: grid; grid-template-columns: 100px 1fr; gap: 40px;
+  align-items: end;
+}
+.work-block[data-layout="full-wide"] .work-block__caption { padding-bottom: 8px; }
+.work-block[data-layout="full-wide"] .work-block__media { aspect-ratio: 16/9; overflow: hidden; }
+
+/* Layout 02 — video right, text left */
+.work-block[data-layout="video-right"] {
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px;
+  align-items: center;
+}
+.work-block[data-layout="video-right"] .work-block__media { aspect-ratio: 9/16; overflow: hidden; max-width: 440px; margin-left: auto; }
+
+/* Layout 03 — duo images */
+.work-block[data-layout="duo"] {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  align-items: end;
+}
+.work-block[data-layout="duo"] .work-block__pair-left { aspect-ratio: 4/5; overflow: hidden; }
+.work-block[data-layout="duo"] .work-block__pair-right { aspect-ratio: 3/4; overflow: hidden; transform: translateY(-80px); }
+.work-block[data-layout="duo"] .work-block__caption { grid-column: 1 / span 2; margin-top: 16px; max-width: 560px; }
+
+/* Layout 04 — cinema full video */
+.work-block[data-layout="full-video"] .work-block__media { aspect-ratio: 16/9; overflow: hidden; }
+.work-block[data-layout="full-video"] .work-block__caption { margin-top: 28px; text-align: center; max-width: 640px; margin-left: auto; margin-right: auto; }
+
+/* Layout 05 — center crop */
+.work-block[data-layout="center"] { text-align: center; }
+.work-block[data-layout="center"] .work-block__media { max-width: 66%; margin: 0 auto; aspect-ratio: 4/3; overflow: hidden; }
+.work-block[data-layout="center"] .work-block__caption { margin-top: 28px; max-width: 520px; margin-left: auto; margin-right: auto; }
+.work-block[data-layout="center"] .work-block__meta { justify-content: center; }
+
+/* play overlay for videos */
+.work-block__media[data-type="video"] { position: relative; }
+.work-block__media[data-type="video"]::after {
+  content: "";
+  position: absolute; left: 50%; top: 50%;
+  width: 64px; height: 64px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 50%;
+  background: rgba(10,10,10,0.25);
+  pointer-events: none;
+}
+.work-block__media[data-type="video"]::before {
+  content: "";
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-40%, -50%);
+  border-left: 12px solid rgba(255,255,255,0.95);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ===================== INLINE CTA ===================== */
+.cd-inline-cta {
+  padding: 120px 40px;
+  background: var(--theme-bg);
+  text-align: center;
+}
+.cd-inline-cta__inner { max-width: 960px; margin: 0 auto; }
+.cd-inline-cta__label {
+  color: var(--gold);
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.cd-inline-cta__label::before { content:""; width:24px; height:1px; background: currentColor; opacity: 0.7; }
+.cd-inline-cta__label::after  { content:""; width:24px; height:1px; background: currentColor; opacity: 0.7; }
+.cd-inline-cta__title {
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(22px, 2.6vw, 36px);
+  line-height: 1.6; letter-spacing: 0.04em;
+  margin-bottom: 40px;
+}
+.cd-inline-cta__title em { font-style: normal; color: var(--gold); font-weight: 700; }
+.cd-inline-cta__btns { display: inline-flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.btn-primary {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 46px; background: var(--gold); color: var(--black);
+  font-family: var(--font-en); font-weight: 600; font-size: 13px;
+  letter-spacing: 0.24em; text-transform: uppercase; border-radius: 999px;
+  box-shadow: 0 12px 32px rgba(200,168,107,0.28), 0 2px 8px rgba(0,0,0,0.28);
+  transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+}
+.btn-primary::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg,#E3C893,#C8A86B,#A88550); transform: translateX(-101%); transition: transform 0.9s var(--ease); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(200,168,107,0.38); }
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary > * { position: relative; z-index: 1; }
+.btn-primary svg { transition: transform 0.6s var(--ease); }
+.btn-primary:hover svg { transform: translateX(6px); }
+
+.btn-ghost-dark {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 40px;
+  border: 1px solid rgba(10,10,10,0.35); color: var(--theme-fg);
+  font-family: var(--font-en); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.26em; text-transform: uppercase; border-radius: 999px;
+  transition: background 0.5s var(--ease), color 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+.btn-ghost-dark:hover { background: var(--theme-fg); color: var(--white); border-color: var(--theme-fg); }
+.btn-ghost-dark svg { transition: transform 0.6s var(--ease); }
+.btn-ghost-dark:hover svg { transform: translateX(6px); }
+
+/* ===================== TO TOP + CHAT (floats) ===================== */
+.to-top {
+  position: fixed; right: 28px; bottom: 28px; z-index: 500;
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.88);
+  border: 1px solid rgba(10,10,10,0.18);
+  color: var(--theme-fg);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), background 0.4s var(--ease), color 0.4s var(--ease);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.to-top.active { opacity: 1; pointer-events: auto; }
+.to-top:hover { background: var(--gold); color: var(--black); border-color: var(--gold); transform: translateY(-4px); }
+
+.chat-widget {
+  position: fixed; right: 28px; bottom: 92px; z-index: 500;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  background: var(--theme-fg); color: var(--white);
+  border-radius: 999px;
+  font-family: var(--font-en); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.chat-widget:hover { transform: translateY(-3px); }
+.chat-widget__dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(200,168,107,0.18);
+  animation: chatPulse 2.2s ease-in-out infinite;
+}
+@keyframes chatPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(200,168,107,0.35); }
+  50% { box-shadow: 0 0 0 8px rgba(200,168,107,0); }
+}
+
+.chat-modal {
+  position: fixed; inset: 0; z-index: 800;
+  background: rgba(10,10,10,0.68); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+}
+.chat-modal.active { opacity: 1; pointer-events: auto; }
+.chat-modal__box {
+  width: min(520px, 92vw);
+  max-height: 86vh;
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transform: translateY(24px) scale(0.98);
+  transition: transform 0.5s var(--ease);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+}
+.chat-modal.active .chat-modal__box { transform: translateY(0) scale(1); }
+.chat-modal__header {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(10,10,10,0.08);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.chat-modal__title {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-en); font-weight: 700; font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+}
+.chat-modal__title small { display: block; font-family: var(--font-jp); font-weight: 400; font-size: 11px; letter-spacing: 0.04em; color: var(--gray-400); text-transform: none; margin-top: 4px; }
+.chat-modal__avatar { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; }
+.chat-modal__avatar img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+.chat-modal__close {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-400);
+}
+.chat-modal__body {
+  padding: 24px; display: flex; flex-direction: column; gap: 14px;
+  overflow-y: auto; flex: 1;
+  background: var(--gray-100);
+}
+.chat-bubble { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-family: var(--font-jp); font-weight: 400; font-size: 13px; line-height: 1.7; }
+.chat-bubble--in { background: #fff; align-self: flex-start; border-top-left-radius: 4px; }
+.chat-bubble--out { background: var(--theme-fg); color: var(--white); align-self: flex-end; border-top-right-radius: 4px; }
+.chat-presets { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.chat-presets button {
+  font-family: var(--font-jp); font-weight: 400; font-size: 12px;
+  padding: 8px 14px; border: 1px solid rgba(10,10,10,0.12); border-radius: 999px;
+  background: #fff;
+  transition: border-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+.chat-presets button:hover { border-color: var(--gold); color: var(--gold); }
+.chat-modal__foot {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(10,10,10,0.08);
+  display: flex; gap: 12px;
+}
+.chat-modal__input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid rgba(10,10,10,0.12); border-radius: 999px;
+  font-family: var(--font-jp); font-size: 13px;
+  background: var(--gray-100);
+}
+.chat-modal__input:focus { outline: none; border-color: var(--gold); background: #fff; }
+.chat-modal__send {
+  padding: 12px 22px; background: var(--gold); color: var(--black);
+  border-radius: 999px; font-family: var(--font-en); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+}
+
+/* ===================== PAGE CTA ===================== */
+.page-cta { background: var(--black); color: var(--white); padding: 200px 40px; text-align: center; position: relative; overflow: hidden; }
+.page-cta::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 60% at 50% 30%, rgba(200,168,107,0.08), transparent 70%); pointer-events: none; }
+.page-cta__inner { max-width: 1100px; margin: 0 auto; position: relative; }
+.page-cta__label { color: var(--gold); margin-bottom: 40px; display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; }
+.page-cta__label::before { content:""; width:28px; height:1px; background: currentColor; opacity:0.8; }
+.page-cta__title { font-family: var(--font-en); font-weight: 800; font-size: clamp(48px, 8vw, 128px); line-height: 1; letter-spacing: -0.03em; margin-bottom: 36px; }
+.page-cta__title .dot { color: var(--gold); }
+.page-cta__sub { font-family: var(--font-jp); font-weight: 500; font-size: clamp(15px, 1.4vw, 18px); line-height: 2; letter-spacing: 0.06em; color: rgba(255,255,255,0.78); max-width: 700px; margin: 0 auto 56px; }
+.page-cta__buttons { display: inline-flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 40px;
+  border: 1px solid rgba(255,255,255,0.35); color: #fff;
+  font-family: var(--font-en); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.26em; text-transform: uppercase; border-radius: 999px;
+  transition: background 0.5s var(--ease), color 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+.btn-ghost:hover { background: #fff; color: var(--black); border-color: #fff; }
+.btn-ghost svg { transition: transform 0.6s var(--ease); }
+.btn-ghost:hover svg { transform: translateX(6px); }
+
+/* ===================== FOOTER ===================== */
+.footer { background: var(--black); color: var(--white); padding: 88px 40px 32px; }
+.footer__inner { max-width: 1440px; margin: 0 auto; }
+.footer__top { display: grid; grid-template-columns: 200px 1fr; gap: 48px; padding-bottom: 96px; }
+.footer__logo { font-family: var(--font-en); font-weight: 700; font-size: 24px; letter-spacing: 0.08em; color: #fff; }
+.footer__nav { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 32px; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.footer__col-title { font-family: var(--font-en); font-weight: 800; font-size: 24px; letter-spacing: 0.02em; margin-bottom: 20px; }
+.footer__col ul a { font-family: var(--font-en); font-weight: 700; font-size: 15px; letter-spacing: 0.05em; transition: color 0.3s var(--ease); }
+.footer__col ul a:hover { color: var(--gold); }
+.footer__col--right { text-align: right; min-width: 140px; }
+.footer__col--right ul a { font-size: 16px; letter-spacing: 0.04em; }
+.footer__middle { display: grid; grid-template-columns: 1fr auto auto; gap: 48px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.08); align-items: start; }
+.footer__address { font-family: var(--font-jp); font-style: normal; font-size: 13px; line-height: 1.9; color: rgba(255,255,255,0.7); }
+.footer__map { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 3px; transition: color 0.3s var(--ease), border-color 0.3s var(--ease); }
+.footer__map:hover { color: var(--gold); border-color: var(--gold); }
+.footer__map svg { transition: transform 0.4s var(--ease); }
+.footer__map:hover svg { transform: translate(3px, -3px); }
+.footer__socials { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer__socials a { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-en); font-weight: 400; font-size: 12px; letter-spacing: 0.08em; color: rgba(255,255,255,0.72); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s var(--ease); }
+.footer__socials a:hover { color: var(--gold); }
+.footer__back { width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: #fff; transition: background 0.4s var(--ease), color 0.4s var(--ease), transform 0.4s var(--ease), border-color 0.4s var(--ease); }
+.footer__back:hover { background: var(--gold); color: var(--black); border-color: var(--gold); transform: translateY(-3px); }
+.footer__bottom { margin-top: 64px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; }
+.footer__copy { font-family: var(--font-en); font-weight: 300; font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+.footer__credit { font-family: var(--font-en); font-weight: 300; font-style: italic; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.32); }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1024px) {
+  .cd-hero__inner { grid-template-columns: 1fr; gap: 48px; align-items: stretch; min-height: auto; }
+  .cd-hero__right { order: -1; max-width: 420px; }
+  .cd-hero__portrait { transform: none; aspect-ratio: 4/5; }
+  .cd-hero__vlabel { display: none; }
+  .cd-profile__inner { grid-template-columns: 1fr; gap: 48px; }
+  .cd-works__head { grid-template-columns: 1fr; }
+  .work-block[data-layout="full-wide"],
+  .work-block[data-layout="video-right"],
+  .work-block[data-layout="duo"] { grid-template-columns: 1fr; gap: 32px; }
+  .work-block[data-layout="duo"] .work-block__pair-right { transform: none; }
+  .work-block[data-layout="video-right"] .work-block__media { max-width: 100%; margin: 0; }
+  .work-block[data-layout="center"] .work-block__media { max-width: 100%; }
+}
+@media (max-width: 900px) {
+  .header { padding: 0 20px; }
+  .header__nav { display: none; }
+  .header__hamburger { display: flex; }
+  .breadcrumb { padding: 88px 20px 0; font-size: 10px; letter-spacing: 0.14em; gap: 10px; flex-wrap: wrap; }
+  .cd-hero { padding: 32px 20px 80px; }
+  .cd-bar__inner { padding: 12px 20px; gap: 14px; flex-wrap: wrap; }
+  .cd-bar__sns { order: 3; margin-left: 0; width: 100%; justify-content: flex-start; }
+  .cd-bar__cta { margin-left: auto; padding: 12px 20px; font-size: 10px; }
+  .cd-bar__label small { display: none; }
+  .cd-profile { padding: 100px 20px 80px; }
+  .cd-works { padding: 100px 20px 120px; }
+  .work-block { margin-bottom: 120px; }
+  .cd-inline-cta { padding: 80px 20px; }
+  .page-cta { padding: 140px 20px; }
+  .footer { padding: 72px 20px 32px; }
+  .footer__top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 56px; }
+  .footer__nav { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .footer__col--right { text-align: left; }
+  .footer__middle { grid-template-columns: 1fr; gap: 28px; }
+  .footer__bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
+}
+@media (max-width: 540px) {
+  .cd-inline-cta__btns { flex-direction: column; }
+  .page-cta__buttons { flex-direction: column; }
+  .btn-primary, .btn-ghost, .btn-ghost-dark { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <a href="index.html" class="header__logo">SAC</a>
+  <nav class="header__nav">
+    <a href="index.html#about">ABOUT</a>
+    <a href="works-index.html">WORKS</a>
+    <a href="index.html#service">SERVICE</a>
+    <a href="creator-index.html" aria-current="page">CREATOR</a>
+    <a href="index.html#info">INFO</a>
+    <a href="index.html#contact">CONTACT</a>
+  </nav>
+  <button class="header__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#about">ABOUT</a>
+  <a href="works-index.html">WORKS</a>
+  <a href="index.html#service">SERVICE</a>
+  <a href="creator-index.html">CREATOR</a>
+  <a href="index.html#info">INFO</a>
+  <a href="index.html#contact">CONTACT</a>
+</div>
+
+<!-- ============ BREADCRUMB ============ -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="index.html">HOME</a>
+  <span class="sep">/</span>
+  <a href="creator-index.html">CREATOR</a>
+  <span class="sep">/</span>
+  <span aria-current="page" class="jp">ツネハシ タケシ</span>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="cd-hero" id="top">
+  <span class="cd-hero__vlabel">SAC CREATOR / 001 / MOVIE DIRECTOR</span>
+  <div class="cd-hero__inner">
+    <div class="cd-hero__left">
+      <p class="cd-hero__role">MOVIE DIRECTOR / AI CREATIVE</p>
+      <h1 class="cd-hero__name-jp js-reveal">ツネハシ<br>タケシ<span style="color:var(--gold);">.</span></h1>
+      <p class="cd-hero__name-en js-reveal">TSUNEHASHI TAKESHI</p>
+      <p class="cd-hero__catch js-reveal">
+        映像と設計で、<br>
+        世界をなめらかに接続する。
+      </p>
+    </div>
+    <aside class="cd-hero__right">
+      <div class="cd-hero__portrait">
+        <img src="assets/creators/tsunehashi.jpg" alt="ツネハシタケシ ポートレート" loading="lazy">
+        <div class="cd-hero__portrait-caption">
+          <span class="cd-hero__portrait-caption__id">PORTRAIT / 2025</span>
+          <span class="cd-hero__portrait-caption__name">T.T.</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ STICKY CTA BAR ============ -->
+<div class="cd-bar">
+  <div class="cd-bar__inner">
+    <div class="cd-bar__who">
+      <div class="cd-bar__avatar"><img src="assets/creators/tsunehashi.jpg" alt=""></div>
+      <div class="cd-bar__label">TSUNEHASHI T.<small>ツネハシ タケシ / Movie Director</small></div>
+    </div>
+    <div class="cd-bar__sns" aria-label="Social links">
+      <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X (Twitter)">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M17.53 3H20.5l-6.52 7.45L21.75 21h-6.03l-4.72-6.16L5.6 21H2.63l6.98-7.98L2.25 3h6.18l4.27 5.64L17.53 3Zm-1.06 16.2h1.66L7.63 4.7H5.85l10.62 14.5Z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.4 2.4 0 0 0-1.7-1.7C18.4 5 12 5 12 5s-6.4 0-7.9.5A2.4 2.4 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.4 2.4 0 0 0 1.7 1.7C5.6 19 12 19 12 19s6.4 0 7.9-.5a2.4 2.4 0 0 0 1.7-1.7c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5 3-5 3Z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M16 3v3.2a4.8 4.8 0 0 0 4.8 4.8V14a7.9 7.9 0 0 1-4.8-1.6v5.8a5.8 5.8 0 1 1-5.8-5.8v3.2a2.6 2.6 0 1 0 2.6 2.6V3H16Z"/></svg>
+      </a>
+    </div>
+    <a href="#cta-final" class="cd-bar__cta">
+      <span>依頼・相談したい</span>
+      <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ============ PROFILE ============ -->
+<section class="cd-profile">
+  <div class="cd-profile__inner">
+    <div class="cd-profile__left">
+      <span class="cd-profile__num">PROFILE / 01</span>
+      <h2 class="cd-profile__title">WHO<span class="dot">.</span></h2>
+      <span class="cd-profile__jp">プロフィール</span>
+      <div class="cd-profile__body js-reveal">
+        <p>
+          ツネハシタケシ。<strong>映像監督／AIクリエイティブディレクター</strong>。
+          CM、MV、ブランドフィルム、ショートフォーム映像を横断しながら、
+          近年はAI生成映像と従来制作のハイブリッドなポストプロダクションを設計している。
+        </p>
+        <p>
+          「人間の温度を残したまま、制作速度を変える」をテーマに、
+          事業フェーズに応じた映像設計、映像運用の仕組みづくりまで手掛ける。
+          SACでは主にブランドの立ち上げ映像、継続的な映像運用のディレクションを担当。
+        </p>
+        <p>
+          関心領域：<strong>ブランド映像 / AI映像 / モーションブランディング / 編集的ショートフォーム / ドキュメンタリー</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="cd-timeline js-reveal">
+      <p class="cd-timeline__title">CAREER / SELECTED</p>
+      <div class="cd-timeline__item">
+        <p class="cd-timeline__year">2024 —</p>
+        <p class="cd-timeline__head">SAC クリエイティブディレクター</p>
+        <p class="cd-timeline__desc">AI映像チームの組成、ブランド映像運用設計を主導。</p>
+      </div>
+      <div class="cd-timeline__item">
+        <p class="cd-timeline__year">2021 — 2024</p>
+        <p class="cd-timeline__head">制作会社 EPOCH 所属</p>
+        <p class="cd-timeline__desc">CM・MVを中心に年間30本以上の演出を担当。</p>
+      </div>
+      <div class="cd-timeline__item">
+        <p class="cd-timeline__year">2018 — 2021</p>
+        <p class="cd-timeline__head">映像作家 / 独立</p>
+        <p class="cd-timeline__desc">ブランドフィルムを中心にフリーランスで活動。</p>
+      </div>
+      <div class="cd-timeline__item">
+        <p class="cd-timeline__year">2016</p>
+        <p class="cd-timeline__head">短編作品が国内映画祭入選</p>
+        <p class="cd-timeline__desc">ショートフィルム『FRAGMENTS』。</p>
+      </div>
+      <div class="cd-timeline__item">
+        <p class="cd-timeline__year">2015</p>
+        <p class="cd-timeline__head">美術大学 映像メディア学科 卒</p>
+        <p class="cd-timeline__desc">在学中から広告制作会社で助監督に従事。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SELECTED WORKS ============ -->
+<section class="cd-works" id="works">
+  <div class="cd-works__inner">
+    <div class="cd-works__head js-reveal">
+      <div>
+        <span class="cd-works__num">WORKS / 02</span>
+        <h2 class="cd-works__title">SELECTED WORKS<span class="dot">.</span></h2>
+        <span class="cd-works__jp">選ばれた仕事</span>
+      </div>
+      <div class="cd-works__count"><b>05</b> WORKS / 2023 — 2025</div>
+    </div>
+
+    <!-- Work 01 — full-wide -->
+    <article class="work-block js-reveal" data-layout="full-wide" data-type="work-block">
+      <div class="work-block__caption">
+        <span class="work-block__num">— 01</span>
+        <h3 class="work-block__title">LAST CALL</h3>
+        <p class="work-block__jp">公開オーディション番組 OP映像</p>
+        <div class="work-block__meta">
+          <span>MOVIE <b>/</b></span><span><b>2025.02</b></span><span>CLIENT / <b>LAST CALL PROJECT</b></span>
+        </div>
+      </div>
+      <a href="works-detail.html" class="work-block__media">
+        <img src="assets/works/lastcall.jpg" alt="LAST CALL" loading="lazy" style="object-position:50% 35%;">
+      </a>
+    </article>
+
+    <!-- Work 02 — video right -->
+    <article class="work-block js-reveal" data-layout="video-right">
+      <div>
+        <span class="work-block__num">— 02</span>
+        <h3 class="work-block__title">HYDE / SOCIAL VIRUS</h3>
+        <p class="work-block__jp">Music Video</p>
+        <p class="work-block__desc">
+          ミュージシャンの世界観と生成映像の輪郭をどう接続するか。
+          AIで生成した断片的な映像素材を、実写と同じ粒度で編集し直した一本。
+          「AIらしさ」を消すのではなく、作品の内側の要素として扱う設計を採用。
+        </p>
+        <div class="work-block__meta">
+          <span>MUSIC VIDEO <b>/</b></span><span><b>2024.11</b></span><span>AI CREATIVE <b>/</b> DIRECTOR</span>
+        </div>
+      </div>
+      <a href="works-detail.html" class="work-block__media" data-type="video">
+        <img src="assets/works/hyde.jpg" alt="HYDE | SOCIAL VIRUS" loading="lazy" style="object-position:50% 30%;">
+      </a>
+    </article>
+
+    <!-- Work 03 — duo images -->
+    <article class="work-block js-reveal" data-layout="duo">
+      <a href="works-detail.html" class="work-block__pair-left">
+        <img src="assets/works/24.jpg" alt="24世紀ラーメン" loading="lazy" style="object-position:50% 40%;">
+      </a>
+      <a href="works-detail.html" class="work-block__pair-right">
+        <div class="sac-placeholder" style="background:linear-gradient(135deg,#F4F1EC,#E9E3D8); display:flex; align-items:center; justify-content:center; width:100%; height:100%;">
+          <span style="font-family:var(--font-en); font-weight:900; font-size:clamp(40px,6vw,80px); color:var(--theme-fg); opacity:0.85;">SAC</span>
+        </div>
+      </a>
+      <div class="work-block__caption">
+        <span class="work-block__num">— 03</span>
+        <h3 class="work-block__title">24世紀ラーメン / CAMPAIGN</h3>
+        <p class="work-block__jp">ブランディング / グラフィック / 動画</p>
+        <div class="work-block__meta">
+          <span>BRANDING <b>/</b></span><span><b>2024.09</b></span><span>CLIENT <b>/</b> 24C RAMEN CO.</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Work 04 — full video -->
+    <article class="work-block js-reveal" data-layout="full-video">
+      <a href="works-detail.html" class="work-block__media" data-type="video">
+        <div class="sac-placeholder" style="background:linear-gradient(135deg,#0A0A0A 0%, #1A1A1A 100%); position:relative; width:100%; height:100%;">
+          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-en); font-weight:900; font-size:clamp(48px,7vw,120px); color:#fff; opacity:0.25;">SAC</span>
+        </div>
+      </a>
+      <div class="work-block__caption">
+        <span class="work-block__num">— 04</span>
+        <h3 class="work-block__title">PROJECT ECHO</h3>
+        <p class="work-block__jp">ブランドフィルム / 90sec</p>
+        <div class="work-block__meta">
+          <span>BRAND FILM <b>/</b></span><span><b>2024.03</b></span><span>DIRECTOR</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Work 05 — center -->
+    <article class="work-block js-reveal" data-layout="center">
+      <a href="works-detail.html" class="work-block__media">
+        <div class="sac-placeholder" style="background:linear-gradient(135deg,#F4F1EC,#FFFFFF 60%,#E9E3D8); display:flex; align-items:center; justify-content:center; width:100%; height:100%;">
+          <span style="font-family:var(--font-en); font-weight:900; font-size:clamp(40px,6vw,80px); color:var(--theme-fg); opacity:0.8;">SAC</span>
+        </div>
+      </a>
+      <div class="work-block__caption">
+        <span class="work-block__num">— 05</span>
+        <h3 class="work-block__title">SILENT BLOOM</h3>
+        <p class="work-block__jp">ショートフィルム / 4min</p>
+        <div class="work-block__meta">
+          <span>SHORT FILM <b>/</b></span><span><b>2023.08</b></span><span>WRITER <b>/</b> DIRECTOR</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ INLINE CTA ============ -->
+<section class="cd-inline-cta">
+  <div class="cd-inline-cta__inner">
+    <span class="cd-inline-cta__label">ASK THIS CREATOR</span>
+    <p class="cd-inline-cta__title">
+      気になったら、<em>この人に</em>そのまま聞いてみる。
+    </p>
+    <div class="cd-inline-cta__btns">
+      <a href="#cta-final" class="btn-primary">
+        <span>この人に相談する</span>
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="creator-index.html" class="btn-ghost-dark">
+        <span>他のクリエイターを見る</span>
+        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE CTA ============ -->
+<section class="page-cta" id="cta-final">
+  <div class="page-cta__inner">
+    <span class="page-cta__label">COMMISSION</span>
+    <h2 class="page-cta__title">LET'S TALK<span class="dot">.</span></h2>
+    <p class="page-cta__sub">
+      ツネハシ個人への指名相談、SAC全体への総合問合せ、どちらからでも。<br>
+      まずは「どんなことを考えているか」から、一緒に言語化します。
+    </p>
+    <div class="page-cta__buttons">
+      <a href="index.html#contact" class="btn-primary">
+        <span>ツネハシに依頼・相談する</span>
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="index.html#contact" class="btn-ghost">
+        <span>SACに総合問合せ</span>
+        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <a href="index.html" class="footer__brand" aria-label="SAC"><span class="footer__logo">SAC</span></a>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__col"><h3 class="footer__col-title">ABOUT</h3><ul><li><a href="index.html#about">PHILOSOPHY</a></li><li><a href="index.html#about">APPROACH</a></li><li><a href="index.html#about">COMPANY</a></li></ul></div>
+        <div class="footer__col"><h3 class="footer__col-title">WORKS</h3><ul><li><a href="works-index.html">ALL WORKS</a></li><li><a href="works-index.html">MOVIE</a></li><li><a href="works-index.html">WEB DESIGN</a></li><li><a href="works-index.html">GRAPHIC</a></li></ul></div>
+        <div class="footer__col"><h3 class="footer__col-title">CREATOR</h3><ul><li><a href="creator-index.html#movie-director">DIRECTOR</a></li><li><a href="creator-index.html#art-director">ART DIRECTOR</a></li><li><a href="creator-index.html">ALL CREATORS</a></li></ul></div>
+        <div class="footer__col footer__col--right"><ul><li><a href="index.html#service">SERVICE</a></li><li><a href="index.html#info">INFO</a></li><li><a href="index.html#contact">CONTACT</a></li></ul></div>
+      </nav>
+    </div>
+    <div class="footer__middle">
+      <div class="footer__address-wrap">
+        <address class="footer__address">〒141-0021 東京都品川区上大崎3-14-1<br>中丸ハウス B棟</address>
+        <a href="https://maps.app.goo.gl/tKVmTAiDvhVb9SHV6" target="_blank" rel="noopener" class="footer__map">MAP<svg viewBox="0 0 24 24" width="12" height="12"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <ul class="footer__socials" aria-label="Social media">
+        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></li>
+        <li><a href="https://x.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.53 3H20.5l-6.52 7.45L21.75 21h-6.03l-4.72-6.16L5.6 21H2.63l6.98-7.98L2.25 3h6.18l4.27 5.64L17.53 3Zm-1.06 16.2h1.66L7.63 4.7H5.85l10.62 14.5Z"/></svg><span>X (Twitter)</span></a></li>
+        <li><a href="https://www.facebook.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h-3a4 4 0 0 0-4 4v3H4v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3V3Z"/></svg><span>Facebook</span></a></li>
+      </ul>
+      <a href="#top" class="footer__back" aria-label="Back to top"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© EPOCH Inc.</p>
+      <p class="footer__credit">This website is entirely crafted with AI.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ FLOATS ============ -->
+<a href="#top" class="to-top" id="toTop" aria-label="ページ上部へ戻る">
+  <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+<button class="chat-widget" id="chatOpen" aria-label="CHATで相談">
+  <span class="chat-widget__dot"></span>
+  <span>CHATで相談</span>
+</button>
+
+<!-- ============ CHAT MODAL ============ -->
+<div class="chat-modal" id="chatModal" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+  <div class="chat-modal__box">
+    <div class="chat-modal__header">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="chat-modal__avatar"><img src="assets/creators/tsunehashi.jpg" alt=""></div>
+        <div class="chat-modal__title" id="chatTitle">TSUNEHASHI T.<small>ツネハシに気軽に相談する</small></div>
+      </div>
+      <button class="chat-modal__close" id="chatClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="chat-modal__body" id="chatBody">
+      <div class="chat-bubble chat-bubble--in">こんにちは、ツネハシです。映像のご相談、構想段階からお受けします。どんなことを考えていますか？</div>
+      <div class="chat-presets">
+        <button data-preset="ブランド映像の相談">ブランド映像の相談</button>
+        <button data-preset="MVを作りたい">MVを作りたい</button>
+        <button data-preset="AI映像の相談">AI映像の相談</button>
+        <button data-preset="予算感を知りたい">予算感を知りたい</button>
+      </div>
+    </div>
+    <form class="chat-modal__foot" id="chatForm">
+      <input type="text" class="chat-modal__input" id="chatInput" placeholder="メッセージを書く…" autocomplete="off">
+      <button type="submit" class="chat-modal__send">送る</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var header = document.getElementById('header');
+  var toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('scrolled', window.scrollY > 80);
+    toTop.classList.toggle('active', window.scrollY > 400);
+  }, { passive: true });
+
+  var hamburger = document.getElementById('hamburger');
+  var mobile = document.getElementById('mobileMenu');
+  if (hamburger && mobile) {
+    hamburger.addEventListener('click', function(){
+      hamburger.classList.toggle('active');
+      mobile.classList.toggle('active');
+      document.body.style.overflow = mobile.classList.contains('active') ? 'hidden' : '';
+    });
+    mobile.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ hamburger.classList.remove('active'); mobile.classList.remove('active'); document.body.style.overflow=''; });
+    });
+  }
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('revealed'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.js-reveal').forEach(function(el){ observer.observe(el); });
+
+  // CHAT
+  var chatOpen  = document.getElementById('chatOpen');
+  var chatClose = document.getElementById('chatClose');
+  var chatModal = document.getElementById('chatModal');
+  var chatBody  = document.getElementById('chatBody');
+  var chatForm  = document.getElementById('chatForm');
+  var chatInput = document.getElementById('chatInput');
+
+  function openChat(){ chatModal.classList.add('active'); document.body.style.overflow='hidden'; setTimeout(function(){ chatInput.focus(); }, 300); }
+  function closeChat(){ chatModal.classList.remove('active'); document.body.style.overflow=''; }
+  chatOpen.addEventListener('click', openChat);
+  chatClose.addEventListener('click', closeChat);
+  chatModal.addEventListener('click', function(e){ if (e.target === chatModal) closeChat(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeChat(); });
+
+  function addBubble(text, direction){
+    var b = document.createElement('div');
+    b.className = 'chat-bubble chat-bubble--' + direction;
+    b.textContent = text;
+    chatBody.appendChild(b);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+  function respond(){
+    setTimeout(function(){ addBubble('ありがとうございます。内容を確認して、担当から折り返しご連絡します。', 'in'); }, 700);
+  }
+
+  chatForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = chatInput.value.trim();
+    if (!v) return;
+    addBubble(v, 'out');
+    chatInput.value = '';
+    respond();
+  });
+  document.querySelectorAll('.chat-presets button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      addBubble(btn.getAttribute('data-preset'), 'out');
+      respond();
+    });
+  });
+
+  // Smooth scroll (offset for sticky header + cd-bar)
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var tgt = document.querySelector(id);
+      if (!tgt) return;
+      e.preventDefault();
+      var y = tgt.getBoundingClientRect().top + window.scrollY - 120;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
