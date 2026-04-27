@@ -229,14 +229,14 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .wd-overview__body strong { color: var(--theme-fg); font-weight: 700; }
 
 .wd-facts {
-  border: 1px solid rgba(10,10,10,0.1);
-  padding: 40px;
-  display: flex; flex-direction: column; gap: 28px;
-  background: var(--ivory);
+  border-left: 1px solid rgba(10,10,10,0.12);
+  padding: 4px 0 4px 40px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px 32px;
+  background: transparent;
 }
 .wd-fact__label { font-family: var(--font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-.wd-fact__value { font-family: var(--font-jp); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; }
-.wd-fact__value small { display: block; margin-top: 4px; font-family: var(--font-en); font-weight: 400; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-400); }
+.wd-fact__value { font-family: var(--font-jp); font-weight: 500; font-size: 15px; letter-spacing: 0.02em; line-height: 1.5; }
+.wd-fact__value small { display: block; margin-top: 4px; font-family: var(--font-en); font-weight: 400; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-400); }
 
 /* ===================== STAFF CREDIT (compact + lock) ===================== */
 .wd-staff { background: var(--ivory); padding: 96px 40px 100px; }
@@ -462,18 +462,21 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold);
 }
 .wd-sac-item__title {
+  padding: 0 12px;
   font-family: var(--font-en); font-weight: 700; font-size: 16px;
   line-height: 1.25; letter-spacing: -0.01em; color: #fff;
   transition: color 0.3s var(--ease);
+  word-break: break-word;
 }
 .wd-sac-item:hover .wd-sac-item__title { color: var(--gold); }
 .wd-sac-item__jp {
   display: block; margin-top: 4px;
   font-family: var(--font-jp); font-weight: 500; font-size: 12px;
   letter-spacing: 0.04em; color: rgba(255,255,255,0.6);
+  word-break: break-word;
 }
 .wd-sac-item__date {
-  display: block; margin-top: 6px;
+  display: block; margin-top: 6px; padding: 0 12px 14px;
   font-family: var(--font-en); font-weight: 500; font-size: 10px;
   letter-spacing: 0.22em; color: rgba(255,255,255,0.5);
 }
@@ -772,8 +775,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   <div class="wd-staff__inner">
     <div class="wd-staff__head js-reveal">
       <span class="wd-staff__num">CREDIT / 02</span>
-      <h2 class="wd-staff__title">STAFF</h2>
-      <span class="wd-staff__jp">スタッフクレジット</span>
+      <h2 class="wd-staff__title">STAFF CREDIT</h2>
     </div>
 
     <div class="wd-staff__wrap js-reveal">
@@ -830,8 +832,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     <div class="wd-related__head js-reveal">
       <div class="wd-related__head-left">
         <span class="wd-related__num">RELATED / 03</span>
-        <h2 class="wd-related__title">BY TSUNEHASHI</h2>
-        <span class="wd-related__jp">このクリエイターの他の仕事</span>
+        <h2 class="wd-related__title">TSUNEHASHI'S OTHER WORKS</h2>
       </div>
       <a href="creator-detail.html" class="wd-related__view">
         <span>VIEW PROFILE</span>
@@ -890,7 +891,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       <div class="wd-sac__head-left">
         <span class="wd-sac__num">LATEST / 04</span>
         <h2 class="wd-sac__title">SAC WORKS</h2>
-        <span class="wd-sac__jp">SAC 全体の最新仕事</span>
       </div>
       <a href="works-index.html" class="wd-related__view" style="color:rgba(255,255,255,0.78);">
         <span>VIEW ALL</span>
