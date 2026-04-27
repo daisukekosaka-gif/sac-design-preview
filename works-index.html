@@ -84,12 +84,12 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .breadcrumb [aria-current="page"] { color: var(--theme-fg); }
 
 /* ===================== HERO ===================== */
-.w-hero { padding: 48px 40px 80px; position: relative; }
+.w-hero { padding: 64px 40px 88px; position: relative; }
 .w-hero__inner {
-  max-width: 1600px; margin: 0 auto;
+  max-width: 1680px; margin: 0 auto;
   display: grid; grid-template-columns: 72px minmax(0, 1fr) 360px;
-  gap: 40px; align-items: end;
-  min-height: 60vh;
+  gap: 40px; align-items: start;
+  min-height: 50vh;
 }
 .w-hero__main { min-width: 0; }
 .w-hero__stats { min-width: 0; }
@@ -97,9 +97,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   writing-mode: vertical-rl;
   font-family: var(--font-jp); font-weight: 500; font-size: 13px;
   letter-spacing: 0.6em; color: var(--gray-400);
-  height: 160px;
-  align-self: end;
-  margin-bottom: 40px;
+  min-height: 200px;
+  align-self: start;
+  margin-top: 70px; /* sub label の高さ + 余白 ぶん下げて、タイトル top と Y 揃え */
 }
 .w-hero__vlabel strong { color: var(--theme-fg); font-weight: 700; }
 
@@ -127,21 +127,12 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   color: var(--gray-400);
   margin-bottom: 6px;
 }
-.w-hero__lead {
-  font-family: var(--font-jp); font-weight: 500;
-  font-size: clamp(16px, 1.4vw, 20px);
-  line-height: 2; letter-spacing: 0.06em;
-  color: var(--gray-500);
-  max-width: 520px;
-  padding-bottom: 20px;
-}
-.w-hero__lead strong { color: var(--theme-fg); font-weight: 700; }
 
 .w-hero__stats {
   display: flex; flex-direction: column; gap: 18px;
-  padding: 28px 0 40px 24px;
+  padding: 36px 0 0 24px;
   border-left: 1px solid rgba(10,10,10,0.12);
-  align-self: end;
+  align-self: start;
 }
 .w-hero__stats .w-hero__stat b { font-size: clamp(22px, 1.8vw, 30px); }
 .w-hero__stat {
@@ -214,49 +205,29 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 .w-cats__counter b { color: var(--gold); font-weight: 600; }
 
-/* ===================== GALLERY ===================== */
+/* ===================== GALLERY (grid) ===================== */
 .w-gallery {
-  padding: 140px 40px 120px;
+  padding: 80px 40px 80px;
   position: relative;
 }
 .w-gallery__inner {
-  max-width: 1600px; margin: 0 auto;
+  max-width: 1680px; margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: 24px;
-  row-gap: 120px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 28px;
+  row-gap: 56px;
 }
 
 .w-item {
   position: relative;
-  grid-column: span 12;
   display: block;
 }
-.w-item[data-layout="wide"]        { grid-column: span 9; }
-.w-item[data-layout="wide-right"]  { grid-column: 4 / span 9; }
-.w-item[data-layout="mid"]         { grid-column: span 6; }
-.w-item[data-layout="mid-offset"]  { grid-column: 7 / span 6; transform: translateY(-80px); }
-.w-item[data-layout="portrait"]    { grid-column: 9 / span 4; transform: translateY(-120px); }
-.w-item[data-layout="portrait-l"]  { grid-column: 2 / span 4; }
-.w-item[data-layout="cinema"]      { grid-column: span 11; }
-.w-item[data-layout="small"]       { grid-column: span 4; transform: translateY(60px); }
-.w-item[data-layout="small-r"]     { grid-column: 9 / span 4; transform: translateY(60px); }
-.w-item[data-layout="tall"]        { grid-column: 3 / span 4; }
 
 .w-item__media {
   position: relative; overflow: hidden; border-radius: 2px;
   background: var(--ivory);
+  aspect-ratio: 16 / 11;
 }
-.w-item[data-layout="wide"] .w-item__media,
-.w-item[data-layout="wide-right"] .w-item__media { aspect-ratio: 16 / 9; }
-.w-item[data-layout="mid"] .w-item__media,
-.w-item[data-layout="mid-offset"] .w-item__media { aspect-ratio: 4 / 3; }
-.w-item[data-layout="portrait"] .w-item__media,
-.w-item[data-layout="portrait-l"] .w-item__media { aspect-ratio: 3 / 4; }
-.w-item[data-layout="cinema"] .w-item__media { aspect-ratio: 21 / 9; }
-.w-item[data-layout="small"] .w-item__media,
-.w-item[data-layout="small-r"] .w-item__media { aspect-ratio: 1 / 1; }
-.w-item[data-layout="tall"] .w-item__media { aspect-ratio: 9 / 13; }
 
 .w-item__img {
   width: 100%; height: 100%;
@@ -390,27 +361,15 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .w-more__counter b { color: var(--gold); font-weight: 600; font-size: 14px; letter-spacing: 0.1em; }
 
 /* ===================== PAGE CTA ===================== */
-.page-cta { background: var(--black); color: var(--white); padding: 180px 40px; text-align: center; position: relative; overflow: hidden; }
+.page-cta { background: var(--black); color: var(--white); padding: 120px 40px; text-align: center; position: relative; overflow: hidden; }
 .page-cta::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 60% at 50% 30%, rgba(200,168,107,0.06), transparent 70%); pointer-events: none; }
 .page-cta__inner { max-width: 1100px; margin: 0 auto; position: relative; }
-.page-cta__label {
-  color: var(--gold); margin-bottom: 40px;
-  display: inline-flex; align-items: center; gap: 12px;
-  font-family: var(--font-en); font-weight: 500; font-size: 11px;
-  letter-spacing: 0.26em; text-transform: uppercase;
-}
-.page-cta__label::before { content:""; width:28px; height:1px; background: currentColor; opacity:0.8;}
-.page-cta__title {
-  font-family: var(--font-en); font-weight: 800;
-  font-size: clamp(48px, 8vw, 128px); line-height: 1; letter-spacing: -0.03em;
-  margin-bottom: 36px;
-}
-.page-cta__title .dot { color: var(--gold); }
 .page-cta__sub {
   font-family: var(--font-jp); font-weight: 500;
-  font-size: clamp(15px, 1.4vw, 18px); line-height: 2; letter-spacing: 0.06em;
-  color: rgba(255,255,255,0.78); max-width: 640px; margin: 0 auto 56px;
+  font-size: clamp(17px, 1.6vw, 22px); line-height: 2; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.86); max-width: 760px; margin: 0 auto 48px;
 }
+.page-cta__sub strong { color: var(--gold); font-weight: 700; }
 .page-cta__buttons { display: inline-flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
 .btn-primary {
   position: relative; overflow: hidden;
@@ -471,6 +430,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .footer__credit { font-family: var(--font-en); font-weight: 300; font-style: italic; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.32); }
 
 /* ===================== RESPONSIVE ===================== */
+@media (max-width: 1400px) {
+  .w-gallery__inner { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; row-gap: 48px; }
+}
 @media (max-width: 1200px) {
   .w-hero__inner { grid-template-columns: 56px minmax(0, 1fr) 280px; gap: 24px; }
 }
@@ -481,13 +443,12 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .breadcrumb { padding: 88px 20px 0; font-size: 10px; letter-spacing: 0.14em; gap: 10px; }
   .w-hero { padding: 40px 20px 64px; }
   .w-hero__inner { grid-template-columns: 1fr; gap: 32px; min-height: auto; }
-  .w-hero__vlabel { writing-mode: horizontal-tb; height: auto; margin-bottom: 0; letter-spacing: 0.3em; }
+  .w-hero__vlabel { writing-mode: horizontal-tb; min-height: auto; padding-top: 0; letter-spacing: 0.3em; }
   .w-hero__stats { padding: 24px 0 0 0; border-left: none; border-top: 1px solid rgba(10,10,10,0.1); }
   .w-cats__inner { padding: 14px 20px; gap: 22px; }
   .w-cats__head, .w-cats__counter { display: none; }
-  .w-gallery { padding: 80px 20px 60px; row-gap: 72px; }
-  .w-gallery__inner { column-gap: 16px; row-gap: 72px; }
-  .w-item[data-layout] { grid-column: span 12 !important; transform: none !important; }
+  .w-gallery { padding: 64px 20px 56px; }
+  .w-gallery__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; row-gap: 40px; }
   .w-more { padding: 24px 20px 80px; }
   .page-cta { padding: 120px 20px; }
   .footer { padding: 72px 20px 32px; }
@@ -498,6 +459,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .footer__bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
 }
 @media (max-width: 540px) {
+  .w-gallery__inner { grid-template-columns: 1fr; }
   .w-item__foot { flex-direction: column; gap: 8px; }
   .page-cta__buttons { flex-direction: column; }
   .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
@@ -543,11 +505,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     <div class="w-hero__main">
       <p class="w-hero__sub">SELECTED WORKS / 2020 — 2025</p>
       <h1 class="w-hero__title js-reveal">WORKS<span class="dot">.</span><span class="strike" aria-hidden="true"></span></h1>
-      <p class="w-hero__lead js-reveal">
-        <strong>作品は、名簿に並べるものではない。</strong><br>
-        一つひとつ、依頼の形も、関わったチームも違う。<br>
-        その記録を、展示のように並べてみます。
-      </p>
     </div>
     <div class="w-hero__stats js-reveal">
       <div class="w-hero__stat"><span>TOTAL WORKS</span><b>042</b></div>
@@ -576,7 +533,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <section class="w-gallery">
   <div class="w-gallery__inner" id="gallery">
     <!-- 10 works initial -->
-    <a href="works-detail.html" class="w-item js-reveal" data-cat="movie" data-layout="wide">
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="movie">
       <div class="w-item__media">
         <img class="w-item__img" src="assets/works/lastcall.jpg" alt="LAST CALL" loading="lazy" style="object-position:50% 35%;">
         <div class="w-item__overlay"></div>
@@ -591,7 +548,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </div>
     </a>
 
-    <a href="works-detail.html" class="w-item js-reveal" data-cat="movie" data-layout="portrait">
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="movie">
       <div class="w-item__media">
         <img class="w-item__img" src="assets/works/hyde.jpg" alt="HYDE | SOCIAL VIRUS" loading="lazy" style="object-position:50% 30%;">
         <div class="w-item__overlay"></div>
@@ -606,7 +563,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </div>
     </a>
 
-    <a href="works-detail.html" class="w-item js-reveal" data-cat="graphic" data-layout="mid">
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="graphic">
       <div class="w-item__media">
         <img class="w-item__img" src="assets/works/24.jpg" alt="24世紀ラーメン" loading="lazy" style="object-position:50% 50%;">
         <div class="w-item__overlay"></div>
@@ -621,7 +578,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </div>
     </a>
 
-    <a href="works-detail.html" class="w-item js-reveal" data-cat="web" data-layout="small-r">
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="web">
       <div class="w-item__media">
         <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
         <div class="w-item__overlay"></div>
@@ -636,7 +593,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </div>
     </a>
 
-    <a href="works-detail.html" class="w-item js-reveal" data-cat="installation" data-layout="cinema">
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="installation">
       <div class="w-item__media">
         <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
         <div class="w-item__overlay"></div>
@@ -651,7 +608,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </div>
     </a>
 
-    <a href="works-detail.html" class="w-item js-reveal" data-cat="sns" data-layout="small">
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="sns">
       <div class="w-item__media">
         <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
         <div class="w-item__overlay"></div>
@@ -666,7 +623,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </div>
     </a>
 
-    <a href="works-detail.html" class="w-item js-reveal" data-cat="movie" data-layout="wide-right">
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="movie">
       <div class="w-item__media">
         <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
         <div class="w-item__overlay"></div>
@@ -681,7 +638,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </div>
     </a>
 
-    <a href="works-detail.html" class="w-item js-reveal" data-cat="graphic" data-layout="portrait-l">
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="graphic">
       <div class="w-item__media">
         <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
         <div class="w-item__overlay"></div>
@@ -696,7 +653,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </div>
     </a>
 
-    <a href="works-detail.html" class="w-item js-reveal" data-cat="web" data-layout="mid-offset">
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="web">
       <div class="w-item__media">
         <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
         <div class="w-item__overlay"></div>
@@ -711,7 +668,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </div>
     </a>
 
-    <a href="works-detail.html" class="w-item js-reveal" data-cat="other" data-layout="tall">
+    <a href="works-detail.html" class="w-item js-reveal" data-cat="other">
       <div class="w-item__media">
         <div class="sac-placeholder"><span class="sac-placeholder__label">NO IMAGE</span></div>
         <div class="w-item__overlay"></div>
@@ -742,10 +699,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <!-- ============ PAGE CTA ============ -->
 <section class="page-cta">
   <div class="page-cta__inner">
-    <span class="page-cta__label">COMMISSION</span>
-    <h2 class="page-cta__title">MAKE IT NEXT<span class="dot">.</span></h2>
     <p class="page-cta__sub">
-      気になる一本があれば、その先も見せられます。<br>
+      <strong>気になる一本があれば、その先も見せられます。</strong><br>
       構想段階からのご相談、座組の組成、予算帯のすり合わせも。
     </p>
     <div class="page-cta__buttons">
