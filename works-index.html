@@ -128,6 +128,16 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 .w-hero__sub::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
 
+.w-hero__lead {
+  margin-top: 36px;
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(17px, 1.4vw, 22px);
+  line-height: 1.95; letter-spacing: 0.04em;
+  color: var(--gray-500);
+  max-width: 640px;
+}
+.w-hero__lead strong { color: var(--theme-fg); font-weight: 700; }
+
 .w-hero__stats {
   display: flex; flex-direction: column; gap: 16px;
   padding: 0 0 0 24px;
@@ -505,6 +515,11 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     <div class="w-hero__main">
       <p class="w-hero__sub">SELECTED WORKS</p>
       <h1 class="w-hero__title js-reveal">WORKS<span class="dot">.</span><span class="strike" aria-hidden="true"></span></h1>
+      <p class="w-hero__lead js-reveal">
+        <strong>大手クライアント・スタートアップ・地方企業まで、</strong><br>
+        ハイクオリティなAIクリエイティブを企画し実行。<br>
+        SACでは予算や規模に関わらず、多くの実績を揃えています。
+      </p>
     </div>
     <div class="w-hero__stats js-reveal">
       <div class="w-hero__stat"><span>TOTAL WORKS</span><b>042</b></div>
