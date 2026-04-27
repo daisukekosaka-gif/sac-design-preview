@@ -84,7 +84,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .breadcrumb [aria-current="page"] { color: var(--theme-fg); }
 
 /* ===================== HERO ===================== */
-.w-hero { padding: 56px 40px 128px; position: relative; }
+.w-hero { padding: 32px 40px 56px; position: relative; }
 .w-hero__inner {
   max-width: 1680px; margin: 0 auto;
   display: grid; grid-template-columns: 72px minmax(0, 1fr) 360px;
@@ -103,10 +103,10 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
 .w-hero__title {
   font-family: var(--font-en); font-weight: 900;
-  font-size: clamp(60px, 10vw, 156px);
-  line-height: 0.88; letter-spacing: -0.05em;
+  font-size: clamp(56px, 7.6vw, 124px);
+  line-height: 0.9; letter-spacing: -0.05em;
   color: var(--theme-fg);
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   position: relative;
   overflow-wrap: anywhere;
 }
@@ -129,10 +129,10 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .w-hero__sub::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
 
 .w-hero__lead {
-  margin-top: 36px;
+  margin-top: 24px;
   font-family: var(--font-jp); font-weight: 500;
-  font-size: clamp(17px, 1.4vw, 22px);
-  line-height: 1.95; letter-spacing: 0.04em;
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.85; letter-spacing: 0.04em;
   color: var(--gray-500);
   max-width: 640px;
 }
