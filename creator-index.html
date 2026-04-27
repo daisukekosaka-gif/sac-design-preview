@@ -119,14 +119,13 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .breadcrumb [aria-current="page"] { color: var(--theme-fg); }
 
 /* ===================== HERO (creator-index) ===================== */
-.c-hero { padding: 64px 40px 120px; position: relative; }
+.c-hero { padding: 80px 40px 120px; position: relative; }
 .c-hero__inner {
-  max-width: 1440px; margin: 0 auto;
-  display: grid; grid-template-columns: 100px minmax(0, 1fr) 300px;
-  gap: 48px; align-items: end;
-  min-height: 72vh;
+  max-width: 1680px; margin: 0 auto;
+  display: grid; grid-template-columns: 120px minmax(0, 1fr);
+  gap: 56px; align-items: end;
+  min-height: 64vh;
 }
-.c-hero__main { min-width: 0; }
 .c-hero__vlabel {
   writing-mode: vertical-rl;
   font-family: var(--font-jp); font-weight: 500; font-size: 14px;
@@ -134,70 +133,37 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   color: var(--gray-400);
   align-self: start;
   padding-top: 20px;
-  height: 220px;
+  height: 240px;
 }
 .c-hero__vlabel strong { color: var(--theme-fg); font-weight: 700; }
 
-.c-hero__main { position: relative; }
-.c-hero__tag {
-  display: inline-block; margin-bottom: 36px;
-}
+.c-hero__main { position: relative; min-width: 0; max-width: 1320px; }
+.c-hero__tag { display: inline-block; margin-bottom: 36px; }
 .c-hero__title {
   font-family: var(--font-en); font-weight: 900;
-  font-size: clamp(48px, 8.4vw, 124px);
-  line-height: 0.9; letter-spacing: -0.045em;
+  font-size: clamp(56px, 9vw, 168px);
+  line-height: 0.88; letter-spacing: -0.05em;
   color: var(--theme-fg);
   margin-bottom: 48px;
   overflow-wrap: anywhere;
 }
-.c-hero__title em {
-  font-style: normal; color: var(--gold);
-}
+.c-hero__title em { font-style: normal; color: var(--gold); }
 .c-hero__lead {
   font-family: var(--font-jp); font-weight: 500;
-  font-size: clamp(17px, 1.6vw, 22px);
+  font-size: clamp(17px, 1.4vw, 22px);
   line-height: 1.95; letter-spacing: 0.04em;
   color: var(--gray-500);
-  max-width: 560px;
+  max-width: 640px;
 }
 .c-hero__lead strong { color: var(--theme-fg); font-weight: 700; }
 .c-hero__meta {
-  margin-top: 40px;
-  display: flex; gap: 32px; align-items: center;
+  margin-top: 48px;
+  display: flex; gap: 40px; align-items: center; flex-wrap: wrap;
   font-family: var(--font-en); font-weight: 500; font-size: 11px;
   letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--gray-400);
 }
 .c-hero__meta b { color: var(--gold); font-weight: 600; font-size: 14px; letter-spacing: 0.12em; }
-
-.c-hero__portrait {
-  align-self: end;
-  width: 100%;
-  max-width: 100%;
-  position: relative;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  border-radius: 2px;
-  transform: translateY(40px);
-}
-.c-hero__portrait img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 28%;
-  filter: grayscale(0.15) contrast(1.02);
-}
-.c-hero__portrait::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(10,10,10,0.22));
-  pointer-events: none;
-}
-.c-hero__portrait-caption {
-  position: absolute; left: 20px; bottom: 20px; right: 20px;
-  display: flex; justify-content: space-between; align-items: flex-end;
-  font-family: var(--font-en); font-weight: 500; font-size: 10px;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: rgba(255,255,255,0.9);
-}
-.c-hero__portrait-caption b { font-weight: 600; color: #fff; font-size: 12px; letter-spacing: 0.12em; }
 
 /* ===================== CATEGORY NAV (sticky) ===================== */
 .c-cats {
@@ -257,9 +223,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 
 /* ===================== CREATOR SECTION ===================== */
-.c-section { padding: 140px 40px 100px; position: relative; }
+.c-section { padding: 140px 40px 120px; position: relative; }
 .c-section[data-theme="ivory"] { background: var(--ivory); }
-.c-section__inner { max-width: 1440px; margin: 0 auto; }
+.c-section__inner { max-width: 1680px; margin: 0 auto; }
 
 .c-section__head {
   display: grid; grid-template-columns: 1fr auto; align-items: end;
@@ -303,37 +269,21 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   max-width: 340px;
 }
 
-/* GRID: 非対称カラム + 行毎インデント + 縦オフセット */
+/* GRID: 整然とした均等グリッド */
 .c-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: 24px;
-  row-gap: 80px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 32px;
+  row-gap: 64px;
 }
 .c-card { position: relative; display: block; }
-/* カードサイズバリエーション（CMS向け: data-size=large|mid|small） */
-.c-card[data-size="large"] { grid-column: span 5; }
-.c-card[data-size="mid"]   { grid-column: span 4; }
-.c-card[data-size="small"] { grid-column: span 3; }
-/* 行内オフセット */
-.c-card[data-offset="down"]  { transform: translateY(72px); }
-.c-card[data-offset="up"]    { transform: translateY(-24px); }
-.c-card[data-offset="deep"]  { transform: translateY(120px); }
-.c-card[data-offset="flat"]  { transform: translateY(0); }
-/* インデント */
-.c-card[data-indent="left"]  { padding-left: 40px; }
-.c-card[data-indent="right"] { padding-right: 40px; }
 
 .c-card__media {
   position: relative; overflow: hidden; border-radius: 2px;
   background: var(--sand);
   margin-bottom: 20px;
+  aspect-ratio: 3 / 4;
 }
-.c-card[data-size="large"] .c-card__media { aspect-ratio: 3 / 4; }
-.c-card[data-size="mid"] .c-card__media   { aspect-ratio: 4 / 5; }
-.c-card[data-size="small"] .c-card__media { aspect-ratio: 1 / 1; }
-.c-card[data-aspect="portrait"] .c-card__media { aspect-ratio: 3 / 4 !important; }
-.c-card[data-aspect="square"]   .c-card__media { aspect-ratio: 1 / 1 !important; }
 
 .c-card__img {
   width: 100%; height: 100%;
@@ -463,7 +413,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .page-cta {
   background: var(--black);
   color: var(--white);
-  padding: 180px 40px;
+  padding: 120px 40px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -475,29 +425,15 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   pointer-events: none;
 }
 .page-cta__inner { max-width: 1100px; margin: 0 auto; position: relative; }
-.page-cta__label {
-  color: var(--gold);
-  margin-bottom: 40px;
-  display: inline-flex; align-items: center; gap: 12px;
-  font-family: var(--font-en); font-weight: 500; font-size: 11px;
-  letter-spacing: 0.26em; text-transform: uppercase;
-}
-.page-cta__label::before { content:""; width:28px; height:1px; background: currentColor; opacity:0.8;}
-.page-cta__title {
-  font-family: var(--font-en); font-weight: 800;
-  font-size: clamp(48px, 8vw, 128px);
-  line-height: 1; letter-spacing: -0.03em;
-  margin-bottom: 36px;
-}
-.page-cta__title .dot { color: var(--gold); }
 .page-cta__sub {
   font-family: var(--font-jp); font-weight: 500;
-  font-size: clamp(15px, 1.4vw, 18px);
+  font-size: clamp(17px, 1.6vw, 22px);
   line-height: 2; letter-spacing: 0.06em;
-  color: rgba(255,255,255,0.78);
-  max-width: 640px;
-  margin: 0 auto 56px;
+  color: rgba(255,255,255,0.86);
+  max-width: 720px;
+  margin: 0 auto 48px;
 }
+.page-cta__sub strong { color: var(--gold); font-weight: 700; }
 .page-cta__buttons {
   display: inline-flex; flex-wrap: wrap; gap: 18px; justify-content: center;
 }
@@ -619,37 +555,26 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .footer__credit { font-family: var(--font-en); font-weight: 300; font-style: italic; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.32); }
 
 /* ===================== RESPONSIVE ===================== */
+@media (max-width: 1400px) {
+  .c-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 28px; row-gap: 56px; }
+}
 @media (max-width: 1200px) {
-  .c-hero__inner { grid-template-columns: 80px minmax(0, 1fr) 240px; gap: 28px; }
-  .c-card[data-size="large"] { grid-column: span 6; }
-  .c-card[data-size="mid"]   { grid-column: span 6; }
-  .c-card[data-size="small"] { grid-column: span 4; }
+  .c-hero__inner { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
 }
 @media (max-width: 900px) {
   .header { padding: 0 20px; }
   .header__nav { display: none; }
   .header__hamburger { display: flex; }
   .breadcrumb { padding: 88px 20px 0; font-size: 10px; letter-spacing: 0.14em; gap: 10px; }
-  .c-hero { padding: 40px 20px 80px; }
-  .c-hero__inner {
-    grid-template-columns: 1fr;
-    grid-template-areas: "label" "main" "portrait";
-    gap: 28px;
-    min-height: auto;
-  }
+  .c-hero { padding: 48px 20px 80px; }
+  .c-hero__inner { grid-template-columns: 1fr; gap: 28px; min-height: auto; }
   .c-hero__vlabel { writing-mode: horizontal-tb; height: auto; }
-  .c-hero__portrait { transform: none; aspect-ratio: 4 / 5; }
   .c-cats__inner { padding: 14px 20px; gap: 28px; }
   .c-cats__head { display: none; }
   .c-section { padding: 100px 20px 80px; }
   .c-section__head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 64px; padding-bottom: 24px; }
   .c-section__meta { align-items: flex-start; text-align: left; }
-  .c-grid { grid-template-columns: repeat(6, 1fr); row-gap: 48px; column-gap: 16px; }
-  .c-card[data-size="large"],
-  .c-card[data-size="mid"],
-  .c-card[data-size="small"] { grid-column: span 3; }
-  .c-card[data-offset] { transform: none; }
-  .c-card[data-indent] { padding: 0; }
+  .c-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 48px; column-gap: 20px; }
   .c-intermission { padding: 80px 20px; }
   .page-cta { padding: 120px 20px; }
   .footer { padding: 72px 20px 32px; }
@@ -660,10 +585,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .footer__bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
 }
 @media (max-width: 540px) {
-  .c-grid { grid-template-columns: 1fr 1fr; }
-  .c-card[data-size="large"],
-  .c-card[data-size="mid"],
-  .c-card[data-size="small"] { grid-column: span 1; }
+  .c-grid { grid-template-columns: 1fr; }
   .c-hero__meta { flex-wrap: wrap; gap: 16px; }
   .page-cta__buttons { flex-direction: column; }
   .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
@@ -727,13 +649,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </div>
     </div>
 
-    <aside class="c-hero__portrait js-reveal">
-      <img src="assets/creators/tsunehashi.jpg" alt="" loading="lazy" decoding="async">
-      <div class="c-hero__portrait-caption">
-        <span>FEATURED</span>
-        <b>TSUNEHASHI T.</b>
-      </div>
-    </aside>
   </div>
 </section>
 
@@ -785,7 +700,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
     <div class="c-grid">
       <!-- 01 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="large" data-offset="flat">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <img class="c-card__img" src="assets/creators/tsunehashi.jpg" alt="ツネハシタケシ" loading="lazy">
           <span class="c-card__index">01</span>
@@ -798,7 +713,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </div>
       </a>
       <!-- 02 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="mid" data-offset="down">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <img class="c-card__img" src="assets/creators/ochiai.png" alt="落合 剛之" loading="lazy">
           <span class="c-card__index">02</span>
@@ -811,8 +726,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </div>
       </a>
       <!-- 03 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="small" data-offset="up" data-indent="right">
-        <div class="c-card__media" data-aspect="square">
+      <a href="creator-detail.html" class="c-card js-reveal">
+        <div class="c-card__media">
           <img class="c-card__img" src="assets/creators/bird.jpg" alt="Bird" loading="lazy">
           <span class="c-card__index">03</span>
           <div class="c-card__overlay"><p class="c-card__catch">「AIのノイズの奥に、手触りを探す。」</p></div>
@@ -825,7 +740,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a>
 
       <!-- 04 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="mid" data-offset="flat" data-indent="left">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <div class="sac-placeholder" aria-label="写真未登録"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">04</span>
@@ -838,7 +753,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </div>
       </a>
       <!-- 05 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="small" data-offset="deep">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">05</span>
@@ -851,7 +766,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </div>
       </a>
       <!-- 06 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="large" data-offset="down" data-indent="right">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">06</span>
@@ -865,8 +780,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a>
 
       <!-- 07 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="small" data-offset="flat">
-        <div class="c-card__media" data-aspect="portrait">
+      <a href="creator-detail.html" class="c-card js-reveal">
+        <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">07</span>
           <div class="c-card__overlay"><p class="c-card__catch">「素材を信じて、編集で語らない。」</p></div>
@@ -878,7 +793,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </div>
       </a>
       <!-- 08 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="mid" data-offset="up" data-indent="left">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">08</span>
@@ -891,7 +806,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </div>
       </a>
       <!-- 09 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="large" data-offset="flat">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">09</span>
@@ -905,8 +820,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a>
 
       <!-- 10 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="small" data-offset="down" data-indent="right">
-        <div class="c-card__media" data-aspect="square">
+      <a href="creator-detail.html" class="c-card js-reveal">
+        <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">10</span>
           <div class="c-card__overlay"><p class="c-card__catch">「AIに"らしさ"の輪郭を彫らせる。」</p></div>
@@ -949,7 +864,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
     <div class="c-grid">
       <!-- 01 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="mid" data-offset="flat">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <img class="c-card__img" src="assets/creators/gane.jpg" alt="gane.WAV" loading="lazy">
           <span class="c-card__index">01</span>
@@ -962,7 +877,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </div>
       </a>
       <!-- 02 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="large" data-offset="down" data-indent="left">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <img class="c-card__img" src="assets/creators/aoki.webp" alt="AoKi¹⁰⁴" loading="lazy">
           <span class="c-card__index">02</span>
@@ -975,8 +890,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </div>
       </a>
       <!-- 03 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="small" data-offset="up" data-indent="right">
-        <div class="c-card__media" data-aspect="portrait">
+      <a href="creator-detail.html" class="c-card js-reveal">
+        <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">03</span>
           <div class="c-card__overlay"><p class="c-card__catch">「ロゴは、書く前に、呼吸する。」</p></div>
@@ -988,7 +903,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </div>
       </a>
       <!-- 04 -->
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="mid" data-offset="flat">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">04</span>
@@ -1020,7 +935,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     </div>
 
     <div class="c-grid">
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="large" data-offset="flat">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">01</span>
@@ -1032,8 +947,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
           <span class="c-card__role">Sound Designer / Composer</span>
         </div>
       </a>
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="mid" data-offset="down" data-indent="left">
-        <div class="c-card__media" data-aspect="square">
+      <a href="creator-detail.html" class="c-card js-reveal">
+        <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">02</span>
           <div class="c-card__overlay"><p class="c-card__catch">「AI生成音源に、人間の呼吸を混ぜる。」</p></div>
@@ -1044,7 +959,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
           <span class="c-card__role">AI Sound Creator</span>
         </div>
       </a>
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="mid" data-offset="up" data-indent="right">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">03</span>
@@ -1076,7 +991,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     </div>
 
     <div class="c-grid">
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="mid" data-offset="flat">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">01</span>
@@ -1088,7 +1003,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
           <span class="c-card__role">Executive Producer</span>
         </div>
       </a>
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="large" data-offset="down" data-indent="right">
+      <a href="creator-detail.html" class="c-card js-reveal">
         <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">02</span>
@@ -1100,8 +1015,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
           <span class="c-card__role">Producer</span>
         </div>
       </a>
-      <a href="creator-detail.html" class="c-card js-reveal" data-size="small" data-offset="up" data-indent="left">
-        <div class="c-card__media" data-aspect="portrait">
+      <a href="creator-detail.html" class="c-card js-reveal">
+        <div class="c-card__media">
           <div class="sac-placeholder"><span class="sac-placeholder__label">NO PORTRAIT</span></div>
           <span class="c-card__index">03</span>
           <div class="c-card__overlay"><p class="c-card__catch">「予算は、作品の強度を決める言葉。」</p></div>
@@ -1119,8 +1034,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <!-- ============ PAGE CTA ============ -->
 <section class="page-cta">
   <div class="page-cta__inner">
-    <span class="page-cta__label">CONTACT</span>
-    <h2 class="page-cta__title">LET'S CREATE<span class="dot">.</span></h2>
     <p class="page-cta__sub">
       気になる一人が見つかったら、その場で話せます。<br>
       プロジェクトの構想段階からでも、チームの編成相談でも。
