@@ -84,12 +84,11 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .breadcrumb [aria-current="page"] { color: var(--theme-fg); }
 
 /* ===================== HERO ===================== */
-.w-hero { padding: 64px 40px 88px; position: relative; }
+.w-hero { padding: 56px 40px 56px; position: relative; }
 .w-hero__inner {
   max-width: 1680px; margin: 0 auto;
   display: grid; grid-template-columns: 72px minmax(0, 1fr) 360px;
   gap: 40px; align-items: start;
-  min-height: 50vh;
 }
 .w-hero__main { min-width: 0; }
 .w-hero__stats { min-width: 0; }
@@ -99,7 +98,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   letter-spacing: 0.6em; color: var(--gray-400);
   min-height: 200px;
   align-self: start;
-  margin-top: 70px; /* sub label の高さ + 余白 ぶん下げて、タイトル top と Y 揃え */
 }
 .w-hero__vlabel strong { color: var(--theme-fg); font-weight: 700; }
 
@@ -122,15 +120,17 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 @keyframes strikeIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 .w-hero__sub {
-  font-family: var(--font-en); font-weight: 500; font-size: 13px;
-  letter-spacing: 0.24em; text-transform: uppercase;
-  color: var(--gray-400);
-  margin-bottom: 6px;
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
 }
+.w-hero__sub::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
 
 .w-hero__stats {
-  display: flex; flex-direction: column; gap: 18px;
-  padding: 36px 0 0 24px;
+  display: flex; flex-direction: column; gap: 16px;
+  padding: 0 0 0 24px;
   border-left: 1px solid rgba(10,10,10,0.12);
   align-self: start;
 }
@@ -503,7 +503,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   <div class="w-hero__inner">
     <div class="w-hero__vlabel">SAC <strong>SELECTED WORKS</strong> ARCHIVE</div>
     <div class="w-hero__main">
-      <p class="w-hero__sub">SELECTED WORKS / 2020 — 2025</p>
+      <p class="w-hero__sub">SELECTED WORKS</p>
       <h1 class="w-hero__title js-reveal">WORKS<span class="dot">.</span><span class="strike" aria-hidden="true"></span></h1>
     </div>
     <div class="w-hero__stats js-reveal">
@@ -705,7 +705,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     </p>
     <div class="page-cta__buttons">
       <a href="index.html#contact" class="btn-primary">
-        <span>作品について相談する</span>
+        <span>WORKSについて相談する</span>
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <a href="creator-index.html" class="btn-ghost">
