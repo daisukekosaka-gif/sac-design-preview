@@ -57,10 +57,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
 /* ===================== CREATOR HERO ===================== */
 .cd-hero { padding: 24px 40px 48px; background: var(--ivory); position: relative; overflow: hidden; }
-.cd-hero__inner { max-width: 1680px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 64px; align-items: end; min-height: calc(100vh - 320px); position: relative; }
-.cd-hero__left { min-width: 0; }
+.cd-hero__inner { max-width: 1680px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 64px; align-items: start; min-height: calc(100vh - 320px); position: relative; }
+.cd-hero__left { min-width: 0; padding-top: 8px; }
 
-.cd-hero__left { padding-bottom: 12px; }
 .cd-hero__role {
   font-family: var(--font-en); font-weight: 600; font-size: 12px;
   letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
@@ -103,7 +102,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   width: 100%;
   max-width: 100%;
 }
-.cd-hero__right { display: flex; flex-direction: column; justify-content: flex-end; }
+.cd-hero__right { display: flex; flex-direction: column; justify-content: flex-start; }
 .cd-hero__portrait img {
   width: 100%; height: 100%;
   object-fit: cover; object-position: 50% 20%;
@@ -764,7 +763,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   <div class="cd-works__inner">
     <div class="cd-works__head js-reveal">
       <span class="cd-works__num">WORKS / 02</span>
-      <span class="cd-works__jp">選ばれた仕事</span>
     </div>
 
     <div class="cd-works__grid">
@@ -874,36 +872,16 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   </div>
 </section>
 
-<!-- ============ INLINE CTA ============ -->
-<section class="cd-inline-cta">
-  <div class="cd-inline-cta__inner">
-    <span class="cd-inline-cta__label">ASK THIS CREATOR</span>
-    <p class="cd-inline-cta__title">
-      気になったら、<em>この人に</em>そのまま聞いてみる。
-    </p>
-    <div class="cd-inline-cta__btns">
-      <a href="#cta-final" class="btn-primary">
-        <span>この人に相談する</span>
-        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="creator-index.html" class="btn-ghost-dark">
-        <span>他のクリエイターを見る</span>
-        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
 <!-- ============ PAGE CTA ============ -->
 <section class="page-cta" id="cta-final">
   <div class="page-cta__inner">
     <p class="page-cta__sub">
-      <strong>ツネハシ個人への指名相談、SAC全体への総合問合せ、どちらからでも。</strong><br>
+      <strong>クリエイターへの指名相談、SAC全体への総合問合せ、どちらからでも。</strong><br>
       まずは「どんなことを考えているか」から、一緒に言語化します。
     </p>
     <div class="page-cta__buttons">
       <a href="index.html#contact" class="btn-primary">
-        <span>ツネハシに依頼・相談する</span>
+        <span>SACに依頼・相談する</span>
         <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <a href="index.html#contact" class="btn-ghost">
