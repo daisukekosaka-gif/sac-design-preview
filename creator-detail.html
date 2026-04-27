@@ -57,7 +57,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
 /* ===================== CREATOR HERO ===================== */
 .cd-hero { padding: 24px 40px 48px; background: var(--ivory); position: relative; overflow: hidden; }
-.cd-hero__inner { max-width: 1680px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 64px; align-items: start; min-height: calc(100vh - 320px); position: relative; }
+.cd-hero__inner { max-width: 1680px; margin: 0 auto; display: grid; grid-template-columns: 60px minmax(0, 1.2fr) minmax(0, 0.75fr); gap: 0 48px; align-items: start; min-height: calc(100vh - 320px); position: relative; }
 .cd-hero__left { min-width: 0; padding-top: 8px; }
 
 .cd-hero__role {
@@ -128,12 +128,14 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   color: var(--gold);
 }
 
-/* vertical label */
+/* vertical label — first grid column */
 .cd-hero__vlabel {
-  position: absolute; left: 40px; top: 24px;
+  align-self: start;
+  padding-top: 24px;
   writing-mode: vertical-rl;
   font-family: var(--font-en); font-weight: 500; font-size: 10px;
   letter-spacing: 0.36em; text-transform: uppercase; color: var(--gray-400);
+  white-space: nowrap;
 }
 
 /* ===================== STICKY CTA BAR ===================== */
@@ -579,6 +581,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .cd-hero__right { order: -1; max-width: 420px; }
   .cd-hero__portrait { transform: none; aspect-ratio: 4/5; }
   .cd-hero__vlabel { display: none; }
+  .cd-hero__left { padding-left: 0; }
   .cd-profile__inner { grid-template-columns: 1fr; gap: 48px; }
   .cd-works__head { grid-template-columns: 1fr; }
   .work-block[data-layout="full-wide"],
@@ -653,8 +656,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
 <!-- ============ HERO ============ -->
 <section class="cd-hero" id="top">
-  <span class="cd-hero__vlabel">SAC CREATOR / 001 / MOVIE DIRECTOR</span>
   <div class="cd-hero__inner">
+    <span class="cd-hero__vlabel">SAC CREATOR / 001 / MOVIE DIRECTOR</span>
     <div class="cd-hero__left">
       <p class="cd-hero__role">MOVIE DIRECTOR / AI CREATIVE</p>
       <h1 class="cd-hero__name-jp js-reveal">ツネハシ タケシ<span style="color:var(--gold);">.</span></h1>
