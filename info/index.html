@@ -127,21 +127,65 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   margin: 0 auto;
 }
 .i-list__head {
-  margin-bottom: 28px;
-  padding-bottom: 20px;
+  margin-bottom: 36px;
+  padding-bottom: 22px;
   border-bottom: 1px solid rgba(10,10,10,0.12);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
 }
 .i-list__title {
   font-family: var(--font-en); font-weight: 800;
   font-size: clamp(28px, 2.6vw, 40px);
   line-height: 1; letter-spacing: -0.02em;
-  display: flex; align-items: baseline; gap: 24px; flex-wrap: wrap;
+  margin: 0;
 }
-.i-list__title small {
-  font-family: var(--font-jp); font-weight: 500;
-  font-size: 12px; letter-spacing: 0.16em;
+.i-list__title em { font-style: normal; color: var(--gold); }
+
+/* Tag filters */
+.i-list__filters {
+  display: flex; align-items: center; gap: 6px;
+  flex-wrap: wrap;
+}
+.i-list__filter {
+  font-family: var(--font-en); font-weight: 600;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--gray-400);
+  padding: 9px 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
 }
+.i-list__filter:hover {
+  color: var(--theme-fg);
+  border-color: rgba(10,10,10,0.14);
+}
+.i-list__filter.active {
+  color: var(--white);
+  background: var(--theme-fg);
+  border-color: var(--theme-fg);
+}
+.i-list__filter b {
+  font-family: var(--font-en); font-weight: 600;
+  color: var(--gold); margin-left: 8px;
+  font-size: 10px; letter-spacing: 0.04em;
+}
+.i-list__filter.active b { color: var(--gold-soft); }
+/* Hide empty rows / show only matching */
+.i-list__rows .i-row.is-hidden { display: none; }
+.i-list__empty {
+  display: none;
+  padding: 56px 0;
+  text-align: center;
+  font-family: var(--font-jp); font-weight: 500;
+  color: var(--gray-400); font-size: 14px; letter-spacing: 0.05em;
+  grid-column: 1 / -1;
+}
+.i-list__empty.is-active { display: block; }
 
 .i-list__rows {
   list-style: none;
@@ -181,7 +225,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .i-row a:hover .i-row__thumb::after { opacity: 1; }
 .i-row__cue {
   position: absolute;
-  left: 16px; bottom: 16px;
+  right: 16px; bottom: 16px;
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--font-en); font-weight: 600;
   font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
@@ -448,7 +492,15 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <section class="i-list">
   <div class="i-list__inner">
     <header class="i-list__head">
-      <h2 class="i-list__title">DISPATCH<small>すべての発信 ／ Showing 15 of 128</small></h2>
+      <h2 class="i-list__title">STORIES<em>.</em></h2>
+      <div class="i-list__filters" role="tablist" aria-label="記事カテゴリで絞り込み">
+        <button class="i-list__filter active" data-filter="all" role="tab" aria-selected="true">ALL <b>15</b></button>
+        <button class="i-list__filter" data-filter="project" role="tab">PROJECT <b>5</b></button>
+        <button class="i-list__filter" data-filter="report"  role="tab">REPORT <b>4</b></button>
+        <button class="i-list__filter" data-filter="news"    role="tab">NEWS <b>3</b></button>
+        <button class="i-list__filter" data-filter="release" role="tab">RELEASE <b>2</b></button>
+        <button class="i-list__filter" data-filter="media"   role="tab">MEDIA <b>1</b></button>
+      </div>
     </header>
     <ul class="i-list__rows" id="rows">
 
@@ -618,6 +670,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
     </ul>
+    <p class="i-list__empty" id="emptyMsg">該当する記事がありません。</p>
 
     <!-- ============ PAGINATION ============ -->
     <div class="i-pager">
@@ -753,6 +806,29 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('revealed'); observer.unobserve(e.target); } });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.js-reveal').forEach(function(el){ observer.observe(el); });
+
+  // Tag filter (visual only — CMS が同等のクエリを返す前提)
+  (function(){
+    var filters = document.querySelectorAll('.i-list__filter');
+    var rows = document.querySelectorAll('#rows .i-row');
+    var emptyMsg = document.getElementById('emptyMsg');
+    filters.forEach(function(f){
+      f.addEventListener('click', function(){
+        filters.forEach(function(x){ x.classList.remove('active'); x.setAttribute('aria-selected','false'); });
+        f.classList.add('active');
+        f.setAttribute('aria-selected','true');
+        var cat = f.getAttribute('data-filter');
+        var visible = 0;
+        rows.forEach(function(r){
+          var c = r.getAttribute('data-cat');
+          var match = (cat === 'all' || cat === c);
+          r.classList.toggle('is-hidden', !match);
+          if (match) visible++;
+        });
+        if (emptyMsg) emptyMsg.classList.toggle('is-active', visible === 0);
+      });
+    });
+  })();
 
   // Chat
   var chatOpen = document.getElementById('chatOpen');
