@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>『LAST CALL』キービジュアル制作チームに参画。 — INFO / SAC</title>
+<meta name="description" content="2026年6月公開予定の大型音楽プロジェクト『LAST CALL』のキービジュアル、ティザームービー、SNS展開素材まで、SACがクリエイティブの一気通貫を担当。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===================== TOKENS ===================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --ivory: #F4F1EC;
+  --sand: #E9E3D8;
+  --stone: #D6CFC0;
+  --gray-50:  #FAFAFA;
+  --gray-100: #F5F5F5;
+  --gray-150: #ECECEC;
+  --gray-200: #CCCCCC;
+  --gray-300: #B5B5B5;
+  --gray-400: #888888;
+  --gray-500: #444444;
+  --gray-700: #232323;
+  --gray-900: #1A1A1A;
+  --gold: #C8A86B;
+  --gold-soft: #E3C893;
+  --theme-bg: #FFFFFF;
+  --theme-fg: #0A0A0A;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-en: 'Inter', sans-serif;
+  --font-jp: 'Noto Sans JP', sans-serif;
+  --font-mincho: 'Zen Old Mincho', 'Noto Serif JP', serif;
+}
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: clip; }
+body { font-family: var(--font-jp); color: var(--theme-fg); background: var(--theme-bg); overflow-x: clip; line-height: 1.7; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+button { background: none; border: none; cursor: pointer; color: inherit; font: inherit; }
+::selection { background: var(--gold); color: var(--black); }
+
+/* ===================== HEADER ===================== */
+.header { position: fixed; top: 0; left: 0; width: 100%; height: 72px; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.header.scrolled { background: rgba(255,255,255,0.88); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); border-bottom-color: rgba(10,10,10,0.08); }
+.header__logo { font-family: var(--font-en); font-weight: 700; font-size: 18px; letter-spacing: 0.08em; }
+.header__nav { display: flex; gap: 36px; }
+.header__nav a { font-family: var(--font-en); font-weight: 400; font-size: 11px; letter-spacing: 0.14em; opacity: 0.72; transition: color 0.3s var(--ease), opacity 0.3s var(--ease); }
+.header__nav a:hover, .header__nav a[aria-current="page"] { opacity: 1; color: var(--gold); }
+.header__hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; z-index: 1100; }
+.header__hamburger span { display: block; width: 22px; height: 1.5px; background: currentColor; transition: transform 0.4s var(--ease), opacity 0.3s var(--ease); }
+.header__hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.header__hamburger.active span:nth-child(2) { opacity: 0; }
+.header__hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { position: fixed; inset: 0; background: var(--black); z-index: 1050; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease); }
+.mobile-menu.active { opacity: 1; pointer-events: auto; }
+.mobile-menu a { font-family: var(--font-en); font-weight: 300; font-size: 22px; letter-spacing: 0.12em; color: var(--white); transition: color 0.3s var(--ease); }
+.mobile-menu a:hover { color: var(--gold); }
+
+/* ===================== UTILITIES ===================== */
+.js-reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.js-reveal.revealed { opacity: 1; transform: translateY(0); }
+
+/* ===================== READING PROGRESS ===================== */
+.read-progress { position: fixed; top: 72px; left: 0; height: 2px; z-index: 999; background: rgba(10,10,10,0.05); width: 100%; }
+.read-progress__bar { height: 100%; width: 0%; background: var(--gold); transition: width 0.1s linear; }
+
+/* ===================== BREADCRUMB ===================== */
+.breadcrumb {
+  padding: 96px 40px 0;
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-400);
+  max-width: 1880px; margin: 0 auto;
+}
+.breadcrumb a { transition: color 0.3s var(--ease); }
+.breadcrumb a:hover { color: var(--gold); }
+.breadcrumb span.sep { opacity: 0.35; }
+.breadcrumb [aria-current="page"] { color: var(--theme-fg); text-transform: none; letter-spacing: 0.06em; font-family: var(--font-jp); font-weight: 500; max-width: 540px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ===================== ARTICLE HERO ===================== */
+.article-hero {
+  padding: 28px 40px 0;
+  position: relative;
+}
+.article-hero__inner {
+  max-width: 1880px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) 220px;
+  gap: 56px;
+  align-items: end;
+  padding-bottom: 36px;
+}
+.article-hero__index {
+  font-family: var(--font-en); font-weight: 600;
+  font-size: 11px; letter-spacing: 0.22em;
+  color: var(--gray-400);
+  writing-mode: vertical-rl;
+  align-self: start;
+  padding-top: 4px;
+}
+.article-hero__index b { color: var(--theme-fg); }
+.article-hero__main { min-width: 0; }
+.article-hero__cat {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-bottom: 28px;
+}
+.article-hero__cat .tag {
+  font-family: var(--font-en); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  border-radius: 999px;
+}
+.article-hero__cat .date {
+  font-family: var(--font-en); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.22em; color: var(--gray-400);
+}
+.article-hero__cat .date b { color: var(--theme-fg); font-weight: 700; }
+.article-hero__title {
+  font-family: var(--font-jp); font-weight: 700;
+  font-size: clamp(34px, 4.4vw, 72px);
+  line-height: 1.32; letter-spacing: 0.005em;
+  color: var(--theme-fg);
+  text-wrap: balance;
+  margin-bottom: 28px;
+}
+.article-hero__title em { font-style: normal; color: var(--gold); }
+.article-hero__title .quote { font-family: var(--font-mincho); font-weight: 700; }
+.article-hero__lead {
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 2.0; letter-spacing: 0.04em;
+  color: var(--gray-500);
+  max-width: 720px;
+}
+.article-hero__lead strong { color: var(--theme-fg); font-weight: 700; }
+
+.article-hero__side {
+  display: flex; flex-direction: column; gap: 18px;
+  align-self: end;
+  padding-bottom: 6px;
+}
+.article-hero__side-row {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray-400);
+  border-bottom: 1px solid rgba(10,10,10,0.08);
+  padding-bottom: 10px;
+}
+.article-hero__side-row b { font-family: var(--font-en); font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--theme-fg); }
+.article-hero__side-row.gold b { color: var(--gold); }
+.article-hero__avatars { display: inline-flex; align-items: center; }
+.article-hero__avatars .av { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--white); margin-left: -7px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.article-hero__avatars .av:first-child { margin-left: 0; }
+.article-hero__avatars .av img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ===================== BIG HERO IMAGE ===================== */
+.article-cover {
+  position: relative;
+  padding: 0 40px;
+  margin-bottom: 96px;
+}
+.article-cover__inner {
+  max-width: 1880px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 56px;
+}
+.article-cover__caption {
+  align-self: end;
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray-400);
+  writing-mode: vertical-rl;
+  padding-bottom: 8px;
+}
+.article-cover__caption b { color: var(--theme-fg); font-weight: 700; }
+.article-cover__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--gray-100);
+  border-radius: 2px;
+}
+.article-cover__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform 1.6s var(--ease); }
+.article-cover.is-in .article-cover__media img { transform: scale(1); }
+.article-cover__credit {
+  position: absolute;
+  right: 16px; bottom: 16px;
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.22em; color: var(--gray-500);
+  text-transform: uppercase;
+}
+.article-cover__credit b { color: var(--theme-fg); font-weight: 700; }
+
+/* Floating share rail (left side of article) */
+.share-rail {
+  position: fixed;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 14px 8px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(10,10,10,0.06);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s var(--ease);
+}
+.share-rail.is-active { opacity: 1; pointer-events: auto; }
+.share-rail__label {
+  font-family: var(--font-en); font-weight: 600; font-size: 9px;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gray-400);
+  writing-mode: vertical-rl;
+  margin: 4px auto 8px;
+}
+.share-rail__btn {
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  color: var(--theme-fg);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.share-rail__btn:hover { background: var(--theme-fg); color: var(--white); transform: scale(1.06); }
+
+/* ===================== ARTICLE BODY (editorial) ===================== */
+.article-body {
+  padding: 0 40px 120px;
+  position: relative;
+}
+.article-body__inner {
+  max-width: 1880px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) 320px;
+  gap: 56px;
+  position: relative;
+}
+.article-body__rail {
+  align-self: start;
+  position: sticky;
+  top: 96px;
+}
+.article-body__rail-label {
+  font-family: var(--font-en); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gray-400);
+  writing-mode: vertical-rl;
+  padding: 8px 0;
+}
+.article-body__rail-label b { color: var(--theme-fg); }
+.article-body__main { min-width: 0; max-width: 760px; }
+.article-body__side {
+  align-self: start;
+  position: sticky;
+  top: 96px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+
+/* TOC */
+.toc {
+  padding: 24px 0 24px 24px;
+  border-left: 1px solid rgba(10,10,10,0.12);
+}
+.toc__label {
+  font-family: var(--font-en); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px;
+}
+.toc ol { list-style: none; counter-reset: toc; display: flex; flex-direction: column; gap: 10px; }
+.toc li { counter-increment: toc; }
+.toc a {
+  display: block;
+  font-family: var(--font-jp); font-weight: 500; font-size: 13px;
+  line-height: 1.6; color: var(--gray-500);
+  padding-left: 36px; position: relative;
+  transition: color 0.3s var(--ease);
+}
+.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  position: absolute; left: 0; top: 1px;
+  font-family: var(--font-en); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--gray-400);
+  transition: color 0.3s var(--ease);
+}
+.toc a:hover { color: var(--theme-fg); }
+.toc a:hover::before { color: var(--gold); }
+
+/* Article typography */
+.article-body__main p,
+.article-body__main h2,
+.article-body__main h3,
+.article-body__main figure,
+.article-body__main blockquote,
+.article-body__main ul,
+.article-body__main ol,
+.article-body__main .embed,
+.article-body__main hr {
+  margin-bottom: 28px;
+}
+.article-body__main p {
+  font-family: var(--font-jp); font-weight: 400;
+  font-size: 16px; line-height: 2.05; letter-spacing: 0.04em;
+  color: var(--gray-500);
+}
+.article-body__main p strong { color: var(--theme-fg); font-weight: 700; }
+.article-body__main p a {
+  color: var(--theme-fg); font-weight: 600;
+  border-bottom: 1px solid var(--gold);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.article-body__main p a:hover { color: var(--gold); border-color: transparent; }
+
+.article-body__main .lead {
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(18px, 1.4vw, 22px);
+  line-height: 2.0; letter-spacing: 0.04em;
+  color: var(--theme-fg);
+  margin-bottom: 56px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(10,10,10,0.08);
+  text-wrap: pretty;
+}
+.article-body__main .lead em { font-style: normal; color: var(--gold); }
+
+.article-body__main h2 {
+  font-family: var(--font-jp); font-weight: 700;
+  font-size: clamp(24px, 2vw, 34px);
+  line-height: 1.4; letter-spacing: 0.02em;
+  color: var(--theme-fg);
+  margin-top: 72px; margin-bottom: 28px;
+  position: relative;
+  padding-left: 0;
+  text-wrap: balance;
+}
+.article-body__main h2 .num {
+  display: block;
+  font-family: var(--font-en); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.26em; color: var(--gold);
+  margin-bottom: 14px;
+}
+.article-body__main h2 .num::before { content: ''; display: inline-block; width: 24px; height: 1px; background: currentColor; vertical-align: middle; margin-right: 12px; }
+.article-body__main h2 em { font-style: normal; color: var(--gold); }
+
+.article-body__main h3 {
+  font-family: var(--font-jp); font-weight: 700;
+  font-size: clamp(18px, 1.3vw, 22px);
+  line-height: 1.55; letter-spacing: 0.02em;
+  color: var(--theme-fg);
+  margin-top: 48px;
+}
+.article-body__main h3::before { content: '— '; color: var(--gold); }
+
+.article-body__main ul, .article-body__main ol { padding-left: 28px; }
+.article-body__main li {
+  font-family: var(--font-jp); font-weight: 400;
+  font-size: 15px; line-height: 1.95; letter-spacing: 0.04em;
+  color: var(--gray-500);
+  margin-bottom: 8px;
+}
+.article-body__main ul li { list-style: none; position: relative; padding-left: 0; }
+.article-body__main ul li::before { content: ''; position: absolute; left: -24px; top: 0.85em; width: 12px; height: 1px; background: var(--gold); }
+
+.article-body__main hr {
+  border: none;
+  height: 1px;
+  background: rgba(10,10,10,0.1);
+  margin: 56px 0;
+}
+
+/* Pull quote */
+.article-body__main blockquote {
+  margin: 64px -120px;
+  padding: 0;
+  font-family: var(--font-mincho); font-weight: 500;
+  font-size: clamp(24px, 2.2vw, 38px);
+  line-height: 1.7; letter-spacing: 0.04em;
+  color: var(--theme-fg);
+  position: relative;
+  text-wrap: balance;
+}
+.article-body__main blockquote::before {
+  content: '“';
+  position: absolute;
+  left: -8px; top: -56px;
+  font-family: var(--font-mincho); font-weight: 900;
+  font-size: 160px; color: var(--gold);
+  line-height: 1; opacity: 0.4;
+}
+.article-body__main blockquote cite {
+  display: block;
+  margin-top: 28px;
+  font-family: var(--font-jp); font-style: normal; font-weight: 600;
+  font-size: 13px; letter-spacing: 0.08em; color: var(--gray-400);
+}
+.article-body__main blockquote cite::before { content: '— '; }
+
+/* Inline figures */
+.article-body__main figure {
+  margin: 56px 0;
+}
+.article-body__main figure img {
+  width: 100%; height: auto;
+  border-radius: 2px;
+}
+.article-body__main figcaption {
+  margin-top: 14px;
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: 12px; line-height: 1.7; color: var(--gray-400);
+  letter-spacing: 0.04em;
+  padding-left: 14px;
+  border-left: 2px solid var(--gold);
+}
+.article-body__main figcaption b { color: var(--gray-500); font-weight: 700; }
+
+/* Wide / bleed figure — breaks out of column to give editorial drama */
+.article-body__main figure.wide {
+  margin: 80px -180px;
+}
+.article-body__main figure.bleed {
+  margin: 80px calc(-1 * (50vw - 760px / 2 + 40px));
+  margin-left: calc(-1 * (50vw - 760px / 2 - 88px - 56px - 40px));
+  margin-right: calc(-1 * (50vw - 760px / 2 - 320px - 56px - 40px));
+}
+.article-body__main figure.bleed img { aspect-ratio: 21 / 9; object-fit: cover; }
+
+/* Two-up figures */
+.article-body__main .figs-2 {
+  display: grid; grid-template-columns: 1.2fr 1fr;
+  gap: 18px;
+  margin: 56px -120px;
+}
+.article-body__main .figs-2 figure { margin: 0; }
+.article-body__main .figs-2 figure:nth-child(2) { padding-top: 64px; }
+.article-body__main .figs-2 figure img { aspect-ratio: 4 / 5; object-fit: cover; }
+.article-body__main .figs-2 figure:first-child img { aspect-ratio: 4 / 3; }
+
+/* Video embed */
+.article-body__main .embed {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--black);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 64px -120px;
+}
+.article-body__main .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.article-body__main .embed__caption {
+  margin-top: 14px;
+  font-family: var(--font-jp); font-weight: 500; font-size: 12px;
+  color: var(--gray-400); padding-left: 14px; border-left: 2px solid var(--gold);
+}
+
+/* Inline reference / link card */
+.article-body__main .ref-card {
+  display: grid; grid-template-columns: 1fr 200px;
+  gap: 28px;
+  align-items: stretch;
+  margin: 56px 0;
+  padding: 0;
+  border: 1px solid rgba(10,10,10,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: border-color 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.article-body__main .ref-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+.article-body__main .ref-card__body { padding: 24px 28px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+.article-body__main .ref-card__label { font-family: var(--font-en); font-weight: 600; font-size: 10px; letter-spacing: 0.26em; color: var(--gold); text-transform: uppercase; }
+.article-body__main .ref-card__title { font-family: var(--font-jp); font-weight: 700; font-size: 16px; line-height: 1.5; color: var(--theme-fg); margin: 0; }
+.article-body__main .ref-card__url { font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.06em; color: var(--gray-400); }
+.article-body__main .ref-card__media { background: var(--gray-100); position: relative; }
+.article-body__main .ref-card__media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Tagged badges within the body */
+.tag-badge {
+  display: inline-block;
+  font-family: var(--font-en); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold);
+  padding: 3px 10px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  margin: 0 4px;
+  vertical-align: 1px;
+}
+
+/* ===================== CREDITS / RELATED CREATORS (cast-roll) ===================== */
+.credits {
+  background: var(--ivory);
+  padding: 120px 40px;
+  position: relative;
+}
+.credits__inner {
+  max-width: 1880px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 56px;
+}
+.credits__label {
+  writing-mode: vertical-rl;
+  font-family: var(--font-en); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--gold);
+  align-self: start;
+  padding-top: 6px;
+}
+.credits__head {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: 36px; align-items: end;
+  padding-bottom: 56px;
+  border-bottom: 1px solid rgba(10,10,10,0.1);
+  margin-bottom: 56px;
+}
+.credits__title {
+  font-family: var(--font-en); font-weight: 800;
+  font-size: clamp(48px, 5.4vw, 84px);
+  line-height: 0.95; letter-spacing: -0.04em;
+}
+.credits__title small {
+  display: block;
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(12px, 0.85vw, 14px);
+  letter-spacing: 0.18em; color: var(--gray-400);
+  margin-top: 14px;
+}
+.credits__title em { font-style: normal; color: var(--gold); }
+.credits__view-all {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-en); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 16px 28px; border: 1px solid var(--theme-fg);
+  border-radius: 999px;
+  transition: background 0.4s var(--ease), color 0.4s var(--ease);
+}
+.credits__view-all:hover { background: var(--theme-fg); color: var(--white); }
+.credits__view-all svg { transition: transform 0.4s var(--ease); }
+.credits__view-all:hover svg { transform: translateX(6px); }
+
+.credits__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px 36px;
+}
+.cred {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  position: relative;
+  transition: transform 0.4s var(--ease);
+}
+.cred:hover { transform: translateY(-3px); }
+.cred__media {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--gray-100);
+  position: relative;
+}
+.cred__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.6s var(--ease); }
+.cred:hover .cred__media img { transform: scale(1.08); }
+.cred__media::after {
+  content: ''; position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  transition: border-color 0.4s var(--ease);
+}
+.cred:hover .cred__media::after { border-color: var(--gold); }
+.cred__role {
+  font-family: var(--font-en); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.cred__name {
+  font-family: var(--font-jp); font-weight: 700;
+  font-size: 17px; line-height: 1.4; color: var(--theme-fg);
+  margin-bottom: 2px;
+}
+.cred__name-en {
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.12em; color: var(--gray-400);
+}
+.cred__link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 8px;
+  font-family: var(--font-en); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gray-400);
+  transition: color 0.3s var(--ease);
+}
+.cred:hover .cred__link { color: var(--theme-fg); }
+.cred__link svg { transition: transform 0.3s var(--ease); }
+.cred:hover .cred__link svg { transform: translate(3px, -3px); }
+
+/* ===================== SHARE BLOCK ===================== */
+.share-block {
+  padding: 100px 40px 80px;
+  background: var(--white);
+}
+.share-block__inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: center;
+}
+.share-block__title {
+  font-family: var(--font-en); font-weight: 800;
+  font-size: clamp(36px, 3.6vw, 56px);
+  line-height: 1; letter-spacing: -0.03em;
+}
+.share-block__title em { font-style: normal; color: var(--gold); }
+.share-block__title small {
+  display: block;
+  font-family: var(--font-jp); font-weight: 500; font-size: clamp(13px, 0.95vw, 15px);
+  letter-spacing: 0.04em; color: var(--gray-500);
+  margin-top: 18px;
+  line-height: 1.85;
+}
+.share-block__buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+.share-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 16px 24px;
+  border: 1px solid rgba(10,10,10,0.16);
+  border-radius: 999px;
+  font-family: var(--font-en); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.share-btn:hover { background: var(--theme-fg); color: var(--white); border-color: var(--theme-fg); }
+.share-btn svg { width: 16px; height: 16px; }
+.share-btn[data-share="x"]:hover { background: #000; }
+.share-btn[data-share="facebook"]:hover { background: #1877F2; border-color: #1877F2; }
+.share-btn[data-share="line"]:hover { background: #06C755; border-color: #06C755; }
+.share-btn--copy { position: relative; }
+.share-btn--copy.copied { background: var(--gold); color: var(--black); border-color: var(--gold); }
+.share-btn--copy.copied::after {
+  content: 'コピーしました';
+  position: absolute; left: 50%; top: -38px;
+  transform: translateX(-50%);
+  background: var(--theme-fg); color: var(--white);
+  padding: 6px 12px; font-size: 10px; letter-spacing: 0.18em; border-radius: 4px;
+  white-space: nowrap;
+  font-family: var(--font-jp); font-weight: 500;
+}
+
+/* ===================== PAGE CTA ===================== */
+.page-cta {
+  background: var(--black);
+  color: var(--white);
+  padding: 140px 40px;
+  position: relative; overflow: hidden;
+}
+.page-cta::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 60% at 80% 20%, rgba(200,168,107,0.12), transparent 70%),
+    radial-gradient(40% 40% at 10% 80%, rgba(200,168,107,0.06), transparent 70%);
+  pointer-events: none;
+}
+.page-cta__inner {
+  max-width: 1280px; margin: 0 auto;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 80px;
+  align-items: end;
+}
+.page-cta__sub {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.page-cta__sub::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
+.page-cta__title {
+  font-family: var(--font-en); font-weight: 800;
+  font-size: clamp(48px, 5.6vw, 84px);
+  line-height: 0.96; letter-spacing: -0.04em;
+  color: var(--white);
+}
+.page-cta__title em { font-style: normal; color: var(--gold); }
+.page-cta__title-jp {
+  display: block; margin-top: 18px;
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 2; letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.78);
+  max-width: 640px;
+}
+.page-cta__title-jp strong { color: var(--gold); font-weight: 700; }
+.page-cta__right { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; padding-bottom: 16px; }
+.btn-primary {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 46px;
+  background: var(--gold); color: var(--black);
+  font-family: var(--font-en); font-weight: 600; font-size: 13px;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  border-radius: 999px;
+  box-shadow: 0 12px 32px rgba(200,168,107,0.28), 0 2px 8px rgba(0,0,0,0.28);
+  transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+}
+.btn-primary::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, #E3C893 0%, #C8A86B 55%, #A88550 100%); transform: translateX(-101%); transition: transform 0.9s var(--ease); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(200,168,107,0.38); }
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary > * { position: relative; z-index: 1; }
+.btn-primary svg { transition: transform 0.6s var(--ease); }
+.btn-primary:hover svg { transform: translateX(6px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 40px;
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #fff;
+  font-family: var(--font-en); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  border-radius: 999px;
+  transition: background 0.5s var(--ease), color 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+.btn-ghost:hover { background: #fff; color: var(--black); border-color: #fff; }
+.btn-ghost svg { transition: transform 0.6s var(--ease); }
+.btn-ghost:hover svg { transform: translateX(6px); }
+
+/* ===================== NEXT / PREV (article navigation) ===================== */
+.article-nav {
+  background: var(--white);
+  padding: 80px 40px 40px;
+  border-top: 1px solid rgba(10,10,10,0.06);
+}
+.article-nav__inner {
+  max-width: 1880px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 36px;
+  align-items: stretch;
+}
+.article-nav__item {
+  display: grid; grid-template-columns: 80px minmax(0, 1fr);
+  gap: 18px; align-items: center;
+  padding: 28px 0;
+  transition: transform 0.4s var(--ease);
+}
+.article-nav__item:hover { transform: translateY(-2px); }
+.article-nav__item--next { grid-template-columns: minmax(0, 1fr) 80px; text-align: right; }
+.article-nav__thumb {
+  width: 80px; height: 80px;
+  overflow: hidden;
+  background: var(--gray-100);
+}
+.article-nav__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.article-nav__dir {
+  font-family: var(--font-en); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+  display: inline-flex; gap: 8px; align-items: center;
+}
+.article-nav__title {
+  font-family: var(--font-jp); font-weight: 700;
+  font-size: 15px; line-height: 1.55; color: var(--theme-fg);
+  letter-spacing: 0.02em;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.article-nav__center {
+  display: flex; align-items: center; justify-content: center;
+}
+.article-nav__center a {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
+  font-family: var(--font-en); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gray-400); transition: color 0.3s var(--ease);
+  padding: 16px;
+  border-left: 1px solid rgba(10,10,10,0.08);
+  border-right: 1px solid rgba(10,10,10,0.08);
+}
+.article-nav__center a:hover { color: var(--gold); }
+.article-nav__center svg { width: 24px; height: 24px; }
+
+/* ===================== CHAT WIDGET ===================== */
+.chat-widget { position: fixed; right: 28px; bottom: 28px; z-index: 500; display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px; background: var(--theme-fg); color: var(--white); border-radius: 999px; font-family: var(--font-en); font-weight: 600; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; box-shadow: 0 12px 32px rgba(0,0,0,0.18); transition: transform 0.5s var(--ease); }
+.chat-widget:hover { transform: translateY(-3px); }
+.chat-widget__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(200,168,107,0.18); animation: chatPulse 2.2s ease-in-out infinite; }
+@keyframes chatPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 4px rgba(200,168,107,0.18); }
+  50%      { transform: scale(1.2); box-shadow: 0 0 0 8px rgba(200,168,107,0.05); }
+}
+.chat-modal { position: fixed; inset: 0; z-index: 800; background: rgba(10,10,10,0.68); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s var(--ease); }
+.chat-modal.active { opacity: 1; pointer-events: auto; }
+.chat-modal__box { width: min(520px, 92vw); max-height: 86vh; background: var(--white); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transform: translateY(24px) scale(0.98); transition: transform 0.5s var(--ease); box-shadow: 0 30px 60px rgba(0,0,0,0.35); }
+.chat-modal.active .chat-modal__box { transform: translateY(0) scale(1); }
+.chat-modal__header { padding: 20px 24px; border-bottom: 1px solid rgba(10,10,10,0.08); display: flex; justify-content: space-between; align-items: center; }
+.chat-modal__title { font-family: var(--font-en); font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; }
+.chat-modal__title small { display: block; font-family: var(--font-jp); font-weight: 400; font-size: 11px; letter-spacing: 0.04em; color: var(--gray-400); text-transform: none; margin-top: 4px; }
+.chat-modal__close { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gray-400); }
+.chat-modal__body { padding: 24px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; flex: 1; background: var(--gray-100); }
+.chat-bubble { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-family: var(--font-jp); font-weight: 400; font-size: 13px; line-height: 1.7; }
+.chat-bubble--in { background: #fff; align-self: flex-start; border-top-left-radius: 4px; }
+.chat-bubble--out { background: var(--theme-fg); color: var(--white); align-self: flex-end; border-top-right-radius: 4px; }
+.chat-presets { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.chat-presets button { font-family: var(--font-jp); font-weight: 400; font-size: 12px; padding: 8px 14px; border: 1px solid rgba(10,10,10,0.12); border-radius: 999px; background: #fff; transition: border-color 0.3s var(--ease), color 0.3s var(--ease); }
+.chat-presets button:hover { border-color: var(--gold); color: var(--gold); }
+.chat-modal__foot { padding: 16px 20px; border-top: 1px solid rgba(10,10,10,0.08); display: flex; gap: 12px; }
+.chat-modal__input { flex: 1; padding: 12px 16px; border: 1px solid rgba(10,10,10,0.12); border-radius: 999px; font-family: var(--font-jp); font-size: 13px; background: var(--gray-100); }
+.chat-modal__input:focus { outline: none; border-color: var(--gold); background: #fff; }
+.chat-modal__send { padding: 12px 22px; background: var(--gold); color: var(--black); border-radius: 999px; font-family: var(--font-en); font-weight: 600; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+
+/* ===================== FOOTER ===================== */
+.footer { background: var(--black); color: var(--white); padding: 88px 40px 32px; }
+.footer__inner { max-width: 1440px; margin: 0 auto; }
+.footer__top { display: grid; grid-template-columns: 200px 1fr; gap: 48px; padding-bottom: 96px; }
+.footer__logo { font-family: var(--font-en); font-weight: 700; font-size: 24px; letter-spacing: 0.08em; color: #fff; }
+.footer__nav { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 32px; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.footer__col-title { font-family: var(--font-en); font-weight: 800; font-size: 24px; letter-spacing: 0.02em; margin-bottom: 20px; }
+.footer__col ul a { font-family: var(--font-en); font-weight: 700; font-size: 15px; letter-spacing: 0.05em; transition: color 0.3s var(--ease); }
+.footer__col ul a:hover { color: var(--gold); }
+.footer__col--right { text-align: right; min-width: 140px; }
+.footer__col--right ul a { font-size: 16px; letter-spacing: 0.04em; }
+.footer__middle { display: grid; grid-template-columns: 1fr auto auto; gap: 48px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.08); align-items: start; }
+.footer__address { font-family: var(--font-jp); font-style: normal; font-size: 13px; line-height: 1.9; color: rgba(255,255,255,0.7); }
+.footer__map { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 3px; transition: color 0.3s var(--ease), border-color 0.3s var(--ease); }
+.footer__map:hover { color: var(--gold); border-color: var(--gold); }
+.footer__map svg { transition: transform 0.4s var(--ease); }
+.footer__map:hover svg { transform: translate(3px, -3px); }
+.footer__socials { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer__socials a { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-en); font-weight: 400; font-size: 12px; letter-spacing: 0.08em; color: rgba(255,255,255,0.72); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s var(--ease); }
+.footer__socials a:hover { color: var(--gold); }
+.footer__back { width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: #fff; transition: background 0.4s var(--ease), color 0.4s var(--ease), transform 0.4s var(--ease), border-color 0.4s var(--ease); }
+.footer__back:hover { background: var(--gold); color: var(--black); border-color: var(--gold); transform: translateY(-3px); }
+.footer__bottom { margin-top: 64px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; }
+.footer__copy { font-family: var(--font-en); font-weight: 300; font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+.footer__credit { font-family: var(--font-en); font-weight: 300; font-style: italic; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.32); }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1500px) {
+  .article-hero__inner { grid-template-columns: 64px minmax(0, 1fr) 200px; gap: 36px; }
+  .article-cover__inner { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
+  .article-body__inner { grid-template-columns: 64px minmax(0, 1fr) 280px; gap: 40px; }
+  .article-body__main blockquote { margin-left: -64px; margin-right: -64px; }
+  .article-body__main figure.wide { margin-left: -100px; margin-right: -100px; }
+  .article-body__main .figs-2 { margin-left: -64px; margin-right: -64px; }
+  .article-body__main .embed { margin-left: -64px; margin-right: -64px; }
+  .credits__inner { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
+  .credits__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px; }
+}
+@media (max-width: 1100px) {
+  .article-hero__inner { grid-template-columns: 1fr; gap: 24px; }
+  .article-hero__index { writing-mode: horizontal-tb; }
+  .article-hero__side { flex-direction: row; flex-wrap: wrap; gap: 18px; padding: 20px 0; border-top: 1px solid rgba(10,10,10,0.08); }
+  .article-hero__side-row { padding-bottom: 0; border-bottom: none; flex: 1 1 auto; min-width: 140px; }
+  .article-cover__inner { grid-template-columns: 1fr; }
+  .article-cover__caption { writing-mode: horizontal-tb; }
+  .article-body__inner { grid-template-columns: 1fr; gap: 36px; }
+  .article-body__rail { display: none; }
+  .article-body__side { position: relative; top: auto; }
+  .article-body__main { max-width: none; }
+  .article-body__main blockquote, .article-body__main figure.wide, .article-body__main .figs-2, .article-body__main .embed, .article-body__main figure.bleed {
+    margin-left: 0; margin-right: 0;
+  }
+  .credits__inner { grid-template-columns: 1fr; }
+  .credits__label { writing-mode: horizontal-tb; padding-top: 0; }
+  .credits__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .credits__head { grid-template-columns: 1fr; gap: 24px; }
+  .share-block__inner { grid-template-columns: 1fr; gap: 28px; }
+  .page-cta__inner { grid-template-columns: 1fr; gap: 36px; }
+  .article-nav__inner { grid-template-columns: 1fr; gap: 16px; }
+  .article-nav__item--next { grid-template-columns: 80px minmax(0, 1fr); text-align: left; }
+  .article-nav__center a { border: 1px solid rgba(10,10,10,0.08); padding: 12px 24px; border-radius: 999px; flex-direction: row; }
+  .share-rail { display: none; }
+}
+@media (max-width: 900px) {
+  .header { padding: 0 20px; }
+  .header__nav { display: none; }
+  .header__hamburger { display: flex; }
+  .breadcrumb { padding: 88px 20px 0; }
+  .article-hero { padding: 24px 20px 0; }
+  .article-cover { padding: 0 20px; margin-bottom: 56px; }
+  .article-body { padding: 0 20px 80px; }
+  .credits { padding: 80px 20px; }
+  .credits__list { grid-template-columns: 1fr; }
+  .share-block { padding: 64px 20px; }
+  .page-cta { padding: 80px 20px; }
+  .article-nav { padding: 56px 20px 24px; }
+  .article-body__main blockquote { margin: 48px 0; font-size: 22px; }
+  .article-body__main blockquote::before { font-size: 100px; top: -36px; }
+  .footer { padding: 72px 20px 32px; }
+  .footer__top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 56px; }
+  .footer__nav { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .footer__col--right { text-align: left; }
+  .footer__middle { grid-template-columns: 1fr; gap: 28px; }
+  .chat-widget { right: 16px; bottom: 16px; padding: 12px 16px; font-size: 10px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <a href="../index.html" class="header__logo">SAC</a>
+  <nav class="header__nav">
+    <a href="../index.html#about">ABOUT</a>
+    <a href="../works-index.html">WORKS</a>
+    <a href="../index.html#service">SERVICE</a>
+    <a href="../creator-index.html">CREATOR</a>
+    <a href="index.html" aria-current="page">INFO</a>
+    <a href="../index.html#contact">CONTACT</a>
+  </nav>
+  <button class="header__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../index.html#about">ABOUT</a>
+  <a href="../works-index.html">WORKS</a>
+  <a href="../index.html#service">SERVICE</a>
+  <a href="../creator-index.html">CREATOR</a>
+  <a href="index.html">INFO</a>
+  <a href="../index.html#contact">CONTACT</a>
+</div>
+
+<!-- ============ READING PROGRESS ============ -->
+<div class="read-progress" aria-hidden="true"><div class="read-progress__bar" id="progressBar"></div></div>
+
+<!-- ============ BREADCRUMB ============ -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">HOME</a>
+  <span class="sep">/</span>
+  <a href="index.html">INFO</a>
+  <span class="sep">/</span>
+  <span aria-current="page">『LAST CALL』キービジュアル制作チームに参画</span>
+</nav>
+
+<!-- ============ ARTICLE HERO ============ -->
+<header class="article-hero" id="top">
+  <div class="article-hero__inner">
+    <div class="article-hero__index"><b>001</b> &nbsp; / &nbsp; DISPATCH No.128</div>
+    <div class="article-hero__main">
+      <div class="article-hero__cat">
+        <span class="tag">PROJECT</span>
+        <span class="date">PUBLISHED <b>2026.04.18</b> / UPDATED 2026.04.20</span>
+      </div>
+      <h1 class="article-hero__title js-reveal">
+        <span class="quote">『LAST CALL』</span>キービジュアル<em>制作チーム</em>に参画。<br>
+        アーティスト写真からティザー映像までの<em>一気通貫</em>を担当しました。
+      </h1>
+      <p class="article-hero__lead js-reveal">
+        <strong>2026年6月公開予定の大型音楽プロジェクト『LAST CALL』。</strong>
+        SACはキービジュアル、ティザームービー、SNS展開素材まで、クリエイティブの一気通貫を担当。
+        AIによる素材生成、ディレクション、現場撮影、後処理までを編集的に組み上げています。
+      </p>
+    </div>
+    <aside class="article-hero__side js-reveal">
+      <div class="article-hero__side-row"><span>READ TIME</span><b>8 MIN</b></div>
+      <div class="article-hero__side-row gold"><span>PROJECT</span><b>OPEN</b></div>
+      <div class="article-hero__side-row"><span>CREATORS</span>
+        <div class="article-hero__avatars">
+          <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
+          <span class="av"><img src="../assets/creators/ochiai.png" alt=""></span>
+          <span class="av"><img src="../assets/creators/tsunehashi.jpg" alt=""></span>
+          <span class="av"><img src="../assets/creators/bird.jpg" alt=""></span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<!-- ============ COVER IMAGE ============ -->
+<section class="article-cover" id="cover">
+  <div class="article-cover__inner">
+    <div class="article-cover__caption">COVER &nbsp;／&nbsp; <b>KEY VISUAL — LAST CALL</b></div>
+    <figure class="article-cover__media">
+      <img src="../assets/works/lastcall.jpg" alt="LAST CALL キービジュアル">
+      <figcaption class="article-cover__credit">Photography: <b>Bird</b> &nbsp;/&nbsp; Direction: <b>SAC</b></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ FLOATING SHARE RAIL ============ -->
+<aside class="share-rail" id="shareRail" aria-label="記事をシェア">
+  <span class="share-rail__label">SHARE</span>
+  <a class="share-rail__btn" data-share="x" href="#" aria-label="Xでシェア">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.53 3H20.5l-6.52 7.45L21.75 21h-6.03l-4.72-6.16L5.6 21H2.63l6.98-7.98L2.25 3h6.18l4.27 5.64L17.53 3Z"/></svg>
+  </a>
+  <a class="share-rail__btn" data-share="facebook" href="#" aria-label="Facebookでシェア">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h-3a4 4 0 0 0-4 4v3H4v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3V3Z"/></svg>
+  </a>
+  <a class="share-rail__btn" data-share="line" href="#" aria-label="LINEでシェア">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19.94 10.46c0-3.5-3.51-6.34-7.83-6.34-4.31 0-7.83 2.84-7.83 6.34 0 3.13 2.79 5.76 6.55 6.26.26.06.6.17.69.39.08.2.05.51.03.71l-.11.66c-.03.2-.16.78.69.42.85-.36 4.59-2.7 6.27-4.62 1.16-1.27 1.54-2.55 1.54-3.82Z"/></svg>
+  </a>
+  <a class="share-rail__btn share-rail__copy" data-share="copy" href="#" aria-label="URLをコピー" id="railCopy">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+  </a>
+</aside>
+
+<!-- ============ ARTICLE BODY ============ -->
+<section class="article-body">
+  <div class="article-body__inner">
+
+    <!-- LEFT RAIL -->
+    <div class="article-body__rail" aria-hidden="true">
+      <p class="article-body__rail-label"><b>LAST CALL</b> &nbsp;／&nbsp; SAC ARCHIVE 2026</p>
+    </div>
+
+    <!-- MAIN COLUMN -->
+    <article class="article-body__main">
+
+      <p class="lead">
+        音楽は、最初の1秒で<em>「世界観」</em>を伝えるメディアです。
+        ジャケット、ティザー、ライブの一瞬、SNSのサムネイル ── 入り口は無数にあるけれど、それらが「同じひとつの作品」を指している必要があります。
+        本記事では、SACがアーティスト・レーベル・マネジメントと並走しながら『LAST CALL』のキービジュアルを設計した、その思考と実装を残しておきます。
+      </p>
+
+      <h2><span class="num">CHAPTER 01</span>ブリーフは「<em>一語</em>」だけだった</h2>
+      <p>
+        プロジェクトの最初のミーティングで、アーティスト本人から渡された言葉は、たった一語でした。<strong>「沈黙。」</strong>
+        通常、商業案件のブリーフは要件と禁止事項のリストになりがちですが、今回はその真逆。SAC側で<a href="#">仮説のヴィジュアルムードボード</a>を3案立て、本人と二人三脚で削り込んでいくことが、企画段階の主作業になりました。
+      </p>
+      <p>
+        ムードを言語化するために、AIによる素材生成は<strong>提案ツール</strong>として使っています。一晩で200カット以上を生成し、翌朝のミーティングで一緒に<em>「これは違う、これは近い」</em>を仕分けする。AIは答えではなく、対話の解像度を上げる装置として機能しました。
+      </p>
+
+      <figure class="wide">
+        <img src="../assets/works/lastcall.jpg" alt="ムードボードA案">
+        <figcaption><b>FIG.1</b> &nbsp;／&nbsp; 初期ムードボードA案。生成系のラフ素材を200カット並べ、本人と「沈黙の温度」を仕分けた。</figcaption>
+      </figure>
+
+      <h2><span class="num">CHAPTER 02</span>キービジュアルは<em>「ジャケットではなく、装置」</em></h2>
+      <p>
+        従来、キービジュアルはCDジャケットやポスターのために作られていました。けれど現在の音楽プロジェクトにおいて、キービジュアルは<strong>SNSのアイコン、サブスクのサムネイル、ライブの会場演出、ティザーの素材</strong>へ、同じ画像が流れていきます。「印刷されるための一枚」ではなく、「<em>あらゆる尺・解像度に伸縮するための装置</em>」として設計する必要がありました。
+      </p>
+      <p>
+        そこでSACが採用したのは、<strong>レイヤー設計</strong>のアプローチです。最終ヴィジュアルを、被写体／余白／色／ノイズの4層に分けて作り、運用フェーズで自由に組み替えられるようにしておく。これにより、SNS用の正方形版、ライブ会場用の縦長版、サブスクのサムネイル用の横長版が、すべて<em>同じ気配</em>を保ったまま展開できます。
+      </p>
+
+      <h3>レイヤー構造の方針</h3>
+      <ul>
+        <li><strong>L1：被写体（人物）</strong>　／　現場撮影。AI素材は使用しない。表情はディレクションで決める。</li>
+        <li><strong>L2：余白（空間）</strong>　／　AI生成。雰囲気を「沈黙」に寄せる。100枚以上のバリエーション。</li>
+        <li><strong>L3：色温度</strong>　／　Lookup Table（LUT）として管理。展開先ごとに微調整可能。</li>
+        <li><strong>L4：ノイズ／粒子</strong>　／　全媒体共通の「サイン」として、フィルム粒子を全カットに統一して敷く。</li>
+      </ul>
+
+      <div class="figs-2">
+        <figure>
+          <img src="../assets/works/24.jpg" alt="撮影現場">
+          <figcaption><b>FIG.2</b> &nbsp;／&nbsp; 現場撮影は1日で完了。AI素材で事前に画角を確定させ、現場では「人」だけに集中。</figcaption>
+        </figure>
+        <figure>
+          <img src="../assets/works/hyde.jpg" alt="後処理">
+          <figcaption><b>FIG.3</b> &nbsp;／&nbsp; 後処理は4層を組み合わせ。同じ素材から12種のフォーマットを派生。</figcaption>
+        </figure>
+      </div>
+
+      <h2><span class="num">CHAPTER 03</span>ティザー映像は<em>「動かない」</em>ことに賭けた</h2>
+      <p>
+        SNSタイムラインで再生されるティザーは、最初の1秒の引きが命です。多くの場合「動き」と「カット数」で勝負しがちですが、本プロジェクトでは真逆の判断をしました。<strong>ほぼ動かない15秒。</strong>
+        被写体は呼吸しているだけ。背景は微細にゆらぐだけ。けれど、フィードを縦スクロールしていた指が一瞬止まる。「この人、なんで動いてないんだ？」という違和感を、視聴の引っ掛かりに変える設計です。
+      </p>
+
+      <blockquote>
+        止めることでしか出せない緊張感がある。<br>
+        AIの強みは「動かす」ことだけではなく、<br>
+        <em>動かさない判断を、現場で即座に試せること</em>だ。
+        <cite>SAC ／ ディレクター 青木 健一</cite>
+      </blockquote>
+
+      <p>
+        この判断は、AIが現場でリアルタイムに「もし動かしたらどう見えるか」を生成して比較できたからこそ可能になりました。判断材料が手元で揃うとき、人は<em>過剰な動き</em>を選ばずに済みます。
+      </p>
+
+      <div class="embed" aria-label="ティザー映像（プレビュー）">
+        <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1" title="LAST CALL Teaser" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="embed__caption" style="margin-top:-12px; padding-left:14px; border-left:2px solid var(--gold); color:var(--gray-400); font-size:12px;">
+        <b>VIDEO</b> &nbsp;／&nbsp; LAST CALL ティザー（15秒・公開前のプレビュー版）
+      </p>
+
+      <h2><span class="num">CHAPTER 04</span>SNS展開で大事だった、たった<em>一つ</em>のこと</h2>
+      <p>
+        本プロジェクトのSNS素材は、48パターン用意しました。Instagram用の正方形、ストーリーズ用の縦長、リール用の動画、X用の横長、ティザー、解禁日カウントダウン、それぞれ複数バリエーション。けれど、運用上、徹底したことはたった一つ。
+      </p>
+      <p><strong>「同じ粒子（ノイズ）が、すべての画像に乗っている」</strong>こと。これだけです。</p>
+      <p>
+        色も構図もカット割りも、媒体ごとに変わって構わない。けれど粒子だけは絶対に揃える。タイムライン上で他の画像と並んだ時、「この粒子の感触、どこかで見た」という<em>記憶の引っ掛かり</em>を作る。これが、断片的な接触の中でも「同じ作品」として認識されるための、いちばん細い、いちばん強い線でした。
+      </p>
+
+      <a class="ref-card" href="#" rel="noopener">
+        <div class="ref-card__body">
+          <span class="ref-card__label">REFERENCE / 関連リンク</span>
+          <h4 class="ref-card__title">LAST CALL 公式特設ページ ／ 6月17日 0:00 公開予定</h4>
+          <span class="ref-card__url">lastcall.example.com</span>
+        </div>
+        <div class="ref-card__media"><img src="../assets/works/lastcall.jpg" alt=""></div>
+      </a>
+
+      <h2><span class="num">CHAPTER 05</span>誰がいて、誰が作ったか</h2>
+      <p>
+        この仕事は、SAC単独では成立していません。アーティスト本人、レーベル、マネジメント、撮影現場のスタッフ、ヘアメイク、スタイリスト、印刷会社、SNS運用チーム ── 数えれば30人以上が関わっています。本記事の最後では、特にSACから入った主要なクリエイターを<a href="../creator-index.html">CREATOR一覧</a>からリンクで紹介します。
+      </p>
+      <p>
+        個別のキャスティング、似た規模の音楽プロジェクトのご相談は、<strong>記事末尾のCONTACTまたはチャットから</strong>気軽にどうぞ。AIネイティブの音楽案件は、いま、年に数件しか動いていません。<em>動いている人間の手が空いている時に</em>、ご相談いただくのがいちばん良いタイミングです。
+      </p>
+
+      <hr>
+
+      <p>
+        <span class="tag-badge">PROJECT</span><span class="tag-badge">MUSIC</span><span class="tag-badge">KEY VISUAL</span><span class="tag-badge">TEASER</span><span class="tag-badge">SNS</span>
+      </p>
+
+      <p style="font-family: var(--font-en); font-weight: 600; font-size: 11px; letter-spacing: 0.22em; color: var(--gray-400); text-transform: uppercase; margin-top: 28px;">
+        WRITTEN BY <span style="color:var(--theme-fg);">SAC EDITORIAL</span> ／ 2026.04.18
+      </p>
+    </article>
+
+    <!-- RIGHT SIDE: TOC + small CTAs -->
+    <aside class="article-body__side">
+      <div class="toc">
+        <p class="toc__label">— CONTENTS</p>
+        <ol>
+          <li><a href="#">ブリーフは「一語」だけだった</a></li>
+          <li><a href="#">キービジュアルは「ジャケットではなく、装置」</a></li>
+          <li><a href="#">ティザー映像は「動かない」ことに賭けた</a></li>
+          <li><a href="#">SNS展開で大事だった、たった一つのこと</a></li>
+          <li><a href="#">誰がいて、誰が作ったか</a></li>
+        </ol>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ============ CREDITS / RELATED CREATORS ============ -->
+<section class="credits">
+  <div class="credits__inner">
+    <span class="credits__label">CREDITS &nbsp;／&nbsp; この記事に関わったクリエイター</span>
+    <div>
+      <div class="credits__head">
+        <h2 class="credits__title">
+          CAST &amp; <em>CREDITS</em>
+          <small>本プロジェクトを動かした人たち。気になる名前があれば、そのままプロフィールへ。</small>
+        </h2>
+        <a href="../creator-index.html" class="credits__view-all">
+          <span>CREATOR一覧へ</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="credits__list">
+
+        <a href="../creator-detail.html" class="cred">
+          <div class="cred__media"><img src="../assets/creators/aoki.webp" alt="青木 健一"></div>
+          <div>
+            <p class="cred__role">Creative Director</p>
+            <p class="cred__name">青木 健一</p>
+            <p class="cred__name-en">Kenichi Aoki</p>
+            <span class="cred__link">VIEW PROFILE <svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+
+        <a href="../creator-detail.html" class="cred">
+          <div class="cred__media"><img src="../assets/creators/ochiai.png" alt="落合 響"></div>
+          <div>
+            <p class="cred__role">Producer</p>
+            <p class="cred__name">落合 響</p>
+            <p class="cred__name-en">Hibiki Ochiai</p>
+            <span class="cred__link">VIEW PROFILE <svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+
+        <a href="../creator-detail.html" class="cred">
+          <div class="cred__media"><img src="../assets/creators/tsunehashi.jpg" alt="常橋 拓海"></div>
+          <div>
+            <p class="cred__role">Art Director</p>
+            <p class="cred__name">常橋 拓海</p>
+            <p class="cred__name-en">Takumi Tsunehashi</p>
+            <span class="cred__link">VIEW PROFILE <svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+
+        <a href="../creator-detail.html" class="cred">
+          <div class="cred__media"><img src="../assets/creators/bird.jpg" alt="Bird"></div>
+          <div>
+            <p class="cred__role">Photographer</p>
+            <p class="cred__name">Bird</p>
+            <p class="cred__name-en">Bird (Photography)</p>
+            <span class="cred__link">VIEW PROFILE <svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+
+        <a href="../creator-detail.html" class="cred">
+          <div class="cred__media"><img src="../assets/creators/gane.jpg" alt="金内 慎一"></div>
+          <div>
+            <p class="cred__role">Motion Designer</p>
+            <p class="cred__name">金内 慎一</p>
+            <p class="cred__name-en">Shinichi Kanai</p>
+            <span class="cred__link">VIEW PROFILE <svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+
+        <a href="../creator-detail.html" class="cred">
+          <div class="cred__media"><img src="../assets/creators/aoki.webp" alt="SAC EDITORIAL"></div>
+          <div>
+            <p class="cred__role">Editorial</p>
+            <p class="cred__name">SAC 編集部</p>
+            <p class="cred__name-en">SAC EDITORIAL</p>
+            <span class="cred__link">VIEW PROFILE <svg viewBox="0 0 24 24" width="10" height="10" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHARE BLOCK ============ -->
+<section class="share-block" id="shareBlock">
+  <div class="share-block__inner">
+    <div>
+      <h2 class="share-block__title">
+        この記事を、<em>シェア</em>する。
+        <small>知り合いに読ませたい1本だったなら、そっと共有してください。<br>SNSの拡散ひとつが、次の似た仕事につながります。</small>
+      </h2>
+    </div>
+    <div class="share-block__buttons">
+      <a class="share-btn" data-share="x" href="#" aria-label="Xでシェア">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.53 3H20.5l-6.52 7.45L21.75 21h-6.03l-4.72-6.16L5.6 21H2.63l6.98-7.98L2.25 3h6.18l4.27 5.64L17.53 3Z"/></svg>
+        <span>Share on X</span>
+      </a>
+      <a class="share-btn" data-share="facebook" href="#" aria-label="Facebookでシェア">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h-3a4 4 0 0 0-4 4v3H4v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3V3Z"/></svg>
+        <span>Facebook</span>
+      </a>
+      <a class="share-btn" data-share="line" href="#" aria-label="LINEでシェア">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.94 10.46c0-3.5-3.51-6.34-7.83-6.34-4.31 0-7.83 2.84-7.83 6.34 0 3.13 2.79 5.76 6.55 6.26.26.06.6.17.69.39.08.2.05.51.03.71l-.11.66c-.03.2-.16.78.69.42.85-.36 4.59-2.7 6.27-4.62 1.16-1.27 1.54-2.55 1.54-3.82Z"/></svg>
+        <span>LINE</span>
+      </a>
+      <button class="share-btn share-btn--copy" data-share="copy" id="copyBtn" type="button" aria-label="URLをコピー">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+        <span>Copy URL</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE CTA ============ -->
+<section class="page-cta">
+  <div class="page-cta__inner">
+    <div>
+      <p class="page-cta__sub">CONTACT / 相談する</p>
+      <h2 class="page-cta__title">この温度の<br>仕事、<em>続けよう</em>。</h2>
+      <p class="page-cta__title-jp">
+        <strong>キービジュアル、ティザー、SNS運用、会場演出。</strong>
+        音楽以外でも、似た温度のクリエイティブを探しているなら、構想段階で構いません。SACのプロジェクトデスクへ直接ご相談ください。
+      </p>
+    </div>
+    <div class="page-cta__right">
+      <a href="../index.html#contact" class="btn-primary">
+        <span>SACに相談する</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="../creator-index.html" class="btn-ghost">
+        <span>クリエイターを指名する</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ARTICLE NAV (prev / next) ============ -->
+<nav class="article-nav" aria-label="記事ナビゲーション">
+  <div class="article-nav__inner">
+    <a href="yymmdd.html" class="article-nav__item article-nav__item--prev">
+      <div class="article-nav__thumb"><img src="../assets/works/24.jpg" alt=""></div>
+      <div>
+        <p class="article-nav__dir">
+          <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M19 12H5M11 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          PREV / 前の記事
+        </p>
+        <p class="article-nav__title">STUDIO REPORT 002 ／ AIネイティブな撮影現場で見えてきた、人と機械の役割分担。</p>
+      </div>
+    </a>
+    <div class="article-nav__center">
+      <a href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span>INFO INDEX</span>
+      </a>
+    </div>
+    <a href="yymmdd.html" class="article-nav__item article-nav__item--next">
+      <div>
+        <p class="article-nav__dir" style="justify-content: flex-end; display: flex;">
+          NEXT / 次の記事
+          <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </p>
+        <p class="article-nav__title">『HYDE OFFICIAL FAN FES 2026』ヴィジュアルおよび会場演出をSACが担当。</p>
+      </div>
+      <div class="article-nav__thumb"><img src="../assets/works/hyde.jpg" alt=""></div>
+    </a>
+  </div>
+</nav>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <a href="../index.html" class="footer__brand" aria-label="SAC"><span class="footer__logo">SAC</span></a>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__col"><h3 class="footer__col-title">ABOUT</h3><ul><li><a href="../index.html#about">PHILOSOPHY</a></li><li><a href="../index.html#about">APPROACH</a></li><li><a href="../index.html#about">COMPANY</a></li></ul></div>
+        <div class="footer__col"><h3 class="footer__col-title">WORKS</h3><ul><li><a href="../works-index.html">ALL WORKS</a></li><li><a href="../works-index.html">MOVIE</a></li><li><a href="../works-index.html">WEB DESIGN</a></li><li><a href="../works-index.html">GRAPHIC</a></li></ul></div>
+        <div class="footer__col"><h3 class="footer__col-title">CREATOR</h3><ul><li><a href="../creator-index.html#movie-director">DIRECTOR</a></li><li><a href="../creator-index.html#art-director">ART DIRECTOR</a></li><li><a href="../creator-index.html">ALL CREATORS</a></li></ul></div>
+        <div class="footer__col footer__col--right"><ul><li><a href="../index.html#service">SERVICE</a></li><li><a href="index.html">INFO</a></li><li><a href="../index.html#contact">CONTACT</a></li></ul></div>
+      </nav>
+    </div>
+    <div class="footer__middle">
+      <div class="footer__address-wrap">
+        <address class="footer__address">〒141-0021 東京都品川区上大崎3-14-1<br>中丸ハウス B棟</address>
+        <a href="https://maps.app.goo.gl/tKVmTAiDvhVb9SHV6" target="_blank" rel="noopener" class="footer__map">MAP<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <ul class="footer__socials" aria-label="Social media">
+        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></li>
+        <li><a href="https://x.com/" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.53 3H20.5l-6.52 7.45L21.75 21h-6.03l-4.72-6.16L5.6 21H2.63l6.98-7.98L2.25 3h6.18l4.27 5.64L17.53 3Zm-1.06 16.2h1.66L7.63 4.7H5.85l10.62 14.5Z"/></svg><span>X (Twitter)</span></a></li>
+        <li><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h-3a4 4 0 0 0-4 4v3H4v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3V3Z"/></svg><span>Facebook</span></a></li>
+      </ul>
+      <a href="#top" class="footer__back" aria-label="Back to top"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© EPOCH Inc.</p>
+      <p class="footer__credit">This website is entirely crafted with AI.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHAT WIDGET ============ -->
+<button class="chat-widget" id="chatOpen" aria-label="CHATで相談">
+  <span class="chat-widget__dot"></span>
+  <span>この記事について相談</span>
+</button>
+<div class="chat-modal" id="chatModal" role="dialog" aria-modal="true">
+  <div class="chat-modal__box">
+    <div class="chat-modal__header">
+      <div class="chat-modal__title">SAC PROJECT DESK<small>『LAST CALL』のような仕事をご検討中の方へ</small></div>
+      <button class="chat-modal__close" id="chatClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="chat-modal__body" id="chatBody">
+      <div class="chat-bubble chat-bubble--in">こんにちは、SACです。『LAST CALL』のようなキービジュアル制作・ティザー・SNS展開のご相談、お気軽にどうぞ。</div>
+      <div class="chat-presets">
+        <button data-preset="似たキービジュアルを作りたい">似たキービジュアルを作りたい</button>
+        <button data-preset="ティザー映像を作りたい">ティザー映像を作りたい</button>
+        <button data-preset="このクリエイターを指名したい">このクリエイターを指名したい</button>
+        <button data-preset="予算感を相談したい">予算感を相談</button>
+      </div>
+    </div>
+    <form class="chat-modal__foot" id="chatForm">
+      <input type="text" class="chat-modal__input" id="chatInput" placeholder="メッセージを書く…" autocomplete="off">
+      <button type="submit" class="chat-modal__send">送る</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // Header scroll
+  var header = document.getElementById('header');
+  var progress = document.getElementById('progressBar');
+  var shareRail = document.getElementById('shareRail');
+  var cover = document.getElementById('cover');
+
+  function onScroll(){
+    var y = window.scrollY;
+    header.classList.toggle('scrolled', y > 80);
+
+    // reading progress relative to article body
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - doc.clientHeight;
+    var pct = max > 0 ? Math.min(100, (y / max) * 100) : 0;
+    progress.style.width = pct + '%';
+
+    // floating share rail visibility — appear after cover, hide near footer
+    var shareEl = document.getElementById('shareBlock');
+    if (cover && shareEl) {
+      var coverBottom = cover.getBoundingClientRect().bottom;
+      var shareTop = shareEl.getBoundingClientRect().top;
+      var active = coverBottom < 120 && shareTop > window.innerHeight * 0.6;
+      shareRail.classList.toggle('is-active', active);
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile menu
+  var hamburger = document.getElementById('hamburger');
+  var mobile = document.getElementById('mobileMenu');
+  if (hamburger && mobile) {
+    hamburger.addEventListener('click', function(){
+      hamburger.classList.toggle('active');
+      mobile.classList.toggle('active');
+      document.body.style.overflow = mobile.classList.contains('active') ? 'hidden' : '';
+    });
+    mobile.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ hamburger.classList.remove('active'); mobile.classList.remove('active'); document.body.style.overflow=''; });
+    });
+  }
+
+  // Reveal
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('revealed'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.js-reveal').forEach(function(el){ observer.observe(el); });
+
+  // Cover image reveal
+  if (cover) {
+    var coverObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('is-in'); coverObs.unobserve(e.target); } });
+    }, { threshold: 0.2 });
+    coverObs.observe(cover);
+  }
+
+  // Share — open share intent for X / Facebook / LINE; copy URL otherwise
+  function shareIntent(kind){
+    var url = encodeURIComponent(window.location.href);
+    var title = encodeURIComponent(document.title);
+    if (kind === 'x') return 'https://twitter.com/intent/tweet?text=' + title + '&url=' + url;
+    if (kind === 'facebook') return 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+    if (kind === 'line') return 'https://social-plugins.line.me/lineit/share?url=' + url;
+    return null;
+  }
+  document.querySelectorAll('[data-share]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var k = a.getAttribute('data-share');
+      if (k === 'copy') {
+        e.preventDefault();
+        var loc = window.location.href;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(loc).then(function(){ flashCopy(a); });
+        } else {
+          var ta = document.createElement('textarea'); ta.value = loc; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); flashCopy(a);
+        }
+      } else {
+        var u = shareIntent(k);
+        if (u) { e.preventDefault(); window.open(u, '_blank', 'noopener,width=600,height=520'); }
+      }
+    });
+  });
+  function flashCopy(a){
+    a.classList.add('copied');
+    setTimeout(function(){ a.classList.remove('copied'); }, 1800);
+  }
+
+  // Chat
+  var chatOpen = document.getElementById('chatOpen');
+  var chatClose = document.getElementById('chatClose');
+  var chatModal = document.getElementById('chatModal');
+  var chatBody = document.getElementById('chatBody');
+  var chatForm = document.getElementById('chatForm');
+  var chatInput = document.getElementById('chatInput');
+  function openChat(){ chatModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+  function closeChat(){ chatModal.classList.remove('active'); document.body.style.overflow = ''; }
+  chatOpen && chatOpen.addEventListener('click', openChat);
+  chatClose && chatClose.addEventListener('click', closeChat);
+  chatModal && chatModal.addEventListener('click', function(e){ if (e.target === chatModal) closeChat(); });
+  document.querySelectorAll('.chat-presets button').forEach(function(b){
+    b.addEventListener('click', function(){
+      addBubble(b.getAttribute('data-preset'), 'out');
+      setTimeout(function(){ addBubble('ありがとうございます。担当より追ってご返信します。簡単な詳細・予算帯・スケジュールがあれば下に書いてください。', 'in'); }, 600);
+    });
+  });
+  chatForm && chatForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = (chatInput.value || '').trim();
+    if (!v) return;
+    addBubble(v, 'out'); chatInput.value = '';
+    setTimeout(function(){ addBubble('受け取りました。担当者よりご返信します（営業時間内）。', 'in'); }, 700);
+  });
+  function addBubble(text, dir){
+    var d = document.createElement('div');
+    d.className = 'chat-bubble chat-bubble--' + dir;
+    d.textContent = text;
+    chatBody.appendChild(d);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+})();
+</script>
+
+</body>
+</html>

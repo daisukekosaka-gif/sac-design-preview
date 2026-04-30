@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INFO — SAC / Smart AI Creative</title>
+<meta name="description" content="SACの最新情報、お知らせ、取り組み、実績トピック。映像・ウェブ・グラフィック・インスタレーション・SNSにわたるSACの動きをここから。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===================== TOKENS ===================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --ivory: #F4F1EC;
+  --sand: #E9E3D8;
+  --stone: #D6CFC0;
+  --gray-100: #F5F5F5;
+  --gray-150: #ECECEC;
+  --gray-200: #CCCCCC;
+  --gray-300: #B5B5B5;
+  --gray-400: #888888;
+  --gray-500: #444444;
+  --gray-700: #232323;
+  --gray-900: #1A1A1A;
+  --gold: #C8A86B;
+  --gold-soft: #E3C893;
+  --theme-bg: #FFFFFF;
+  --theme-fg: #0A0A0A;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-en: 'Inter', sans-serif;
+  --font-jp: 'Noto Sans JP', sans-serif;
+}
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: clip; }
+body {
+  font-family: var(--font-jp);
+  color: var(--theme-fg);
+  background: var(--theme-bg);
+  overflow-x: clip;
+  line-height: 1.7;
+}
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+button { background: none; border: none; cursor: pointer; color: inherit; font: inherit; }
+::selection { background: var(--gold); color: var(--black); }
+
+/* ===================== HEADER ===================== */
+.header { position: fixed; top: 0; left: 0; width: 100%; height: 72px; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.header.scrolled { background: rgba(255,255,255,0.88); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); border-bottom-color: rgba(10,10,10,0.08); }
+.header__logo { font-family: var(--font-en); font-weight: 700; font-size: 18px; letter-spacing: 0.08em; }
+.header__nav { display: flex; gap: 36px; }
+.header__nav a { font-family: var(--font-en); font-weight: 400; font-size: 11px; letter-spacing: 0.14em; opacity: 0.72; transition: color 0.3s var(--ease), opacity 0.3s var(--ease); }
+.header__nav a:hover, .header__nav a[aria-current="page"] { opacity: 1; color: var(--gold); }
+.header__hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; z-index: 1100; }
+.header__hamburger span { display: block; width: 22px; height: 1.5px; background: currentColor; transition: transform 0.4s var(--ease), opacity 0.3s var(--ease); }
+.header__hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.header__hamburger.active span:nth-child(2) { opacity: 0; }
+.header__hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { position: fixed; inset: 0; background: var(--black); z-index: 1050; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease); }
+.mobile-menu.active { opacity: 1; pointer-events: auto; }
+.mobile-menu a { font-family: var(--font-en); font-weight: 300; font-size: 22px; letter-spacing: 0.12em; color: var(--white); transition: color 0.3s var(--ease); }
+.mobile-menu a:hover { color: var(--gold); }
+
+/* ===================== UTILITIES ===================== */
+.section-label { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+.section-label::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
+.js-reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.js-reveal.revealed { opacity: 1; transform: translateY(0); }
+
+/* ===================== BREADCRUMB ===================== */
+.breadcrumb {
+  padding: 96px 40px 0;
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-400);
+  max-width: 1880px; margin: 0 auto;
+}
+.breadcrumb a { transition: color 0.3s var(--ease); }
+.breadcrumb a:hover { color: var(--gold); }
+.breadcrumb span.sep { opacity: 0.35; }
+.breadcrumb [aria-current="page"] { color: var(--theme-fg); }
+
+/* ===================== HERO (editorial / asymmetric) ===================== */
+.i-hero { padding: 36px 40px 28px; position: relative; }
+.i-hero__inner {
+  max-width: 1880px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) 360px;
+  gap: 56px; align-items: end;
+}
+.i-hero__vlabel {
+  writing-mode: vertical-rl;
+  font-family: var(--font-jp); font-weight: 500; font-size: 13px;
+  letter-spacing: 0.62em; color: var(--gray-400);
+  align-self: start;
+  padding-top: 12px;
+}
+.i-hero__vlabel strong { color: var(--theme-fg); font-weight: 700; }
+.i-hero__main { min-width: 0; }
+.i-hero__sub { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.i-hero__sub::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
+.i-hero__title {
+  font-family: var(--font-en); font-weight: 900;
+  font-size: clamp(72px, 12vw, 220px);
+  line-height: 0.86; letter-spacing: -0.06em;
+  color: var(--theme-fg);
+  position: relative;
+  display: inline-block;
+}
+.i-hero__title .dot { color: var(--gold); }
+.i-hero__title-jp {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--font-jp); font-weight: 700;
+  font-size: clamp(20px, 2vw, 30px);
+  line-height: 1.4; letter-spacing: 0.08em;
+  color: var(--theme-fg);
+}
+.i-hero__title-jp em { font-style: normal; color: var(--gold); }
+.i-hero__lead {
+  margin-top: 32px;
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 2.0; letter-spacing: 0.04em;
+  color: var(--gray-500);
+  max-width: 720px;
+}
+.i-hero__lead strong { color: var(--theme-fg); font-weight: 700; }
+.i-hero__meta {
+  display: flex; flex-direction: column; gap: 18px;
+  align-self: end;
+  padding: 0 0 6px 24px;
+  border-left: 1px solid rgba(10,10,10,0.12);
+}
+.i-hero__meta-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 18px;
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gray-400);
+}
+.i-hero__meta-row b { font-weight: 700; font-size: 28px; letter-spacing: -0.02em; color: var(--theme-fg); font-family: var(--font-en); }
+.i-hero__meta-row.gold b { color: var(--gold); }
+.i-hero__meta-note {
+  font-family: var(--font-jp); font-weight: 400; font-size: 12px;
+  line-height: 1.7; color: var(--gray-400);
+  border-top: 1px solid rgba(10,10,10,0.08);
+  padding-top: 14px;
+}
+
+/* ===================== FEATURE (latest article) ===================== */
+.i-feature { padding: 48px 40px 96px; position: relative; }
+.i-feature__inner {
+  max-width: 1880px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1.18fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: end;
+}
+.i-feature__index {
+  font-family: var(--font-en); font-weight: 700;
+  font-size: 11px; letter-spacing: 0.22em;
+  color: var(--gray-400);
+  writing-mode: vertical-rl;
+  align-self: start;
+  padding-top: 4px;
+}
+.i-feature__index b { color: var(--theme-fg); }
+.i-feature__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--gray-100);
+  border-radius: 2px;
+}
+.i-feature__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.6s var(--ease); }
+.i-feature:hover .i-feature__media img { transform: scale(1.04); }
+.i-feature__cap {
+  position: absolute;
+  left: 16px; bottom: 16px;
+  display: inline-flex; gap: 10px; align-items: center;
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-en); font-weight: 600; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--theme-fg);
+}
+.i-feature__cap b { color: var(--gold); font-weight: 700; }
+.i-feature__body { padding-bottom: 8px; }
+.i-feature__date {
+  font-family: var(--font-en); font-weight: 600; font-size: 12px;
+  letter-spacing: 0.22em; color: var(--gray-400);
+  margin-bottom: 14px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.i-feature__date span { padding: 4px 10px; border: 1px solid rgba(10,10,10,0.18); border-radius: 999px; font-size: 10px; letter-spacing: 0.2em; color: var(--theme-fg); }
+.i-feature__title {
+  font-family: var(--font-jp); font-weight: 700;
+  font-size: clamp(28px, 2.8vw, 46px);
+  line-height: 1.32; letter-spacing: 0.01em;
+  color: var(--theme-fg);
+  margin-bottom: 22px;
+  text-wrap: balance;
+}
+.i-feature__title em { font-style: normal; color: var(--gold); }
+.i-feature__excerpt {
+  font-family: var(--font-jp); font-weight: 400;
+  font-size: 14px; line-height: 2.0; letter-spacing: 0.04em;
+  color: var(--gray-500);
+  max-width: 540px;
+  margin-bottom: 24px;
+}
+.i-feature__creators { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+.i-feature__creators-label { font-family: var(--font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.22em; color: var(--gray-400); text-transform: uppercase; }
+.i-feature__creators-list { display: flex; align-items: center; }
+.i-feature__creators-list .av {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 2px solid var(--white);
+  background: var(--gray-100);
+  margin-left: -8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.i-feature__creators-list .av:first-child { margin-left: 0; }
+.i-feature__creators-list .av img { width: 100%; height: 100%; object-fit: cover; }
+.i-feature__creators-names { font-family: var(--font-jp); font-weight: 500; font-size: 13px; color: var(--gray-500); }
+.i-feature__creators-names em { font-style: normal; color: var(--theme-fg); font-weight: 700; }
+.i-feature__cta {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-family: var(--font-en); font-weight: 600; font-size: 12px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 18px 32px; border: 1px solid var(--theme-fg);
+  border-radius: 999px;
+  transition: background 0.4s var(--ease), color 0.4s var(--ease);
+}
+.i-feature__cta:hover { background: var(--theme-fg); color: var(--white); }
+.i-feature__cta svg { transition: transform 0.4s var(--ease); }
+.i-feature__cta:hover svg { transform: translateX(6px); }
+
+/* Big featured ribbon label, bleeds left edge */
+.i-feature__ribbon {
+  position: absolute;
+  left: 40px; top: 0;
+  writing-mode: vertical-rl;
+  font-family: var(--font-en); font-weight: 800;
+  font-size: 11px; letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: inline-flex; gap: 14px; align-items: center;
+}
+.i-feature__ribbon::before { content: ""; width: 1px; height: 36px; background: var(--gold); }
+
+/* ===================== TIMELINE LIST ===================== */
+.i-list {
+  padding: 0 40px 96px;
+  position: relative;
+}
+.i-list__head {
+  max-width: 1880px; margin: 0 auto 48px;
+  display: grid; grid-template-columns: 88px minmax(0, 1fr) auto;
+  gap: 56px; align-items: end;
+  padding-top: 64px; border-top: 1px solid rgba(10,10,10,0.08);
+}
+.i-list__title {
+  font-family: var(--font-en); font-weight: 800;
+  font-size: clamp(36px, 4.2vw, 64px);
+  line-height: 0.95; letter-spacing: -0.03em;
+}
+.i-list__title small { display: block; font-family: var(--font-jp); font-weight: 500; font-size: clamp(12px, 0.85vw, 14px); letter-spacing: 0.18em; color: var(--gray-400); margin-top: 14px; }
+.i-list__filters {
+  display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding-bottom: 6px;
+}
+.i-list__filter {
+  font-family: var(--font-en); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gray-400);
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+  cursor: pointer;
+}
+.i-list__filter:hover { color: var(--theme-fg); border-color: rgba(10,10,10,0.16); }
+.i-list__filter.active { color: var(--theme-fg); background: var(--theme-fg); color: var(--white); border-color: var(--theme-fg); }
+.i-list__filter b { color: var(--gold); margin-left: 8px; font-weight: 700; }
+
+/* Timeline grid: year column (left) + content (right) */
+.i-list__inner {
+  max-width: 1880px; margin: 0 auto;
+  position: relative;
+}
+
+/* Year marker: sticky behavior using position:sticky on a left column */
+.i-list__rows {
+  display: flex; flex-direction: column;
+  gap: 0;
+}
+.i-row {
+  display: grid;
+  grid-template-columns: 88px 110px minmax(0, 1fr);
+  gap: 24px;
+  padding: 36px 0;
+  border-top: 1px solid rgba(10,10,10,0.08);
+  position: relative;
+  align-items: start;
+  transition: background 0.4s var(--ease);
+}
+.i-row:hover { background: linear-gradient(90deg, rgba(244,241,236,0) 0%, rgba(244,241,236,0.6) 8%, rgba(244,241,236,0.6) 92%, rgba(244,241,236,0) 100%); }
+.i-row__year {
+  font-family: var(--font-en); font-weight: 800;
+  font-size: clamp(40px, 3.6vw, 56px);
+  letter-spacing: -0.04em; line-height: 0.9;
+  color: var(--theme-fg);
+}
+.i-row__year small { display: block; margin-top: 4px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; color: var(--gray-400); }
+/* hide year for repeated rows in the same year */
+.i-row[data-year-hide="true"] .i-row__year { opacity: 0; }
+.i-row__date {
+  font-family: var(--font-en); font-weight: 600; font-size: 12px;
+  letter-spacing: 0.18em; color: var(--gray-400);
+  display: flex; flex-direction: column; gap: 6px;
+  padding-top: 8px;
+}
+.i-row__date b { font-family: var(--font-en); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; color: var(--theme-fg); }
+.i-row__date span.cat {
+  display: inline-block;
+  font-size: 10px; letter-spacing: 0.22em;
+  padding: 4px 10px;
+  border: 1px solid rgba(10,10,10,0.16);
+  border-radius: 999px;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  width: max-content;
+}
+.i-row__date span.cat.gold { color: var(--gold); border-color: rgba(200,168,107,0.45); }
+.i-row__main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 36px;
+  align-items: start;
+}
+.i-row__title-wrap { min-width: 0; }
+.i-row__title {
+  font-family: var(--font-jp); font-weight: 700;
+  font-size: clamp(20px, 1.6vw, 26px);
+  line-height: 1.45; letter-spacing: 0.02em;
+  color: var(--theme-fg);
+  margin-bottom: 12px;
+  text-wrap: pretty;
+  transition: color 0.4s var(--ease);
+}
+.i-row__title em { font-style: normal; color: var(--gold); }
+.i-row a:hover .i-row__title { color: var(--gold); }
+.i-row__excerpt {
+  font-family: var(--font-jp); font-weight: 400;
+  font-size: 13px; line-height: 1.95; letter-spacing: 0.03em;
+  color: var(--gray-500);
+  max-width: 720px;
+  margin-bottom: 18px;
+}
+.i-row__foot { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.i-row__creators { display: inline-flex; align-items: center; gap: 12px; }
+.i-row__creators-list { display: flex; }
+.i-row__creators-list .av { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; border: 2px solid var(--white); margin-left: -6px; background: var(--gray-100); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.i-row__creators-list .av:first-child { margin-left: 0; }
+.i-row__creators-list .av img { width: 100%; height: 100%; object-fit: cover; }
+.i-row__creators-names { font-family: var(--font-jp); font-weight: 500; font-size: 12px; color: var(--gray-500); }
+.i-row__creators-names em { font-style: normal; color: var(--theme-fg); font-weight: 700; }
+.i-row__more {
+  font-family: var(--font-en); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gray-400);
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: color 0.3s var(--ease);
+}
+.i-row a:hover .i-row__more { color: var(--gold); }
+.i-row__more svg { transition: transform 0.4s var(--ease); }
+.i-row a:hover .i-row__more svg { transform: translateX(4px); }
+.i-row__thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--gray-100);
+  border-radius: 2px;
+}
+.i-row__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.6s var(--ease); }
+.i-row a:hover .i-row__thumb img { transform: scale(1.06); }
+.i-row__thumb--placeholder {
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #F4F1EC 0%, #E9E3D8 100%);
+  font-family: var(--font-en); font-weight: 700; font-size: 28px;
+  letter-spacing: -0.02em; color: var(--gray-300);
+}
+.i-row a { display: contents; color: inherit; }
+/* Rhythm variations */
+.i-row--full {
+  /* full-bleed editorial entry: image becomes wide on the right */
+}
+.i-row--full .i-row__main { grid-template-columns: minmax(0, 1fr) 460px; }
+.i-row--full .i-row__title { font-size: clamp(24px, 2vw, 34px); }
+.i-row--text-only .i-row__main { grid-template-columns: minmax(0, 1fr); }
+.i-row--text-only .i-row__title {
+  font-family: var(--font-jp); font-weight: 700;
+  font-size: clamp(22px, 1.85vw, 30px);
+  line-height: 1.4;
+  padding-left: 24px;
+  border-left: 3px solid var(--gold);
+}
+.i-row--text-only .i-row__excerpt { padding-left: 24px; }
+.i-row--text-only .i-row__foot { padding-left: 24px; }
+.i-row--quiet { background: rgba(244,241,236,0.4); }
+.i-row--quiet:hover { background: rgba(244,241,236,0.85); }
+
+/* Inset image variant: image bleeds slightly outside */
+.i-row--bleed .i-row__thumb { aspect-ratio: 16 / 9; }
+.i-row--bleed .i-row__main { grid-template-columns: minmax(0, 1fr) 360px; }
+
+/* ===================== PAGINATION ===================== */
+.i-pager {
+  max-width: 1880px; margin: 0 auto;
+  padding: 64px 0 0;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 56px;
+  align-items: center;
+}
+.i-pager__count {
+  font-family: var(--font-en); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.22em; color: var(--gray-400); text-transform: uppercase;
+}
+.i-pager__count b { color: var(--theme-fg); font-size: 16px; }
+.i-pager__inner {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.i-pager__btn {
+  min-width: 48px; height: 48px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-en); font-weight: 600; font-size: 13px;
+  letter-spacing: 0.04em;
+  border-radius: 50%;
+  color: var(--gray-400);
+  transition: color 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease);
+  border: 1px solid transparent;
+}
+.i-pager__btn:hover { color: var(--theme-fg); border-color: rgba(10,10,10,0.16); }
+.i-pager__btn.active {
+  background: var(--theme-fg); color: var(--white); border-color: var(--theme-fg);
+}
+.i-pager__btn[disabled] { opacity: 0.3; pointer-events: none; }
+.i-pager__btn--nav { padding: 0 22px; border-radius: 999px; gap: 10px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; border-color: rgba(10,10,10,0.16); }
+.i-pager__btn--nav svg { width: 14px; height: 14px; }
+.i-pager__sep { color: var(--gray-300); padding: 0 4px; }
+
+/* ===================== PAGE CTA ===================== */
+.page-cta {
+  background: var(--black); color: var(--white);
+  padding: 140px 40px 140px;
+  position: relative; overflow: hidden;
+}
+.page-cta::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 60% at 80% 20%, rgba(200,168,107,0.10), transparent 70%),
+    radial-gradient(40% 40% at 10% 80%, rgba(200,168,107,0.06), transparent 70%);
+  pointer-events: none;
+}
+.page-cta__inner {
+  max-width: 1280px; margin: 0 auto;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 80px;
+  align-items: end;
+}
+.page-cta__sub {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.page-cta__sub::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
+.page-cta__title {
+  font-family: var(--font-en); font-weight: 800;
+  font-size: clamp(52px, 6vw, 96px);
+  line-height: 0.95; letter-spacing: -0.04em;
+  color: var(--white);
+}
+.page-cta__title em { font-style: normal; color: var(--gold); }
+.page-cta__title-jp {
+  display: block; margin-top: 18px;
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 2; letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.78);
+  max-width: 640px;
+}
+.page-cta__title-jp strong { color: var(--gold); font-weight: 700; }
+.page-cta__right { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; padding-bottom: 16px; }
+.btn-primary {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 46px;
+  background: var(--gold); color: var(--black);
+  font-family: var(--font-en); font-weight: 600; font-size: 13px;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  border-radius: 999px;
+  box-shadow: 0 12px 32px rgba(200,168,107,0.28), 0 2px 8px rgba(0,0,0,0.28);
+  transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+}
+.btn-primary::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, #E3C893 0%, #C8A86B 55%, #A88550 100%); transform: translateX(-101%); transition: transform 0.9s var(--ease); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(200,168,107,0.38); }
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary > * { position: relative; z-index: 1; }
+.btn-primary svg { transition: transform 0.6s var(--ease); }
+.btn-primary:hover svg { transform: translateX(6px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 40px;
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #fff;
+  font-family: var(--font-en); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  border-radius: 999px;
+  transition: background 0.5s var(--ease), color 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+.btn-ghost:hover { background: #fff; color: var(--black); border-color: #fff; }
+.btn-ghost svg { transition: transform 0.6s var(--ease); }
+.btn-ghost:hover svg { transform: translateX(6px); }
+
+/* ===================== CHAT WIDGET ===================== */
+.chat-widget { position: fixed; right: 28px; bottom: 28px; z-index: 500; display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px; background: var(--theme-fg); color: var(--white); border-radius: 999px; font-family: var(--font-en); font-weight: 600; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; box-shadow: 0 12px 32px rgba(0,0,0,0.18); transition: transform 0.5s var(--ease); }
+.chat-widget:hover { transform: translateY(-3px); }
+.chat-widget__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(200,168,107,0.18); animation: chatPulse 2.2s ease-in-out infinite; }
+@keyframes chatPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 4px rgba(200,168,107,0.18); }
+  50%      { transform: scale(1.2); box-shadow: 0 0 0 8px rgba(200,168,107,0.05); }
+}
+.chat-modal { position: fixed; inset: 0; z-index: 800; background: rgba(10,10,10,0.68); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s var(--ease); }
+.chat-modal.active { opacity: 1; pointer-events: auto; }
+.chat-modal__box { width: min(520px, 92vw); max-height: 86vh; background: var(--white); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transform: translateY(24px) scale(0.98); transition: transform 0.5s var(--ease); box-shadow: 0 30px 60px rgba(0,0,0,0.35); }
+.chat-modal.active .chat-modal__box { transform: translateY(0) scale(1); }
+.chat-modal__header { padding: 20px 24px; border-bottom: 1px solid rgba(10,10,10,0.08); display: flex; justify-content: space-between; align-items: center; }
+.chat-modal__title { font-family: var(--font-en); font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; }
+.chat-modal__title small { display: block; font-family: var(--font-jp); font-weight: 400; font-size: 11px; letter-spacing: 0.04em; color: var(--gray-400); text-transform: none; margin-top: 4px; }
+.chat-modal__close { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gray-400); }
+.chat-modal__body { padding: 24px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; flex: 1; background: var(--gray-100); }
+.chat-bubble { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-family: var(--font-jp); font-weight: 400; font-size: 13px; line-height: 1.7; }
+.chat-bubble--in { background: #fff; align-self: flex-start; border-top-left-radius: 4px; }
+.chat-bubble--out { background: var(--theme-fg); color: var(--white); align-self: flex-end; border-top-right-radius: 4px; }
+.chat-presets { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.chat-presets button { font-family: var(--font-jp); font-weight: 400; font-size: 12px; padding: 8px 14px; border: 1px solid rgba(10,10,10,0.12); border-radius: 999px; background: #fff; transition: border-color 0.3s var(--ease), color 0.3s var(--ease); }
+.chat-presets button:hover { border-color: var(--gold); color: var(--gold); }
+.chat-modal__foot { padding: 16px 20px; border-top: 1px solid rgba(10,10,10,0.08); display: flex; gap: 12px; }
+.chat-modal__input { flex: 1; padding: 12px 16px; border: 1px solid rgba(10,10,10,0.12); border-radius: 999px; font-family: var(--font-jp); font-size: 13px; background: var(--gray-100); }
+.chat-modal__input:focus { outline: none; border-color: var(--gold); background: #fff; }
+.chat-modal__send { padding: 12px 22px; background: var(--gold); color: var(--black); border-radius: 999px; font-family: var(--font-en); font-weight: 600; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+
+/* ===================== FOOTER ===================== */
+.footer { background: var(--black); color: var(--white); padding: 88px 40px 32px; }
+.footer__inner { max-width: 1440px; margin: 0 auto; }
+.footer__top { display: grid; grid-template-columns: 200px 1fr; gap: 48px; padding-bottom: 96px; }
+.footer__logo { font-family: var(--font-en); font-weight: 700; font-size: 24px; letter-spacing: 0.08em; color: #fff; }
+.footer__nav { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 32px; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.footer__col-title { font-family: var(--font-en); font-weight: 800; font-size: 24px; letter-spacing: 0.02em; margin-bottom: 20px; }
+.footer__col ul a { font-family: var(--font-en); font-weight: 700; font-size: 15px; letter-spacing: 0.05em; transition: color 0.3s var(--ease); }
+.footer__col ul a:hover { color: var(--gold); }
+.footer__col--right { text-align: right; min-width: 140px; }
+.footer__col--right ul a { font-size: 16px; letter-spacing: 0.04em; }
+.footer__middle { display: grid; grid-template-columns: 1fr auto auto; gap: 48px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.08); align-items: start; }
+.footer__address { font-family: var(--font-jp); font-style: normal; font-size: 13px; line-height: 1.9; color: rgba(255,255,255,0.7); }
+.footer__map { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 3px; transition: color 0.3s var(--ease), border-color 0.3s var(--ease); }
+.footer__map:hover { color: var(--gold); border-color: var(--gold); }
+.footer__map svg { transition: transform 0.4s var(--ease); }
+.footer__map:hover svg { transform: translate(3px, -3px); }
+.footer__socials { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer__socials a { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-en); font-weight: 400; font-size: 12px; letter-spacing: 0.08em; color: rgba(255,255,255,0.72); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s var(--ease); }
+.footer__socials a:hover { color: var(--gold); }
+.footer__back { width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; color: #fff; transition: background 0.4s var(--ease), color 0.4s var(--ease), transform 0.4s var(--ease), border-color 0.4s var(--ease); }
+.footer__back:hover { background: var(--gold); color: var(--black); border-color: var(--gold); transform: translateY(-3px); }
+.footer__bottom { margin-top: 64px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; }
+.footer__copy { font-family: var(--font-en); font-weight: 300; font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+.footer__credit { font-family: var(--font-en); font-weight: 300; font-style: italic; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.32); }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1500px) {
+  .i-hero__inner { grid-template-columns: 64px minmax(0, 1fr) 280px; gap: 36px; }
+  .i-feature__inner { grid-template-columns: 64px minmax(0, 1.1fr) minmax(0, 1fr); gap: 36px; }
+  .i-list__head { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 36px; }
+  .i-row { grid-template-columns: 64px 100px minmax(0, 1fr); gap: 18px; }
+  .i-pager { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
+}
+@media (max-width: 1100px) {
+  .i-hero__inner { grid-template-columns: 1fr; gap: 24px; }
+  .i-hero__vlabel { writing-mode: horizontal-tb; padding-top: 0; }
+  .i-hero__meta { flex-direction: row; flex-wrap: wrap; gap: 24px 36px; padding: 18px 0 0 0; border-left: none; border-top: 1px solid rgba(10,10,10,0.12); }
+  .i-feature__inner { grid-template-columns: 1fr; gap: 28px; }
+  .i-feature__index { writing-mode: horizontal-tb; }
+  .i-list__head { grid-template-columns: 1fr; gap: 24px; }
+  .i-row { grid-template-columns: 1fr 1fr; gap: 16px; padding: 28px 0; }
+  .i-row__year { grid-column: 1 / 2; font-size: 32px; }
+  .i-row__date { grid-column: 2 / 3; align-items: flex-end; padding-top: 0; }
+  .i-row__main { grid-column: 1 / -1; grid-template-columns: 1fr; gap: 18px; }
+  .i-row--full .i-row__main, .i-row--bleed .i-row__main { grid-template-columns: 1fr; }
+  .page-cta__inner { grid-template-columns: 1fr; gap: 36px; }
+  .page-cta { padding: 96px 24px; }
+  .i-pager { grid-template-columns: 1fr; gap: 18px; }
+}
+@media (max-width: 900px) {
+  .header { padding: 0 20px; }
+  .header__nav { display: none; }
+  .header__hamburger { display: flex; }
+  .breadcrumb { padding: 88px 20px 0; }
+  .i-hero { padding: 28px 20px 24px; }
+  .i-feature { padding: 36px 20px 72px; }
+  .i-list { padding: 0 20px 72px; }
+  .i-list__head { padding-top: 36px; margin-bottom: 28px; }
+  .i-feature__title { font-size: 26px; }
+  .i-row { padding: 24px 0; }
+  .i-row--text-only .i-row__title, .i-row--text-only .i-row__excerpt, .i-row--text-only .i-row__foot { padding-left: 16px; }
+  .footer { padding: 72px 20px 32px; }
+  .footer__top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 56px; }
+  .footer__nav { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .footer__col--right { text-align: left; }
+  .footer__middle { grid-template-columns: 1fr; gap: 28px; }
+  .chat-widget { right: 16px; bottom: 16px; padding: 12px 16px; font-size: 10px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <a href="../index.html" class="header__logo">SAC</a>
+  <nav class="header__nav">
+    <a href="../index.html#about">ABOUT</a>
+    <a href="../works-index.html">WORKS</a>
+    <a href="../index.html#service">SERVICE</a>
+    <a href="../creator-index.html">CREATOR</a>
+    <a href="index.html" aria-current="page">INFO</a>
+    <a href="../index.html#contact">CONTACT</a>
+  </nav>
+  <button class="header__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../index.html#about">ABOUT</a>
+  <a href="../works-index.html">WORKS</a>
+  <a href="../index.html#service">SERVICE</a>
+  <a href="../creator-index.html">CREATOR</a>
+  <a href="index.html">INFO</a>
+  <a href="../index.html#contact">CONTACT</a>
+</div>
+
+<!-- ============ BREADCRUMB ============ -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">HOME</a>
+  <span class="sep">/</span>
+  <span aria-current="page">INFO</span>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="i-hero" id="top">
+  <div class="i-hero__inner">
+    <div class="i-hero__vlabel">SAC <strong>DISPATCH</strong> ARCHIVE</div>
+    <div class="i-hero__main">
+      <p class="i-hero__sub">SAC INFO / NEWSROOM</p>
+      <h1 class="i-hero__title js-reveal">INFO<span class="dot">.</span></h1>
+      <p class="i-hero__title-jp js-reveal">SACの<em>動き</em>と、いまここにある仕事のはなし。</p>
+      <p class="i-hero__lead js-reveal">
+        <strong>新しいプロジェクトの始動、現場のレポート、社内の取り組み、メディア掲載、登壇、リリース。</strong><br>
+        ここはSACの「動き」を読み物として残す場所です。<br>
+        単なる告知ではなく、その背景・思想・関わったクリエイターを含めて、出来るだけ余すことなく書いています。
+      </p>
+    </div>
+    <div class="i-hero__meta js-reveal">
+      <div class="i-hero__meta-row"><span>POSTED</span><b>128</b></div>
+      <div class="i-hero__meta-row gold"><span>LATEST</span><b>2026.04</b></div>
+      <div class="i-hero__meta-row"><span>EDITORS</span><b>06</b></div>
+      <p class="i-hero__meta-note">CMSと連動。記事の追加・編集・公開/非公開は管理画面から行います。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURE (latest highlighted entry) ============ -->
+<section class="i-feature">
+  <span class="i-feature__ribbon">LATEST DISPATCH / 最新の発信</span>
+  <div class="i-feature__inner">
+    <div class="i-feature__index"><b>001</b> &nbsp; OF 128</div>
+    <a class="i-feature__media js-reveal" href="yymmdd.html" aria-label="LAST CALL — 大型音楽プロジェクトのキービジュアル制作を担当">
+      <img src="../assets/works/lastcall.jpg" alt="LAST CALL キービジュアル制作">
+      <span class="i-feature__cap"><b>FEATURED</b> / 2026.04.18 / PROJECT</span>
+    </a>
+    <div class="i-feature__body js-reveal">
+      <p class="i-feature__date">2026.04.18 <span>PROJECT</span></p>
+      <h2 class="i-feature__title">『LAST CALL』キービジュアル<em>制作チームに参画</em>。アーティスト写真からティザー映像までの一気通貫を担当しました。</h2>
+      <p class="i-feature__excerpt">
+        2026年6月公開予定の大型音楽プロジェクト『LAST CALL』のキービジュアル、ティザームービー、SNS展開素材まで、SACがクリエイティブの一気通貫を担当。クライアントのレーベル・マネジメント・アーティスト本人と並走しながら、AIによる素材生成、ディレクション、現場撮影、後処理までを編集的に組み上げています。
+      </p>
+      <div class="i-feature__creators">
+        <span class="i-feature__creators-label">CREATORS</span>
+        <div class="i-feature__creators-list">
+          <span class="av"><img src="../assets/creators/aoki.webp" alt="青木"></span>
+          <span class="av"><img src="../assets/creators/ochiai.png" alt="落合"></span>
+          <span class="av"><img src="../assets/creators/tsunehashi.jpg" alt="常橋"></span>
+        </div>
+        <p class="i-feature__creators-names"><em>青木 健一</em>・<em>落合 響</em>・<em>常橋 拓海</em> ほか</p>
+      </div>
+      <a class="i-feature__cta" href="yymmdd.html">
+        <span>記事を読む</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE LIST ============ -->
+<section class="i-list">
+  <div class="i-list__head">
+    <div></div>
+    <div>
+      <h2 class="i-list__title">DISPATCH<small>すべての発信 / Showing 15 of 128</small></h2>
+    </div>
+    <div class="i-list__filters" role="tablist" aria-label="INFO filters">
+      <button class="i-list__filter active" data-filter="all">ALL <b>128</b></button>
+      <button class="i-list__filter" data-filter="project">PROJECT</button>
+      <button class="i-list__filter" data-filter="news">NEWS</button>
+      <button class="i-list__filter" data-filter="release">RELEASE</button>
+      <button class="i-list__filter" data-filter="report">REPORT</button>
+      <button class="i-list__filter" data-filter="media">MEDIA</button>
+    </div>
+  </div>
+
+  <div class="i-list__inner">
+    <div class="i-list__rows" id="rows">
+
+      <!-- 002 -->
+      <article class="i-row js-reveal" data-cat="report">
+        <a href="yymmdd.html" aria-label="STUDIO REPORT 002 — AIネイティブな撮影現場で見えたこと">
+          <div class="i-row__year">2026<small>YEAR</small></div>
+          <div class="i-row__date"><b>04.10</b><span class="cat">REPORT</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">STUDIO REPORT 002 ／ <em>AIネイティブな撮影現場</em>で見えてきた、人と機械の役割分担。</h3>
+              <p class="i-row__excerpt">3月に行った都内スタジオでの一日を、ディレクター・フォトグラファー・AIエンジニアの3視点で記録しました。「AIに置き換わるもの」と「現場でしか出せないもの」の境界線を、現実的な解像度で記しています。</p>
+              <div class="i-row__foot">
+                <div class="i-row__creators">
+                  <div class="i-row__creators-list">
+                    <span class="av"><img src="../assets/creators/bird.jpg" alt=""></span>
+                    <span class="av"><img src="../assets/creators/gane.jpg" alt=""></span>
+                  </div>
+                  <p class="i-row__creators-names"><em>金 翼</em>・<em>金内 慎一</em></p>
+                </div>
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt=""></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 003 - text only / announcement -->
+      <article class="i-row i-row--text-only i-row--quiet js-reveal" data-year-hide="true" data-cat="news">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2026</div>
+          <div class="i-row__date"><b>04.05</b><span class="cat gold">NEWS</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">SACがJ-WAVE「INNOVATION WORLD」に取り上げられました。AIクリエイティブの実装ケースとしての紹介です。</h3>
+              <p class="i-row__excerpt">代表・落合へのインタビュー記事と、当社が手がけた近年の実績についての特集が組まれました。番組内では、AIを「素材生成」ではなく「企画と現場運用の両方」へ落とし込む実装についても触れられています。</p>
+              <div class="i-row__foot">
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 004 - full bleed image -->
+      <article class="i-row i-row--full js-reveal" data-year-hide="true" data-cat="project">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2026</div>
+          <div class="i-row__date"><b>03.29</b><span class="cat">PROJECT</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">『HYDE OFFICIAL FAN FES 2026』ヴィジュアルおよび会場演出をSACが担当。</h3>
+              <p class="i-row__excerpt">アーティスト・HYDE氏のオフィシャルファンフェスにおける、メインヴィジュアル、グッズ展開、会場映像演出までを一貫してSACが担当。ライブ会場における体験設計と、SNS拡散を見据えたヴィジュアル設計を両立させる構成としました。AI素材と実写素材の混成比、そして現場照明と映像のタイミング調整について、本記事で公開しています。</p>
+              <div class="i-row__foot">
+                <div class="i-row__creators">
+                  <div class="i-row__creators-list">
+                    <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
+                    <span class="av"><img src="../assets/creators/tsunehashi.jpg" alt=""></span>
+                  </div>
+                  <p class="i-row__creators-names"><em>青木 健一</em>・<em>常橋 拓海</em></p>
+                </div>
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="i-row__thumb i-row--bleed"><img src="../assets/works/hyde.jpg" alt=""></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 005 -->
+      <article class="i-row js-reveal" data-year-hide="true" data-cat="release">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2026</div>
+          <div class="i-row__date"><b>03.22</b><span class="cat">RELEASE</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">SAC公式サイト、フルリニューアル公開。<em>「同じブランドでありつづける」</em>ことを最優先にした再構築です。</h3>
+              <p class="i-row__excerpt">トップページ、各下層ページまで、AIクリエイティブを「事業」として表現するための再設計を行いました。本記事ではリニューアルの設計思想、構造、そしてその過程で見えた論点を共有しています。</p>
+              <div class="i-row__foot">
+                <div class="i-row__creators">
+                  <div class="i-row__creators-list">
+                    <span class="av"><img src="../assets/creators/ochiai.png" alt=""></span>
+                  </div>
+                  <p class="i-row__creators-names"><em>落合 響</em></p>
+                </div>
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="i-row__thumb i-row__thumb--placeholder">SAC ／ RENEWAL</div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 006 -->
+      <article class="i-row js-reveal" data-year-hide="true" data-cat="report">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2026</div>
+          <div class="i-row__date"><b>03.14</b><span class="cat">REPORT</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">『24時間TV』のグラフィック制作、SACが3年連続で参画。今年は<em>「現場で動かしながら作る」</em>進め方に変えました。</h3>
+              <p class="i-row__excerpt">大型番組のキーグラフィック、OP、番組宣伝、SNS展開、会場インスタレーションまで。複数現場とリアルタイムに伴走するためのワークフローを公開しています。</p>
+              <div class="i-row__foot">
+                <div class="i-row__creators">
+                  <div class="i-row__creators-list">
+                    <span class="av"><img src="../assets/creators/bird.jpg" alt=""></span>
+                    <span class="av"><img src="../assets/creators/gane.jpg" alt=""></span>
+                  </div>
+                  <p class="i-row__creators-names"><em>金 翼</em>・<em>金内 慎一</em></p>
+                </div>
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt=""></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 007 - announcement -->
+      <article class="i-row i-row--text-only js-reveal" data-year-hide="true" data-cat="news">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2026</div>
+          <div class="i-row__date"><b>03.06</b><span class="cat gold">NEWS</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">CCBT「AIと制作の倫理を考える」円卓会議にSACが登壇。プロダクションサイドからの実務報告を行いました。</h3>
+              <p class="i-row__excerpt">東京都が主催するシビッククリエイティブベースの公開会議に、SACディレクター陣が登壇。AI制作における権利・倫理・実務上の運用について発言しました。当日の論点メモを記事として残しています。</p>
+              <div class="i-row__foot">
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 008 -->
+      <article class="i-row js-reveal" data-cat="project">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2026<small>YEAR</small></div>
+          <div class="i-row__date"><b>02.27</b><span class="cat">PROJECT</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">大手食品メーカーのCM企画にSACが入りました。AIを使った「テイスティングのオノマトペ表現」が始点になっています。</h3>
+              <p class="i-row__excerpt">広告代理店との共同プロジェクトとして、商品の食感・余韻・温度といった非言語領域を、AI画像生成と実写の合成で可視化する試み。テスト段階の社内ボードを一部公開しています。</p>
+              <div class="i-row__foot">
+                <div class="i-row__creators">
+                  <div class="i-row__creators-list">
+                    <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
+                    <span class="av"><img src="../assets/creators/tsunehashi.jpg" alt=""></span>
+                  </div>
+                  <p class="i-row__creators-names"><em>青木 健一</em>・<em>常橋 拓海</em></p>
+                </div>
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="i-row__thumb i-row__thumb--placeholder">CM ／ DEV</div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 009 -->
+      <article class="i-row js-reveal" data-year-hide="true" data-cat="media">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2026</div>
+          <div class="i-row__date"><b>02.18</b><span class="cat">MEDIA</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">『広告月報』2月号にSACの実装事例が掲載。<em>「AIをチームに迎え入れる」</em>という章で詳しく取り上げられました。</h3>
+              <p class="i-row__excerpt">広告業界誌における特集企画「AIネイティブのクリエイティブ組織」へSACが寄稿。生成AIをひとつの“同僚”として組織にどう据えるか、運用と契約の両面から書いています。誌面の一部抜粋も。</p>
+              <div class="i-row__foot">
+                <div class="i-row__creators">
+                  <div class="i-row__creators-list">
+                    <span class="av"><img src="../assets/creators/ochiai.png" alt=""></span>
+                  </div>
+                  <p class="i-row__creators-names"><em>落合 響</em></p>
+                </div>
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt=""></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 010 - full bleed -->
+      <article class="i-row i-row--full js-reveal" data-year-hide="true" data-cat="project">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2026</div>
+          <div class="i-row__date"><b>02.10</b><span class="cat">PROJECT</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">国内自治体との連携プロジェクトが始動。<em>「観光と移住をつなぐ動画群」</em>のシリーズ制作です。</h3>
+              <p class="i-row__excerpt">地域の風景・人・産業をテーマに、12ヶ月にわたる動画シリーズを制作する取り組みが始まりました。ローカルクルーとSACの混成チームで、観光と移住の両方を視野に入れた発信物を作っていきます。初月の取材レポートを公開。</p>
+              <div class="i-row__foot">
+                <div class="i-row__creators">
+                  <div class="i-row__creators-list">
+                    <span class="av"><img src="../assets/creators/bird.jpg" alt=""></span>
+                    <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
+                  </div>
+                  <p class="i-row__creators-names"><em>金 翼</em>・<em>青木 健一</em></p>
+                </div>
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt=""></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 011 - text only release -->
+      <article class="i-row i-row--text-only i-row--quiet js-reveal" data-year-hide="true" data-cat="release">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2026</div>
+          <div class="i-row__date"><b>02.01</b><span class="cat">RELEASE</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">社内ツール『TYPE ENGINE』のv0.4を公開。日本語タイポグラフィのAI整形精度を大きく改善しました。</h3>
+              <p class="i-row__excerpt">SACが社内で開発・運用しているタイポ整形ツール『TYPE ENGINE』の最新バージョンが完成。長文向けジャスティフィケーション、行頭禁則、約物処理、書体ペアリング推薦の全てがアップデートされています。詳細は記事内で。</p>
+              <div class="i-row__foot">
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 012 -->
+      <article class="i-row js-reveal" data-cat="report">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2025<small>YEAR</small></div>
+          <div class="i-row__date"><b>12.20</b><span class="cat">REPORT</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">2025年、SACが手がけた仕事を一気に振り返ります。<em>42件</em>のうち、特に手応えのあった10件を抜粋。</h3>
+              <p class="i-row__excerpt">CM、ミュージックビデオ、コーポレートサイト、グラフィック、SNS運用、インスタレーション。ジャンルを横断したアウトプット群を、当社の視点で並べ直しました。</p>
+              <div class="i-row__foot">
+                <div class="i-row__creators">
+                  <div class="i-row__creators-list">
+                    <span class="av"><img src="../assets/creators/ochiai.png" alt=""></span>
+                    <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
+                    <span class="av"><img src="../assets/creators/tsunehashi.jpg" alt=""></span>
+                  </div>
+                  <p class="i-row__creators-names"><em>SAC編集部</em></p>
+                </div>
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt=""></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 013 -->
+      <article class="i-row js-reveal" data-year-hide="true" data-cat="project">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2025</div>
+          <div class="i-row__date"><b>11.28</b><span class="cat">PROJECT</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">スタートアップ向けの<em>「30日でブランド一式を立ち上げる」</em>パッケージ、提供開始しました。</h3>
+              <p class="i-row__excerpt">ロゴ・コーポレートサイト・名刺・SNS用ヴィジュアル・Pitch資料まで、30日でまるごとSACが組み上げるブランディングパッケージ。創業期の資金繰りに優しい価格帯で運用しています。記事内に提供条件と実例を記載。</p>
+              <div class="i-row__foot">
+                <div class="i-row__creators">
+                  <div class="i-row__creators-list">
+                    <span class="av"><img src="../assets/creators/gane.jpg" alt=""></span>
+                  </div>
+                  <p class="i-row__creators-names"><em>金内 慎一</em></p>
+                </div>
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="i-row__thumb i-row__thumb--placeholder">PKG ／ 30D</div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 014 - announcement -->
+      <article class="i-row i-row--text-only js-reveal" data-year-hide="true" data-cat="news">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2025</div>
+          <div class="i-row__date"><b>10.15</b><span class="cat gold">NEWS</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">SACのオフィスを上大崎に移転しました。撮影スタジオ・ミーティングルームを併設しています。</h3>
+              <p class="i-row__excerpt">これまでより少し大きな拠点で、社内撮影・編集・打ち合わせを一気通貫で行える空間を構えました。お打ち合わせ・スタジオ見学はいつでも歓迎です。</p>
+              <div class="i-row__foot">
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 015 -->
+      <article class="i-row js-reveal" data-year-hide="true" data-cat="report">
+        <a href="yymmdd.html">
+          <div class="i-row__year">2025</div>
+          <div class="i-row__date"><b>09.30</b><span class="cat">REPORT</span></div>
+          <div class="i-row__main">
+            <div class="i-row__title-wrap">
+              <h3 class="i-row__title">『SILENT BLOOM』ブランドムービーの制作秘話。AI素材と実写の比率を「<em>3割:7割</em>」にした理由。</h3>
+              <p class="i-row__excerpt">化粧品ブランドのリブランディング映像。AIによる質感生成は素材の段階で大量に試し、最終のキーカットは敢えて実写中心へ寄せています。その判断軸と運用について公開。</p>
+              <div class="i-row__foot">
+                <div class="i-row__creators">
+                  <div class="i-row__creators-list">
+                    <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
+                    <span class="av"><img src="../assets/creators/bird.jpg" alt=""></span>
+                  </div>
+                  <p class="i-row__creators-names"><em>青木 健一</em>・<em>金 翼</em></p>
+                </div>
+                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+            <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt=""></div>
+          </div>
+        </a>
+      </article>
+
+    </div>
+
+    <!-- ============ PAGINATION ============ -->
+    <div class="i-pager">
+      <p class="i-pager__count">PAGE <b>01</b> &nbsp;/&nbsp; 09</p>
+      <div class="i-pager__inner">
+        <button class="i-pager__btn i-pager__btn--nav" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>PREV</span>
+        </button>
+        <button class="i-pager__btn active">1</button>
+        <button class="i-pager__btn">2</button>
+        <button class="i-pager__btn">3</button>
+        <button class="i-pager__btn">4</button>
+        <button class="i-pager__btn">5</button>
+        <span class="i-pager__sep">…</span>
+        <button class="i-pager__btn">9</button>
+        <button class="i-pager__btn i-pager__btn--nav">
+          <span>NEXT</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE CTA ============ -->
+<section class="page-cta">
+  <div class="page-cta__inner">
+    <div>
+      <p class="page-cta__sub">CONTACT / ご相談</p>
+      <h2 class="page-cta__title">気になる発信が<br>あれば、その<em>先</em>も。</h2>
+      <p class="page-cta__title-jp">
+        <strong>記事に書ききれなかった現場のリアル、座組、予算帯、進行も全部お話しします。</strong>
+        構想段階・社内検討段階のご連絡こそ歓迎しています。
+      </p>
+    </div>
+    <div class="page-cta__right">
+      <a href="../index.html#contact" class="btn-primary">
+        <span>SACに相談する</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="../creator-index.html" class="btn-ghost">
+        <span>クリエイターを見る</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <a href="../index.html" class="footer__brand" aria-label="SAC"><span class="footer__logo">SAC</span></a>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__col"><h3 class="footer__col-title">ABOUT</h3><ul><li><a href="../index.html#about">PHILOSOPHY</a></li><li><a href="../index.html#about">APPROACH</a></li><li><a href="../index.html#about">COMPANY</a></li></ul></div>
+        <div class="footer__col"><h3 class="footer__col-title">WORKS</h3><ul><li><a href="../works-index.html">ALL WORKS</a></li><li><a href="../works-index.html">MOVIE</a></li><li><a href="../works-index.html">WEB DESIGN</a></li><li><a href="../works-index.html">GRAPHIC</a></li></ul></div>
+        <div class="footer__col"><h3 class="footer__col-title">CREATOR</h3><ul><li><a href="../creator-index.html#movie-director">DIRECTOR</a></li><li><a href="../creator-index.html#art-director">ART DIRECTOR</a></li><li><a href="../creator-index.html">ALL CREATORS</a></li></ul></div>
+        <div class="footer__col footer__col--right"><ul><li><a href="../index.html#service">SERVICE</a></li><li><a href="index.html">INFO</a></li><li><a href="../index.html#contact">CONTACT</a></li></ul></div>
+      </nav>
+    </div>
+    <div class="footer__middle">
+      <div class="footer__address-wrap">
+        <address class="footer__address">〒141-0021 東京都品川区上大崎3-14-1<br>中丸ハウス B棟</address>
+        <a href="https://maps.app.goo.gl/tKVmTAiDvhVb9SHV6" target="_blank" rel="noopener" class="footer__map">MAP<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <ul class="footer__socials" aria-label="Social media">
+        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></li>
+        <li><a href="https://x.com/" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.53 3H20.5l-6.52 7.45L21.75 21h-6.03l-4.72-6.16L5.6 21H2.63l6.98-7.98L2.25 3h6.18l4.27 5.64L17.53 3Zm-1.06 16.2h1.66L7.63 4.7H5.85l10.62 14.5Z"/></svg><span>X (Twitter)</span></a></li>
+        <li><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h-3a4 4 0 0 0-4 4v3H4v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3V3Z"/></svg><span>Facebook</span></a></li>
+      </ul>
+      <a href="#top" class="footer__back" aria-label="Back to top"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© EPOCH Inc.</p>
+      <p class="footer__credit">This website is entirely crafted with AI.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CHAT WIDGET ============ -->
+<button class="chat-widget" id="chatOpen" aria-label="CHATで相談">
+  <span class="chat-widget__dot"></span>
+  <span>SACに相談</span>
+</button>
+<div class="chat-modal" id="chatModal" role="dialog" aria-modal="true">
+  <div class="chat-modal__box">
+    <div class="chat-modal__header">
+      <div class="chat-modal__title">SAC INFO DESK<small>気になる発信について、気軽に相談する</small></div>
+      <button class="chat-modal__close" id="chatClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 6L6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="chat-modal__body" id="chatBody">
+      <div class="chat-bubble chat-bubble--in">こんにちは、SACです。気になる発信や、似た取り組みのご相談はこちらからどうぞ。</div>
+      <div class="chat-presets">
+        <button data-preset="特定の記事について詳しく知りたい">記事について詳しく</button>
+        <button data-preset="似たプロジェクトを依頼したい">似た仕事を依頼したい</button>
+        <button data-preset="クリエイターを指名で依頼できますか">クリエイター指名は可能？</button>
+        <button data-preset="予算感を相談したい">予算感を相談</button>
+      </div>
+    </div>
+    <form class="chat-modal__foot" id="chatForm">
+      <input type="text" class="chat-modal__input" id="chatInput" placeholder="メッセージを書く…" autocomplete="off">
+      <button type="submit" class="chat-modal__send">送る</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // Header scroll
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  // Mobile menu
+  var hamburger = document.getElementById('hamburger');
+  var mobile = document.getElementById('mobileMenu');
+  if (hamburger && mobile) {
+    hamburger.addEventListener('click', function(){
+      hamburger.classList.toggle('active');
+      mobile.classList.toggle('active');
+      document.body.style.overflow = mobile.classList.contains('active') ? 'hidden' : '';
+    });
+    mobile.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ hamburger.classList.remove('active'); mobile.classList.remove('active'); document.body.style.overflow=''; });
+    });
+  }
+
+  // Reveal
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('revealed'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.js-reveal').forEach(function(el){ observer.observe(el); });
+
+  // Filters (visual only — CMS will drive results)
+  var filters = document.querySelectorAll('.i-list__filter');
+  var rows = document.querySelectorAll('#rows .i-row');
+  filters.forEach(function(f){
+    f.addEventListener('click', function(){
+      filters.forEach(function(x){ x.classList.remove('active'); });
+      f.classList.add('active');
+      var cat = f.getAttribute('data-filter');
+      rows.forEach(function(r){
+        var c = r.getAttribute('data-cat');
+        r.style.display = (cat === 'all' || cat === c) ? '' : 'none';
+      });
+    });
+  });
+
+  // Chat
+  var chatOpen = document.getElementById('chatOpen');
+  var chatClose = document.getElementById('chatClose');
+  var chatModal = document.getElementById('chatModal');
+  var chatBody = document.getElementById('chatBody');
+  var chatForm = document.getElementById('chatForm');
+  var chatInput = document.getElementById('chatInput');
+  function openChat(){ chatModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+  function closeChat(){ chatModal.classList.remove('active'); document.body.style.overflow = ''; }
+  chatOpen && chatOpen.addEventListener('click', openChat);
+  chatClose && chatClose.addEventListener('click', closeChat);
+  chatModal && chatModal.addEventListener('click', function(e){ if (e.target === chatModal) closeChat(); });
+  document.querySelectorAll('.chat-presets button').forEach(function(b){
+    b.addEventListener('click', function(){
+      addBubble(b.getAttribute('data-preset'), 'out');
+      setTimeout(function(){ addBubble('ありがとうございます。担当より追ってご返信します。簡単な詳細・予算帯・スケジュールがあれば下に書いてください。', 'in'); }, 600);
+    });
+  });
+  chatForm && chatForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = (chatInput.value || '').trim();
+    if (!v) return;
+    addBubble(v, 'out'); chatInput.value = '';
+    setTimeout(function(){ addBubble('受け取りました。担当者よりご返信します（営業時間内）。', 'in'); }, 700);
+  });
+  function addBubble(text, dir){
+    var d = document.createElement('div');
+    d.className = 'chat-bubble chat-bubble--' + dir;
+    d.textContent = text;
+    chatBody.appendChild(d);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+})();
+</script>
+
+</body>
+</html>
