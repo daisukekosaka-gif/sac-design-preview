@@ -118,13 +118,15 @@ img, svg {
 
 .header__nav {
   display: flex;
-  gap: 36px;
+  /* font-size 引き上げに合わせて gap を1段階(-4px)タイト化 */
+  gap: 32px;
 }
 
 .header__nav a {
   font-family: var(--font-en);
   font-weight: 400;
-  font-size: 11px;
+  /* 11px → 15px (×1.36)。ロゴ(18px)との視覚バランスを保ちつつ視認性を上げる */
+  font-size: 15px;
   letter-spacing: 0.14em;
   transition: color 0.3s var(--ease), opacity 0.3s var(--ease);
   opacity: 0.72;
