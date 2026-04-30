@@ -494,7 +494,9 @@ img, svg {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 16px;
-  align-items: start;
+  /* ラベル(line-height:1) と本文1行目(line-height:2) を文字ベースラインで揃える。
+     これによりフォントメトリクス由来のオプティカルずれを吸収する。 */
+  align-items: baseline;
   height: 100%; /* グリッドのstretchを受けて図解高さまで伸びる */
   opacity: var(--ph-p);
   transform: translateY(calc(56px * (1 - var(--ph-p))));
@@ -505,6 +507,7 @@ img, svg {
   display: flex;
   flex-direction: column;
   height: 100%;
+  align-self: stretch; /* baseline 揃えでも縦に伸長させ VIEW MORE を下端に配置 */
 }
 
 .about__body-label {
