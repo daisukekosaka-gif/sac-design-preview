@@ -1810,14 +1810,15 @@ img, svg {
 .footer__ticker {
   position: relative;
   overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 22px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  /* 大きい文字を受け止める高さ。clamp で画面サイズに追従 */
+  padding: clamp(20px, 3.2vw, 36px) 0;
   background: linear-gradient(
     90deg,
-    rgba(200, 168, 107, 0.04) 0%,
-    rgba(200, 168, 107, 0.10) 50%,
-    rgba(200, 168, 107, 0.04) 100%
+    rgba(200, 168, 107, 0.05) 0%,
+    rgba(200, 168, 107, 0.14) 50%,
+    rgba(200, 168, 107, 0.05) 100%
   );
 }
 
@@ -1827,7 +1828,7 @@ img, svg {
   content: '';
   position: absolute;
   top: 0;
-  width: 120px;
+  width: clamp(80px, 12vw, 180px);
   height: 100%;
   z-index: 2;
   pointer-events: none;
@@ -1845,7 +1846,7 @@ img, svg {
   display: flex;
   width: max-content;
   /* 2連結したコンテンツのうち、片方分(=50%)だけ平行移動して無限ループ */
-  animation: footer-ticker 32s linear infinite;
+  animation: footer-ticker 40s linear infinite;
   will-change: transform;
 }
 
@@ -1862,24 +1863,30 @@ img, svg {
 .footer__ticker-item {
   display: inline-flex;
   align-items: center;
-  gap: 32px;
-  padding: 0 32px;
-  font-family: var(--font-en);
-  font-weight: 500;
-  font-style: italic;
-  font-size: 22px;
-  letter-spacing: 0.08em;
-  color: var(--gold);
+  gap: clamp(28px, 3vw, 48px);
+  padding: 0 clamp(28px, 3vw, 48px);
+  /* Helvetica 指定。macOS / iOS では Helvetica Neue、Win では Arial にフォールバック。
+     Inter は使わず、Helvetica の素直な存在感で AI 制作のメッセージを伝える */
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  /* clamp(モバイル, 流体, デスクトップ) で大きく主張 */
+  font-size: clamp(26px, 4.4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+  color: #FFFFFF;
   white-space: nowrap;
 }
 
+/* 区切りドットは gold で SAC ブランドを差し色に */
 .footer__ticker-item::after {
   content: '';
   display: inline-block;
-  width: 6px;
-  height: 6px;
+  width: clamp(6px, 0.7vw, 10px);
+  height: clamp(6px, 0.7vw, 10px);
   border-radius: 999px;
-  background: rgba(200, 168, 107, 0.55);
+  background: var(--gold);
+  box-shadow: 0 0 14px rgba(200, 168, 107, 0.55);
 }
 
 @keyframes footer-ticker {
@@ -1964,12 +1971,7 @@ img, svg {
   .footer__middle { grid-template-columns: 1fr; gap: 24px; padding-top: 32px; text-align: left; }
   .footer__socials { flex-direction: row; flex-wrap: wrap; gap: 16px; }
   .footer__bottom { margin-top: 24px; }
-
-  /* ティッカーをスマホ向けに調整 */
-  .footer__ticker { padding: 16px 0; }
-  .footer__ticker-item { font-size: 16px; gap: 20px; padding: 0 20px; }
-  .footer__ticker::before,
-  .footer__ticker::after { width: 60px; }
+  /* ティッカーは clamp() で流体スケールしているのでモバイル個別指定は不要 */
 }
 </style>
 </head>
