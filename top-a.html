@@ -103,10 +103,12 @@ img, svg {
 }
 
 .header.scrolled {
-  background: rgba(255,255,255,0.88);
+  /* 背景・ボーダーをテーマ変数ベースに。dark テーマ(stone/black)では
+     自動的に暗いバーになり、白文字ナビとのコントラストが確保される */
+  background: color-mix(in oklab, var(--theme-bg) 88%, transparent);
   backdrop-filter: blur(18px) saturate(1.3);
   -webkit-backdrop-filter: blur(18px) saturate(1.3);
-  border-bottom-color: rgba(10,10,10,0.08);
+  border-bottom-color: color-mix(in oklab, var(--theme-fg) 10%, transparent);
 }
 
 .header__logo {
