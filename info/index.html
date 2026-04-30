@@ -117,275 +117,82 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 .i-hero__title .dot { color: var(--gold); }
 
-/* ===================== FEATURE (latest article) ===================== */
-.i-feature { padding: 48px 40px 96px; position: relative; }
-.i-feature__inner {
-  max-width: 1880px; margin: 0 auto;
-  display: grid;
-  grid-template-columns: 88px minmax(0, 1.18fr) minmax(0, 1fr);
-  gap: 56px;
-  align-items: end;
-}
-.i-feature__index {
-  font-family: var(--font-en); font-weight: 700;
-  font-size: 11px; letter-spacing: 0.22em;
-  color: var(--gray-400);
-  writing-mode: vertical-rl;
-  align-self: start;
-  padding-top: 4px;
-}
-.i-feature__index b { color: var(--theme-fg); }
-.i-feature__media {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background: var(--gray-100);
-  border-radius: 2px;
-}
-.i-feature__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.6s var(--ease); }
-.i-feature:hover .i-feature__media img { transform: scale(1.04); }
-.i-feature__cap {
-  position: absolute;
-  left: 16px; bottom: 16px;
-  display: inline-flex; gap: 10px; align-items: center;
-  padding: 8px 14px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(10px);
-  font-family: var(--font-en); font-weight: 600; font-size: 10px;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--theme-fg);
-}
-.i-feature__cap b { color: var(--gold); font-weight: 700; }
-.i-feature__body { padding-bottom: 8px; }
-.i-feature__date {
-  font-family: var(--font-en); font-weight: 600; font-size: 12px;
-  letter-spacing: 0.22em; color: var(--gray-400);
-  margin-bottom: 14px;
-  display: inline-flex; align-items: center; gap: 12px;
-}
-.i-feature__date span { padding: 4px 10px; border: 1px solid rgba(10,10,10,0.18); border-radius: 999px; font-size: 10px; letter-spacing: 0.2em; color: var(--theme-fg); }
-.i-feature__title {
-  font-family: var(--font-jp); font-weight: 700;
-  font-size: clamp(28px, 2.8vw, 46px);
-  line-height: 1.32; letter-spacing: 0.01em;
-  color: var(--theme-fg);
-  margin-bottom: 22px;
-  text-wrap: balance;
-}
-.i-feature__title em { font-style: normal; color: var(--gold); }
-.i-feature__excerpt {
-  font-family: var(--font-jp); font-weight: 400;
-  font-size: 14px; line-height: 2.0; letter-spacing: 0.04em;
-  color: var(--gray-500);
-  max-width: 540px;
-  margin-bottom: 24px;
-}
-.i-feature__creators { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
-.i-feature__creators-label { font-family: var(--font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.22em; color: var(--gray-400); text-transform: uppercase; }
-.i-feature__creators-list { display: flex; align-items: center; }
-.i-feature__creators-list .av {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 2px solid var(--white);
-  background: var(--gray-100);
-  margin-left: -8px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-.i-feature__creators-list .av:first-child { margin-left: 0; }
-.i-feature__creators-list .av img { width: 100%; height: 100%; object-fit: cover; }
-.i-feature__creators-names { font-family: var(--font-jp); font-weight: 500; font-size: 13px; color: var(--gray-500); }
-.i-feature__creators-names em { font-style: normal; color: var(--theme-fg); font-weight: 700; }
-.i-feature__cta {
-  display: inline-flex; align-items: center; gap: 14px;
-  font-family: var(--font-en); font-weight: 600; font-size: 12px;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  padding: 18px 32px; border: 1px solid var(--theme-fg);
-  border-radius: 999px;
-  transition: background 0.4s var(--ease), color 0.4s var(--ease);
-}
-.i-feature__cta:hover { background: var(--theme-fg); color: var(--white); }
-.i-feature__cta svg { transition: transform 0.4s var(--ease); }
-.i-feature__cta:hover svg { transform: translateX(6px); }
-
-/* Big featured ribbon label, bleeds left edge */
-.i-feature__ribbon {
-  position: absolute;
-  left: 40px; top: 0;
-  writing-mode: vertical-rl;
-  font-family: var(--font-en); font-weight: 800;
-  font-size: 11px; letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: inline-flex; gap: 14px; align-items: center;
-}
-.i-feature__ribbon::before { content: ""; width: 1px; height: 36px; background: var(--gold); }
-
-/* ===================== TIMELINE LIST ===================== */
+/* ===================== DISPATCH LIST (simple, EPOCH-style) ===================== */
 .i-list {
-  padding: 0 40px 96px;
+  padding: 24px 40px 120px;
   position: relative;
+}
+.i-list__inner {
+  max-width: 1280px;
+  margin: 0 auto;
 }
 .i-list__head {
-  max-width: 1880px; margin: 0 auto 48px;
-  display: grid; grid-template-columns: 88px minmax(0, 1fr) auto;
-  gap: 56px; align-items: end;
-  padding-top: 64px; border-top: 1px solid rgba(10,10,10,0.08);
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(10,10,10,0.12);
 }
 .i-list__title {
   font-family: var(--font-en); font-weight: 800;
-  font-size: clamp(36px, 4.2vw, 64px);
-  line-height: 0.95; letter-spacing: -0.03em;
+  font-size: clamp(28px, 2.6vw, 40px);
+  line-height: 1; letter-spacing: -0.02em;
+  display: flex; align-items: baseline; gap: 24px; flex-wrap: wrap;
 }
-.i-list__title small { display: block; font-family: var(--font-jp); font-weight: 500; font-size: clamp(12px, 0.85vw, 14px); letter-spacing: 0.18em; color: var(--gray-400); margin-top: 14px; }
-.i-list__filters {
-  display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap;
-  padding-bottom: 6px;
-}
-.i-list__filter {
-  font-family: var(--font-en); font-weight: 500; font-size: 11px;
-  letter-spacing: 0.18em; text-transform: uppercase;
+.i-list__title small {
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: 12px; letter-spacing: 0.16em;
   color: var(--gray-400);
-  padding: 10px 16px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
-  cursor: pointer;
-}
-.i-list__filter:hover { color: var(--theme-fg); border-color: rgba(10,10,10,0.16); }
-.i-list__filter.active { color: var(--theme-fg); background: var(--theme-fg); color: var(--white); border-color: var(--theme-fg); }
-.i-list__filter b { color: var(--gold); margin-left: 8px; font-weight: 700; }
-
-/* Timeline grid: year column (left) + content (right) */
-.i-list__inner {
-  max-width: 1880px; margin: 0 auto;
-  position: relative;
 }
 
-/* Year marker: sticky behavior using position:sticky on a left column */
 .i-list__rows {
-  display: flex; flex-direction: column;
-  gap: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
 }
 .i-row {
-  display: grid;
-  grid-template-columns: 88px 110px minmax(0, 1fr);
-  gap: 24px;
-  padding: 36px 0;
-  border-top: 1px solid rgba(10,10,10,0.08);
-  position: relative;
-  align-items: start;
+  border-bottom: 1px solid rgba(10,10,10,0.1);
   transition: background 0.4s var(--ease);
 }
-.i-row:hover { background: linear-gradient(90deg, rgba(244,241,236,0) 0%, rgba(244,241,236,0.6) 8%, rgba(244,241,236,0.6) 92%, rgba(244,241,236,0) 100%); }
-.i-row__year {
-  font-family: var(--font-en); font-weight: 800;
-  font-size: clamp(40px, 3.6vw, 56px);
-  letter-spacing: -0.04em; line-height: 0.9;
-  color: var(--theme-fg);
-}
-.i-row__year small { display: block; margin-top: 4px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; color: var(--gray-400); }
-/* hide year for repeated rows in the same year */
-.i-row[data-year-hide="true"] .i-row__year { opacity: 0; }
-.i-row__date {
-  font-family: var(--font-en); font-weight: 600; font-size: 12px;
-  letter-spacing: 0.18em; color: var(--gray-400);
-  display: flex; flex-direction: column; gap: 6px;
-  padding-top: 8px;
-}
-.i-row__date b { font-family: var(--font-en); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; color: var(--theme-fg); }
-.i-row__date span.cat {
-  display: inline-block;
-  font-size: 10px; letter-spacing: 0.22em;
-  padding: 4px 10px;
-  border: 1px solid rgba(10,10,10,0.16);
-  border-radius: 999px;
-  color: var(--gray-500);
-  text-transform: uppercase;
-  width: max-content;
-}
-.i-row__date span.cat.gold { color: var(--gold); border-color: rgba(200,168,107,0.45); }
-.i-row__main {
+.i-row:hover { background: rgba(244,241,236,0.45); }
+.i-row a {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
-  gap: 36px;
-  align-items: start;
+  grid-template-columns: 140px 110px minmax(0, 1fr) 28px;
+  gap: 32px;
+  align-items: center;
+  padding: 26px 8px;
+  color: inherit;
 }
-.i-row__title-wrap { min-width: 0; }
-.i-row__title {
-  font-family: var(--font-jp); font-weight: 700;
-  font-size: clamp(20px, 1.6vw, 26px);
-  line-height: 1.45; letter-spacing: 0.02em;
-  color: var(--theme-fg);
-  margin-bottom: 12px;
-  text-wrap: pretty;
-  transition: color 0.4s var(--ease);
-}
-.i-row__title em { font-style: normal; color: var(--gold); }
-.i-row a:hover .i-row__title { color: var(--gold); }
-.i-row__excerpt {
-  font-family: var(--font-jp); font-weight: 400;
-  font-size: 13px; line-height: 1.95; letter-spacing: 0.03em;
+.i-row__date {
+  font-family: var(--font-en); font-weight: 600;
+  font-size: 13px; letter-spacing: 0.12em;
   color: var(--gray-500);
-  max-width: 720px;
-  margin-bottom: 18px;
 }
-.i-row__foot { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-.i-row__creators { display: inline-flex; align-items: center; gap: 12px; }
-.i-row__creators-list { display: flex; }
-.i-row__creators-list .av { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; border: 2px solid var(--white); margin-left: -6px; background: var(--gray-100); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-.i-row__creators-list .av:first-child { margin-left: 0; }
-.i-row__creators-list .av img { width: 100%; height: 100%; object-fit: cover; }
-.i-row__creators-names { font-family: var(--font-jp); font-weight: 500; font-size: 12px; color: var(--gray-500); }
-.i-row__creators-names em { font-style: normal; color: var(--theme-fg); font-weight: 700; }
-.i-row__more {
-  font-family: var(--font-en); font-weight: 600; font-size: 11px;
-  letter-spacing: 0.22em; text-transform: uppercase;
+.i-row__cat {
+  font-family: var(--font-en); font-weight: 600;
+  font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
   color: var(--gray-400);
-  display: inline-flex; align-items: center; gap: 8px;
+}
+.i-row__title {
+  font-family: var(--font-jp); font-weight: 500;
+  font-size: 15px; line-height: 1.7; letter-spacing: 0.02em;
+  color: var(--theme-fg);
+  text-wrap: pretty;
+  /* clamp to 1 line on wide screens, allow up to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   transition: color 0.3s var(--ease);
 }
-.i-row a:hover .i-row__more { color: var(--gold); }
-.i-row__more svg { transition: transform 0.4s var(--ease); }
-.i-row a:hover .i-row__more svg { transform: translateX(4px); }
-.i-row__thumb {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background: var(--gray-100);
-  border-radius: 2px;
+.i-row__arrow {
+  font-family: var(--font-en); font-weight: 400;
+  font-size: 18px; color: var(--gray-300);
+  text-align: right;
+  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
 }
-.i-row__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.6s var(--ease); }
-.i-row a:hover .i-row__thumb img { transform: scale(1.06); }
-.i-row__thumb--placeholder {
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #F4F1EC 0%, #E9E3D8 100%);
-  font-family: var(--font-en); font-weight: 700; font-size: 28px;
-  letter-spacing: -0.02em; color: var(--gray-300);
-}
-.i-row a { display: contents; color: inherit; }
-/* Rhythm variations */
-.i-row--full {
-  /* full-bleed editorial entry: image becomes wide on the right */
-}
-.i-row--full .i-row__main { grid-template-columns: minmax(0, 1fr) 460px; }
-.i-row--full .i-row__title { font-size: clamp(24px, 2vw, 34px); }
-.i-row--text-only .i-row__main { grid-template-columns: minmax(0, 1fr); }
-.i-row--text-only .i-row__title {
-  font-family: var(--font-jp); font-weight: 700;
-  font-size: clamp(22px, 1.85vw, 30px);
-  line-height: 1.4;
-  padding-left: 24px;
-  border-left: 3px solid var(--gold);
-}
-.i-row--text-only .i-row__excerpt { padding-left: 24px; }
-.i-row--text-only .i-row__foot { padding-left: 24px; }
-.i-row--quiet { background: rgba(244,241,236,0.4); }
-.i-row--quiet:hover { background: rgba(244,241,236,0.85); }
+.i-row a:hover .i-row__title { color: var(--gold); }
+.i-row a:hover .i-row__arrow { color: var(--gold); transform: translateX(4px); }
 
-/* Inset image variant: image bleeds slightly outside */
-.i-row--bleed .i-row__thumb { aspect-ratio: 16 / 9; }
-.i-row--bleed .i-row__main { grid-template-columns: minmax(0, 1fr) 360px; }
-
+/* ===================== PAGINATION ===================== */
 /* ===================== PAGINATION ===================== */
 .i-pager {
   max-width: 1880px; margin: 0 auto;
@@ -558,23 +365,13 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 @media (max-width: 1500px) {
   .i-hero { padding: 96px 40px 112px; }
   .i-hero__inner { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
-  .i-feature__inner { grid-template-columns: 64px minmax(0, 1.1fr) minmax(0, 1fr); gap: 36px; }
-  .i-list__head { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 36px; }
-  .i-row { grid-template-columns: 64px 100px minmax(0, 1fr); gap: 18px; }
   .i-pager { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
 }
 @media (max-width: 1100px) {
   .i-hero { padding: 80px 40px 96px; }
   .i-hero__inner { grid-template-columns: 1fr; gap: 24px; min-height: 0; }
   .i-hero__vlabel { writing-mode: horizontal-tb; padding-top: 0; }
-  .i-feature__inner { grid-template-columns: 1fr; gap: 28px; }
-  .i-feature__index { writing-mode: horizontal-tb; }
-  .i-list__head { grid-template-columns: 1fr; gap: 24px; }
-  .i-row { grid-template-columns: 1fr 1fr; gap: 16px; padding: 28px 0; }
-  .i-row__year { grid-column: 1 / 2; font-size: 32px; }
-  .i-row__date { grid-column: 2 / 3; align-items: flex-end; padding-top: 0; }
-  .i-row__main { grid-column: 1 / -1; grid-template-columns: 1fr; gap: 18px; }
-  .i-row--full .i-row__main, .i-row--bleed .i-row__main { grid-template-columns: 1fr; }
+  .i-row a { grid-template-columns: 110px 90px minmax(0, 1fr) 24px; gap: 20px; padding: 22px 6px; }
   .page-cta__inner { grid-template-columns: 1fr; gap: 36px; }
   .page-cta { padding: 96px 24px; }
   .i-pager { grid-template-columns: 1fr; gap: 18px; }
@@ -585,12 +382,16 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .header__hamburger { display: flex; }
   .breadcrumb { padding: 88px 20px 0; }
   .i-hero { padding: 64px 20px 80px; }
-  .i-feature { padding: 36px 20px 72px; }
-  .i-list { padding: 0 20px 72px; }
-  .i-list__head { padding-top: 36px; margin-bottom: 28px; }
-  .i-feature__title { font-size: 26px; }
-  .i-row { padding: 24px 0; }
-  .i-row--text-only .i-row__title, .i-row--text-only .i-row__excerpt, .i-row--text-only .i-row__foot { padding-left: 16px; }
+  .i-list { padding: 12px 20px 72px; }
+  .i-row a {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 20px 4px;
+  }
+  .i-row__arrow { display: none; }
+  .i-row__date { font-size: 12px; }
+  .i-row__cat { font-size: 9px; letter-spacing: 0.22em; }
+  .i-row__title { font-size: 14px; -webkit-line-clamp: 3; }
   .footer { padding: 72px 20px 32px; }
   .footer__top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 56px; }
   .footer__nav { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
@@ -643,379 +444,125 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   </div>
 </section>
 
-<!-- ============ FEATURE (latest highlighted entry) ============ -->
-<section class="i-feature">
-  <span class="i-feature__ribbon">LATEST DISPATCH / 最新の発信</span>
-  <div class="i-feature__inner">
-    <div class="i-feature__index"><b>001</b> &nbsp; OF 128</div>
-    <a class="i-feature__media js-reveal" href="yymmdd.html" aria-label="LAST CALL — 大型音楽プロジェクトのキービジュアル制作を担当">
-      <img src="../assets/works/lastcall.jpg" alt="LAST CALL キービジュアル制作">
-      <span class="i-feature__cap"><b>FEATURED</b> / 2026.04.18 / PROJECT</span>
-    </a>
-    <div class="i-feature__body js-reveal">
-      <p class="i-feature__date">2026.04.18 <span>PROJECT</span></p>
-      <h2 class="i-feature__title">『LAST CALL』キービジュアル<em>制作チームに参画</em>。アーティスト写真からティザー映像までの一気通貫を担当しました。</h2>
-      <p class="i-feature__excerpt">
-        2026年6月公開予定の大型音楽プロジェクト『LAST CALL』のキービジュアル、ティザームービー、SNS展開素材まで、SACがクリエイティブの一気通貫を担当。クライアントのレーベル・マネジメント・アーティスト本人と並走しながら、AIによる素材生成、ディレクション、現場撮影、後処理までを編集的に組み上げています。
-      </p>
-      <div class="i-feature__creators">
-        <span class="i-feature__creators-label">CREATORS</span>
-        <div class="i-feature__creators-list">
-          <span class="av"><img src="../assets/creators/aoki.webp" alt="青木"></span>
-          <span class="av"><img src="../assets/creators/ochiai.png" alt="落合"></span>
-          <span class="av"><img src="../assets/creators/tsunehashi.jpg" alt="常橋"></span>
-        </div>
-        <p class="i-feature__creators-names"><em>青木 健一</em>・<em>落合 響</em>・<em>常橋 拓海</em> ほか</p>
-      </div>
-      <a class="i-feature__cta" href="yymmdd.html">
-        <span>記事を読む</span>
-        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
 
-<!-- ============ TIMELINE LIST ============ -->
+<!-- ============ DISPATCH LIST (simple) ============ -->
 <section class="i-list">
-  <div class="i-list__head">
-    <div></div>
-    <div>
-      <h2 class="i-list__title">DISPATCH<small>すべての発信 / Showing 15 of 128</small></h2>
-    </div>
-    <div class="i-list__filters" role="tablist" aria-label="INFO filters">
-      <button class="i-list__filter active" data-filter="all">ALL <b>128</b></button>
-      <button class="i-list__filter" data-filter="project">PROJECT</button>
-      <button class="i-list__filter" data-filter="news">NEWS</button>
-      <button class="i-list__filter" data-filter="release">RELEASE</button>
-      <button class="i-list__filter" data-filter="report">REPORT</button>
-      <button class="i-list__filter" data-filter="media">MEDIA</button>
-    </div>
-  </div>
-
   <div class="i-list__inner">
-    <div class="i-list__rows" id="rows">
+    <header class="i-list__head">
+      <h2 class="i-list__title">DISPATCH<small>すべての発信 ／ Showing 15 of 128</small></h2>
+    </header>
+    <ul class="i-list__rows" id="rows">
 
-      <!-- 002 -->
-      <article class="i-row js-reveal" data-cat="report">
-        <a href="yymmdd.html" aria-label="STUDIO REPORT 002 — AIネイティブな撮影現場で見えたこと">
-          <div class="i-row__year">2026<small>YEAR</small></div>
-          <div class="i-row__date"><b>04.10</b><span class="cat">REPORT</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">STUDIO REPORT 002 ／ <em>AIネイティブな撮影現場</em>で見えてきた、人と機械の役割分担。</h3>
-              <p class="i-row__excerpt">3月に行った都内スタジオでの一日を、ディレクター・フォトグラファー・AIエンジニアの3視点で記録しました。「AIに置き換わるもの」と「現場でしか出せないもの」の境界線を、現実的な解像度で記しています。</p>
-              <div class="i-row__foot">
-                <div class="i-row__creators">
-                  <div class="i-row__creators-list">
-                    <span class="av"><img src="../assets/creators/bird.jpg" alt=""></span>
-                    <span class="av"><img src="../assets/creators/gane.jpg" alt=""></span>
-                  </div>
-                  <p class="i-row__creators-names"><em>金 翼</em>・<em>金内 慎一</em></p>
-                </div>
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-            <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt=""></div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-04-18">2026.04.18</time>
+        <span class="i-row__cat">PROJECT</span>
+        <h3 class="i-row__title">『LAST CALL』キービジュアル制作チームに参画。アーティスト写真からティザー映像までの一気通貫を担当しました。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 003 - text only / announcement -->
-      <article class="i-row i-row--text-only i-row--quiet js-reveal" data-year-hide="true" data-cat="news">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2026</div>
-          <div class="i-row__date"><b>04.05</b><span class="cat gold">NEWS</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">SACがJ-WAVE「INNOVATION WORLD」に取り上げられました。AIクリエイティブの実装ケースとしての紹介です。</h3>
-              <p class="i-row__excerpt">代表・落合へのインタビュー記事と、当社が手がけた近年の実績についての特集が組まれました。番組内では、AIを「素材生成」ではなく「企画と現場運用の両方」へ落とし込む実装についても触れられています。</p>
-              <div class="i-row__foot">
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-04-10">2026.04.10</time>
+        <span class="i-row__cat">REPORT</span>
+        <h3 class="i-row__title">STUDIO REPORT 002 ／ AIネイティブな撮影現場で見えてきた、人と機械の役割分担。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 004 - full bleed image -->
-      <article class="i-row i-row--full js-reveal" data-year-hide="true" data-cat="project">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2026</div>
-          <div class="i-row__date"><b>03.29</b><span class="cat">PROJECT</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">『HYDE OFFICIAL FAN FES 2026』ヴィジュアルおよび会場演出をSACが担当。</h3>
-              <p class="i-row__excerpt">アーティスト・HYDE氏のオフィシャルファンフェスにおける、メインヴィジュアル、グッズ展開、会場映像演出までを一貫してSACが担当。ライブ会場における体験設計と、SNS拡散を見据えたヴィジュアル設計を両立させる構成としました。AI素材と実写素材の混成比、そして現場照明と映像のタイミング調整について、本記事で公開しています。</p>
-              <div class="i-row__foot">
-                <div class="i-row__creators">
-                  <div class="i-row__creators-list">
-                    <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
-                    <span class="av"><img src="../assets/creators/tsunehashi.jpg" alt=""></span>
-                  </div>
-                  <p class="i-row__creators-names"><em>青木 健一</em>・<em>常橋 拓海</em></p>
-                </div>
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-            <div class="i-row__thumb i-row--bleed"><img src="../assets/works/hyde.jpg" alt=""></div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="news"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-04-05">2026.04.05</time>
+        <span class="i-row__cat">NEWS</span>
+        <h3 class="i-row__title">SACがJ-WAVE「INNOVATION WORLD」に取り上げられました。AIクリエイティブの実装ケースとしての紹介です。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 005 -->
-      <article class="i-row js-reveal" data-year-hide="true" data-cat="release">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2026</div>
-          <div class="i-row__date"><b>03.22</b><span class="cat">RELEASE</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">SAC公式サイト、フルリニューアル公開。<em>「同じブランドでありつづける」</em>ことを最優先にした再構築です。</h3>
-              <p class="i-row__excerpt">トップページ、各下層ページまで、AIクリエイティブを「事業」として表現するための再設計を行いました。本記事ではリニューアルの設計思想、構造、そしてその過程で見えた論点を共有しています。</p>
-              <div class="i-row__foot">
-                <div class="i-row__creators">
-                  <div class="i-row__creators-list">
-                    <span class="av"><img src="../assets/creators/ochiai.png" alt=""></span>
-                  </div>
-                  <p class="i-row__creators-names"><em>落合 響</em></p>
-                </div>
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-            <div class="i-row__thumb i-row__thumb--placeholder">SAC ／ RENEWAL</div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-03-29">2026.03.29</time>
+        <span class="i-row__cat">PROJECT</span>
+        <h3 class="i-row__title">『HYDE OFFICIAL FAN FES 2026』ヴィジュアルおよび会場演出をSACが担当。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 006 -->
-      <article class="i-row js-reveal" data-year-hide="true" data-cat="report">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2026</div>
-          <div class="i-row__date"><b>03.14</b><span class="cat">REPORT</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">『24時間TV』のグラフィック制作、SACが3年連続で参画。今年は<em>「現場で動かしながら作る」</em>進め方に変えました。</h3>
-              <p class="i-row__excerpt">大型番組のキーグラフィック、OP、番組宣伝、SNS展開、会場インスタレーションまで。複数現場とリアルタイムに伴走するためのワークフローを公開しています。</p>
-              <div class="i-row__foot">
-                <div class="i-row__creators">
-                  <div class="i-row__creators-list">
-                    <span class="av"><img src="../assets/creators/bird.jpg" alt=""></span>
-                    <span class="av"><img src="../assets/creators/gane.jpg" alt=""></span>
-                  </div>
-                  <p class="i-row__creators-names"><em>金 翼</em>・<em>金内 慎一</em></p>
-                </div>
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-            <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt=""></div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="release"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-03-22">2026.03.22</time>
+        <span class="i-row__cat">RELEASE</span>
+        <h3 class="i-row__title">SAC公式サイト、フルリニューアル公開。「同じブランドでありつづける」ことを最優先にした再構築です。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 007 - announcement -->
-      <article class="i-row i-row--text-only js-reveal" data-year-hide="true" data-cat="news">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2026</div>
-          <div class="i-row__date"><b>03.06</b><span class="cat gold">NEWS</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">CCBT「AIと制作の倫理を考える」円卓会議にSACが登壇。プロダクションサイドからの実務報告を行いました。</h3>
-              <p class="i-row__excerpt">東京都が主催するシビッククリエイティブベースの公開会議に、SACディレクター陣が登壇。AI制作における権利・倫理・実務上の運用について発言しました。当日の論点メモを記事として残しています。</p>
-              <div class="i-row__foot">
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-03-14">2026.03.14</time>
+        <span class="i-row__cat">REPORT</span>
+        <h3 class="i-row__title">『24時間TV』のグラフィック制作、SACが3年連続で参画。今年は「現場で動かしながら作る」進め方に変えました。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 008 -->
-      <article class="i-row js-reveal" data-cat="project">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2026<small>YEAR</small></div>
-          <div class="i-row__date"><b>02.27</b><span class="cat">PROJECT</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">大手食品メーカーのCM企画にSACが入りました。AIを使った「テイスティングのオノマトペ表現」が始点になっています。</h3>
-              <p class="i-row__excerpt">広告代理店との共同プロジェクトとして、商品の食感・余韻・温度といった非言語領域を、AI画像生成と実写の合成で可視化する試み。テスト段階の社内ボードを一部公開しています。</p>
-              <div class="i-row__foot">
-                <div class="i-row__creators">
-                  <div class="i-row__creators-list">
-                    <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
-                    <span class="av"><img src="../assets/creators/tsunehashi.jpg" alt=""></span>
-                  </div>
-                  <p class="i-row__creators-names"><em>青木 健一</em>・<em>常橋 拓海</em></p>
-                </div>
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-            <div class="i-row__thumb i-row__thumb--placeholder">CM ／ DEV</div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="news"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-03-06">2026.03.06</time>
+        <span class="i-row__cat">NEWS</span>
+        <h3 class="i-row__title">CCBT「AIと制作の倫理を考える」円卓会議にSACが登壇。プロダクションサイドからの実務報告を行いました。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 009 -->
-      <article class="i-row js-reveal" data-year-hide="true" data-cat="media">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2026</div>
-          <div class="i-row__date"><b>02.18</b><span class="cat">MEDIA</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">『広告月報』2月号にSACの実装事例が掲載。<em>「AIをチームに迎え入れる」</em>という章で詳しく取り上げられました。</h3>
-              <p class="i-row__excerpt">広告業界誌における特集企画「AIネイティブのクリエイティブ組織」へSACが寄稿。生成AIをひとつの“同僚”として組織にどう据えるか、運用と契約の両面から書いています。誌面の一部抜粋も。</p>
-              <div class="i-row__foot">
-                <div class="i-row__creators">
-                  <div class="i-row__creators-list">
-                    <span class="av"><img src="../assets/creators/ochiai.png" alt=""></span>
-                  </div>
-                  <p class="i-row__creators-names"><em>落合 響</em></p>
-                </div>
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-            <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt=""></div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-02-27">2026.02.27</time>
+        <span class="i-row__cat">PROJECT</span>
+        <h3 class="i-row__title">大手食品メーカーのCM企画にSACが入りました。AIを使った「テイスティングのオノマトペ表現」が始点になっています。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 010 - full bleed -->
-      <article class="i-row i-row--full js-reveal" data-year-hide="true" data-cat="project">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2026</div>
-          <div class="i-row__date"><b>02.10</b><span class="cat">PROJECT</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">国内自治体との連携プロジェクトが始動。<em>「観光と移住をつなぐ動画群」</em>のシリーズ制作です。</h3>
-              <p class="i-row__excerpt">地域の風景・人・産業をテーマに、12ヶ月にわたる動画シリーズを制作する取り組みが始まりました。ローカルクルーとSACの混成チームで、観光と移住の両方を視野に入れた発信物を作っていきます。初月の取材レポートを公開。</p>
-              <div class="i-row__foot">
-                <div class="i-row__creators">
-                  <div class="i-row__creators-list">
-                    <span class="av"><img src="../assets/creators/bird.jpg" alt=""></span>
-                    <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
-                  </div>
-                  <p class="i-row__creators-names"><em>金 翼</em>・<em>青木 健一</em></p>
-                </div>
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-            <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt=""></div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="media"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-02-18">2026.02.18</time>
+        <span class="i-row__cat">MEDIA</span>
+        <h3 class="i-row__title">『広告月報』2月号にSACの実装事例が掲載。「AIをチームに迎え入れる」という章で詳しく取り上げられました。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 011 - text only release -->
-      <article class="i-row i-row--text-only i-row--quiet js-reveal" data-year-hide="true" data-cat="release">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2026</div>
-          <div class="i-row__date"><b>02.01</b><span class="cat">RELEASE</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">社内ツール『TYPE ENGINE』のv0.4を公開。日本語タイポグラフィのAI整形精度を大きく改善しました。</h3>
-              <p class="i-row__excerpt">SACが社内で開発・運用しているタイポ整形ツール『TYPE ENGINE』の最新バージョンが完成。長文向けジャスティフィケーション、行頭禁則、約物処理、書体ペアリング推薦の全てがアップデートされています。詳細は記事内で。</p>
-              <div class="i-row__foot">
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-02-10">2026.02.10</time>
+        <span class="i-row__cat">PROJECT</span>
+        <h3 class="i-row__title">国内自治体との連携プロジェクトが始動。「観光と移住をつなぐ動画群」のシリーズ制作です。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 012 -->
-      <article class="i-row js-reveal" data-cat="report">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2025<small>YEAR</small></div>
-          <div class="i-row__date"><b>12.20</b><span class="cat">REPORT</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">2025年、SACが手がけた仕事を一気に振り返ります。<em>42件</em>のうち、特に手応えのあった10件を抜粋。</h3>
-              <p class="i-row__excerpt">CM、ミュージックビデオ、コーポレートサイト、グラフィック、SNS運用、インスタレーション。ジャンルを横断したアウトプット群を、当社の視点で並べ直しました。</p>
-              <div class="i-row__foot">
-                <div class="i-row__creators">
-                  <div class="i-row__creators-list">
-                    <span class="av"><img src="../assets/creators/ochiai.png" alt=""></span>
-                    <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
-                    <span class="av"><img src="../assets/creators/tsunehashi.jpg" alt=""></span>
-                  </div>
-                  <p class="i-row__creators-names"><em>SAC編集部</em></p>
-                </div>
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-            <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt=""></div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="release"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2026-02-01">2026.02.01</time>
+        <span class="i-row__cat">RELEASE</span>
+        <h3 class="i-row__title">社内ツール『TYPE ENGINE』のv0.4を公開。日本語タイポグラフィのAI整形精度を大きく改善しました。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 013 -->
-      <article class="i-row js-reveal" data-year-hide="true" data-cat="project">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2025</div>
-          <div class="i-row__date"><b>11.28</b><span class="cat">PROJECT</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">スタートアップ向けの<em>「30日でブランド一式を立ち上げる」</em>パッケージ、提供開始しました。</h3>
-              <p class="i-row__excerpt">ロゴ・コーポレートサイト・名刺・SNS用ヴィジュアル・Pitch資料まで、30日でまるごとSACが組み上げるブランディングパッケージ。創業期の資金繰りに優しい価格帯で運用しています。記事内に提供条件と実例を記載。</p>
-              <div class="i-row__foot">
-                <div class="i-row__creators">
-                  <div class="i-row__creators-list">
-                    <span class="av"><img src="../assets/creators/gane.jpg" alt=""></span>
-                  </div>
-                  <p class="i-row__creators-names"><em>金内 慎一</em></p>
-                </div>
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-            <div class="i-row__thumb i-row__thumb--placeholder">PKG ／ 30D</div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2025-12-20">2025.12.20</time>
+        <span class="i-row__cat">REPORT</span>
+        <h3 class="i-row__title">2025年、SACが手がけた仕事を一気に振り返ります。42件のうち、特に手応えのあった10件を抜粋。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 014 - announcement -->
-      <article class="i-row i-row--text-only js-reveal" data-year-hide="true" data-cat="news">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2025</div>
-          <div class="i-row__date"><b>10.15</b><span class="cat gold">NEWS</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">SACのオフィスを上大崎に移転しました。撮影スタジオ・ミーティングルームを併設しています。</h3>
-              <p class="i-row__excerpt">これまでより少し大きな拠点で、社内撮影・編集・打ち合わせを一気通貫で行える空間を構えました。お打ち合わせ・スタジオ見学はいつでも歓迎です。</p>
-              <div class="i-row__foot">
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2025-11-28">2025.11.28</time>
+        <span class="i-row__cat">PROJECT</span>
+        <h3 class="i-row__title">スタートアップ向けの「30日でブランド一式を立ち上げる」パッケージ、提供開始しました。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-      <!-- 015 -->
-      <article class="i-row js-reveal" data-year-hide="true" data-cat="report">
-        <a href="yymmdd.html">
-          <div class="i-row__year">2025</div>
-          <div class="i-row__date"><b>09.30</b><span class="cat">REPORT</span></div>
-          <div class="i-row__main">
-            <div class="i-row__title-wrap">
-              <h3 class="i-row__title">『SILENT BLOOM』ブランドムービーの制作秘話。AI素材と実写の比率を「<em>3割:7割</em>」にした理由。</h3>
-              <p class="i-row__excerpt">化粧品ブランドのリブランディング映像。AIによる質感生成は素材の段階で大量に試し、最終のキーカットは敢えて実写中心へ寄せています。その判断軸と運用について公開。</p>
-              <div class="i-row__foot">
-                <div class="i-row__creators">
-                  <div class="i-row__creators-list">
-                    <span class="av"><img src="../assets/creators/aoki.webp" alt=""></span>
-                    <span class="av"><img src="../assets/creators/bird.jpg" alt=""></span>
-                  </div>
-                  <p class="i-row__creators-names"><em>青木 健一</em>・<em>金 翼</em></p>
-                </div>
-                <span class="i-row__more">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            </div>
-            <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt=""></div>
-          </div>
-        </a>
-      </article>
+      <li class="i-row js-reveal" data-cat="news"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2025-10-15">2025.10.15</time>
+        <span class="i-row__cat">NEWS</span>
+        <h3 class="i-row__title">SACのオフィスを上大崎に移転しました。撮影スタジオ・ミーティングルームを併設しています。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
 
-    </div>
+      <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
+        <time class="i-row__date" datetime="2025-09-30">2025.09.30</time>
+        <span class="i-row__cat">REPORT</span>
+        <h3 class="i-row__title">『SILENT BLOOM』ブランドムービーの制作秘話。AI素材と実写の比率を「3割:7割」にした理由。</h3>
+        <span class="i-row__arrow" aria-hidden="true">→</span>
+      </a></li>
+
+    </ul>
 
     <!-- ============ PAGINATION ============ -->
     <div class="i-pager">
-      <p class="i-pager__count">PAGE <b>01</b> &nbsp;/&nbsp; 09</p>
+      <p class="i-pager__count">PAGE <b>01</b> &nbsp;／&nbsp; 09</p>
       <div class="i-pager__inner">
         <button class="i-pager__btn i-pager__btn--nav" disabled>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1034,6 +581,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </button>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -1150,21 +698,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('revealed'); observer.unobserve(e.target); } });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.js-reveal').forEach(function(el){ observer.observe(el); });
-
-  // Filters (visual only — CMS will drive results)
-  var filters = document.querySelectorAll('.i-list__filter');
-  var rows = document.querySelectorAll('#rows .i-row');
-  filters.forEach(function(f){
-    f.addEventListener('click', function(){
-      filters.forEach(function(x){ x.classList.remove('active'); });
-      f.classList.add('active');
-      var cat = f.getAttribute('data-filter');
-      rows.forEach(function(r){
-        var c = r.getAttribute('data-cat');
-        r.style.display = (cat === 'all' || cat === c) ? '' : 'none';
-      });
-    });
-  });
 
   // Chat
   var chatOpen = document.getElementById('chatOpen');
