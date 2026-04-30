@@ -1806,6 +1806,92 @@ img, svg {
   margin: 0;
 }
 
+/* ---- AI クレジットティッカー（フッタ最上部） ---- */
+.footer__ticker {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 22px 0;
+  background: linear-gradient(
+    90deg,
+    rgba(200, 168, 107, 0.04) 0%,
+    rgba(200, 168, 107, 0.10) 50%,
+    rgba(200, 168, 107, 0.04) 100%
+  );
+}
+
+/* 端のフェードでループの繋ぎ目を目立たなくする */
+.footer__ticker::before,
+.footer__ticker::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.footer__ticker::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--black) 0%, transparent 100%);
+}
+.footer__ticker::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--black) 0%, transparent 100%);
+}
+
+.footer__ticker-track {
+  display: flex;
+  width: max-content;
+  /* 2連結したコンテンツのうち、片方分(=50%)だけ平行移動して無限ループ */
+  animation: footer-ticker 32s linear infinite;
+  will-change: transform;
+}
+
+.footer__ticker:hover .footer__ticker-track {
+  animation-play-state: paused;
+}
+
+.footer__ticker-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.footer__ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  padding: 0 32px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.footer__ticker-item::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(200, 168, 107, 0.55);
+}
+
+@keyframes footer-ticker {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+/* OS の reduce-motion 設定を尊重 */
+@media (prefers-reduced-motion: reduce) {
+  .footer__ticker-track { animation: none; }
+}
+
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 1024px) {
   .hero { min-height: 560px; }
@@ -1878,6 +1964,12 @@ img, svg {
   .footer__middle { grid-template-columns: 1fr; gap: 24px; padding-top: 32px; text-align: left; }
   .footer__socials { flex-direction: row; flex-wrap: wrap; gap: 16px; }
   .footer__bottom { margin-top: 24px; }
+
+  /* ティッカーをスマホ向けに調整 */
+  .footer__ticker { padding: 16px 0; }
+  .footer__ticker-item { font-size: 16px; gap: 20px; padding: 0 20px; }
+  .footer__ticker::before,
+  .footer__ticker::after { width: 60px; }
 }
 </style>
 </head>
@@ -2333,6 +2425,30 @@ img, svg {
 
 <!-- FOOTER -->
 <footer class="footer">
+
+  <!-- AI クレジットティッカー：フッタ最上部、全幅で流す -->
+  <div class="footer__ticker" aria-hidden="true">
+    <div class="footer__ticker-track">
+      <!-- 同じグループを2つ並べて -50% で無限ループ -->
+      <div class="footer__ticker-group">
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+      </div>
+      <div class="footer__ticker-group" aria-hidden="true">
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+      </div>
+    </div>
+  </div>
+
   <div class="footer__inner">
 
     <!-- TOP: ロゴ + ナビ4カラム -->
@@ -2431,10 +2547,9 @@ img, svg {
       </a>
     </div>
 
-    <!-- BOTTOM: コピーライト + AIクレジット -->
+    <!-- BOTTOM: コピーライト（AIクレジットはティッカー側に集約） -->
     <div class="footer__bottom">
       <p class="footer__copy">© EPOCH Inc.</p>
-      <p class="footer__credit">This website is entirely crafted with AI.</p>
     </div>
   </div>
 </footer>
