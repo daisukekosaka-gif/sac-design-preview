@@ -152,45 +152,60 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   border-bottom: 1px solid rgba(10,10,10,0.1);
   transition: background 0.4s var(--ease);
 }
+.i-row:first-child { border-top: 1px solid rgba(10,10,10,0.1); }
 .i-row:hover { background: rgba(244,241,236,0.45); }
 .i-row a {
   display: grid;
-  grid-template-columns: 140px 110px minmax(0, 1fr) 28px;
+  grid-template-columns: 160px minmax(0, 1fr);
   gap: 32px;
   align-items: center;
-  padding: 26px 8px;
+  padding: 22px 8px;
   color: inherit;
 }
-.i-row__date {
-  font-family: var(--font-en); font-weight: 600;
-  font-size: 13px; letter-spacing: 0.12em;
-  color: var(--gray-500);
+.i-row__thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--gray-100);
+  border-radius: 2px;
 }
-.i-row__cat {
+.i-row__thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease), filter 0.4s var(--ease);
+}
+.i-row a:hover .i-row__thumb img { transform: scale(1.05); }
+.i-row__body {
+  min-width: 0;
+  display: flex; flex-direction: column;
+  gap: 10px;
+}
+.i-row__meta {
+  display: inline-flex; align-items: center; gap: 14px;
   font-family: var(--font-en); font-weight: 600;
-  font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+  font-size: 12px; letter-spacing: 0.14em;
   color: var(--gray-400);
+}
+.i-row__meta time { color: var(--gray-500); }
+.i-row__meta .i-row__cat {
+  font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gold);
+  padding: 3px 10px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
 }
 .i-row__title {
   font-family: var(--font-jp); font-weight: 500;
-  font-size: 15px; line-height: 1.7; letter-spacing: 0.02em;
+  font-size: 16px; line-height: 1.65; letter-spacing: 0.02em;
   color: var(--theme-fg);
   text-wrap: pretty;
-  /* clamp to 1 line on wide screens, allow up to 2 lines */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   transition: color 0.3s var(--ease);
 }
-.i-row__arrow {
-  font-family: var(--font-en); font-weight: 400;
-  font-size: 18px; color: var(--gray-300);
-  text-align: right;
-  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
-}
 .i-row a:hover .i-row__title { color: var(--gold); }
-.i-row a:hover .i-row__arrow { color: var(--gold); transform: translateX(4px); }
 
 /* ===================== PAGINATION ===================== */
 /* ===================== PAGINATION ===================== */
@@ -371,7 +386,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .i-hero { padding: 80px 40px 96px; }
   .i-hero__inner { grid-template-columns: 1fr; gap: 24px; min-height: 0; }
   .i-hero__vlabel { writing-mode: horizontal-tb; padding-top: 0; }
-  .i-row a { grid-template-columns: 110px 90px minmax(0, 1fr) 24px; gap: 20px; padding: 22px 6px; }
+  .i-row a { grid-template-columns: 130px minmax(0, 1fr); gap: 22px; padding: 20px 6px; }
   .page-cta__inner { grid-template-columns: 1fr; gap: 36px; }
   .page-cta { padding: 96px 24px; }
   .i-pager { grid-template-columns: 1fr; gap: 18px; }
@@ -384,13 +399,13 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .i-hero { padding: 64px 20px 80px; }
   .i-list { padding: 12px 20px 72px; }
   .i-row a {
-    grid-template-columns: 1fr;
-    gap: 6px;
-    padding: 20px 4px;
+    grid-template-columns: 100px minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px 4px;
+    align-items: flex-start;
   }
-  .i-row__arrow { display: none; }
-  .i-row__date { font-size: 12px; }
-  .i-row__cat { font-size: 9px; letter-spacing: 0.22em; }
+  .i-row__meta { font-size: 11px; gap: 10px; }
+  .i-row__meta .i-row__cat { font-size: 9px; letter-spacing: 0.22em; padding: 2px 8px; }
   .i-row__title { font-size: 14px; -webkit-line-clamp: 3; }
   .footer { padding: 72px 20px 32px; }
   .footer__top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 56px; }
@@ -454,108 +469,168 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     <ul class="i-list__rows" id="rows">
 
       <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-04-18">2026.04.18</time>
-        <span class="i-row__cat">PROJECT</span>
-        <h3 class="i-row__title">『LAST CALL』キービジュアル制作チームに参画。アーティスト写真からティザー映像までの一気通貫を担当しました。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-04-18">2026.04.18</time>
+            <span class="i-row__cat">PROJECT</span>
+          </div>
+          <h3 class="i-row__title">『LAST CALL』キービジュアル制作チームに参画。アーティスト写真からティザー映像までの一気通貫を担当しました。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-04-10">2026.04.10</time>
-        <span class="i-row__cat">REPORT</span>
-        <h3 class="i-row__title">STUDIO REPORT 002 ／ AIネイティブな撮影現場で見えてきた、人と機械の役割分担。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-04-10">2026.04.10</time>
+            <span class="i-row__cat">REPORT</span>
+          </div>
+          <h3 class="i-row__title">STUDIO REPORT 002 ／ AIネイティブな撮影現場で見えてきた、人と機械の役割分担。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="news"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-04-05">2026.04.05</time>
-        <span class="i-row__cat">NEWS</span>
-        <h3 class="i-row__title">SACがJ-WAVE「INNOVATION WORLD」に取り上げられました。AIクリエイティブの実装ケースとしての紹介です。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-04-05">2026.04.05</time>
+            <span class="i-row__cat">NEWS</span>
+          </div>
+          <h3 class="i-row__title">SACがJ-WAVE「INNOVATION WORLD」に取り上げられました。AIクリエイティブの実装ケースとしての紹介です。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-03-29">2026.03.29</time>
-        <span class="i-row__cat">PROJECT</span>
-        <h3 class="i-row__title">『HYDE OFFICIAL FAN FES 2026』ヴィジュアルおよび会場演出をSACが担当。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-03-29">2026.03.29</time>
+            <span class="i-row__cat">PROJECT</span>
+          </div>
+          <h3 class="i-row__title">『HYDE OFFICIAL FAN FES 2026』ヴィジュアルおよび会場演出をSACが担当。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="release"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-03-22">2026.03.22</time>
-        <span class="i-row__cat">RELEASE</span>
-        <h3 class="i-row__title">SAC公式サイト、フルリニューアル公開。「同じブランドでありつづける」ことを最優先にした再構築です。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-03-22">2026.03.22</time>
+            <span class="i-row__cat">RELEASE</span>
+          </div>
+          <h3 class="i-row__title">SAC公式サイト、フルリニューアル公開。「同じブランドでありつづける」ことを最優先にした再構築です。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-03-14">2026.03.14</time>
-        <span class="i-row__cat">REPORT</span>
-        <h3 class="i-row__title">『24時間TV』のグラフィック制作、SACが3年連続で参画。今年は「現場で動かしながら作る」進め方に変えました。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-03-14">2026.03.14</time>
+            <span class="i-row__cat">REPORT</span>
+          </div>
+          <h3 class="i-row__title">『24時間TV』のグラフィック制作、SACが3年連続で参画。今年は「現場で動かしながら作る」進め方に変えました。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="news"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-03-06">2026.03.06</time>
-        <span class="i-row__cat">NEWS</span>
-        <h3 class="i-row__title">CCBT「AIと制作の倫理を考える」円卓会議にSACが登壇。プロダクションサイドからの実務報告を行いました。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-03-06">2026.03.06</time>
+            <span class="i-row__cat">NEWS</span>
+          </div>
+          <h3 class="i-row__title">CCBT「AIと制作の倫理を考える」円卓会議にSACが登壇。プロダクションサイドからの実務報告を行いました。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-02-27">2026.02.27</time>
-        <span class="i-row__cat">PROJECT</span>
-        <h3 class="i-row__title">大手食品メーカーのCM企画にSACが入りました。AIを使った「テイスティングのオノマトペ表現」が始点になっています。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-02-27">2026.02.27</time>
+            <span class="i-row__cat">PROJECT</span>
+          </div>
+          <h3 class="i-row__title">大手食品メーカーのCM企画にSACが入りました。AIを使った「テイスティングのオノマトペ表現」が始点になっています。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="media"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-02-18">2026.02.18</time>
-        <span class="i-row__cat">MEDIA</span>
-        <h3 class="i-row__title">『広告月報』2月号にSACの実装事例が掲載。「AIをチームに迎え入れる」という章で詳しく取り上げられました。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-02-18">2026.02.18</time>
+            <span class="i-row__cat">MEDIA</span>
+          </div>
+          <h3 class="i-row__title">『広告月報』2月号にSACの実装事例が掲載。「AIをチームに迎え入れる」という章で詳しく取り上げられました。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-02-10">2026.02.10</time>
-        <span class="i-row__cat">PROJECT</span>
-        <h3 class="i-row__title">国内自治体との連携プロジェクトが始動。「観光と移住をつなぐ動画群」のシリーズ制作です。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-02-10">2026.02.10</time>
+            <span class="i-row__cat">PROJECT</span>
+          </div>
+          <h3 class="i-row__title">国内自治体との連携プロジェクトが始動。「観光と移住をつなぐ動画群」のシリーズ制作です。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="release"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2026-02-01">2026.02.01</time>
-        <span class="i-row__cat">RELEASE</span>
-        <h3 class="i-row__title">社内ツール『TYPE ENGINE』のv0.4を公開。日本語タイポグラフィのAI整形精度を大きく改善しました。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2026-02-01">2026.02.01</time>
+            <span class="i-row__cat">RELEASE</span>
+          </div>
+          <h3 class="i-row__title">社内ツール『TYPE ENGINE』のv0.4を公開。日本語タイポグラフィのAI整形精度を大きく改善しました。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2025-12-20">2025.12.20</time>
-        <span class="i-row__cat">REPORT</span>
-        <h3 class="i-row__title">2025年、SACが手がけた仕事を一気に振り返ります。42件のうち、特に手応えのあった10件を抜粋。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2025-12-20">2025.12.20</time>
+            <span class="i-row__cat">REPORT</span>
+          </div>
+          <h3 class="i-row__title">2025年、SACが手がけた仕事を一気に振り返ります。42件のうち、特に手応えのあった10件を抜粋。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2025-11-28">2025.11.28</time>
-        <span class="i-row__cat">PROJECT</span>
-        <h3 class="i-row__title">スタートアップ向けの「30日でブランド一式を立ち上げる」パッケージ、提供開始しました。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2025-11-28">2025.11.28</time>
+            <span class="i-row__cat">PROJECT</span>
+          </div>
+          <h3 class="i-row__title">スタートアップ向けの「30日でブランド一式を立ち上げる」パッケージ、提供開始しました。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="news"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2025-10-15">2025.10.15</time>
-        <span class="i-row__cat">NEWS</span>
-        <h3 class="i-row__title">SACのオフィスを上大崎に移転しました。撮影スタジオ・ミーティングルームを併設しています。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2025-10-15">2025.10.15</time>
+            <span class="i-row__cat">NEWS</span>
+          </div>
+          <h3 class="i-row__title">SACのオフィスを上大崎に移転しました。撮影スタジオ・ミーティングルームを併設しています。</h3>
+        </div>
       </a></li>
 
       <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
-        <time class="i-row__date" datetime="2025-09-30">2025.09.30</time>
-        <span class="i-row__cat">REPORT</span>
-        <h3 class="i-row__title">『SILENT BLOOM』ブランドムービーの制作秘話。AI素材と実写の比率を「3割:7割」にした理由。</h3>
-        <span class="i-row__arrow" aria-hidden="true">→</span>
+        <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__body">
+          <div class="i-row__meta">
+            <time datetime="2025-09-30">2025.09.30</time>
+            <span class="i-row__cat">REPORT</span>
+          </div>
+          <h3 class="i-row__title">『SILENT BLOOM』ブランドムービーの制作秘話。AI素材と実写の比率を「3割:7割」にした理由。</h3>
+        </div>
       </a></li>
 
     </ul>
