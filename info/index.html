@@ -145,26 +145,20 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
 .i-list__rows {
   list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px 36px;
+}
+.i-row { display: block; }
+.i-row a {
   display: flex;
   flex-direction: column;
-}
-.i-row {
-  border-bottom: 1px solid rgba(10,10,10,0.1);
-  transition: background 0.4s var(--ease);
-}
-.i-row:first-child { border-top: 1px solid rgba(10,10,10,0.1); }
-.i-row:hover { background: rgba(244,241,236,0.45); }
-.i-row a {
-  display: grid;
-  grid-template-columns: 160px minmax(0, 1fr);
-  gap: 32px;
-  align-items: center;
-  padding: 22px 8px;
+  gap: 18px;
   color: inherit;
 }
 .i-row__thumb {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   background: var(--gray-100);
   border-radius: 2px;
@@ -195,12 +189,12 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   border-radius: 999px;
 }
 .i-row__title {
-  font-family: var(--font-jp); font-weight: 500;
+  font-family: var(--font-jp); font-weight: 700;
   font-size: 16px; line-height: 1.65; letter-spacing: 0.02em;
   color: var(--theme-fg);
   text-wrap: pretty;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   transition: color 0.3s var(--ease);
@@ -386,7 +380,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .i-hero { padding: 80px 40px 96px; }
   .i-hero__inner { grid-template-columns: 1fr; gap: 24px; min-height: 0; }
   .i-hero__vlabel { writing-mode: horizontal-tb; padding-top: 0; }
-  .i-row a { grid-template-columns: 130px minmax(0, 1fr); gap: 22px; padding: 20px 6px; }
+  .i-list__rows { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 28px; }
   .page-cta__inner { grid-template-columns: 1fr; gap: 36px; }
   .page-cta { padding: 96px 24px; }
   .i-pager { grid-template-columns: 1fr; gap: 18px; }
@@ -398,15 +392,11 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .breadcrumb { padding: 88px 20px 0; }
   .i-hero { padding: 64px 20px 80px; }
   .i-list { padding: 12px 20px 72px; }
-  .i-row a {
-    grid-template-columns: 100px minmax(0, 1fr);
-    gap: 16px;
-    padding: 16px 4px;
-    align-items: flex-start;
-  }
+  .i-list__rows { grid-template-columns: 1fr; gap: 36px; }
+  .i-row a { gap: 14px; }
   .i-row__meta { font-size: 11px; gap: 10px; }
   .i-row__meta .i-row__cat { font-size: 9px; letter-spacing: 0.22em; padding: 2px 8px; }
-  .i-row__title { font-size: 14px; -webkit-line-clamp: 3; }
+  .i-row__title { font-size: 15px; -webkit-line-clamp: 3; }
   .footer { padding: 72px 20px 32px; }
   .footer__top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 56px; }
   .footer__nav { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
