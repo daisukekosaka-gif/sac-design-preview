@@ -29,12 +29,12 @@
   --font-en: 'Inter', sans-serif;
   --font-jp: 'Noto Sans JP', sans-serif;
 }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: clip; }
 body {
   font-family: var(--font-jp);
   color: var(--theme-fg);
   background: var(--theme-bg);
-  overflow-x: hidden;
+  overflow-x: clip;
   transition: background-color 0.9s var(--ease), color 0.9s var(--ease);
 }
 a { color: inherit; text-decoration: none; }
@@ -659,25 +659,21 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     <a href="#movie-director" class="c-cat active" data-cat="movie-director">
       <span class="c-cat__num">01</span>
       <span class="c-cat__en">MOVIE DIRECTOR</span>
-      <span class="c-cat__jp">映像監督</span>
       <span class="c-cat__count">10</span>
     </a>
     <a href="#art-director" class="c-cat" data-cat="art-director">
       <span class="c-cat__num">02</span>
       <span class="c-cat__en">ART DIRECTOR</span>
-      <span class="c-cat__jp">アートディレクター</span>
       <span class="c-cat__count">04</span>
     </a>
     <a href="#sound-creator" class="c-cat" data-cat="sound-creator">
       <span class="c-cat__num">03</span>
       <span class="c-cat__en">SOUND CREATOR</span>
-      <span class="c-cat__jp">サウンドクリエイター</span>
       <span class="c-cat__count">03</span>
     </a>
     <a href="#producer" class="c-cat" data-cat="producer">
       <span class="c-cat__num">04</span>
       <span class="c-cat__en">PRODUCER</span>
-      <span class="c-cat__jp">プロデューサー</span>
       <span class="c-cat__count">03</span>
     </a>
   </div>
