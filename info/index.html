@@ -87,72 +87,35 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .breadcrumb span.sep { opacity: 0.35; }
 .breadcrumb [aria-current="page"] { color: var(--theme-fg); }
 
-/* ===================== HERO (editorial / asymmetric) ===================== */
-.i-hero { padding: 36px 40px 28px; position: relative; }
+/* ===================== HERO (editorial / spacious) ===================== */
+.i-hero { padding: 120px 40px 140px; position: relative; }
 .i-hero__inner {
   max-width: 1880px; margin: 0 auto;
   display: grid;
-  grid-template-columns: 88px minmax(0, 1fr) 360px;
-  gap: 56px; align-items: end;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 56px; align-items: center;
+  min-height: 52vh;
 }
 .i-hero__vlabel {
   writing-mode: vertical-rl;
   font-family: var(--font-jp); font-weight: 500; font-size: 13px;
   letter-spacing: 0.62em; color: var(--gray-400);
-  align-self: start;
-  padding-top: 12px;
+  align-self: stretch;
+  display: flex; align-items: center;
 }
 .i-hero__vlabel strong { color: var(--theme-fg); font-weight: 700; }
 .i-hero__main { min-width: 0; }
-.i-hero__sub { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-en); font-weight: 500; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-.i-hero__sub::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
+.i-hero__sub { display: flex; align-items: center; gap: 12px; font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
+.i-hero__sub::before { content: ""; width: 36px; height: 1px; background: currentColor; opacity: 0.7; }
 .i-hero__title {
   font-family: var(--font-en); font-weight: 900;
-  font-size: clamp(72px, 12vw, 220px);
+  font-size: clamp(96px, 14vw, 280px);
   line-height: 0.86; letter-spacing: -0.06em;
   color: var(--theme-fg);
   position: relative;
   display: inline-block;
 }
 .i-hero__title .dot { color: var(--gold); }
-.i-hero__title-jp {
-  display: block;
-  margin-top: 12px;
-  font-family: var(--font-jp); font-weight: 700;
-  font-size: clamp(20px, 2vw, 30px);
-  line-height: 1.4; letter-spacing: 0.08em;
-  color: var(--theme-fg);
-}
-.i-hero__title-jp em { font-style: normal; color: var(--gold); }
-.i-hero__lead {
-  margin-top: 32px;
-  font-family: var(--font-jp); font-weight: 500;
-  font-size: clamp(14px, 1vw, 16px);
-  line-height: 2.0; letter-spacing: 0.04em;
-  color: var(--gray-500);
-  max-width: 720px;
-}
-.i-hero__lead strong { color: var(--theme-fg); font-weight: 700; }
-.i-hero__meta {
-  display: flex; flex-direction: column; gap: 18px;
-  align-self: end;
-  padding: 0 0 6px 24px;
-  border-left: 1px solid rgba(10,10,10,0.12);
-}
-.i-hero__meta-row {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 18px;
-  font-family: var(--font-en); font-weight: 500; font-size: 11px;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--gray-400);
-}
-.i-hero__meta-row b { font-weight: 700; font-size: 28px; letter-spacing: -0.02em; color: var(--theme-fg); font-family: var(--font-en); }
-.i-hero__meta-row.gold b { color: var(--gold); }
-.i-hero__meta-note {
-  font-family: var(--font-jp); font-weight: 400; font-size: 12px;
-  line-height: 1.7; color: var(--gray-400);
-  border-top: 1px solid rgba(10,10,10,0.08);
-  padding-top: 14px;
-}
 
 /* ===================== FEATURE (latest article) ===================== */
 .i-feature { padding: 48px 40px 96px; position: relative; }
@@ -593,16 +556,17 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 1500px) {
-  .i-hero__inner { grid-template-columns: 64px minmax(0, 1fr) 280px; gap: 36px; }
+  .i-hero { padding: 96px 40px 112px; }
+  .i-hero__inner { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
   .i-feature__inner { grid-template-columns: 64px minmax(0, 1.1fr) minmax(0, 1fr); gap: 36px; }
   .i-list__head { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 36px; }
   .i-row { grid-template-columns: 64px 100px minmax(0, 1fr); gap: 18px; }
   .i-pager { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
 }
 @media (max-width: 1100px) {
-  .i-hero__inner { grid-template-columns: 1fr; gap: 24px; }
+  .i-hero { padding: 80px 40px 96px; }
+  .i-hero__inner { grid-template-columns: 1fr; gap: 24px; min-height: 0; }
   .i-hero__vlabel { writing-mode: horizontal-tb; padding-top: 0; }
-  .i-hero__meta { flex-direction: row; flex-wrap: wrap; gap: 24px 36px; padding: 18px 0 0 0; border-left: none; border-top: 1px solid rgba(10,10,10,0.12); }
   .i-feature__inner { grid-template-columns: 1fr; gap: 28px; }
   .i-feature__index { writing-mode: horizontal-tb; }
   .i-list__head { grid-template-columns: 1fr; gap: 24px; }
@@ -620,7 +584,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .header__nav { display: none; }
   .header__hamburger { display: flex; }
   .breadcrumb { padding: 88px 20px 0; }
-  .i-hero { padding: 28px 20px 24px; }
+  .i-hero { padding: 64px 20px 80px; }
   .i-feature { padding: 36px 20px 72px; }
   .i-list { padding: 0 20px 72px; }
   .i-list__head { padding-top: 36px; margin-bottom: 28px; }
@@ -675,18 +639,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     <div class="i-hero__main">
       <p class="i-hero__sub">SAC INFO / NEWSROOM</p>
       <h1 class="i-hero__title js-reveal">INFO<span class="dot">.</span></h1>
-      <p class="i-hero__title-jp js-reveal">SACの<em>動き</em>と、いまここにある仕事のはなし。</p>
-      <p class="i-hero__lead js-reveal">
-        <strong>新しいプロジェクトの始動、現場のレポート、社内の取り組み、メディア掲載、登壇、リリース。</strong><br>
-        ここはSACの「動き」を読み物として残す場所です。<br>
-        単なる告知ではなく、その背景・思想・関わったクリエイターを含めて、出来るだけ余すことなく書いています。
-      </p>
-    </div>
-    <div class="i-hero__meta js-reveal">
-      <div class="i-hero__meta-row"><span>POSTED</span><b>128</b></div>
-      <div class="i-hero__meta-row gold"><span>LATEST</span><b>2026.04</b></div>
-      <div class="i-hero__meta-row"><span>EDITORS</span><b>06</b></div>
-      <p class="i-hero__meta-note">CMSと連動。記事の追加・編集・公開/非公開は管理画面から行います。</p>
     </div>
   </div>
 </section>
