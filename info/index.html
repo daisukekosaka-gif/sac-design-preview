@@ -168,7 +168,36 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   object-fit: cover;
   transition: transform 1.2s var(--ease), filter 0.4s var(--ease);
 }
-.i-row a:hover .i-row__thumb img { transform: scale(1.05); }
+.i-row a:hover .i-row__thumb img { transform: scale(1.05); filter: brightness(0.9); }
+/* Hover overlay — clickability prompt */
+.i-row__thumb::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,10,10,0) 50%, rgba(10,10,10,0.45) 100%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+  pointer-events: none;
+}
+.i-row a:hover .i-row__thumb::after { opacity: 1; }
+.i-row__cue {
+  position: absolute;
+  left: 16px; bottom: 16px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-en); font-weight: 600;
+  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--white);
+  padding: 8px 14px;
+  background: rgba(10,10,10,0.7);
+  backdrop-filter: blur(6px);
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), background 0.4s var(--ease), color 0.4s var(--ease);
+  z-index: 1;
+}
+.i-row__cue svg { transition: transform 0.4s var(--ease); }
+.i-row a:hover .i-row__cue { opacity: 1; transform: translateY(0); background: var(--gold); color: var(--black); }
+.i-row a:hover .i-row__cue svg { transform: translateX(4px); }
 .i-row__body {
   min-width: 0;
   display: flex; flex-direction: column;
@@ -238,52 +267,17 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .i-pager__btn--nav svg { width: 14px; height: 14px; }
 .i-pager__sep { color: var(--gray-300); padding: 0 4px; }
 
-/* ===================== PAGE CTA ===================== */
-.page-cta {
-  background: var(--black); color: var(--white);
-  padding: 140px 40px 140px;
-  position: relative; overflow: hidden;
-}
-.page-cta::before {
-  content: ""; position: absolute; inset: 0;
-  background:
-    radial-gradient(60% 60% at 80% 20%, rgba(200,168,107,0.10), transparent 70%),
-    radial-gradient(40% 40% at 10% 80%, rgba(200,168,107,0.06), transparent 70%);
-  pointer-events: none;
-}
-.page-cta__inner {
-  max-width: 1280px; margin: 0 auto;
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 80px;
-  align-items: end;
-}
+/* ===================== PAGE CTA (WORKS / CREATOR と統一) ===================== */
+.page-cta { background: var(--black); color: var(--white); padding: 120px 40px; text-align: center; position: relative; overflow: hidden; }
+.page-cta::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 60% at 50% 30%, rgba(200,168,107,0.06), transparent 70%); pointer-events: none; }
+.page-cta__inner { max-width: 1100px; margin: 0 auto; position: relative; }
 .page-cta__sub {
-  display: inline-flex; align-items: center; gap: 12px;
-  font-family: var(--font-en); font-weight: 500; font-size: 10px;
-  letter-spacing: 0.26em; text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 24px;
-}
-.page-cta__sub::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
-.page-cta__title {
-  font-family: var(--font-en); font-weight: 800;
-  font-size: clamp(52px, 6vw, 96px);
-  line-height: 0.95; letter-spacing: -0.04em;
-  color: var(--white);
-}
-.page-cta__title em { font-style: normal; color: var(--gold); }
-.page-cta__title-jp {
-  display: block; margin-top: 18px;
   font-family: var(--font-jp); font-weight: 500;
-  font-size: clamp(15px, 1.1vw, 18px);
-  line-height: 2; letter-spacing: 0.04em;
-  color: rgba(255,255,255,0.78);
-  max-width: 640px;
+  font-size: clamp(17px, 1.6vw, 22px); line-height: 2; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.86); max-width: 760px; margin: 0 auto 48px;
 }
-.page-cta__title-jp strong { color: var(--gold); font-weight: 700; }
-.page-cta__right { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; padding-bottom: 16px; }
+.page-cta__sub strong { color: var(--gold); font-weight: 700; }
+.page-cta__buttons { display: inline-flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
 .btn-primary {
   position: relative; overflow: hidden;
   display: inline-flex; align-items: center; gap: 14px;
@@ -381,8 +375,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .i-hero__inner { grid-template-columns: 1fr; gap: 24px; min-height: 0; }
   .i-hero__vlabel { writing-mode: horizontal-tb; padding-top: 0; }
   .i-list__rows { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 28px; }
-  .page-cta__inner { grid-template-columns: 1fr; gap: 36px; }
   .page-cta { padding: 96px 24px; }
+  .page-cta__buttons { flex-direction: column; }
   .i-pager { grid-template-columns: 1fr; gap: 18px; }
 }
 @media (max-width: 900px) {
@@ -459,7 +453,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     <ul class="i-list__rows" id="rows">
 
       <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-04-18">2026.04.18</time>
@@ -470,7 +464,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-04-10">2026.04.10</time>
@@ -481,7 +475,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="news"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-04-05">2026.04.05</time>
@@ -492,7 +486,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-03-29">2026.03.29</time>
@@ -503,7 +497,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="release"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-03-22">2026.03.22</time>
@@ -514,7 +508,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-03-14">2026.03.14</time>
@@ -525,7 +519,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="news"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-03-06">2026.03.06</time>
@@ -536,7 +530,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-02-27">2026.02.27</time>
@@ -547,7 +541,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="media"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-02-18">2026.02.18</time>
@@ -558,7 +552,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-02-10">2026.02.10</time>
@@ -569,7 +563,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="release"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2026-02-01">2026.02.01</time>
@@ -580,7 +574,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2025-12-20">2025.12.20</time>
@@ -591,7 +585,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="project"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/lastcall.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2025-11-28">2025.11.28</time>
@@ -602,7 +596,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="news"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/24.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2025-10-15">2025.10.15</time>
@@ -613,7 +607,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       </a></li>
 
       <li class="i-row js-reveal" data-cat="report"><a href="yymmdd.html">
-        <div class="i-row__thumb"><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
+        <div class="i-row__thumb"><span class="i-row__cue">READ <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><img src="../assets/works/hyde.jpg" alt="" loading="lazy"></div>
         <div class="i-row__body">
           <div class="i-row__meta">
             <time datetime="2025-09-30">2025.09.30</time>
@@ -653,15 +647,11 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <!-- ============ PAGE CTA ============ -->
 <section class="page-cta">
   <div class="page-cta__inner">
-    <div>
-      <p class="page-cta__sub">CONTACT / ご相談</p>
-      <h2 class="page-cta__title">気になる発信が<br>あれば、その<em>先</em>も。</h2>
-      <p class="page-cta__title-jp">
-        <strong>記事に書ききれなかった現場のリアル、座組、予算帯、進行も全部お話しします。</strong>
-        構想段階・社内検討段階のご連絡こそ歓迎しています。
-      </p>
-    </div>
-    <div class="page-cta__right">
+    <p class="page-cta__sub">
+      <strong>気になる発信があれば、その先も見せられます。</strong><br>
+      記事に書ききれなかった現場のリアル、座組、予算帯、進行のご相談も。
+    </p>
+    <div class="page-cta__buttons">
       <a href="../index.html#contact" class="btn-primary">
         <span>SACに相談する</span>
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
