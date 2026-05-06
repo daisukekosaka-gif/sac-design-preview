@@ -1876,16 +1876,6 @@ img, svg {
   white-space: nowrap;
 }
 
-/* 区切りドットは gold で SAC ブランドを差し色に */
-.footer__ticker-item::after {
-  content: '';
-  display: inline-block;
-  width: clamp(6px, 0.7vw, 10px);
-  height: clamp(6px, 0.7vw, 10px);
-  border-radius: 999px;
-  background: var(--gold);
-  box-shadow: 0 0 14px rgba(200, 168, 107, 0.55);
-}
 
 @keyframes footer-ticker {
   from { transform: translate3d(0, 0, 0); }
