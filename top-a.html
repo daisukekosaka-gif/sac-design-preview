@@ -1810,16 +1810,14 @@ img, svg {
 .footer__ticker {
   position: relative;
   overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.10);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
-  /* 大きい文字を受け止める高さ。clamp で画面サイズに追従 */
+  /* 背景・境界線は撤去してフッタの黒地と完全に同化させる。
+     文字とドットだけが浮かぶシンプルなティッカーとして表示。 */
+  background: transparent;
+  border: 0;
+  /* 大きい文字を受け止める縦パディング */
   padding: clamp(20px, 3.2vw, 36px) 0;
-  background: linear-gradient(
-    90deg,
-    rgba(200, 168, 107, 0.05) 0%,
-    rgba(200, 168, 107, 0.14) 50%,
-    rgba(200, 168, 107, 0.05) 100%
-  );
+  /* ティッカーとフッタメニュー(footer__inner)の間に十分な余白 */
+  margin-bottom: clamp(56px, 8vw, 96px);
 }
 
 /* 端のフェードでループの繋ぎ目を目立たなくする */
