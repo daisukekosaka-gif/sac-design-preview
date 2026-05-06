@@ -817,9 +817,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
           <p class="wd-staff__error" id="staffError">パスワードが違います</p>
           <div class="wd-staff__divider">OR</div>
           <p class="wd-staff__sub">パスワードをお持ちでない方</p>
-          <button type="button" class="wd-staff__view" id="staffViewBtn">クレジットを見る
+          <a href="mailto:info@sac.epoch-inc.jp?subject=%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95%E3%82%AF%E3%83%AC%E3%82%B8%E3%83%83%E3%83%88%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%81%AE%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B" class="wd-staff__view" id="staffViewBtn">パスワードを問い合わせる
             <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -957,8 +957,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <section class="page-cta">
   <div class="page-cta__inner">
     <p class="page-cta__sub">
-      <strong>この一本のように、あなたのプロジェクトも任せてみませんか。</strong><br>
-      作品ごとに、最適なチームをSAC側で編成します。
+      <strong>この一本のように、あなたのプロジェクトもSACに託してみませんか。</strong><br>
+      プロジェクトごとに、最適なチームをSAC側で編成します。
     </p>
     <div class="page-cta__buttons">
       <a href="index.html#contact" class="btn-primary">
@@ -1110,7 +1110,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   var staffForm = document.getElementById('staffForm');
   var staffPw = document.getElementById('staffPw');
   var staffError = document.getElementById('staffError');
-  var staffViewBtn = document.getElementById('staffViewBtn');
   function unlockStaff(){
     staffList.setAttribute('data-locked', 'false');
     staffLock.setAttribute('hidden', '');
@@ -1129,14 +1128,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       }
     });
   }
-  if (staffViewBtn) {
-    staffViewBtn.addEventListener('click', function(){
-      // パスワード未保有者向け：チャット相談を開く
-      var chatBtn = document.getElementById('chatOpen');
-      if (chatBtn) chatBtn.click();
-    });
-  }
-
   // CHAT
   var chatOpen = document.getElementById('chatOpen');
   var chatClose = document.getElementById('chatClose');
