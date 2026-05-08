@@ -822,7 +822,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .article-cover__inner { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
   .article-body__inner { grid-template-columns: 64px minmax(0, 1fr) 280px; gap: 40px; }
   .article-body__main blockquote { margin-left: -64px; margin-right: -64px; }
-  .article-body__main figure.wide { margin-left: -100px; margin-right: -100px; }
+  /* SHARE rail 削除に合わせ、wide 画像をビューポート左端まで extend */
+  .article-body__main figure.wide { margin-left: -144px; margin-right: -100px; }
   .article-body__main .figs-2 { margin-left: -64px; margin-right: -64px; }
   .article-body__main .embed { margin-left: -64px; margin-right: -64px; }
   .credits__inner { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
