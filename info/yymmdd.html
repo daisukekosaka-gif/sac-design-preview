@@ -315,6 +315,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   position: relative;
   padding-left: 0;
   text-wrap: balance;
+  scroll-margin-top: 96px;
 }
 .article-body__main h2 .num {
   display: block;
@@ -981,7 +982,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         本記事では、SACがアーティスト・レーベル・マネジメントと並走しながら『LAST CALL』のキービジュアルを設計した、その思考と実装を残しておきます。
       </p>
 
-      <h2><span class="num">CHAPTER 01</span>ブリーフは「<em>一語</em>」だけだった</h2>
+      <h2 id="chapter-01"><span class="num">CHAPTER 01</span>ブリーフは「<em>一語</em>」だけだった</h2>
       <p>
         プロジェクトの最初のミーティングで、アーティスト本人から渡された言葉は、たった一語でした。<strong>「沈黙。」</strong>
         通常、商業案件のブリーフは要件と禁止事項のリストになりがちですが、今回はその真逆。SAC側で<a href="#">仮説のヴィジュアルムードボード</a>を3案立て、本人と二人三脚で削り込んでいくことが、企画段階の主作業になりました。
@@ -995,7 +996,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         <figcaption><b>FIG.1</b> &nbsp;／&nbsp; 初期ムードボードA案。生成系のラフ素材を200カット並べ、本人と「沈黙の温度」を仕分けた。</figcaption>
       </figure>
 
-      <h2><span class="num">CHAPTER 02</span>キービジュアルは<em>「ジャケットではなく、装置」</em></h2>
+      <h2 id="chapter-02"><span class="num">CHAPTER 02</span>キービジュアルは<em>「ジャケットではなく、装置」</em></h2>
       <p>
         従来、キービジュアルはCDジャケットやポスターのために作られていました。けれど現在の音楽プロジェクトにおいて、キービジュアルは<strong>SNSのアイコン、サブスクのサムネイル、ライブの会場演出、ティザーの素材</strong>へ、同じ画像が流れていきます。「印刷されるための一枚」ではなく、「<em>あらゆる尺・解像度に伸縮するための装置</em>」として設計する必要がありました。
       </p>
@@ -1022,7 +1023,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         </figure>
       </div>
 
-      <h2><span class="num">CHAPTER 03</span>ティザー映像は<em>「動かない」</em>ことに賭けた</h2>
+      <h2 id="chapter-03"><span class="num">CHAPTER 03</span>ティザー映像は<em>「動かない」</em>ことに賭けた</h2>
       <p>
         SNSタイムラインで再生されるティザーは、最初の1秒の引きが命です。多くの場合「動き」と「カット数」で勝負しがちですが、本プロジェクトでは真逆の判断をしました。<strong>ほぼ動かない15秒。</strong>
         被写体は呼吸しているだけ。背景は微細にゆらぐだけ。けれど、フィードを縦スクロールしていた指が一瞬止まる。「この人、なんで動いてないんだ？」という違和感を、視聴の引っ掛かりに変える設計です。
@@ -1039,7 +1040,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         <b>VIDEO</b> &nbsp;／&nbsp; LAST CALL ティザー（15秒・公開前のプレビュー版）
       </p>
 
-      <h2><span class="num">CHAPTER 04</span>SNS展開で大事だった、たった<em>一つ</em>のこと</h2>
+      <h2 id="chapter-04"><span class="num">CHAPTER 04</span>SNS展開で大事だった、たった<em>一つ</em>のこと</h2>
       <p>
         本プロジェクトのSNS素材は、48パターン用意しました。Instagram用の正方形、ストーリーズ用の縦長、リール用の動画、X用の横長、ティザー、解禁日カウントダウン、それぞれ複数バリエーション。けれど、運用上、徹底したことはたった一つ。
       </p>
@@ -1057,7 +1058,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         <div class="ref-card__media"><img src="../assets/works/lastcall.jpg" alt=""></div>
       </a>
 
-      <h2><span class="num">CHAPTER 05</span>誰がいて、誰が作ったか</h2>
+      <h2 id="chapter-05"><span class="num">CHAPTER 05</span>誰がいて、誰が作ったか</h2>
       <p>
         この仕事は、SAC単独では成立していません。アーティスト本人、レーベル、マネジメント、撮影現場のスタッフ、ヘアメイク、スタイリスト、印刷会社、SNS運用チーム ── 数えれば30人以上が関わっています。本記事の最後では、特にSACから入った主要なクリエイターを<a href="../creator-index.html">CREATOR一覧</a>からリンクで紹介します。
       </p>
@@ -1081,11 +1082,11 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       <div class="toc">
         <p class="toc__label">— CONTENTS</p>
         <ol>
-          <li><a href="#">ブリーフは「一語」だけだった</a></li>
-          <li><a href="#">キービジュアルは「ジャケットではなく、装置」</a></li>
-          <li><a href="#">ティザー映像は「動かない」ことに賭けた</a></li>
-          <li><a href="#">SNS展開で大事だった、たった一つのこと</a></li>
-          <li><a href="#">誰がいて、誰が作ったか</a></li>
+          <li><a href="#chapter-01">ブリーフは「一語」だけだった</a></li>
+          <li><a href="#chapter-02">キービジュアルは「ジャケットではなく、装置」</a></li>
+          <li><a href="#chapter-03">ティザー映像は「動かない」ことに賭けた</a></li>
+          <li><a href="#chapter-04">SNS展開で大事だった、たった一つのこと</a></li>
+          <li><a href="#chapter-05">誰がいて、誰が作ったか</a></li>
         </ol>
       </div>
     </aside>
