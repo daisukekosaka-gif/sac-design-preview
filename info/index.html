@@ -87,14 +87,14 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .breadcrumb span.sep { opacity: 0.35; }
 .breadcrumb [aria-current="page"] { color: var(--theme-fg); }
 
-/* ===================== HERO (editorial / spacious) ===================== */
-.i-hero { padding: 120px 40px 140px; position: relative; }
+/* ===================== HERO (creator-index と同仕様) ===================== */
+.i-hero { padding: 80px 40px 120px; position: relative; }
 .i-hero__inner {
-  max-width: 1880px; margin: 0 auto;
+  max-width: 1680px; margin: 0 auto;
   display: grid;
-  grid-template-columns: 88px minmax(0, 1fr);
-  gap: 56px; align-items: center;
-  min-height: 52vh;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 56px; align-items: end;
+  min-height: 64vh;
 }
 .i-hero__vlabel {
   writing-mode: vertical-rl;
@@ -109,11 +109,11 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .i-hero__sub::before { content: ""; width: 36px; height: 1px; background: currentColor; opacity: 0.7; }
 .i-hero__title {
   font-family: var(--font-en); font-weight: 900;
-  font-size: clamp(96px, 14vw, 280px);
-  line-height: 0.86; letter-spacing: -0.06em;
+  font-size: clamp(56px, 9vw, 168px);
+  line-height: 0.88; letter-spacing: -0.05em;
   color: var(--theme-fg);
-  position: relative;
-  display: inline-block;
+  margin-bottom: 48px;
+  overflow-wrap: anywhere;
 }
 .i-hero__title .dot { color: var(--gold); }
 
@@ -410,9 +410,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 1500px) {
-  .i-hero { padding: 96px 40px 112px; }
-  .i-hero__inner { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
-  .i-pager { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
+  .i-hero__inner { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
+  .i-pager { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
 }
 @media (max-width: 1100px) {
   .i-hero { padding: 80px 40px 96px; }
