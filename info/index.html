@@ -409,14 +409,12 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .footer__credit { font-family: var(--font-en); font-weight: 300; font-style: italic; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.32); }
 
 /* ===================== RESPONSIVE ===================== */
-@media (max-width: 1500px) {
+/* creator-index と同じブレークポイント (1200 / 900) で揃える */
+@media (max-width: 1200px) {
   .i-hero__inner { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
   .i-pager { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
 }
 @media (max-width: 1100px) {
-  .i-hero { padding: 80px 40px 96px; }
-  .i-hero__inner { grid-template-columns: 1fr; gap: 24px; min-height: 0; }
-  .i-hero__vlabel { writing-mode: horizontal-tb; padding-top: 0; }
   .i-list__rows { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 28px; }
   .page-cta { padding: 96px 24px; }
   .page-cta__buttons { flex-direction: column; }
@@ -427,7 +425,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .header__nav { display: none; }
   .header__hamburger { display: flex; }
   .breadcrumb { padding: 88px 20px 0; }
-  .i-hero { padding: 64px 20px 80px; }
+  .i-hero { padding: 48px 20px 80px; }
+  .i-hero__inner { grid-template-columns: 1fr; gap: 28px; min-height: auto; }
+  .i-hero__vlabel { writing-mode: horizontal-tb; height: auto; padding-top: 0; }
   .i-list { padding: 12px 20px 72px; }
   .i-list__rows { grid-template-columns: 1fr; gap: 36px; }
   .i-row a { gap: 14px; }
