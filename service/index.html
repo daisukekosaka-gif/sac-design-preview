@@ -88,107 +88,53 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .breadcrumb span.sep { opacity: 0.35; }
 .breadcrumb [aria-current="page"] { color: var(--theme-fg); }
 
-/* ===================== HERO ===================== */
-.s-hero {
-  position: relative;
-  padding: 56px 40px 120px;
-  min-height: calc(100svh - 92px);
-  display: grid;
-  grid-template-columns: 80px minmax(0, 1fr) 320px;
-  gap: 48px;
-  align-items: stretch;
+/* ===================== HERO (creator-index 仕様に合わせる) ===================== */
+.s-hero { padding: 80px 40px 120px; position: relative; }
+.s-hero__inner {
+  max-width: 1680px; margin: 0 auto;
+  display: grid; grid-template-columns: 120px minmax(0, 1fr);
+  gap: 56px; align-items: end;
+  min-height: 64vh;
 }
 .s-hero__vlabel {
   writing-mode: vertical-rl;
-  font-family: var(--font-jp); font-weight: 500; font-size: 13px;
-  letter-spacing: 0.6em; color: var(--gray-400);
+  font-family: var(--font-jp); font-weight: 500; font-size: 14px;
+  letter-spacing: 0.42em;
+  color: var(--gray-400);
   align-self: start;
-  margin-top: 12px;
+  padding-top: 20px;
+  height: 240px;
 }
 .s-hero__vlabel strong { color: var(--theme-fg); font-weight: 700; }
 
-.s-hero__main {
-  position: relative;
-  display: flex; flex-direction: column; justify-content: space-between;
-  min-height: 56vh;
-}
-.s-hero__sub {
-  display: inline-flex; align-items: center; gap: 12px;
-  font-family: var(--font-en); font-weight: 500; font-size: 10px;
-  letter-spacing: 0.24em; text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
-}
-.s-hero__sub::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
-
-.s-hero__title-en {
+.s-hero__main { position: relative; min-width: 0; max-width: 1320px; }
+.s-hero__tag { display: inline-block; margin-bottom: 36px; }
+.s-hero__title {
   font-family: var(--font-en); font-weight: 900;
-  font-size: clamp(64px, 9vw, 168px);
-  line-height: 0.86; letter-spacing: -0.05em;
+  font-size: clamp(56px, 9vw, 168px);
+  line-height: 0.88; letter-spacing: -0.05em;
   color: var(--theme-fg);
-  margin-bottom: 20px;
+  margin-bottom: 48px;
+  overflow-wrap: anywhere;
 }
-.s-hero__title-en .dot { color: var(--gold); }
-.s-hero__title-jp {
-  font-family: var(--font-jp); font-weight: 700;
-  font-size: clamp(28px, 3.6vw, 56px);
-  line-height: 1.3; letter-spacing: 0.02em;
-  color: var(--theme-fg);
-  max-width: 16em;
-}
-.s-hero__title-jp em {
-  font-style: normal;
-  background: linear-gradient(transparent 65%, rgba(200,168,107,0.32) 65%);
-  padding: 0 2px;
-}
-
+.s-hero__title em { font-style: normal; color: var(--gold); }
+.s-hero__title .dot { color: var(--gold); }
 .s-hero__lead {
-  margin-top: 36px;
   font-family: var(--font-jp); font-weight: 500;
-  font-size: clamp(14px, 1.05vw, 17px);
-  line-height: 2; letter-spacing: 0.04em;
+  font-size: clamp(17px, 1.4vw, 22px);
+  line-height: 1.95; letter-spacing: 0.04em;
   color: var(--gray-500);
-  max-width: 560px;
+  max-width: 640px;
 }
 .s-hero__lead strong { color: var(--theme-fg); font-weight: 700; }
-
 .s-hero__meta {
-  display: flex; flex-direction: column; gap: 18px;
-  padding: 8px 0 0 24px;
-  border-left: 1px solid rgba(10,10,10,0.12);
-  align-self: start;
-}
-.s-hero__meta-row {
-  display: flex; justify-content: space-between; align-items: baseline;
-  gap: 16px;
+  margin-top: 48px;
+  display: flex; gap: 40px; align-items: center; flex-wrap: wrap;
   font-family: var(--font-en); font-weight: 500; font-size: 11px;
-  letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray-400);
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gray-400);
 }
-.s-hero__meta-row b { font-weight: 700; font-size: 30px; letter-spacing: -0.02em; color: var(--theme-fg); }
-.s-hero__meta-row.gold b { color: var(--gold); }
-
-.s-hero__index {
-  margin-top: 56px;
-  display: flex; flex-direction: column; gap: 8px;
-  font-family: var(--font-en); font-weight: 500; font-size: 10px;
-  letter-spacing: 0.22em; color: var(--gray-400);
-}
-.s-hero__index-title { color: var(--theme-fg); font-weight: 600; margin-bottom: 4px; }
-.s-hero__index a { display: flex; gap: 12px; padding: 4px 0; border-bottom: 1px solid rgba(10,10,10,0.06); transition: color 0.3s var(--ease), padding 0.3s var(--ease); }
-.s-hero__index a:hover { color: var(--gold); padding-left: 8px; }
-.s-hero__index a span:first-child { color: var(--gold); min-width: 26px; }
-
-.s-hero__scroll {
-  position: absolute;
-  bottom: 0; left: 0;
-  display: inline-flex; align-items: center; gap: 14px;
-  font-family: var(--font-en); font-weight: 500; font-size: 10px;
-  letter-spacing: 0.24em; color: var(--gray-400);
-  text-transform: uppercase;
-}
-.s-hero__scroll-line { display: block; width: 56px; height: 1px; background: currentColor; position: relative; overflow: hidden; opacity: 0.4; }
-.s-hero__scroll-line::after { content: ""; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: var(--gold); animation: scrollLine 2.4s var(--ease) infinite; }
-@keyframes scrollLine { 0% { left: -100%; } 60% { left: 110%; } 100% { left: 110%; } }
+.s-hero__meta b { color: var(--gold); font-weight: 600; font-size: 14px; letter-spacing: 0.12em; }
 
 /* ===================== ABOUT (SACとは何か) — ivory bg ===================== */
 .s-about {
@@ -1141,8 +1087,10 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .footer__credit { font-family: var(--font-en); font-weight: 300; font-style: italic; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.32); }
 
 /* ===================== RESPONSIVE ===================== */
+@media (max-width: 1200px) {
+  .s-hero__inner { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
+}
 @media (max-width: 1280px) {
-  .s-hero { grid-template-columns: 56px minmax(0, 1fr) 280px; gap: 32px; }
   .s-fields__grid { grid-auto-rows: minmax(140px, auto); }
 }
 @media (max-width: 1080px) {
@@ -1163,19 +1111,10 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .header__hamburger { display: flex; }
   .breadcrumb { padding: 88px 20px 0; font-size: 10px; letter-spacing: 0.14em; gap: 10px; }
 
-  .s-hero {
-    padding: 32px 20px 80px;
-    grid-template-columns: 1fr;
-    gap: 28px;
-    min-height: auto;
-  }
-  .s-hero__vlabel { writing-mode: horizontal-tb; letter-spacing: 0.3em; margin-top: 0; }
-  .s-hero__main { min-height: auto; }
-  .s-hero__title-en { font-size: clamp(56px, 14vw, 84px); }
-  .s-hero__title-jp { font-size: clamp(24px, 6vw, 36px); }
-  .s-hero__meta { padding: 24px 0 0 0; border-left: none; border-top: 1px solid rgba(10,10,10,0.12); }
-  .s-hero__index { margin-top: 32px; }
-  .s-hero__scroll { position: static; margin-top: 32px; }
+  .s-hero { padding: 48px 20px 80px; }
+  .s-hero__inner { grid-template-columns: 1fr; gap: 28px; min-height: auto; }
+  .s-hero__vlabel { writing-mode: horizontal-tb; height: auto; padding-top: 0; letter-spacing: 0.3em; }
+  .s-hero__meta { gap: 16px; }
 
   .s-about,
   .s-fields,
@@ -1259,45 +1198,28 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
 <!-- ============ HERO ============ -->
 <section class="s-hero" id="top" data-section="hero">
-  <div class="s-hero__vlabel">SAC <strong>SERVICE</strong> 提供領域と相談のしかた</div>
+  <div class="s-hero__inner">
+    <div class="s-hero__vlabel">SAC <strong>SERVICE</strong> 2025</div>
 
-  <div class="s-hero__main">
-    <div>
-      <p class="s-hero__sub">SERVICE — WHAT WE OFFER</p>
-      <h1 class="s-hero__title-en js-reveal">SERVICE<span class="dot">.</span></h1>
-      <p class="s-hero__title-jp js-reveal delay-1">
-        <em>つくる</em>、を解放する。<br>制約から、企画を考える。
-      </p>
-      <p class="s-hero__lead js-reveal delay-2">
+    <div class="s-hero__main">
+      <span class="s-hero__tag section-label">SERVICE</span>
+      <h1 class="s-hero__title js-reveal">
+        <em>つくる</em>を、解放<span class="dot">。</span><br>
+        SERVICE<span class="dot">.</span>
+      </h1>
+      <p class="s-hero__lead js-reveal">
         <strong>予算・時間・座組の制約に縛られない、AI時代の制作パートナー。</strong><br>
         企画から納品、運用まで。映像・グラフィック・WEB・SNS・体験を一気通貫で。<br>
         “こういうことをやりたい”の段階から、SACは一緒に考えます。
       </p>
+      <div class="s-hero__meta js-reveal">
+        <span>FIELDS <b>05</b></span>
+        <span>WORKFLOW <b>05</b></span>
+        <span>OUTPUTS <b>∞</b></span>
+        <span>UPDATED 2025.04</span>
+      </div>
     </div>
-
-    <a href="#challenges" class="s-hero__scroll" aria-label="Scroll to challenges">
-      <span>Scroll</span>
-      <span class="s-hero__scroll-line"></span>
-      <span>READ MORE</span>
-    </a>
   </div>
-
-  <aside class="s-hero__meta js-reveal delay-3" aria-label="Service overview">
-    <div class="s-hero__meta-row"><span>FIELDS</span><b>05</b></div>
-    <div class="s-hero__meta-row gold"><span>WORKFLOW</span><b>05</b></div>
-    <div class="s-hero__meta-row"><span>OUTPUTS</span><b>∞</b></div>
-
-    <nav class="s-hero__index" aria-label="Page index">
-      <span class="s-hero__index-title">INDEX</span>
-      <a href="#about"><span>01</span><span>WHO WE ARE</span></a>
-      <a href="#challenges"><span>02</span><span>CHALLENGES</span></a>
-      <a href="#fields"><span>03</span><span>FIELDS</span></a>
-      <a href="#flow"><span>04</span><span>WORKFLOW</span></a>
-      <a href="#cases"><span>05</span><span>USE CASES</span></a>
-      <a href="#expansion"><span>06</span><span>EXPANSION</span></a>
-      <a href="#contact"><span>07</span><span>CONTACT</span></a>
-    </nav>
-  </aside>
 </section>
 
 <!-- ============ ABOUT (SACとは何か) ============ -->
