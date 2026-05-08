@@ -396,9 +396,10 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 .article-body__main figcaption b { color: var(--gray-500); font-weight: 700; }
 
-/* Wide / bleed figure — breaks out of column to give editorial drama */
+/* Wide / bleed figure — 左端は本文（CHAPTER 開始位置）に揃え、右側のみ拡張 */
 .article-body__main figure.wide {
-  margin: 80px -180px;
+  margin: 80px 0;
+  margin-right: -180px;
 }
 .article-body__main figure.bleed {
   margin: 80px calc(-1 * (50vw - 760px / 2 + 40px));
@@ -822,8 +823,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .article-cover__inner { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
   .article-body__inner { grid-template-columns: 64px minmax(0, 1fr) 280px; gap: 40px; }
   .article-body__main blockquote { margin-left: -64px; margin-right: -64px; }
-  /* SHARE rail 削除に合わせ、wide 画像をビューポート左端まで extend */
-  .article-body__main figure.wide { margin-left: -144px; margin-right: -100px; }
+  /* 左端は本文の開始位置に揃え、右側のみ拡張 */
+  .article-body__main figure.wide { margin-left: 0; margin-right: -100px; }
   .article-body__main .figs-2 { margin-left: -64px; margin-right: -64px; }
   .article-body__main .embed { margin-left: -64px; margin-right: -64px; }
   .credits__inner { grid-template-columns: 64px minmax(0, 1fr); gap: 36px; }
