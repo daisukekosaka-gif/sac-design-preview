@@ -223,7 +223,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 .s-challenges__head {
   text-align: center;
-  max-width: 720px;
+  max-width: 920px;
   margin: 0 auto 80px;
 }
 .s-challenges__head .section-label {
@@ -231,10 +231,11 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 .s-challenges__title {
   font-family: var(--font-jp); font-weight: 700;
-  font-size: clamp(28px, 3.6vw, 52px);
-  line-height: 1.45; letter-spacing: 0.01em;
+  font-size: clamp(26px, 3.2vw, 44px);
+  line-height: 1.45; letter-spacing: 0.005em;
   color: var(--theme-fg);
   margin-bottom: 24px;
+  white-space: nowrap;
 }
 .s-challenges__title em { font-style: normal; color: var(--gold); }
 .s-challenges__lead {
@@ -258,7 +259,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   border-right: 1px solid rgba(10,10,10,0.1);
   border-bottom: 1px solid rgba(10,10,10,0.1);
   transition: background 0.4s var(--ease);
-  min-height: 320px;
 }
 .s-chal:nth-child(3n) { border-right: none; }
 .s-chal:nth-child(n+4) { border-bottom: none; }
@@ -290,7 +290,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   font-family: var(--font-jp); font-size: 13px;
   line-height: 1.85; letter-spacing: 0.03em;
   color: var(--gray-500);
-  margin-top: auto;
   padding-top: 18px;
   border-top: 1px solid rgba(10,10,10,0.1);
 }
@@ -1110,10 +1109,11 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .footer { padding: 72px 20px 32px; }
 
   .s-challenges__grid { grid-template-columns: 1fr; }
-  .s-chal { border-right: none; border-bottom: 1px solid rgba(10,10,10,0.1); min-height: auto; }
+  .s-chal { border-right: none; border-bottom: 1px solid rgba(10,10,10,0.1); }
   .s-chal:nth-child(3n) { border-right: none; }
   .s-chal:nth-child(n+4) { border-bottom: 1px solid rgba(10,10,10,0.1); }
   .s-chal:last-child { border-bottom: none; }
+  .s-challenges__title { white-space: normal; }
 
   .s-fields__grid { grid-template-columns: 1fr; }
   .s-field { grid-column: 1 / -1 !important; grid-row: auto !important; min-height: auto !important; }
