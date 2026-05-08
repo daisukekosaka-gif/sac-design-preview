@@ -1186,13 +1186,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
 /* ===================== CONTACT — FORM ===================== */
 .c-form-section { padding: 120px 40px 140px; background: var(--ivory); position: relative; }
-.c-form-section__inner { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.4fr); gap: 80px; align-items: start; }
-.c-form-section__head { position: sticky; top: 100px; }
-.c-form-section__num { font-family: var(--font-en); font-weight: 800; font-size: clamp(80px, 9vw, 160px); line-height: 0.9; letter-spacing: -0.04em; color: var(--theme-fg); opacity: 0.06; margin-bottom: -32px; user-select: none; }
-.c-form-section__title { font-family: var(--font-jp); font-weight: 700; font-size: clamp(28px, 3vw, 44px); line-height: 1.4; letter-spacing: 0.01em; color: var(--theme-fg); margin: 24px 0 24px; }
-.c-form-section__title em { font-style: normal; color: var(--gold); }
-.c-form-section__desc { font-size: 14.5px; line-height: 2; letter-spacing: 0.04em; color: var(--gray-500); }
-.c-form-section__desc strong { color: var(--theme-fg); font-weight: 700; }
+.c-form-section__inner { max-width: 880px; margin: 0 auto; }
 
 .c-form { display: flex; flex-direction: column; gap: 28px; padding: 56px 56px 48px; background: var(--white); border-radius: 6px; box-shadow: 0 24px 80px -40px rgba(10,10,10,0.18); }
 .c-form__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
@@ -1260,7 +1254,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .c-form__check a { color: var(--theme-fg); border-bottom: 1px solid var(--gold); transition: color 0.3s var(--ease); }
 .c-form__check a:hover { color: var(--gold); }
 
-.c-form__submit-row { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; padding-top: 8px; }
+.c-form__submit-row { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding-top: 24px; text-align: center; }
 .c-form__submit {
   display: inline-flex; align-items: center; gap: 10px;
   padding: 18px 40px;
@@ -1283,7 +1277,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .c-direct__title { font-family: var(--font-jp); font-weight: 700; font-size: clamp(26px, 3.2vw, 44px); line-height: 1.4; letter-spacing: 0.01em; margin: 18px 0 18px; }
 .c-direct__title em { font-style: normal; color: var(--gold); }
 .c-direct__sub { font-size: 14.5px; line-height: 1.95; letter-spacing: 0.04em; color: var(--gray-500); }
-.c-direct__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.c-direct__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 880px; margin: 0 auto; }
 .c-channel {
   display: flex; flex-direction: column; gap: 14px;
   padding: 40px 32px 36px;
@@ -1313,8 +1307,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 @media (max-width: 1024px) {
   .c-types__head { grid-template-columns: 1fr; gap: 28px; }
   .c-types__grid { grid-template-columns: repeat(2, 1fr); }
-  .c-form-section__inner { grid-template-columns: 1fr; gap: 48px; }
-  .c-form-section__head { position: static; }
   .c-direct__grid { grid-template-columns: 1fr; }
   .c-access__inner { grid-template-columns: 1fr; gap: 32px; }
 }
@@ -1385,11 +1377,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <section class="c-types" id="types" data-section="types">
   <div class="c-types__inner">
     <header class="c-types__head">
-      <h2 class="c-types__title js-reveal">
-        どんな入口でも、<br>
-        まずは<em>話してみる</em>ところから。
-      </h2>
-      <p class="c-types__sub js-reveal delay-1">
+      <p class="c-types__sub js-reveal">
         <strong>SACへの相談は、目的が固まっていなくて構いません。</strong>
         以下の4つは、これまで多く寄せられた入口の例です。当てはまらなくても、フォームの「その他」で構いません。
       </p>
@@ -1423,19 +1411,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <!-- ============ FORM ============ -->
 <section class="c-form-section" id="form" data-section="form">
   <div class="c-form-section__inner">
-    <div class="c-form-section__head js-reveal">
-      <p class="c-form-section__num">FORM</p>
-      <h2 class="c-form-section__title">
-        フォームから<br><em>相談する</em>。
-      </h2>
-      <p class="c-form-section__desc">
-        <strong>所要 1〜2分。</strong><br>
-        おおよそ1営業日以内に、担当者から返信します。<br>
-        ご要件が決まっていない段階のご相談も歓迎です。
-      </p>
-    </div>
-
-    <form class="c-form js-reveal delay-1" action="#" method="post" novalidate>
+    <form class="c-form js-reveal" action="#" method="post" novalidate>
       <div class="c-form__field c-form__field--full">
         <span class="c-form__label">お問い合わせ種別 <span class="req">必須</span></span>
         <div class="c-form__radios">
@@ -1511,7 +1487,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
           <span>送信する</span>
           <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <p class="c-form__submit-note">送信後、自動返信メールをお送りします。</p>
+        <p class="c-form__submit-note">おおよそ1営業日以内に、担当者から返信します。<br>送信後に自動返信メールをお送りします。</p>
       </div>
     </form>
   </div>
@@ -1523,7 +1499,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     <header class="c-direct__head">
       <p class="section-label js-reveal">DIRECT — OTHER CHANNELS</p>
       <h2 class="c-direct__title js-reveal delay-1">
-        メールや電話、SNSからも<em>OK</em>。
+        メールや電話からも<em>OK</em>。
       </h2>
       <p class="c-direct__sub js-reveal delay-2">
         フォームが不便な場合は、下記からご連絡ください。お急ぎの場合はお電話が確実です。
@@ -1534,20 +1510,14 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
       <a class="c-channel js-reveal" href="mailto:contact@epoch-inc.jp">
         <span class="c-channel__label">EMAIL</span>
         <span class="c-channel__name">お問い合わせメール</span>
-        <span class="c-channel__value">contact@epoch-inc.jp</span>
+        <span class="c-channel__value">contact@epoch-inc.jp<br>info@epoch-inc.jp</span>
         <span class="c-channel__note">原則、1営業日以内に返信します。添付ファイルはGoogle Drive等のリンクでお送りいただくとスムーズです。</span>
       </a>
-      <a class="c-channel js-reveal delay-1" href="tel:+81300000000">
+      <a class="c-channel js-reveal delay-1" href="tel:+81364502198">
         <span class="c-channel__label">PHONE</span>
         <span class="c-channel__name">代表電話</span>
-        <span class="c-channel__value">03 - 0000 - 0000</span>
+        <span class="c-channel__value">03 - 6450 - 2198</span>
         <span class="c-channel__note">受付：平日 10:00 – 19:00 / 年末年始・夏季休業を除く。担当者不在の場合は折り返します。</span>
-      </a>
-      <a class="c-channel js-reveal delay-2" href="https://www.instagram.com/" target="_blank" rel="noopener">
-        <span class="c-channel__label">SNS</span>
-        <span class="c-channel__name">Instagram / X DM</span>
-        <span class="c-channel__value">@sac_smartai</span>
-        <span class="c-channel__note">企画相談やライトな打診はDMでも結構です。返信は営業日中に対応します。</span>
       </a>
     </div>
   </div>
@@ -1567,7 +1537,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
         〒141-0021<br>
         東京都品川区上大崎3-14-1<br>
         中丸ハウス B棟<br>
-        TEL：03-0000-0000<br>
+        TEL：03 - 6450 - 2198<br>
         受付：平日 10:00 – 19:00
       </address>
       <a class="c-access__map-link" href="https://maps.app.goo.gl/tKVmTAiDvhVb9SHV6" target="_blank" rel="noopener">
@@ -1585,26 +1555,21 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <!-- ============ PAGE CTA ============ -->
 <section class="page-cta" id="next" data-section="cta">
   <div class="page-cta__inner">
-    <p class="page-cta__label js-reveal">NEXT — KEEP EXPLORING</p>
-    <h2 class="page-cta__title js-reveal delay-1">
-      送信前に、もう少し<em>知りたい</em>方へ。
+    <h2 class="page-cta__title js-reveal">
+      もう少し<em>知りたい</em>方へ。
     </h2>
-    <p class="page-cta__sub js-reveal delay-2">
-      <strong>SACの考え方や、これまでの仕事も見てから判断したい——そんな声をよく聞きます。</strong><br>
-      WORKS と SERVICE のページに、判断材料になる事例と進め方を載せています。
+    <p class="page-cta__sub js-reveal delay-1">
+      考え方や事例も、判断材料として揃えています。<br>
+      気になることがあれば、お気軽にどうぞ。
     </p>
-    <div class="page-cta__buttons js-reveal delay-3">
-      <a href="../works-index.html" class="btn-primary">
-        <span>WORKSを見る</span>
+    <div class="page-cta__buttons js-reveal delay-2">
+      <a href="#form" class="btn-primary">
+        <span>SACに相談する</span>
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <a href="../service/" class="btn-ghost">
-        <span>SERVICEを見る</span>
-        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
     </div>
-    <p class="page-cta__small js-reveal delay-4">
-      お電話：03 - 0000 - 0000 / 平日 10:00 – 19:00
+    <p class="page-cta__small js-reveal delay-3">
+      お電話：03 - 6450 - 2198 / 平日 10:00 – 19:00
     </p>
   </div>
 </section>
