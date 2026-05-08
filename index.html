@@ -2025,16 +2025,17 @@ html.is-loading body {
 .sac-loader__curtain--bottom::before { top: -1px; }
 
 /* 退場アニメ: 中央のズーム"ヒーローの瞬間"が終わってからカーテン分割が入る。
-   curtain delay を 0.32s → 0.58s に伸ばすことでズームの存在感を独立させる */
+   curtain delay を後ろ倒し (top 0.73s / bottom 0.81s) し、
+   ズームの余韻をしっかり感じさせてから分割が始まる */
 .sac-loader.is-done .sac-loader__curtain--top {
-  animation: sac-loader-curtain-up   0.95s 0.58s cubic-bezier(0.83, 0, 0.17, 1) forwards;
+  animation: sac-loader-curtain-up   0.95s 0.73s cubic-bezier(0.83, 0, 0.17, 1) forwards;
 }
 .sac-loader.is-done .sac-loader__curtain--bottom {
-  animation: sac-loader-curtain-down 0.95s 0.66s cubic-bezier(0.83, 0, 0.17, 1) forwards;
+  animation: sac-loader-curtain-down 0.95s 0.81s cubic-bezier(0.83, 0, 0.17, 1) forwards;
 }
 .sac-loader.is-done .sac-loader__curtain--top::after,
 .sac-loader.is-done .sac-loader__curtain--bottom::before {
-  animation: sac-loader-line-flash 0.7s 0.55s ease-out forwards;
+  animation: sac-loader-line-flash 0.7s 0.70s ease-out forwards;
 }
 
 @keyframes sac-loader-curtain-up   { to { transform: translateY(-100%); } }
@@ -2287,15 +2288,16 @@ html.is-loading body {
   //   0.08s : ズームピーク (1.65x) 開始
   //   0.20s : フラッシュ・ショックウェーブ peak
   //   0.40s : ズームピークホールド完了
-  //   0.58s : カーテン上下分割スライド開始 (60ms ずらし)
-  //   1.55s : 全アニメ完了
+  //   0.73s : カーテン上分割スライド開始
+  //   0.81s : カーテン下分割スライド開始
+  //   1.76s : 全アニメ完了
   function dismissLoader(){
     var loader = document.getElementById('sacLoader');
     if (!loader) return;
     loader.classList.add('is-done');
     document.documentElement.classList.remove('is-loading');
-    // 退場アニメ全体 (約 1.55s) が完了してから完全に隠す
-    setTimeout(function(){ loader.classList.add('is-gone'); }, 1700);
+    // 退場アニメ全体 (約 1.76s) が完了してから完全に隠す
+    setTimeout(function(){ loader.classList.add('is-gone'); }, 1900);
   }
   function start(){
     setTimeout(dismissLoader, 3600);
