@@ -131,7 +131,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 /* ===================== ABOUT (SACとは何か) — ivory bg ===================== */
 .s-about {
   background: var(--ivory);
-  padding: 160px 40px 200px;
+  padding: 80px 40px 140px;
   position: relative;
 }
 .s-about__inner {
@@ -140,15 +140,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   gap: 80px; align-items: center;
 }
 .s-about__head { padding-right: 40px; }
-.s-about__num {
-  font-family: var(--font-en); font-weight: 800;
-  font-size: clamp(80px, 9vw, 160px);
-  line-height: 0.9; letter-spacing: -0.04em;
-  color: var(--theme-fg);
-  opacity: 0.06;
-  margin-bottom: -40px;
-  user-select: none;
-}
 .s-about__title {
   font-family: var(--font-jp); font-weight: 700;
   font-size: clamp(32px, 4.4vw, 68px);
@@ -185,7 +176,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .s-about__lead strong { color: var(--theme-fg); font-weight: 700; }
 
 .s-about__quote {
-  margin-top: 40px;
+  margin-bottom: 36px;
   padding-left: 24px;
   border-left: 2px solid var(--gold);
   font-family: var(--font-jp); font-weight: 700;
@@ -1214,39 +1205,31 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   <div class="s-about__inner">
     <div class="s-about__head">
       <p class="section-label js-reveal">01 / WHO WE ARE</p>
-      <p class="s-about__num" aria-hidden="true">01</p>
       <h2 class="s-about__title js-reveal delay-1">
         <span class="strike">制作会社</span>でも、<br><span class="strike">AI会社</span>でもない。
       </h2>
-      <p class="s-about__lead js-reveal delay-2">
+      <p class="s-about__quote js-reveal delay-2">
+        制約を“なくす”のではなく、<br>“前提から書き換える”。
+      </p>
+      <p class="s-about__lead js-reveal delay-3">
         SACは、<strong>AI × CREATOR × BUSINESS</strong> の3点で動くチームです。
         AIだけでも、人だけでも、ビジネス視点だけでも、いまの制作には足りない。
         その3つが同じテーブルに乗っている状態を、ひとつのプロジェクトの中につくります。
       </p>
-      <p class="s-about__lead js-reveal delay-3">
+      <p class="s-about__lead js-reveal delay-4">
         その結果、<strong>従来の制作で「無理」とされていた条件</strong>——
         短納期、限定予算、複数素材の同時展開、テスト前提の試作——を
         企画段階から織り込んだ提案ができます。
-      </p>
-      <p class="s-about__quote js-reveal delay-4">
-        制約を“なくす”のではなく、<br>“前提から書き換える”。
       </p>
     </div>
 
     <div class="s-about__venn-wrap js-reveal delay-2">
       <div class="s-about__venn">
         <svg class="venn-svg" viewBox="0 0 600 600" aria-label="AI × CREATOR × BUSINESS の3円ベン図">
-          <!-- Connector lines -->
-          <line class="venn-line" x1="300" y1="220" x2="300" y2="380"/>
-          <line class="venn-line" x1="220" y1="360" x2="380" y2="360"/>
-
           <!-- 3 circles -->
           <circle class="venn-circle" cx="240" cy="240" r="170"/>
           <circle class="venn-circle" cx="360" cy="240" r="170"/>
           <circle class="venn-circle--gold" cx="300" cy="370" r="170"/>
-
-          <!-- center point -->
-          <circle class="venn-dot" cx="300" cy="300" r="6"/>
 
           <!-- Labels -->
           <text x="160" y="160" text-anchor="middle">AI</text>
@@ -1261,11 +1244,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
           <!-- Center label -->
           <text x="300" y="296" class="center" text-anchor="middle">SAC</text>
           <text x="300" y="316" class="jp" text-anchor="middle" style="font-size:10px; letter-spacing:0.16em;">smart ai creative</text>
-
-          <!-- Decorative dots -->
-          <circle class="venn-dot-sm" cx="120" cy="280" r="3"/>
-          <circle class="venn-dot-sm" cx="480" cy="280" r="3"/>
-          <circle class="venn-dot-sm" cx="300" cy="540" r="3"/>
         </svg>
       </div>
       <div class="s-about__venn-legend">
