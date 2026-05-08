@@ -222,92 +222,89 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 .s-about__venn-legend-item b { display: block; font-family: var(--font-en); font-weight: 700; font-size: 11px; letter-spacing: 0.18em; color: var(--theme-fg); margin-bottom: 6px; }
 
-/* ===================== CHALLENGES (解決できる課題) ===================== */
+/* ===================== CHALLENGES (シンプル + 図解) ===================== */
 .s-challenges {
-  padding: 200px 40px 180px;
+  padding: 160px 40px 160px;
   position: relative;
 }
 .s-challenges__inner {
-  max-width: 1440px; margin: 0 auto;
+  max-width: 1320px; margin: 0 auto;
   position: relative;
 }
 .s-challenges__head {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: 48px; align-items: end;
-  margin-bottom: 96px;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 80px;
+}
+.s-challenges__head .section-label {
+  margin-bottom: 28px;
 }
 .s-challenges__title {
   font-family: var(--font-jp); font-weight: 700;
-  font-size: clamp(34px, 4.8vw, 76px);
-  line-height: 1.25; letter-spacing: 0.005em;
+  font-size: clamp(28px, 3.6vw, 52px);
+  line-height: 1.45; letter-spacing: 0.01em;
   color: var(--theme-fg);
+  margin-bottom: 24px;
 }
 .s-challenges__title em { font-style: normal; color: var(--gold); }
-.s-challenges__title-meta { font-family: var(--font-en); font-weight: 500; font-size: 11px; letter-spacing: 0.24em; color: var(--gray-400); margin-top: 28px; display: inline-flex; align-items: center; gap: 10px; }
-.s-challenges__title-meta::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.6; }
-
 .s-challenges__lead {
   font-family: var(--font-jp); font-weight: 500;
-  font-size: 15px; line-height: 2; letter-spacing: 0.04em;
+  font-size: 14px; line-height: 1.95; letter-spacing: 0.04em;
   color: var(--gray-500);
-  max-width: 480px;
-  padding-bottom: 12px;
 }
 
-/* 非対称グリッド */
+/* ===== 整然とした 3x2 グリッド ===== */
 .s-challenges__grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 48px 32px;
-  position: relative;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid rgba(10,10,10,0.1);
 }
 .s-chal {
   position: relative;
-  padding: 32px 28px 32px 0;
-  border-top: 1px solid rgba(10,10,10,0.18);
+  padding: 44px 36px 36px;
+  display: flex; flex-direction: column;
+  background: var(--white);
+  border-right: 1px solid rgba(10,10,10,0.1);
+  border-bottom: 1px solid rgba(10,10,10,0.1);
+  transition: background 0.4s var(--ease);
+  min-height: 320px;
 }
-/* 非対称配置 */
-.s-chal:nth-child(1) { grid-column: 1 / span 5; }
-.s-chal:nth-child(2) { grid-column: 7 / span 5; transform: translateY(72px); }
-.s-chal:nth-child(3) { grid-column: 2 / span 5; }
-.s-chal:nth-child(4) { grid-column: 8 / span 5; transform: translateY(48px); }
-.s-chal:nth-child(5) { grid-column: 1 / span 5; }
-.s-chal:nth-child(6) { grid-column: 7 / span 5; transform: translateY(64px); }
+.s-chal:nth-child(3n) { border-right: none; }
+.s-chal:nth-child(n+4) { border-bottom: none; }
+.s-chal:hover { background: var(--ivory); }
+
+.s-chal__icon {
+  width: 56px; height: 56px;
+  margin-bottom: 28px;
+  color: var(--theme-fg);
+}
+.s-chal__icon svg { width: 100%; height: 100%; display: block; }
 
 .s-chal__num {
   font-family: var(--font-en); font-weight: 600;
-  font-size: 11px; letter-spacing: 0.24em; color: var(--gold);
-  margin-bottom: 18px;
+  font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
 }
-.s-chal__symptom {
-  font-family: var(--font-jp); font-weight: 500;
-  font-size: 12px; letter-spacing: 0.08em; color: var(--gray-400);
-  margin-bottom: 14px;
-}
-.s-chal__symptom::before { content: "“ "; color: var(--gold); font-weight: 700; }
-.s-chal__symptom::after { content: " ”"; color: var(--gold); font-weight: 700; }
+
 .s-chal__title {
   font-family: var(--font-jp); font-weight: 700;
-  font-size: clamp(20px, 2.1vw, 28px);
+  font-size: clamp(17px, 1.5vw, 21px);
   line-height: 1.55; letter-spacing: 0.01em;
   color: var(--theme-fg);
   margin-bottom: 18px;
 }
-.s-chal__title em { font-style: normal; color: var(--gold); }
+
 .s-chal__answer {
   font-family: var(--font-jp); font-size: 13px;
-  line-height: 1.95; letter-spacing: 0.03em;
+  line-height: 1.85; letter-spacing: 0.03em;
   color: var(--gray-500);
-  padding-top: 16px;
-  border-top: 1px dashed rgba(10,10,10,0.18);
-  display: flex; gap: 12px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(10,10,10,0.1);
 }
-.s-chal__answer::before {
-  content: "→";
-  color: var(--gold);
-  font-weight: 600;
-  flex: 0 0 auto;
-}
+.s-chal__answer b { color: var(--theme-fg); font-weight: 700; }
 
 /* ===================== FIELDS (提供領域) — ivory ===================== */
 .s-fields {
@@ -1091,8 +1088,12 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .s-expansion__inner { grid-template-columns: 1fr; gap: 56px; }
   .s-fields__head,
   .s-cases__head,
-  .s-flow__head,
-  .s-challenges__head { grid-template-columns: 1fr; gap: 24px; }
+  .s-flow__head { grid-template-columns: 1fr; gap: 24px; }
+  .s-challenges__grid { grid-template-columns: repeat(2, 1fr); }
+  .s-chal:nth-child(3n) { border-right: 1px solid rgba(10,10,10,0.1); }
+  .s-chal:nth-child(2n) { border-right: none; }
+  .s-chal:nth-child(n+5) { border-bottom: none; }
+  .s-chal:nth-child(n+3):nth-child(-n+4) { border-bottom: 1px solid rgba(10,10,10,0.1); }
   .s-flow__track { grid-template-columns: repeat(5, minmax(180px, 1fr)); overflow-x: auto; padding-bottom: 16px; }
   .s-flow__track::-webkit-scrollbar { display: none; }
   .s-flow__track { scrollbar-width: none; }
@@ -1118,9 +1119,11 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .page-cta { padding: 96px 20px; }
   .footer { padding: 72px 20px 32px; }
 
-  .s-challenges__grid { grid-template-columns: 1fr; gap: 28px; }
-  .s-chal { transform: none !important; }
-  .s-chal:nth-child(n) { grid-column: 1 / -1 !important; transform: none !important; }
+  .s-challenges__grid { grid-template-columns: 1fr; }
+  .s-chal { border-right: none; border-bottom: 1px solid rgba(10,10,10,0.1); min-height: auto; }
+  .s-chal:nth-child(3n) { border-right: none; }
+  .s-chal:nth-child(n+4) { border-bottom: 1px solid rgba(10,10,10,0.1); }
+  .s-chal:last-child { border-bottom: none; }
 
   .s-fields__grid { grid-template-columns: 1fr; }
   .s-field { grid-column: 1 / -1 !important; grid-row: auto !important; min-height: auto !important; }
@@ -1278,62 +1281,111 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <section class="s-challenges" id="challenges" data-section="challenges">
   <div class="s-challenges__inner">
     <header class="s-challenges__head">
-      <div>
-        <p class="section-label js-reveal">02 / CHALLENGES</p>
-        <h2 class="s-challenges__title js-reveal delay-1">
-          “いつもの制作”の<br><em>不便</em>に、答えがある。
-        </h2>
-        <span class="s-challenges__title-meta">SIX COMMON PROBLEMS</span>
-      </div>
+      <p class="section-label js-reveal">02 / CHALLENGES</p>
+      <h2 class="s-challenges__title js-reveal delay-1">
+        “いつもの制作”の<em>不便</em>に、答えがある。
+      </h2>
       <p class="s-challenges__lead js-reveal delay-2">
-        広告・プロモーション・新規事業・社内施策。<br>
-        職種や予算は違っても、現場で起きる詰まり方は驚くほど似ています。<br>
+        職種や予算は違っても、現場の詰まり方は似ています。<br>
         SACが日常的に解いている、6つの典型をまとめました。
       </p>
     </header>
 
     <div class="s-challenges__grid">
+
+      <!-- 01 予算 -->
       <article class="s-chal js-reveal">
-        <p class="s-chal__num">CHALLENGE 01</p>
-        <p class="s-chal__symptom">予算が、足りない</p>
-        <h3 class="s-chal__title"><em>同じ予算で、</em>制作量を3〜5倍にする。</h3>
-        <p class="s-chal__answer">AI で工程を圧縮し、人の判断は要点に集中させる。撮影や素材調達のコストを企画段階から組み替えます。</p>
+        <span class="s-chal__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="22" cy="22" rx="12" ry="4"/>
+            <path d="M10 22v8c0 2.2 5.4 4 12 4s12-1.8 12-4v-8"/>
+            <path d="M10 30v8c0 2.2 5.4 4 12 4s12-1.8 12-4v-8"/>
+            <circle cx="46" cy="40" r="12" stroke="#C8A86B" stroke-width="2"/>
+            <path d="M42 40h8M46 36v8" stroke="#C8A86B" stroke-width="2"/>
+          </svg>
+        </span>
+        <p class="s-chal__num">CHALLENGE 01 — BUDGET</p>
+        <h3 class="s-chal__title">予算が、足りない。</h3>
+        <p class="s-chal__answer"><b>同じ予算で、制作量を3〜5倍に。</b>AIで工程を圧縮し、人の判断は要点に集中。撮影や素材コストも企画段階から組み替えます。</p>
       </article>
 
+      <!-- 02 時間 -->
       <article class="s-chal js-reveal delay-1">
-        <p class="s-chal__num">CHALLENGE 02</p>
-        <p class="s-chal__symptom">時間が、ない</p>
-        <h3 class="s-chal__title">“間に合わせる”ではなく、<em>“間に合う設計”</em>から。</h3>
-        <p class="s-chal__answer">逆算で工程を組み、試作を毎日回す前提に切り替える。最短で初稿、その日に方向性を固めます。</p>
+        <span class="s-chal__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="32" cy="34" r="20"/>
+            <path d="M32 22v12l8 6" stroke="#C8A86B" stroke-width="2"/>
+            <path d="M22 8l-4 4M42 8l4 4" />
+            <path d="M28 8h8" />
+          </svg>
+        </span>
+        <p class="s-chal__num">CHALLENGE 02 — TIME</p>
+        <h3 class="s-chal__title">時間が、ない。</h3>
+        <p class="s-chal__answer"><b>“間に合わせる”ではなく、“間に合う設計”から。</b>逆算で工程を組み、試作を毎日回す前提に切り替えます。</p>
       </article>
 
+      <!-- 03 担当者 -->
       <article class="s-chal js-reveal delay-2">
-        <p class="s-chal__num">CHALLENGE 03</p>
-        <p class="s-chal__symptom">担当者が、足りない</p>
-        <h3 class="s-chal__title">座組の<em>“足りない一手”</em>を、SACで補う。</h3>
-        <p class="s-chal__answer">企画・ディレクション・制作・運用、必要な役割だけ抜き差しで参加します。社内の動きを止めません。</p>
+        <span class="s-chal__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="22" cy="22" r="6"/>
+            <path d="M10 46c0-7 5-12 12-12s12 5 12 12"/>
+            <circle cx="46" cy="22" r="6" stroke-dasharray="2 3" opacity="0.5"/>
+            <path d="M40 30v6M37 33h6" stroke="#C8A86B" stroke-width="2"/>
+          </svg>
+        </span>
+        <p class="s-chal__num">CHALLENGE 03 — TEAM</p>
+        <h3 class="s-chal__title">担当者が、足りない。</h3>
+        <p class="s-chal__answer"><b>座組の“足りない一手”を、SACで補う。</b>企画・ディレクション・制作・運用、必要な役割だけ抜き差しで参加します。</p>
       </article>
 
-      <article class="s-chal js-reveal delay-3">
-        <p class="s-chal__num">CHALLENGE 04</p>
-        <p class="s-chal__symptom">不確実すぎて、動けない</p>
-        <h3 class="s-chal__title">分からないものは、<em>軽くつくって試す。</em></h3>
-        <p class="s-chal__answer">仮説段階で動くプロトタイプを出し、やる/やらないの判断を“見て決める”状態にします。</p>
+      <!-- 04 不確実 -->
+      <article class="s-chal js-reveal">
+        <span class="s-chal__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 38c-4 0-6-3-6-6s3-6 6-6c0-5 4-8 8-8 3 0 6 2 7 4 1-1 3-2 5-2 4 0 7 3 7 7 4 0 6 3 6 6s-3 6-7 6"/>
+            <text x="32" y="34" text-anchor="middle" font-family="Inter" font-weight="800" font-size="14" fill="#C8A86B" stroke="none">?</text>
+            <circle cx="32" cy="46" r="1.5" fill="#C8A86B" stroke="none"/>
+          </svg>
+        </span>
+        <p class="s-chal__num">CHALLENGE 04 — UNCERTAINTY</p>
+        <h3 class="s-chal__title">不確実すぎて、動けない。</h3>
+        <p class="s-chal__answer"><b>分からないものは、軽くつくって試す。</b>仮説段階で動くプロトタイプを出し、判断を“見て決める”状態にします。</p>
       </article>
 
+      <!-- 05 撮影・権利 -->
       <article class="s-chal js-reveal delay-1">
-        <p class="s-chal__num">CHALLENGE 05</p>
-        <p class="s-chal__symptom">撮影・権利の壁が、重い</p>
-        <h3 class="s-chal__title">“撮らずに見せる”を、<em>選択肢に</em>。</h3>
-        <p class="s-chal__answer">生成・合成・置換を組み合わせ、ロケーションやキャスティングに依存しない作り方も提案します。</p>
+        <span class="s-chal__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="22" width="40" height="24" rx="2"/>
+            <circle cx="28" cy="34" r="7"/>
+            <path d="M18 22l3-5h14l3 5"/>
+            <line x1="10" y1="20" x2="50" y2="48" stroke="#C8A86B" stroke-width="2.5"/>
+          </svg>
+        </span>
+        <p class="s-chal__num">CHALLENGE 05 — RIGHTS</p>
+        <h3 class="s-chal__title">撮影・権利の壁が、重い。</h3>
+        <p class="s-chal__answer"><b>“撮らずに見せる”を、選択肢に。</b>生成・合成・置換を組み合わせ、ロケーションやキャスティングに依存しない作り方も提案します。</p>
       </article>
 
+      <!-- 06 テスト/AB -->
       <article class="s-chal js-reveal delay-2">
-        <p class="s-chal__num">CHALLENGE 06</p>
-        <p class="s-chal__symptom">テストしたいが、本制作は重い</p>
-        <h3 class="s-chal__title">本番前提の<em>“軽い試作”</em>で、ABを回す。</h3>
-        <p class="s-chal__answer">同じ企画を複数バリエーションで出し、反応を見て本制作へ。捨てる前提の試作にも価値を残します。</p>
+        <span class="s-chal__icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="32" cy="14" r="4"/>
+            <line x1="32" y1="18" x2="22" y2="38"/>
+            <line x1="32" y1="18" x2="42" y2="38"/>
+            <circle cx="20" cy="44" r="7"/>
+            <text x="20" y="48" text-anchor="middle" font-family="Inter" font-weight="700" font-size="10" fill="currentColor" stroke="none">A</text>
+            <circle cx="44" cy="44" r="7" stroke="#C8A86B" stroke-width="2"/>
+            <text x="44" y="48" text-anchor="middle" font-family="Inter" font-weight="700" font-size="10" fill="#C8A86B" stroke="none">B</text>
+          </svg>
+        </span>
+        <p class="s-chal__num">CHALLENGE 06 — TEST</p>
+        <h3 class="s-chal__title">テストしたいが、本制作は重い。</h3>
+        <p class="s-chal__answer"><b>“軽い試作”で、ABを回してから本制作へ。</b>同じ企画を複数バリエーションで出し、反応を見て勝った方向で進めます。</p>
       </article>
+
     </div>
   </div>
 </section>
