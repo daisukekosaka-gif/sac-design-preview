@@ -258,11 +258,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   background: var(--white);
   border-right: 1px solid rgba(10,10,10,0.1);
   border-bottom: 1px solid rgba(10,10,10,0.1);
-  transition: background 0.4s var(--ease);
 }
 .s-chal:nth-child(3n) { border-right: none; }
 .s-chal:nth-child(n+4) { border-bottom: none; }
-.s-chal:hover { background: var(--ivory); }
 
 .s-chal__icon {
   width: 56px; height: 56px;
@@ -298,29 +296,29 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 /* ===================== FIELDS (提供領域) — ivory ===================== */
 .s-fields {
   background: var(--ivory);
-  padding: 200px 40px 200px;
+  padding: 100px 40px 160px;
   position: relative;
   overflow: hidden;
 }
 .s-fields__inner { max-width: 1480px; margin: 0 auto; }
 .s-fields__head {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-  gap: 48px; align-items: end;
-  margin-bottom: 80px;
+  margin-bottom: 64px;
 }
 .s-fields__title {
   font-family: var(--font-jp); font-weight: 700;
-  font-size: clamp(36px, 5vw, 80px);
+  font-size: clamp(28px, 4.2vw, 64px);
   line-height: 1.2; letter-spacing: 0.005em;
   color: var(--theme-fg);
+  margin-top: 16px;
+  margin-bottom: 24px;
+  white-space: nowrap;
 }
 .s-fields__title em { font-style: normal; color: var(--gold); }
 .s-fields__lead {
   font-family: var(--font-jp); font-weight: 500;
   font-size: 14px; line-height: 2; letter-spacing: 0.03em;
   color: var(--gray-500);
-  max-width: 480px;
-  padding-bottom: 8px;
+  max-width: 640px;
 }
 
 /* 不揃いタイル: 12カラム */
@@ -1113,7 +1111,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .s-chal:nth-child(3n) { border-right: none; }
   .s-chal:nth-child(n+4) { border-bottom: 1px solid rgba(10,10,10,0.1); }
   .s-chal:last-child { border-bottom: none; }
-  .s-challenges__title { white-space: normal; }
+  .s-challenges__title,
+  .s-fields__title { white-space: normal; }
 
   .s-fields__grid { grid-template-columns: 1fr; }
   .s-field { grid-column: 1 / -1 !important; grid-row: auto !important; min-height: auto !important; }
@@ -1434,15 +1433,13 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <section class="s-fields" id="fields" data-section="fields">
   <div class="s-fields__inner">
     <header class="s-fields__head">
-      <div>
-        <p class="section-label js-reveal">03 / FIELDS</p>
-        <h2 class="s-fields__title js-reveal delay-1">
-          5つの領域と、<br>その<em>あいだ</em>。
-        </h2>
-      </div>
+      <p class="section-label js-reveal">03 / FIELDS</p>
+      <h2 class="s-fields__title js-reveal delay-1">
+        5つの領域と、その<em>あいだ</em>。
+      </h2>
       <p class="s-fields__lead js-reveal delay-2">
-        SACは映像・グラフィック・WEB・SNS・体験の5領域を扱います。<br>
-        ただし、本当に強いのは“領域と領域の<em>あいだ</em>”。<br>
+        SACは映像・グラフィック・WEB・SNS・体験の5領域を扱います。
+        ただし、本当に強いのは“領域と領域の<em>あいだ</em>”。
         ひとつの企画から、複数の成果物に分岐させていく前提で動きます。
       </p>
     </header>
