@@ -88,12 +88,12 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .breadcrumb span.sep { opacity: 0.35; }
 .breadcrumb [aria-current="page"] { color: var(--theme-fg); }
 
-/* ===================== HERO (creator-index と完全一致) ===================== */
+/* ===================== HERO ===================== */
 .s-hero { padding: 80px 40px 120px; position: relative; }
 .s-hero__inner {
   max-width: 1680px; margin: 0 auto;
   display: grid; grid-template-columns: 120px minmax(0, 1fr);
-  gap: 56px; align-items: end;
+  gap: 56px; align-items: start;
   min-height: 64vh;
 }
 .s-hero__vlabel {
@@ -102,7 +102,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   letter-spacing: 0.42em;
   color: var(--gray-400);
   align-self: start;
-  padding-top: 20px;
   height: 240px;
 }
 .s-hero__vlabel strong { color: var(--theme-fg); font-weight: 700; }
