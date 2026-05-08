@@ -3,345 +3,3277 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAC | Smart AI Creative — ONE PROMPT CHANGE THE WORLD</title>
-<meta name="description" content="Smart AI Creative（SAC）は、EPOCH Inc.が擁するAIクリエイティブ特化スタジオ。AIとクリエイターの力で、あらゆる制作の制約を解放する。">
-
-<!-- Google Fonts: 欧文=Inter / 和文=Noto Sans JP -->
+<title>SAC — Smart AI Creative</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-<!-- CSS -->
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/layout.css">
+:root {
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --ivory: #F4F1EC;
+  --sand: #E9E3D8;
+  --stone: #D6CFC0;
+  --gray-100: #F5F5F5;
+  --gray-200: #CCCCCC;
+  --gray-400: #888888;
+  --gray-500: #444444;
+  --gray-900: #1A1A1A;
+  --gold: #C8A86B;
+
+  /* セクションテーマ色 — bodyに設定、スクロールでトランジション */
+  --theme-bg: #FFFFFF;
+  --theme-fg: #0A0A0A;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-en: 'Inter', sans-serif;
+  --font-jp: 'Noto Sans JP', sans-serif;
+}
+
+/* テーマ色のトランジションは body の background-color / color 側で行う */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-jp);
+  color: var(--theme-fg);
+  background: var(--theme-bg);
+  overflow-x: hidden;
+  transition: background-color 0.9s var(--ease), color 0.9s var(--ease);
+}
+
+/* 各セクションのテーマ切替トランジション */
+.about, .works, .service, .creator, .info, .contact {
+  transition: background-color 0.9s var(--ease), color 0.9s var(--ease);
+}
+
+/* ===================== FLUX CANVAS (Ikeda 風 流線バックグラウンド) ===================== */
+/* isolation でスタッキング文脈を作り、canvas を z-index:-1 で子の背景に配置 */
+.about, .works, .service, .creator, .info, .contact {
+  position: relative;
+  isolation: isolate;
+}
+
+/* 流線演出は [data-theme="stone"] / [data-theme="black"] のみに出現 */
+.flux-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.22; /* コンテンツの視認性を損なわない控えめなトーン */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ===================== HEADER ===================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 72px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease), color 1.2s var(--ease);
+  border-bottom: 1px solid transparent;
+  mix-blend-mode: normal;
+}
+
+.header.scrolled {
+  /* 背景・ボーダーをテーマ変数ベースに。dark テーマ(stone/black)では
+     自動的に暗いバーになり、白文字ナビとのコントラストが確保される */
+  background: color-mix(in oklab, var(--theme-bg) 88%, transparent);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border-bottom-color: color-mix(in oklab, var(--theme-fg) 10%, transparent);
+}
+
+.header__logo {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+}
+
+.header__nav {
+  display: flex;
+  /* font-size 引き上げに合わせて gap を1段階(-4px)タイト化 */
+  gap: 32px;
+}
+
+.header__nav a {
+  font-family: var(--font-en);
+  font-weight: 400;
+  /* 11px → 15px (×1.36)。ロゴ(18px)との視覚バランスを保ちつつ視認性を上げる */
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  transition: color 0.3s var(--ease), opacity 0.3s var(--ease);
+  opacity: 0.72;
+}
+
+.header__nav a:hover {
+  opacity: 1;
+  color: var(--gold);
+}
+
+.header__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1100;
+  background: none;
+  border: none;
+  padding: 8px;
+}
+
+.header__hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.4s var(--ease), opacity 0.3s var(--ease);
+}
+
+.header__hamburger.active span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.header__hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.header__hamburger.active span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Mobile menu overlay */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease);
+}
+
+.mobile-menu.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu a {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  transition: color 0.3s var(--ease);
+}
+
+.mobile-menu a:hover { color: var(--gold); }
+
+/* ===================== HERO (dots&lines × mount.jp inspired) =====================
+   レイアウト方針:
+   - 動画を画面全幅に敷き、HEROの大部分を占める（主役）
+   - 画面下部に巨大タイポ「ONE PROMPT / CHANGE THE WORLD.」を動画の上に被せる
+   - タイポ周辺は動画下部にグラデーション座布団を敷いて視認性を確保
+   - 全要素を100svh内に収める（ファーストビュー完結）
+=========================================================================== */
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 640px;
+  padding: 0;
+  background: var(--theme-bg);
+  overflow: hidden;
+}
+
+/* 動画: ヘッダー直下から画面下端まで、左右に48pxの余白のみの大画面 */
+.hero__video {
+  position: absolute;
+  top: 88px;
+  left: 48px;
+  right: 48px;
+  bottom: 48px;
+  display: flex;
+}
+
+.hero__video-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--black);
+  opacity: 0;
+  transform: scale(0.98) translateY(12px);
+  transition: opacity 1.4s var(--ease) 0.3s, transform 1.4s var(--ease) 0.3s;
+}
+
+.hero__video-frame.is-in {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.hero__video-frame iframe,
+.hero__video-frame #heroYT {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180%;
+  height: 180%;
+  transform: translate(-50%, -50%);
+  border: none;
+  pointer-events: none;
+}
+
+/* タイポ視認性のための半透明グラデーション座布団
+   動画下部からテーマ背景色へフェードさせ、黒タイポが読みやすい領域を作る */
+.hero__video-frame::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 62%;
+  background: linear-gradient(
+    to top,
+    var(--theme-bg) 0%,
+    var(--theme-bg) 18%,
+    rgba(244, 241, 236, 0.82) 42%,
+    rgba(244, 241, 236, 0.35) 70%,
+    rgba(244, 241, 236, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 下段: 巨大タイポ — 動画の上に絶対配置で被せる */
+.hero__title-wrap {
+  position: absolute;
+  left: 48px;
+  right: 48px;
+  bottom: 40px;
+  z-index: 5;
+}
+
+.hero__title {
+  font-family: var(--font-en);
+  font-weight: 800;
+  font-size: clamp(48px, 8.7vw, 144px);
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  color: var(--theme-fg);
+  white-space: nowrap;
+}
+
+.hero__title-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero__title-line .inner {
+  display: inline-block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+.hero__title-line.is-in .inner {
+  transform: translateY(0);
+  transition: transform 1.2s var(--ease);
+}
+
+.hero__title-line:nth-child(2) .inner { transition-delay: 0.1s; }
+
+.hero__title em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+/* SCROLL インジケーター（右下） */
+.hero__scroll {
+  position: absolute;
+  top: 104px;
+  right: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  transition: opacity 0.8s var(--ease) 1.3s;
+  z-index: 6;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+.hero__scroll.is-in { opacity: 1; }
+
+.hero__scroll-line {
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  animation: scrollLine 2.4s var(--ease) infinite;
+}
+
+@keyframes scrollLine {
+  0% { left: -100%; }
+  55% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* セクション共通 */
+.section-label {
+  font-family: var(--font-en);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.js-reveal {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+
+.js-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===================== ABOUT (Parallax) ===================== */
+/* セクションを縦長にして sticky pin による段階的リビールを行う */
+.about {
+  position: relative;
+  height: 300vh;           /* スクロール距離（= 3画面ぶん） */
+  padding: 0;
+  background: var(--theme-bg);
+  --lead-p: 0;
+  --ap-p: 0;
+  --ph-p: 0;
+}
+
+.about__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  padding: 112px 40px 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.about__inner {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ABOUT 見出し: 固定表示（ABOUTラベルをリードタイトルの高さ中央に配置） */
+.about__head {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  column-gap: 48px;
+  align-items: center;
+  margin-bottom: 56px;
+}
+
+.about__lead {
+  font-family: var(--font-jp);
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 34px);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: var(--theme-fg);
+  white-space: nowrap;
+}
+
+.about__lead em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+/* PHILOSOPHY + APPROACH — 本文幅と図解幅のバランスをとる */
+.about__grid {
+  display: grid;
+  grid-template-columns: minmax(440px, 1.3fr) minmax(0, 2fr);
+  gap: 32px;
+  align-items: stretch; /* philosophy列を図解の高さまで伸ばす */
+}
+
+/* APPROACH — スクロール1段階目で表示。右列全幅を使って図解を最大化 */
+.about__diagram {
+  order: 2;
+  margin: 0;
+  max-width: none;
+  display: block; /* stretchでフル幅 */
+  opacity: var(--ap-p);
+  transform: translateY(calc(56px * (1 - var(--ap-p))));
+  will-change: opacity, transform;
+}
+
+.about__diagram-label {
+  display: block;
+  margin: 0 0 20px 0;
+  padding-top: 0;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  color: var(--gray-400);
+}
+
+.diagram {
+  width: 100%;
+  max-width: 1280px;
+  aspect-ratio: 1000 / 580;
+  height: auto;
+  margin: 0 auto; /* 中央寄せ・全幅 */
+}
+
+/* PHILOSOPHY — スクロール2段階目で表示 */
+.about__philosophy {
+  order: 1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  height: 100%; /* グリッドのstretchを受けて図解高さまで伸びる */
+  opacity: var(--ph-p);
+  transform: translateY(calc(56px * (1 - var(--ph-p))));
+  will-change: opacity, transform;
+}
+
+.about__philosophy-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.about__body-label {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  color: var(--gray-400);
+  /* 本文 .about__body は line-height: 2 で半行(≈7px)のリーディングが文字の上に乗るため、
+     ラベルを同量だけ下に押し下げ、本文1行目の文字上端と視覚的に揃える */
+  padding-top: 7px;
+  white-space: nowrap;
+}
+
+.about__body {
+  max-width: 560px;
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 2;
+  letter-spacing: 0.02em;
+}
+
+.about__body + .about__body {
+  margin-top: 16px;
+}
+
+/* モバイルはパララックスを止めて通常のレイアウトにフォールバック */
+@media (max-width: 900px) {
+  .about {
+    height: auto;
+    --lead-p: 1;
+    --ap-p: 1;
+    --ph-p: 1;
+  }
+  .about__stage {
+    position: relative;
+    top: auto;
+    height: auto;
+    overflow: visible;
+    padding: 96px 24px;
+  }
+  .about__head {
+    grid-template-columns: 88px 1fr;
+    gap: 16px;
+    padding: 0;
+    transform: none;
+  }
+  .about__head .section-label {
+    opacity: 1;
+  }
+  .about__lead {
+    font-size: clamp(24px, 5.4vw, 32px);
+  }
+  .about__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .about__philosophy,
+  .about__diagram {
+    grid-template-columns: 88px 1fr;
+    gap: 16px;
+    transform: none;
+  }
+  .diagram {
+    max-width: 100%;
+  }
+}
+
+.diagram text {
+  font-family: var(--font-en);
+  letter-spacing: 0.08em;
+}
+
+.diagram .node-label-jp {
+  font-family: var(--font-jp);
+  letter-spacing: 0.04em;
+}
+
+.diagram-circle {
+  fill: none;
+  stroke: var(--theme-fg);
+  stroke-width: 1;
+  opacity: 0.35;
+}
+
+.diagram-circle-bold {
+  fill: var(--theme-fg);
+  opacity: 0.04;
+  stroke: var(--theme-fg);
+  stroke-width: 1.2;
+}
+
+.diagram-line {
+  fill: none;
+  stroke: var(--theme-fg);
+  stroke-width: 1;
+  opacity: 0.25;
+  stroke-dasharray: 3 3;
+}
+
+.diagram-line-solid {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.2;
+  opacity: 0.9;
+}
+
+.diagram-dot {
+  fill: var(--gold);
+}
+
+.diagram-dot-small {
+  fill: var(--theme-fg);
+  opacity: 0.5;
+}
+
+/* VIEW MORE はカラム下端に固定（APPROACH図解の下端ラインに揃う） */
+.about__cta {
+  margin-top: auto;
+  padding-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.about__cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  padding: 18px 32px;
+  border: 1px solid currentColor;
+  transition: color 0.35s var(--ease), border-color 0.35s var(--ease), background 0.35s var(--ease);
+}
+
+.about__cta a:hover {
+  color: var(--white);
+  background: var(--theme-fg);
+  border-color: var(--theme-fg);
+}
+
+/* ===================== WORKS (Refined Carousel) ===================== */
+.works {
+  min-height: 100vh;
+  padding: 96px 40px 72px;
+  background: var(--theme-bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.works__head {
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.works__title {
+  font-family: var(--font-en);
+  font-weight: 800;
+  font-size: clamp(40px, 5.4vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.works__meta {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--gray-400);
+}
+
+.works__counter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.works__counter #worksIndex {
+  color: var(--theme-fg);
+  font-weight: 600;
+  transition: color 0.4s var(--ease);
+}
+
+.works__counter-sep {
+  opacity: 0.5;
+}
+
+/* Carousel track */
+.works__carousel {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 480px;
+}
+
+.works__track {
+  flex: 1;
+  display: flex;
+  gap: 24px;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 2px;
+  cursor: grab;
+  outline: none;
+}
+
+.works__track::-webkit-scrollbar { display: none; }
+.works__track.is-dragging { cursor: grabbing; scroll-behavior: auto; }
+
+.works__slide {
+  position: relative;
+  flex: 0 0 min(68%, 880px);
+  align-self: stretch;
+  min-height: 480px;
+  border-radius: 2px;
+  overflow: hidden;
+  scroll-snap-align: center;
+  color: inherit;
+  isolation: isolate;
+  transition: transform 0.8s var(--ease), box-shadow 0.6s var(--ease);
+  box-shadow: 0 2px 30px rgba(0,0,0,0.06);
+}
+
+/* 循環化のため left/right margin は付けない（両端にクローンが存在する） */
+
+.works__slide:hover { box-shadow: 0 16px 60px rgba(0,0,0,0.22); }
+
+.works__slide-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 2s var(--ease), filter 0.6s var(--ease);
+  filter: saturate(0.92) brightness(0.92);
+  z-index: -2;
+}
+
+.works__slide:hover .works__slide-bg {
+  transform: scale(1.06);
+  filter: saturate(1) brightness(1);
+}
+
+/* 実サムネイル <img> — 画像が見きれないよう要点を中央〜上寄りに */
+.works__slide-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  transition: transform 2s var(--ease), filter 0.6s var(--ease);
+  filter: saturate(0.92) brightness(0.9);
+  z-index: -2;
+  display: block;
+  background: #0a0a0a;
+}
+
+.works__slide:hover .works__slide-img {
+  transform: scale(1.04);
+  filter: saturate(1) brightness(1);
+}
+
+.works__slide-bg--1 {
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgba(200,168,107,0.22), transparent 60%),
+    linear-gradient(135deg, #0a0a0a 0%, #171734 45%, #2a1b3d 100%);
+}
+.works__slide-bg--2 {
+  background-image:
+    radial-gradient(ellipse at 70% 30%, rgba(200,168,107,0.18), transparent 60%),
+    linear-gradient(135deg, #2a1515 0%, #3d1a2a 45%, #1a1a2e 100%);
+}
+.works__slide-bg--3 {
+  background-image:
+    radial-gradient(ellipse at 50% 80%, rgba(200,168,107,0.2), transparent 65%),
+    linear-gradient(135deg, #13221a 0%, #1f2d1f 45%, #33351e 100%);
+}
+
+.works__slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 55%, rgba(0,0,0,0) 85%);
+  z-index: -1;
+}
+
+.works__slide-meta {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  right: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.78);
+  text-transform: uppercase;
+}
+
+.works__slide-num {
+  color: var(--gold);
+}
+
+.works__slide-content {
+  position: absolute;
+  bottom: 32px;
+  left: 32px;
+  right: 32px;
+  color: var(--white);
+}
+
+.works__slide-title {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: clamp(28px, 3.8vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin-bottom: 10px;
+}
+
+.works__slide-sub {
+  font-family: var(--font-jp);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.7);
+}
+
+.works__slide-cta {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--white);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  background: rgba(10,10,10,0.22);
+}
+
+.works__slide:hover .works__slide-cta {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Prev/Next navigation */
+.works__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 22%, transparent);
+  background: color-mix(in oklab, var(--theme-bg) 70%, transparent);
+  color: var(--theme-fg);
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.works__nav:hover {
+  background: var(--theme-fg);
+  color: var(--theme-bg);
+  border-color: var(--theme-fg);
+  transform: translateY(-50%) scale(1.06);
+}
+
+.works__nav[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.works__nav--prev { left: -8px; }
+.works__nav--next { right: -8px; }
+
+/* Footer: dots + view-all */
+.works__footer {
+  max-width: 1600px;
+  width: 100%;
+  margin: 28px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.works__progress {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.works__dot {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.works__dot span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: color-mix(in oklab, var(--theme-fg) 18%, transparent);
+  transition: background 0.4s var(--ease), transform 0.4s var(--ease);
+}
+
+.works__dot.is-active span {
+  background: var(--theme-fg);
+  transform: scaleY(2);
+}
+
+.works__dot:hover span {
+  background: color-mix(in oklab, var(--theme-fg) 55%, transparent);
+}
+
+.works__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  padding: 14px 22px;
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 35%, transparent);
+  border-radius: 999px;
+  color: var(--theme-fg);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.works__view-all:hover {
+  background: var(--theme-fg);
+  color: var(--theme-bg);
+  border-color: var(--theme-fg);
+}
+
+/* ===================== SERVICE LINEUP (Compact) ===================== */
+.service {
+  padding: 72px 40px 88px;
+  background: var(--theme-bg);
+}
+
+.service__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.service__header {
+  max-width: 880px;
+  margin: 0 auto 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.service__label {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 0 0 14px; /* LINEUPタイトルの上に配置 */
+}
+
+.service__title {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: clamp(56px, 8vw, 124px);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  margin-bottom: 20px;
+  /* ゴールドのアンダーラインアクセント */
+  display: inline-block;
+  position: relative;
+}
+
+.service__title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+.service__lead {
+  font-family: var(--font-jp);
+  font-size: 12px;
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  color: var(--gray-500);
+}
+
+/* 5サービスを5カラムのカード型グリッドで横に並べ、縦方向の面積を大幅圧縮 */
+.service__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.service__item {
+  position: relative;
+  list-style: none;
+}
+
+/* カード全体をリンク化、右上にアクションボタン */
+.service__link {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 64px 20px 18px; /* 右側は service__action 分を空ける */
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 12%, transparent);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--theme-fg) 2%, transparent);
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.service__link:hover {
+  background: color-mix(in oklab, var(--theme-fg) 6%, transparent);
+  border-color: color-mix(in oklab, var(--theme-fg) 30%, transparent);
+}
+
+/* 右側の円形アクションボタン — MOVIE等のタイトル行と同じ高さに配置 */
+.service__action {
+  position: absolute;
+  right: 16px;
+  top: 34px; /* service__name-en の垂直中央と揃う位置 */
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 28%, transparent);
+  color: var(--theme-fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+/* hover は色変化のみ */
+.service__link:hover .service__action {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #0a0a0a;
+}
+
+.service__num {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+}
+
+.service__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.service__name-en {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+}
+
+.service__name-jp {
+  margin: 0;
+  font-family: var(--font-jp);
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--gray-400);
+}
+
+.service__desc {
+  margin: 4px 0 0;
+  font-family: var(--font-jp);
+  font-size: 11px;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  color: var(--gray-500);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.service__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 22%, transparent);
+  color: var(--theme-fg);
+  align-self: flex-end;
+  margin-top: 8px;
+  transition: transform 0.35s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.service__arrow svg { width: 14px; height: 14px; }
+
+.service__item:hover .service__arrow {
+  background: var(--theme-fg);
+  color: var(--theme-bg);
+  border-color: var(--theme-fg);
+  transform: translateX(4px);
+}
+
+/* ===================== CREATOR ===================== */
+.creator {
+  padding: 140px 40px 160px;
+  background: var(--theme-bg);
+}
+
+.creator__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.creator__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 64px;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.creator__title {
+  font-family: var(--font-en);
+  font-weight: 800;
+  font-size: clamp(40px, 5.4vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.creator__title-sub {
+  font-family: var(--font-jp);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--gray-400);
+  margin-top: 16px;
+}
+
+.creator__link {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid currentColor;
+  transition: color 0.3s var(--ease);
+}
+
+.creator__link:hover { color: var(--gold); }
+
+/* 下部CTA（右上のVIEW ALLと入れ替え） */
+.creator__cta {
+  margin-top: 56px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.creator__cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  padding: 14px 22px;
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 35%, transparent);
+  border-radius: 999px;
+  color: var(--theme-fg);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.creator__cta-link:hover {
+  background: var(--theme-fg);
+  color: var(--theme-bg);
+  border-color: var(--theme-fg);
+}
+
+/* カルーセル化されたクリエイターリスト */
+.creator__carousel {
+  position: relative;
+  margin: 0 -40px; /* はみ出し表現のため親padding分を相殺 */
+}
+
+.creator__list {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 2px 40px;
+  outline: none;
+}
+
+.creator__list::-webkit-scrollbar { display: none; }
+
+.creator__item {
+  /* デスクトップでは5枚を均等配分して全員を同時表示 */
+  flex: 0 0 calc((100% - 80px) / 5);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+  scroll-snap-align: start;
+  text-decoration: none;
+  color: inherit;
+}
+
+.creator__avatar {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s var(--ease);
+}
+
+.creator__avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 1.2s var(--ease), filter 0.6s var(--ease);
+  filter: saturate(0.95) brightness(0.92);
+}
+
+.creator__item:hover .creator__avatar {
+  transform: translateY(-6px);
+}
+
+.creator__item:hover .creator__avatar img {
+  transform: scale(1.04);
+  filter: saturate(1) brightness(1);
+}
+
+.creator__avatar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Prev/Next ナビゲーション（写真の高さ中央に配置） */
+.creator__nav {
+  position: absolute;
+  top: var(--creator-nav-top, 50%);
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  pointer-events: auto;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.creator__nav svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ===== hover: 色だけ変化（サイズ・影・矢印スライドなし） ===== */
+.creator__nav:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #0a0a0a;
+}
+
+.creator__nav[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  /* pointer-events は残し、hover の色変化は発火させる */
+}
+
+.creator__nav--prev { left: 8px; }
+.creator__nav--next { right: 8px; }
+
+.creator__name {
+  font-family: var(--font-en);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.creator__role {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--gray-400);
+  text-transform: uppercase;
+}
+
+/* ===================== INFO ===================== */
+.info {
+  padding: 100px 40px;
+  background: var(--theme-bg);
+}
+
+.info__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.info__header {
+  margin-bottom: 40px;
+}
+
+/* 下部CTA — VIEW ALL CREATORS と同じピル型デザイン */
+.info__cta {
+  margin-top: 56px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.info__cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  padding: 14px 22px;
+  border: 1px solid color-mix(in oklab, var(--theme-fg) 35%, transparent);
+  border-radius: 999px;
+  color: var(--theme-fg);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.info__cta-link:hover {
+  background: var(--theme-fg);
+  color: var(--theme-bg);
+  border-color: var(--theme-fg);
+}
+
+.info__list {
+  list-style: none;
+  border-top: 1px solid rgba(10,10,10,0.1);
+}
+
+.info__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(10,10,10,0.1);
+  transition: padding 0.3s var(--ease);
+  cursor: pointer;
+}
+
+.info__item:hover { padding-left: 8px; }
+.info__item:hover .info__title { color: var(--gold); }
+.info__item:hover .info__arrow { transform: translateX(6px); color: var(--gold); }
+
+.info__item-left {
+  display: flex;
+  gap: 32px;
+  align-items: baseline;
+}
+
+.info__date {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--gray-400);
+}
+
+.info__title {
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  transition: color 0.3s var(--ease);
+}
+
+.info__arrow {
+  font-family: var(--font-en);
+  font-size: 16px;
+  color: var(--gray-400);
+  transition: transform 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+/* ===================== CONTACT ===================== */
+.contact {
+  padding: 180px 40px;
+  background: var(--theme-bg);
+  text-align: center;
+}
+
+.contact__inner { max-width: 1000px; margin: 0 auto; }
+
+.contact__label {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: block;
+  text-transform: uppercase;
+}
+
+.contact__title {
+  font-family: var(--font-en);
+  font-weight: 800;
+  font-size: clamp(48px, 7.6vw, 120px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.contact__title-dot { color: var(--gold); }
+
+.contact__sub {
+  margin: 12px auto 0;
+  max-width: 720px;
+  font-family: var(--font-jp);
+  font-size: 15px;
+  color: rgba(255,255,255,0.78);
+  line-height: 2;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* 目立つ CTA — ゴールド塗り + シーン + 矢印アニメ */
+.contact__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 56px;
+  font-family: var(--font-en);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  padding: 22px 52px;
+  color: #0a0a0a;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 12px 32px rgba(200, 168, 107, 0.28),
+              0 2px 8px rgba(0, 0, 0, 0.28);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), color 0.3s var(--ease);
+  animation: contactBtnGlow 3.2s ease-in-out infinite;
+}
+
+.contact__btn svg {
+  transition: transform 0.35s var(--ease);
+}
+
+.contact__btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #E3C893 0%, #C8A86B 45%, #A88550 100%);
+  z-index: -1;
+  transform: translateX(-100%);
+  transition: transform 0.5s var(--ease);
+}
+
+.contact__btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 44px rgba(200, 168, 107, 0.38),
+              0 4px 12px rgba(0, 0, 0, 0.32);
+}
+
+.contact__btn:hover::before {
+  transform: translateX(0);
+}
+
+.contact__btn:hover svg {
+  transform: translateX(6px);
+}
+
+@keyframes contactBtnGlow {
+  0%, 100% { box-shadow: 0 12px 32px rgba(200, 168, 107, 0.28), 0 2px 8px rgba(0,0,0,0.28); }
+  50%      { box-shadow: 0 14px 40px rgba(200, 168, 107, 0.48), 0 4px 12px rgba(0,0,0,0.32); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact__btn { animation: none; }
+}
+
+/* ===================== FOOTER (EPOCH風カラム構成) ===================== */
+.footer {
+  background: var(--black);
+  color: var(--white);
+  padding: 88px 40px 32px;
+  transition: background 1.2s var(--ease);
+}
+
+.footer__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ---- TOP: ロゴ + ナビ4カラム ---- */
+.footer__top {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+  align-items: start;
+  padding-bottom: 96px;
+}
+
+.footer__brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--white);
+}
+
+.footer__logo {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.08em;
+}
+
+.footer__nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 48px;
+}
+
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer__col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer__col-title {
+  font-family: var(--font-en);
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--white);
+}
+
+.footer__col ul a {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  transition: color 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.footer__col ul a:hover {
+  color: var(--gold);
+}
+
+/* 右端カラム（INFO / COMPANY / RECRUIT / CONTACT相当） */
+.footer__col--right {
+  text-align: right;
+  min-width: 140px;
+}
+
+.footer__col--right ul a {
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+
+/* ---- MIDDLE: 住所 / SNS / Back to top ---- */
+.footer__middle {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 48px;
+  align-items: end;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer__address-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer__address {
+  font-family: var(--font-jp);
+  font-style: normal;
+  font-size: 13px;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.04em;
+}
+
+/* MAP リンク — 住所の直下に控えめに */
+.footer__map {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.85);
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.footer__map svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.footer__map:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.footer__map:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.footer__socials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer__socials a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.72);
+  font-family: var(--font-en);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color 0.3s var(--ease);
+}
+
+.footer__socials a:hover {
+  color: var(--gold);
+}
+
+/* Back to top — 円形アイコンボタン */
+.footer__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.75);
+  background: transparent;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease), transform 0.3s var(--ease);
+  justify-self: end;
+  align-self: end;
+}
+
+.footer__back svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.footer__back:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #0a0a0a;
+  transform: translateY(-3px);
+}
+
+.footer__back:hover svg {
+  transform: translateY(-2px);
+}
+
+/* ---- BOTTOM: コピーライト + AIクレジット ---- */
+.footer__bottom {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.footer__copy {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+/* 控えめなAIクレジット */
+.footer__credit {
+  font-family: var(--font-en);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 10px;
+  color: rgba(255,255,255,0.32);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+/* ---- AI クレジットティッカー（フッタ最上部） ---- */
+.footer__ticker {
+  position: relative;
+  overflow: hidden;
+  /* 背景・境界線は撤去してフッタの黒地と完全に同化させる。
+     文字とドットだけが浮かぶシンプルなティッカーとして表示。 */
+  background: transparent;
+  border: 0;
+  /* 大きい文字を受け止める縦パディング */
+  padding: clamp(20px, 3.2vw, 36px) 0;
+  /* ティッカーとフッタメニュー(footer__inner)の間に十分な余白 */
+  margin-bottom: clamp(56px, 8vw, 96px);
+}
+
+/* 端のフェードでループの繋ぎ目を目立たなくする */
+.footer__ticker::before,
+.footer__ticker::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: clamp(80px, 12vw, 180px);
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.footer__ticker::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--black) 0%, transparent 100%);
+}
+.footer__ticker::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--black) 0%, transparent 100%);
+}
+
+.footer__ticker-track {
+  display: flex;
+  width: max-content;
+  /* 2連結したコンテンツのうち、片方分(=50%)だけ平行移動して無限ループ */
+  animation: footer-ticker 40s linear infinite;
+  will-change: transform;
+}
+
+.footer__ticker:hover .footer__ticker-track {
+  animation-play-state: paused;
+}
+
+.footer__ticker-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.footer__ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(28px, 3vw, 48px);
+  padding: 0 clamp(28px, 3vw, 48px);
+  /* Helvetica 指定。macOS / iOS では Helvetica Neue、Win では Arial にフォールバック。
+     Inter は使わず、Helvetica の素直な存在感で AI 制作のメッセージを伝える */
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  /* clamp(モバイル, 流体, デスクトップ) で大きく主張 */
+  font-size: clamp(26px, 4.4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+
+@keyframes footer-ticker {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+/* OS の reduce-motion 設定を尊重 */
+@media (prefers-reduced-motion: reduce) {
+  .footer__ticker-track { animation: none; }
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1024px) {
+  .hero { min-height: 560px; }
+  .hero__video { top: 80px; left: 24px; right: 24px; bottom: 32px; }
+  .hero__title-wrap { left: 24px; right: 24px; bottom: 32px; }
+  .hero__title { font-size: clamp(54px, 10.5vw, 120px); white-space: nowrap; }
+  .hero__scroll { top: 96px; right: 32px; }
+  .creator__item { flex-basis: calc((100% - 56px) / 4); }
+  .about__head, .about__body-wrap, .about__diagram { grid-template-columns: 1fr; gap: 16px; }
+  .about__cta { padding-left: 0; }
+}
+
+@media (max-width: 768px) {
+  .header { padding: 0 20px; }
+  .header__nav { display: none; }
+  .header__hamburger { display: flex; }
+
+  .hero__video { top: 72px; left: 16px; right: 16px; bottom: 24px; }
+  .hero__title-wrap { left: 20px; right: 20px; bottom: 24px; }
+  .hero__title { font-size: clamp(40px, 12vw, 80px); white-space: nowrap; }
+  .hero__scroll { display: none; }
+
+  .about { padding: 100px 20px; }
+  .works { padding: 80px 20px 100px; }
+  .works { min-height: auto; padding: 80px 0 56px; }
+  .works__head, .works__footer { padding: 0 24px; }
+  .works__head { margin-bottom: 24px; }
+  .works__carousel { min-height: 60vh; }
+  .works__track { gap: 16px; padding: 2px 24px; }
+  .works__slide { flex-basis: 86%; height: 60vh; min-height: 360px; }
+  .works__slide:first-child { margin-left: 0; }
+  .works__slide:last-child { margin-right: 0; }
+  .works__slide-title { font-size: clamp(26px, 6vw, 36px); }
+  .works__slide-content { left: 24px; right: 24px; bottom: 24px; }
+  .works__slide-meta { top: 20px; left: 20px; right: 20px; }
+  .works__slide-cta { display: none; }
+  .works__nav { display: none; }
+
+  .service { padding: 56px 20px 72px; }
+  .service__header { margin-bottom: 28px; }
+  .service__list { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .service__item { padding: 18px 14px; }
+  .service__item:hover { transform: none; }
+  .service__name-en { font-size: 14px; }
+  .service__desc { font-size: 10.5px; -webkit-line-clamp: 4; }
+  .service__arrow { width: 26px; height: 26px; }
+
+  .creator { padding: 80px 0 100px; }
+  .creator__inner { padding: 0; }
+  .creator__header { padding: 0 20px; flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 32px; }
+  .creator__carousel { margin: 0; }
+  .creator__list { gap: 14px; padding: 2px 20px; }
+  .creator__item { flex-basis: 68%; min-width: 0; }
+  .creator__nav { display: none; }
+  .creator__cta { padding: 0 20px; margin-top: 32px; }
+
+  .info { padding: 60px 20px; }
+  .info__item-left { flex-direction: column; gap: 4px; }
+  .info__arrow { display: none; }
+
+  .contact { padding: 120px 20px; }
+
+  .footer { padding: 64px 20px 24px; }
+  .footer__top { grid-template-columns: 1fr; gap: 40px; padding-bottom: 48px; }
+  .footer__brand { margin: 0 auto; }
+  .footer__nav { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
+  .footer__col--right { text-align: left; }
+  .footer__col-title { font-size: 18px; }
+  .footer__col ul a { font-size: 14px; }
+  .footer__middle { grid-template-columns: 1fr; gap: 24px; padding-top: 32px; text-align: left; }
+  .footer__socials { flex-direction: row; flex-wrap: wrap; gap: 16px; }
+  .footer__bottom { margin-top: 24px; }
+  /* ティッカーは clamp() で流体スケールしているのでモバイル個別指定は不要 */
+}
+</style>
 </head>
 <body>
 
-<!-- ============================================================
-     カスタムカーソル（デスクトップのみ / JSで表示制御）
-     ============================================================ -->
-<div class="cursor" aria-hidden="true"></div>
-<div class="cursor-ring" aria-hidden="true"></div>
-
-<!-- ============================================================
-     HEADER — 固定ヘッダー / スクロールで白背景に切替
-     ============================================================ -->
-<header class="site-header" id="siteHeader">
-  <a href="/" class="logo">SAC</a>
-
-  <nav class="global-nav" aria-label="Global navigation">
-    <ul class="nav-list">
-      <li><a href="/about/">ABOUT</a></li>
-      <li><a href="/service/">SERVICE</a></li>
-      <li><a href="/works/">WORKS</a></li>
-      <li class="has-dropdown">
-        <a href="/management/">MANAGEMENT</a>
-        <!-- MANAGEMENT ドロップダウン -->
-        <div class="dropdown">
-          <a href="/management/#member-a">MEMBER A</a>
-          <a href="/management/#member-b">MEMBER B</a>
-          <a href="/management/#member-c">MEMBER C</a>
-          <a href="/management/#member-d">MEMBER D</a>
-          <a href="/management/#member-e">MEMBER E</a>
-        </div>
-      </li>
-      <li><a href="/info/">INFO</a></li>
-      <li><a href="/contact/">CONTACT</a></li>
-    </ul>
+<!-- HEADER -->
+<header class="header" id="header">
+  <a href="#" class="header__logo">SAC</a>
+  <nav class="header__nav">
+    <a href="#about">ABOUT</a>
+    <a href="#works">WORKS</a>
+    <a href="#service">SERVICE</a>
+    <a href="#creator">CREATOR</a>
+    <a href="#info">INFO</a>
+    <a href="#contact">CONTACT</a>
   </nav>
-
-  <!-- モバイル ハンバーガー -->
-  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+  <button class="header__hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </header>
 
-<!-- モバイルメニュー オーバーレイ -->
-<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <nav>
-    <ul>
-      <li><a href="/about/">ABOUT</a></li>
-      <li><a href="/service/">SERVICE</a></li>
-      <li><a href="/works/">WORKS</a></li>
-      <li class="mobile-accordion">
-        <button class="mobile-accordion-toggle" aria-expanded="false">MANAGEMENT</button>
-        <div class="mobile-accordion-body">
-          <a href="/management/#member-a">MEMBER A</a>
-          <a href="/management/#member-b">MEMBER B</a>
-          <a href="/management/#member-c">MEMBER C</a>
-          <a href="/management/#member-d">MEMBER D</a>
-          <a href="/management/#member-e">MEMBER E</a>
-        </div>
-      </li>
-      <li><a href="/info/">INFO</a></li>
-      <li><a href="/contact/">CONTACT</a></li>
-    </ul>
-  </nav>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">ABOUT</a>
+  <a href="#works">WORKS</a>
+  <a href="#service">SERVICE</a>
+  <a href="#creator">CREATOR</a>
+  <a href="#info">INFO</a>
+  <a href="#contact">CONTACT</a>
 </div>
 
-<main>
+<!-- HERO — dots&lines × mount.jp 風
+     構成: 左側空白 + 右に動画（主役） + 下段に巨大タイポ
+     ミニマル極まれり。装飾テキストを排し、映像とタイポだけで語る -->
+<section class="hero" id="hero" data-theme="ivory">
 
-  <!-- ============================================================
-       HERO — YouTube動画背景 / 左下コピーブロック
-       ============================================================ -->
-  <section class="hero" id="hero">
-    <!-- YouTube 動画背景 -->
-    <div class="hero-video" aria-hidden="true">
-      <iframe
-        src="https://www.youtube.com/embed/BjTYsHLEWkA?start=20&end=70&autoplay=1&mute=1&loop=1&playlist=BjTYsHLEWkA&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  <!-- 右: 動画（主役、mount.jp風） -->
+  <div class="hero__video">
+    <div class="hero__video-frame" id="heroVideo">
+      <!-- YouTube IFrame API で5秒以降ループ -->
+      <div id="heroYT"></div>
     </div>
-    <!-- 暗幕オーバーレイ -->
-    <div class="hero-overlay"></div>
-
-    <!-- 左中央 スクロール誘導 -->
-    <div class="hero-scroll">
-      <span class="hero-scroll-text">SCROLL</span>
-      <span class="hero-scroll-line"></span>
-    </div>
-
-    <!-- 右下 縦書きブランド -->
-    <div class="hero-brand-vertical">SMART AI CREATIVE</div>
-
-    <!-- 左下 コピーブロック -->
-    <div class="hero-copy">
-      <span class="hero-gold-line" id="heroGoldLine"></span>
-      <h1 class="hero-title-1" id="heroTitle1" data-split="ONE PROMPT">ONE PROMPT</h1>
-      <h2 class="hero-title-2" id="heroTitle2">CHANGE THE WORLD</h2>
-      <p class="hero-sub-ja" id="heroSubJa">クリエイティブ制作の制約を、解放する。</p>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       ABOUT — 白背景 / 左:番号+ラベル  右:リード+本文+CTA
-       ============================================================ -->
-  <section class="about" id="about">
-    <div class="about-left js-reveal">
-      <div class="section-index">01</div>
-      <div class="section-label">ABOUT</div>
-    </div>
-    <div class="about-right">
-      <p class="about-lead js-reveal">
-        AIとクリエイターの力で、<br>
-        あらゆる制作の制約を解放する。
-      </p>
-      <p class="about-body js-reveal">
-        Smart AI Creative（SAC）は、EPOCH Inc.が擁するAIクリエイティブ特化スタジオです。映像・Web・グラフィック・インスタレーションなど、あらゆる制作領域でAIを活用し、ビジネス成果から逆算した運用設計付きのAI制作を提供します。
-      </p>
-      <a href="/about/" class="about-cta js-reveal">VIEW MORE →</a>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       WORKS — 1作品=1シーン / タイル禁止
-       ============================================================ -->
-  <section class="works" id="works">
-    <div class="works-label">SELECTED WORKS</div>
-
-    <!-- SCENE 01 — FEATURE（WORK_01 / LAST CALL） -->
-    <a href="/works/last-call" class="scene-01" data-cursor="hover">
-      <div class="scene-01-bg" id="scene01Bg"></div>
-      <div class="scene-01-overlay"></div>
-      <div class="scene-01-number">01</div>
-      <div class="scene-01-view">VIEW →</div>
-      <div class="scene-01-content">
-        <div class="scene-01-cat">MOVIE PRODUCTION</div>
-        <h3 class="scene-01-title">LAST CALL</h3>
-        <p class="scene-01-sub">公開オーディション番組 OP映像</p>
-      </div>
-    </a>
-
-    <!-- SCENE 02 — DUO（WORK_02 + WORK_03） -->
-    <div class="scene-02">
-      <a href="/works/hyde" class="duo-wide" data-cursor="hover">
-        <div class="duo-content">
-          <div class="cat">MOVIE</div>
-          <h3 class="title">HYDE | SOCIAL VIRUS</h3>
-          <p class="sub">Music Video</p>
-        </div>
-      </a>
-      <a href="/works/24-ramen" class="duo-narrow" data-cursor="hover">
-        <div class="duo-content">
-          <div class="cat">BRANDING</div>
-          <h3 class="title">24世紀ラーメン</h3>
-          <p class="sub">あべのハルカス店 店舗映像</p>
-        </div>
-      </a>
-    </div>
-
-    <!-- SCENE 03 — STRIP（WORK_04 / 05 / 06） -->
-    <div class="scene-03">
-      <a href="/works/zeus-wifi" class="strip-item" data-cursor="hover">
-        <span class="strip-num">04</span>
-        <span class="strip-tag">WEB</span>
-        <span class="strip-title">ZEUS WiFi — AIデジタルツイン キャンペーン</span>
-        <span class="strip-arrow">→</span>
-        <div class="strip-thumb" style="background-image:url(https://www.epoch-inc.jp/wordpress/wp-content/uploads/2025/06/zeus_wifi_epoch_ogp.jpg);"></div>
-      </a>
-      <a href="/works/softbank-ai-ran" class="strip-item" data-cursor="hover">
-        <span class="strip-num">05</span>
-        <span class="strip-tag">TECH</span>
-        <span class="strip-title">SOFTBANK AI-RAN — AI時代の社会インフラ</span>
-        <span class="strip-arrow">→</span>
-        <div class="strip-thumb" style="background-image:url(https://www.epoch-inc.jp/wordpress/wp-content/uploads/2024/11/image01-1200x675.jpg);"></div>
-      </a>
-      <a href="/works/hyatt-tabisaki" class="strip-item" data-cursor="hover">
-        <span class="strip-num">06</span>
-        <span class="strip-tag">TRAVEL</span>
-        <span class="strip-title">HYATT TABISAKI — Caption by Hyatt 兜町 東京</span>
-        <span class="strip-arrow">→</span>
-        <div class="strip-thumb" style="background-image:url(https://www.epoch-inc.jp/wordpress/wp-content/uploads/2025/11/Hyatt_Caption_KV_FIX_PC-1-1200x675.jpg);"></div>
-      </a>
-
-      <div class="works-view-all">
-        <a href="/works/" class="works-view-all-btn">VIEW ALL WORKS →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       CREATORS — 黒背景の細い帯 / 5名のアバター
-       ============================================================ -->
-  <section class="creators" id="creators">
-    <div class="creators-label">CREATORS</div>
-    <div class="creators-list">
-      <a href="/management/#member-a" class="creator">
-        <div class="creator-avatar"></div>
-        <div class="creator-name">MEMBER A</div>
-        <div class="creator-role">Director</div>
-      </a>
-      <a href="/management/#member-b" class="creator">
-        <div class="creator-avatar"></div>
-        <div class="creator-name">MEMBER B</div>
-        <div class="creator-role">Producer</div>
-      </a>
-      <a href="/management/#member-c" class="creator">
-        <div class="creator-avatar"></div>
-        <div class="creator-name">MEMBER C</div>
-        <div class="creator-role">Designer</div>
-      </a>
-      <a href="/management/#member-d" class="creator">
-        <div class="creator-avatar"></div>
-        <div class="creator-name">MEMBER D</div>
-        <div class="creator-role">Engineer</div>
-      </a>
-      <a href="/management/#member-e" class="creator">
-        <div class="creator-avatar"></div>
-        <div class="creator-name">MEMBER E</div>
-        <div class="creator-role">Creative</div>
-      </a>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       SERVICE — 白背景 / 左:ラベル+リード  右:縦リスト6項目
-       ============================================================ -->
-  <section class="service" id="service">
-    <div class="service-left js-reveal">
-      <div class="section-label gold">SERVICE</div>
-      <p class="service-lead">
-        AIとクリエイターの力で、<br>
-        制作の限界を超える。
-      </p>
-      <p class="service-sub">ビジネス成果から逆算した運用設計付きのAI制作。</p>
-    </div>
-
-    <ul class="service-list">
-      <li class="svc-item js-reveal">
-        <span class="svc-num">01</span>
-        <span class="svc-name">MOVIE PRODUCTION</span>
-        <span class="svc-desc">AIで制作工程を1/5に圧縮</span>
-      </li>
-      <li class="svc-item js-reveal">
-        <span class="svc-num">02</span>
-        <span class="svc-name">WEB DESIGN &amp; DEV</span>
-        <span class="svc-desc">AIドリブンなUX/UI実装</span>
-      </li>
-      <li class="svc-item js-reveal">
-        <span class="svc-num">03</span>
-        <span class="svc-name">GRAPHIC / KEY VISUAL</span>
-        <span class="svc-desc">AIカンプで撮影を最適化</span>
-      </li>
-      <li class="svc-item js-reveal">
-        <span class="svc-num">04</span>
-        <span class="svc-name">INSTALLATION</span>
-        <span class="svc-desc">空間とデジタルを融合した体験設計</span>
-      </li>
-      <li class="svc-item js-reveal">
-        <span class="svc-num">05</span>
-        <span class="svc-name">EVENT</span>
-        <span class="svc-desc">AIを活用したイベント演出</span>
-      </li>
-      <li class="svc-item js-reveal">
-        <span class="svc-num">06</span>
-        <span class="svc-name">ANIMATION</span>
-        <span class="svc-desc">モーション・アニメーション制作</span>
-      </li>
-    </ul>
-  </section>
-
-  <!-- ============================================================
-       INFO — ライトグレー背景 / お知らせ3件
-       ============================================================ -->
-  <section class="info" id="info">
-    <div class="section-label info-label">INFO</div>
-    <ul class="info-list">
-      <li class="info-item js-reveal">
-        <span class="info-date">2026.04.10</span>
-        <span class="info-title">Smart AI Creative、Cannes Lions 2026にて事例登壇が決定。</span>
-        <span class="info-arrow">→</span>
-      </li>
-      <li class="info-item js-reveal">
-        <span class="info-date">2026.03.22</span>
-        <span class="info-title">AIクリエイティブ特化スタジオ「SAC」を正式ローンチしました。</span>
-        <span class="info-arrow">→</span>
-      </li>
-      <li class="info-item js-reveal">
-        <span class="info-date">2026.02.15</span>
-        <span class="info-title">HYATT TABISAKI キャンペーンの制作事例を公開しました。</span>
-        <span class="info-arrow">→</span>
-      </li>
-    </ul>
-    <a href="/info/" class="info-view-all">VIEW ALL →</a>
-  </section>
-
-  <!-- ============================================================
-       CONTACT — 黒背景 / 巨大タイポ "LET'S CREATE TOGETHER."
-       ============================================================ -->
-  <section class="contact" id="contact">
-    <h2 class="contact-title">
-      <span class="contact-title-1">LET'S CREATE</span>
-      <span class="contact-title-2">TOGETHER<span class="gold-dot">.</span></span>
-    </h2>
-    <p class="contact-sub">お仕事のご依頼・ご相談はお気軽にご連絡ください。</p>
-    <a href="/contact/" class="contact-btn" data-cursor="hover">CONTACT</a>
-  </section>
-
-</main>
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer class="site-footer">
-  <div class="footer-top">
-    <div class="footer-left">
-      <span class="footer-logo">SAC</span>
-      <span class="footer-tagline">Smart AI Creative</span>
-    </div>
-    <nav class="footer-nav" aria-label="Footer navigation">
-      <a href="/about/">ABOUT</a>
-      <a href="/service/">SERVICE</a>
-      <a href="/works/">WORKS</a>
-      <a href="/info/">INFO</a>
-    </nav>
-    <div class="footer-right">Powered by EPOCH Inc.</div>
   </div>
-  <div class="footer-bottom">
-    © 2024 SAC / Smart AI Creative. All rights reserved.
+
+  <!-- 下段: 巨大タイポ（全幅） -->
+  <div class="hero__title-wrap">
+    <h1 class="hero__title">
+      <span class="hero__title-line" id="heroLine1"><span class="inner">ONE PROMPT</span></span>
+      <span class="hero__title-line" id="heroLine2"><span class="inner">CHANGE THE <em>WORLD</em>.</span></span>
+    </h1>
+  </div>
+
+  <div class="hero__scroll" id="heroScroll">
+    <div class="hero__scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
+</section>
+
+<!-- ABOUT — パララックス3段階リビール（sticky pinning） -->
+<section class="about" id="about" data-theme="white" data-parallax="about">
+  <div class="about__stage">
+  <div class="about__inner">
+
+    <!-- 導入コピー（初期は拡大表示） -->
+    <div class="about__head">
+      <div class="section-label">ABOUT</div>
+      <p class="about__lead">
+        クリエイティブ制作における<em>すべての制約</em>を解放する。
+      </p>
+    </div>
+
+    <!-- PHILOSOPHY / APPROACH を最終レイアウトで配置。opacity はスクロールで制御 -->
+    <div class="about__grid">
+
+      <!-- 線図（SAC のアプローチ構造）— 先に表示 -->
+      <div class="about__diagram">
+        <div class="about__diagram-label">APPROACH</div>
+      <svg class="diagram" viewBox="0 0 1000 580" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+
+        <!-- 背景グリッドの点 -->
+        <g opacity="0.25">
+          <circle cx="100" cy="80" r="1" class="diagram-dot-small" />
+          <circle cx="100" cy="460" r="1" class="diagram-dot-small" />
+          <circle cx="900" cy="80" r="1" class="diagram-dot-small" />
+          <circle cx="900" cy="460" r="1" class="diagram-dot-small" />
+          <circle cx="500" cy="40" r="1" class="diagram-dot-small" />
+          <circle cx="500" cy="500" r="1" class="diagram-dot-small" />
+        </g>
+
+        <!-- 3つの円（AI / CREATOR / BUSINESS）— 重なりでSACを表現。半径を拡大し視認性を強化 -->
+        <!-- AI 円（左上） -->
+        <circle cx="360" cy="210" r="210" class="diagram-circle-bold" />
+        <!-- CREATOR 円（右上） -->
+        <circle cx="640" cy="210" r="210" class="diagram-circle-bold" />
+        <!-- BUSINESS 円（下） -->
+        <circle cx="500" cy="350" r="210" class="diagram-circle-bold" />
+
+        <!-- 中心の SAC ノード（3円の交差点） -->
+        <circle cx="500" cy="260" r="54" fill="var(--gold)" opacity="0.08" />
+        <circle cx="500" cy="260" r="32" class="diagram-line-solid" fill="none" />
+        <circle cx="500" cy="260" r="3.5" class="diagram-dot" />
+
+        <!-- ラベル: AI（左上の円の外側） -->
+        <text x="190" y="108" class="node-label" font-size="36" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">AI</text>
+        <text x="190" y="140" class="node-label-jp" font-size="16" font-weight="400" fill="var(--gray-400)" text-anchor="middle">生成・自動化・拡張</text>
+
+        <!-- ラベル: CREATOR（右上の円の外側） -->
+        <text x="810" y="108" class="node-label" font-size="36" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">CREATOR</text>
+        <text x="810" y="140" class="node-label-jp" font-size="16" font-weight="400" fill="var(--gray-400)" text-anchor="middle">発想・演出・品質</text>
+
+        <!-- ラベル: BUSINESS（下円の外側） -->
+        <text x="500" y="510" class="node-label" font-size="36" font-weight="800" fill="var(--theme-fg)" text-anchor="middle">BUSINESS</text>
+        <text x="500" y="540" class="node-label-jp" font-size="16" font-weight="400" fill="var(--gray-400)" text-anchor="middle">成果から逆算した運用設計</text>
+
+        <!-- 中央 SAC ラベル -->
+        <text x="500" y="254" font-family="Inter" font-size="24" font-weight="700" fill="var(--theme-fg)" text-anchor="middle" letter-spacing="2">SAC</text>
+        <text x="500" y="282" font-family="Inter" font-size="11" font-weight="500" fill="var(--gold)" text-anchor="middle" letter-spacing="3">SMART AI CREATIVE</text>
+
+      </svg>
+      </div>
+
+      <!-- 本文（PHILOSOPHY）— スクロールで表示 -->
+      <div class="about__philosophy">
+        <div class="about__body-label">PHILOSOPHY</div>
+        <div class="about__philosophy-body">
+          <p class="about__body">
+            Smart AI Creative（SAC）は、EPOCH Inc.が運営する、AIネイティブなクリエイティブスタジオです。映像・Web・グラフィック・空間演出・イベント・SNS運用まで、制作のあらゆる領域にAIを実装します。
+          </p>
+          <p class="about__body">
+            私たちは単にAIを「使う」のではなく、事業の成果から逆算し、制作プロセスそのものを再設計することに向き合っています。AIと一流のクリエイターが並走することで、従来の制約を超えた速度・品質・柔軟性を、事業の現場に届けます。
+          </p>
+          <div class="about__cta">
+            <a href="#">VIEW MORE →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div><!-- /.about__stage -->
+</section>
+
+<!-- WORKS — 洗練されたカルーセル（snap + ドラッグ + ナビゲーション） -->
+<section class="works" id="works" data-theme="sand">
+  <div class="works__head">
+    <h2 class="works__title js-reveal">WORKS</h2>
+    <div class="works__meta js-reveal">
+      <span class="works__counter"><span id="worksIndex">01</span> <span class="works__counter-sep">/</span> <span id="worksTotal">05</span></span>
+    </div>
+  </div>
+
+  <div class="works__carousel">
+    <button class="works__nav works__nav--prev" type="button" aria-label="Previous" id="worksPrev">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 4 L7 12 L15 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="works__track" id="worksTrack" tabindex="0">
+      <a href="#" class="works__slide" data-index="0">
+        <img class="works__slide-img" src="assets/images/works/lastcall.jpg" alt="LAST CALL" loading="lazy" decoding="async" style="object-position: 50% 35%;">
+        <div class="works__slide-overlay"></div>
+        <div class="works__slide-meta">
+          <span class="works__slide-num">01</span>
+          <span class="works__slide-cat">MOVIE PRODUCTION</span>
+        </div>
+        <div class="works__slide-content">
+          <h3 class="works__slide-title">LAST CALL</h3>
+          <p class="works__slide-sub">公開オーディション番組 OP映像</p>
+        </div>
+        <span class="works__slide-cta" aria-hidden="true">
+          VIEW PROJECT
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="works__slide" data-index="1">
+        <img class="works__slide-img" src="assets/images/works/hyde.jpg" alt="HYDE | SOCIAL VIRUS" loading="lazy" decoding="async" style="object-position: 50% 30%;">
+        <div class="works__slide-overlay"></div>
+        <div class="works__slide-meta">
+          <span class="works__slide-num">02</span>
+          <span class="works__slide-cat">MUSIC VIDEO</span>
+        </div>
+        <div class="works__slide-content">
+          <h3 class="works__slide-title">HYDE | SOCIAL VIRUS</h3>
+          <p class="works__slide-sub">Music Video</p>
+        </div>
+        <span class="works__slide-cta" aria-hidden="true">
+          VIEW PROJECT
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="works__slide" data-index="2">
+        <img class="works__slide-img" src="assets/images/works/ramen.jpg" alt="24世紀ラーメン" loading="lazy" decoding="async" style="object-position: 50% 50%;">
+        <div class="works__slide-overlay"></div>
+        <div class="works__slide-meta">
+          <span class="works__slide-num">03</span>
+          <span class="works__slide-cat">BRANDING</span>
+        </div>
+        <div class="works__slide-content">
+          <h3 class="works__slide-title">24世紀ラーメン</h3>
+          <p class="works__slide-sub">ブランディング映像</p>
+        </div>
+        <span class="works__slide-cta" aria-hidden="true">
+          VIEW PROJECT
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="works__slide" data-index="3">
+        <img class="works__slide-img" src="assets/images/works/pj04.jpg" alt="ZEUS Wifi for GLOBAL" loading="lazy" decoding="async" style="object-position: 50% 40%;">
+        <div class="works__slide-overlay"></div>
+        <div class="works__slide-meta">
+          <span class="works__slide-num">04</span>
+          <span class="works__slide-cat">AI DIGITAL TWIN</span>
+        </div>
+        <div class="works__slide-content">
+          <h3 class="works__slide-title">ZEUS Wifi for GLOBAL</h3>
+          <p class="works__slide-sub">多忙なガンバレルーヤを、AIでデジタルツイン化！？</p>
+        </div>
+        <span class="works__slide-cta" aria-hidden="true">
+          VIEW PROJECT
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+      <a href="#" class="works__slide" data-index="4">
+        <img class="works__slide-img" src="assets/images/works/pj05.jpg" alt="Caption by Hyatt 兜町 東京" loading="lazy" decoding="async" style="object-position: 50% 45%;">
+        <div class="works__slide-overlay"></div>
+        <div class="works__slide-meta">
+          <span class="works__slide-num">05</span>
+          <span class="works__slide-cat">CAMPAIGN</span>
+        </div>
+        <div class="works__slide-content">
+          <h3 class="works__slide-title">Caption by Hyatt 兜町 東京</h3>
+          <p class="works__slide-sub">旅先で出会った人ツアー</p>
+        </div>
+        <span class="works__slide-cta" aria-hidden="true">
+          VIEW PROJECT
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    </div>
+
+    <button class="works__nav works__nav--next" type="button" aria-label="Next" id="worksNext">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 4 L17 12 L9 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <div class="works__footer js-reveal">
+    <div class="works__progress" role="tablist" aria-label="Works slides">
+      <button type="button" class="works__dot is-active" data-goto="0" aria-label="Slide 1"><span></span></button>
+      <button type="button" class="works__dot" data-goto="1" aria-label="Slide 2"><span></span></button>
+      <button type="button" class="works__dot" data-goto="2" aria-label="Slide 3"><span></span></button>
+      <button type="button" class="works__dot" data-goto="3" aria-label="Slide 4"><span></span></button>
+      <button type="button" class="works__dot" data-goto="4" aria-label="Slide 5"><span></span></button>
+    </div>
+    <a href="works-index.html" class="works__view-all">VIEW ALL WORKS
+      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- SERVICE -->
+<section class="service" id="service" data-theme="ivory">
+  <div class="service__inner">
+    <header class="service__header js-reveal">
+      <span class="service__label">SERVICE</span>
+      <h2 class="service__title">LINEUP</h2>
+      <p class="service__lead">
+        映像・Web・グラフィック・空間・AIクリエイティブ。<br>
+        あらゆる制作領域で、AIと人間の最適なコラボレーションを設計します。
+      </p>
+    </header>
+
+    <ol class="service__list">
+      <li class="service__item js-reveal">
+        <a href="#works" class="service__link" aria-label="MOVIE カテゴリの事例を見る">
+          <span class="service__num">01</span>
+          <div class="service__body">
+            <h3 class="service__name-en">MOVIE</h3>
+            <p class="service__name-jp">映像制作</p>
+            <p class="service__desc">ブランドフィルム、CM、MV、ショートフォーム。AIを活用したポストプロダクションと生成映像技術で、制作速度と品質を両立します。</p>
+          </div>
+          <span class="service__action" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </li>
+      <li class="service__item js-reveal">
+        <a href="#works" class="service__link" aria-label="WEB DESIGN カテゴリの事例を見る">
+          <span class="service__num">02</span>
+          <div class="service__body">
+            <h3 class="service__name-en">WEB DESIGN</h3>
+            <p class="service__name-jp">ウェブデザイン</p>
+            <p class="service__desc">コーポレートサイト、LP、ECからWebアプリまで。情報設計からUI/UX、実装、AIによる最適化までを一気通貫で手掛けます。</p>
+          </div>
+          <span class="service__action" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </li>
+      <li class="service__item js-reveal">
+        <a href="#works" class="service__link" aria-label="GRAPHIC DESIGN カテゴリの事例を見る">
+          <span class="service__num">03</span>
+          <div class="service__body">
+            <h3 class="service__name-en">GRAPHIC DESIGN</h3>
+            <p class="service__name-jp">グラフィックデザイン</p>
+            <p class="service__desc">VI、パッケージ、広告ビジュアル、エディトリアル。AIのバリエーション生成と人間の審美眼を掛け合わせ、核心を鮮烈に可視化します。</p>
+          </div>
+          <span class="service__action" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </li>
+      <li class="service__item js-reveal">
+        <a href="#works" class="service__link" aria-label="INSTALLATION カテゴリの事例を見る">
+          <span class="service__num">04</span>
+          <div class="service__body">
+            <h3 class="service__name-en">INSTALLATION</h3>
+            <p class="service__name-jp">インスタレーション</p>
+            <p class="service__desc">体験型アート、インタラクティブ展示、プロジェクションマッピング。AIとリアル空間を融合させ、没入体験を設計します。</p>
+          </div>
+          <span class="service__action" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </li>
+      <li class="service__item js-reveal">
+        <a href="#works" class="service__link" aria-label="SNS カテゴリの事例を見る">
+          <span class="service__num">05</span>
+          <div class="service__body">
+            <h3 class="service__name-en">SNS</h3>
+            <p class="service__name-jp">SNS運用・コンテンツ制作</p>
+            <p class="service__desc">SNSアカウントの運用設計からコンテンツ制作、AIを活用した投稿バリエーション生成・分析まで、成果に繋がるSNS運用を支援します。</p>
+          </div>
+          <span class="service__action" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- CREATOR -->
+<section class="creator" id="creator" data-theme="stone">
+  <div class="creator__inner">
+    <div class="creator__header">
+      <div class="js-reveal">
+        <h2 class="creator__title">CREATOR</h2>
+      </div>
+    </div>
+
+    <div class="creator__carousel">
+      <button class="creator__nav creator__nav--prev" type="button" aria-label="Previous" id="creatorPrev">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 4 L7 12 L15 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="creator__list" id="creatorList" tabindex="0">
+        <a href="#" class="creator__item">
+          <div class="creator__avatar">
+            <img src="assets/images/creators/tsunehashi.jpg" alt="ツネハシタケシ" loading="lazy" decoding="async">
+          </div>
+          <span class="creator__name">ツネハシタケシ</span>
+          <span class="creator__role">Director / Designer</span>
+        </a>
+        <a href="#" class="creator__item">
+          <div class="creator__avatar">
+            <img src="assets/images/creators/ochiai.png" alt="落合 剛之" loading="lazy" decoding="async">
+          </div>
+          <span class="creator__name">落合 剛之</span>
+          <span class="creator__role">Director</span>
+        </a>
+        <a href="#" class="creator__item">
+          <div class="creator__avatar">
+            <img src="assets/images/creators/bird.jpg" alt="Bird" loading="lazy" decoding="async">
+          </div>
+          <span class="creator__name">Bird</span>
+          <span class="creator__role">AI Creator</span>
+        </a>
+        <a href="#" class="creator__item">
+          <div class="creator__avatar">
+            <img src="assets/images/creators/gane.jpg" alt="gane.WAV" loading="lazy" decoding="async">
+          </div>
+          <span class="creator__name">gane.WAV</span>
+          <span class="creator__role">AI Creator</span>
+        </a>
+        <a href="#" class="creator__item">
+          <div class="creator__avatar">
+            <img src="assets/images/creators/aoki.webp" alt="AoKi¹⁰⁴" loading="lazy" decoding="async">
+          </div>
+          <span class="creator__name">AoKi¹⁰⁴</span>
+          <span class="creator__role">AI Creator</span>
+        </a>
+      </div>
+
+      <button class="creator__nav creator__nav--next" type="button" aria-label="Next" id="creatorNext">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 4 L17 12 L9 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <div class="creator__cta js-reveal">
+      <a href="creator-index.html" class="creator__cta-link">VIEW ALL CREATORS
+        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info" id="info" data-theme="white">
+  <div class="info__inner">
+    <div class="info__header js-reveal">
+      <div class="section-label">INFO</div>
+    </div>
+    <ul class="info__list js-reveal">
+      <li class="info__item">
+        <div class="info__item-left">
+          <span class="info__date">2026.04.10</span>
+          <span class="info__title">Smart AI Creative、Cannes Lions 2026にて事例登壇が決定。</span>
+        </div>
+        <span class="info__arrow">→</span>
+      </li>
+      <li class="info__item">
+        <div class="info__item-left">
+          <span class="info__date">2026.03.22</span>
+          <span class="info__title">AIクリエイティブ特化スタジオ「SAC」を正式ローンチしました。</span>
+        </div>
+        <span class="info__arrow">→</span>
+      </li>
+      <li class="info__item">
+        <div class="info__item-left">
+          <span class="info__date">2026.02.15</span>
+          <span class="info__title">HYATT TABISAKI キャンペーンの制作事例を公開しました。</span>
+        </div>
+        <span class="info__arrow">→</span>
+      </li>
+    </ul>
+    <div class="info__cta js-reveal">
+      <a href="#" class="info__cta-link">VIEW ALL INFO
+        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact" data-theme="black">
+  <div class="contact__inner js-reveal">
+    <span class="contact__label">CONTACT</span>
+    <p class="contact__sub">AIクリエイティブ制作はもちろん、お仕事のご相談だけでなく、クリエイターのアサイン、AIを使った事例の問合せなど、お気軽にお問い合わせください。</p>
+    <a href="#" class="contact__btn">CONTACT
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+  <!-- AI クレジットティッカー：フッタ最上部、全幅で流す -->
+  <div class="footer__ticker" aria-hidden="true">
+    <div class="footer__ticker-track">
+      <!-- 同じグループを2つ並べて -50% で無限ループ -->
+      <div class="footer__ticker-group">
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+      </div>
+      <div class="footer__ticker-group" aria-hidden="true">
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__inner">
+
+    <!-- TOP: ロゴ + ナビ4カラム -->
+    <div class="footer__top">
+      <a href="#hero" class="footer__brand" aria-label="SAC / Smart AI Creative">
+        <span class="footer__logo">SAC</span>
+      </a>
+
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__col">
+          <h3 class="footer__col-title">ABOUT</h3>
+          <ul>
+            <li><a href="#about">PHILOSOPHY</a></li>
+            <li><a href="#about">APPROACH</a></li>
+            <li><a href="#about">COMPANY</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h3 class="footer__col-title">WORKS</h3>
+          <ul>
+            <li><a href="#works">FEATURED PROJECTS</a></li>
+            <li><a href="#works">MOVIE PRODUCTION</a></li>
+            <li><a href="#works">MUSIC VIDEO</a></li>
+            <li><a href="#works">BRANDING</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h3 class="footer__col-title">CREATOR</h3>
+          <ul>
+            <li><a href="#creator">DIRECTOR</a></li>
+            <li><a href="#creator">AI CREATOR</a></li>
+            <li><a href="#creator">ALL CREATORS</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col footer__col--right">
+          <ul>
+            <li><a href="#service">SERVICE</a></li>
+            <li><a href="#info">INFO</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <!-- MIDDLE: 住所 / SNS / BACK TO TOP -->
+    <div class="footer__middle">
+      <div class="footer__address-wrap">
+        <address class="footer__address">
+          〒141-0021 東京都品川区上大崎3-14-1<br>
+          中丸ハウス B棟
+        </address>
+        <a href="https://maps.app.goo.gl/tKVmTAiDvhVb9SHV6" target="_blank" rel="noopener" class="footer__map">
+          MAP
+          <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H8M17 7V16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <ul class="footer__socials" aria-label="Social media">
+        <li>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+            </svg>
+            <span>Instagram</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+              <path d="M17.53 3H20.5l-6.52 7.45L21.75 21h-6.03l-4.72-6.16L5.6 21H2.63l6.98-7.98L2.25 3h6.18l4.27 5.64L17.53 3Zm-1.06 16.2h1.66L7.63 4.7H5.85l10.62 14.5Z"/>
+            </svg>
+            <span>X (Twitter)</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 3h-3a4 4 0 0 0-4 4v3H4v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3V3Z"/>
+            </svg>
+            <span>Facebook</span>
+          </a>
+        </li>
+      </ul>
+
+      <a href="#hero" class="footer__back" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- BOTTOM: コピーライト（AIクレジットはティッカー側に集約） -->
+    <div class="footer__bottom">
+      <p class="footer__copy">© EPOCH Inc.</p>
+    </div>
   </div>
 </footer>
 
-<!-- JS -->
-<script src="assets/js/main.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // --- Header scroll ---
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 80) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  }, { passive: true });
+
+  // --- Hero intro ---
+  window.addEventListener('load', function() {
+    var ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+    setTimeout(function() {
+      var l1 = document.getElementById('heroLine1');
+      var l2 = document.getElementById('heroLine2');
+      if (l1) l1.classList.add('is-in');
+      if (l2) l2.classList.add('is-in');
+    }, 400);
+
+    setTimeout(function() {
+      var v = document.getElementById('heroVideo');
+      if (v) v.classList.add('is-in');
+    }, 500);
+
+    setTimeout(function() {
+      var sc = document.getElementById('heroScroll');
+      if (sc) sc.classList.add('is-in');
+    }, 1400);
+  });
+
+  // --- Intersection Observer for reveals ---
+  var reveals = document.querySelectorAll('.js-reveal');
+  if ('IntersectionObserver' in window) {
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function(el) { revealObserver.observe(el); });
+  } else {
+    reveals.forEach(function(el) { el.classList.add('revealed'); });
+  }
+
+  // --- ABOUT パララックス（sticky pinning によるスクロール進捗計算） ---
+  // スクロール位置に応じて以下の3つのCSS変数を 0〜1 で更新:
+  //   --lead-p : ABOUT リードコピー（初期は拡大 → 縮小して定位置）
+  //   --ap-p   : APPROACH 図解のフェードイン
+  //   --ph-p   : PHILOSOPHY 本文のフェードイン
+  (function() {
+    var aboutSection = document.querySelector('.about[data-parallax="about"]');
+    if (!aboutSection) return;
+
+    var clamp01 = function(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); };
+    var smoothstep = function(edge0, edge1, x) {
+      var t = clamp01((x - edge0) / (edge1 - edge0));
+      return t * t * (3 - 2 * t);
+    };
+
+    var ticking = false;
+    function update() {
+      ticking = false;
+      // 900px以下はCSS側で --lead-p/--ap-p/--ph-p を強制的に1にしているのでスキップ
+      if (window.innerWidth <= 900) return;
+
+      var rect = aboutSection.getBoundingClientRect();
+      var total = aboutSection.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      var scrolled = Math.max(0, -rect.top);
+      var p = clamp01(scrolled / total); // 0..1
+
+      // 進捗配分:
+      //   lead       0→0.40   リードを先にスライドアップ & 縮小
+      //   approach   0.38→0.70 リード着地後に APPROACH がフェードイン
+      //   philosophy 0.62→0.95 さらに遅れて PHILOSOPHY が登場
+      var leadP = smoothstep(0.00, 0.40, p);
+      var apP   = smoothstep(0.38, 0.70, p);
+      var phP   = smoothstep(0.62, 0.95, p);
+
+      aboutSection.style.setProperty('--lead-p', leadP.toFixed(3));
+      aboutSection.style.setProperty('--ap-p',   apP.toFixed(3));
+      aboutSection.style.setProperty('--ph-p',   phP.toFixed(3));
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  })();
+
+  // --- Section theme color transition ---
+  // 各セクションの data-theme に応じて body の背景色/前景色を切替
+  var themes = {
+    ivory:  { bg: '#F4F1EC', fg: '#0A0A0A' },
+    white:  { bg: '#FFFFFF', fg: '#0A0A0A' },
+    sand:   { bg: '#E9E3D8', fg: '#0A0A0A' },
+    stone:  { bg: '#1A1A1A', fg: '#FFFFFF' },
+    black:  { bg: '#0A0A0A', fg: '#FFFFFF' }
+  };
+  var themedSections = document.querySelectorAll('[data-theme]');
+
+  // セクション・ヘッドラインが画面上部 28vh のラインに到達した時点で
+  // そのセクションのテーマへ切替。CSS の transition で滑らかに遷移。
+  var currentTheme = null;
+  function pickThemeByScroll() {
+    var refY = window.innerHeight * 0.28;
+    var active = themedSections[0];
+    themedSections.forEach(function(s) {
+      var top = s.getBoundingClientRect().top;
+      if (top - refY <= 0) active = s;
+    });
+    if (!active) return;
+    var name = active.getAttribute('data-theme');
+    if (name === currentTheme) return;
+    var t = themes[name];
+    if (!t) return;
+    currentTheme = name;
+    document.documentElement.style.setProperty('--theme-bg', t.bg);
+    document.documentElement.style.setProperty('--theme-fg', t.fg);
+  }
+
+  var themeTicking = false;
+  window.addEventListener('scroll', function() {
+    if (!themeTicking) {
+      requestAnimationFrame(function() { themeTicking = false; pickThemeByScroll(); });
+      themeTicking = true;
+    }
+  }, { passive: true });
+  window.addEventListener('resize', pickThemeByScroll);
+  pickThemeByScroll();
+
+  // --- Hamburger ---
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var mobileLinks = mobileMenu.querySelectorAll('a');
+
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  });
+
+  mobileLinks.forEach(function(link) {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // --- Smooth scroll ---
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var t = document.querySelector(this.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // --- YouTube IFrame API — 5秒以降をループ再生 ---
+  // ポリシー: タイトルバー非表示、ループ時も5秒から再開
+  var YT_VIDEO_ID = 'PtCzVhUE57s';
+  var YT_START_SEC = 5;
+
+  // APIスクリプトをロード
+  var ytTag = document.createElement('script');
+  ytTag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(ytTag);
+
+  window.onYouTubeIframeAPIReady = function() {
+    if (!document.getElementById('heroYT')) return;
+    var player = new YT.Player('heroYT', {
+      videoId: YT_VIDEO_ID,
+      playerVars: {
+        autoplay: 1,
+        mute: 1,
+        controls: 0,
+        rel: 0,
+        modestbranding: 1,
+        showinfo: 0,
+        iv_load_policy: 3,
+        disablekb: 1,
+        fs: 0,
+        playsinline: 1,
+        start: YT_START_SEC
+      },
+      events: {
+        onReady: function(e) {
+          e.target.mute();
+          e.target.playVideo();
+        },
+        onStateChange: function(e) {
+          // 動画終了時に5秒地点へシークして再生
+          if (e.data === YT.PlayerState.ENDED) {
+            e.target.seekTo(YT_START_SEC, true);
+            e.target.playVideo();
+          }
+        }
+      }
+    });
+  };
+
+})();
+</script>
+
+<script>
+/* WORKS Carousel — snap scroll + drag + prev/next + dots + keyboard + counter */
+(function() {
+  'use strict';
+  var track = document.getElementById('worksTrack');
+  if (!track) return;
+  var originalSlides = Array.prototype.slice.call(track.querySelectorAll('.works__slide'));
+  if (!originalSlides.length) return;
+
+  // === 循環カルーセル: 先頭と末尾にクローンを配置 ===
+  var N = originalSlides.length;
+  var firstClone = originalSlides[0].cloneNode(true);
+  var lastClone  = originalSlides[N - 1].cloneNode(true);
+  firstClone.classList.add('is-clone');
+  lastClone.classList.add('is-clone');
+  firstClone.setAttribute('aria-hidden', 'true');
+  lastClone.setAttribute('aria-hidden', 'true');
+  firstClone.removeAttribute('data-index');
+  lastClone.removeAttribute('data-index');
+  // [lastClone, 0, 1, 2, 3, 4, firstClone]
+  track.insertBefore(lastClone, originalSlides[0]);
+  track.appendChild(firstClone);
+
+  // 実スライド配列（本体のみ）とループ用の全配列
+  var slides = originalSlides;           // UI 同期用
+  var allSlides = Array.prototype.slice.call(track.querySelectorAll('.works__slide')); // 7枚
+
+  var prevBtn = document.getElementById('worksPrev');
+  var nextBtn = document.getElementById('worksNext');
+  var idxEl   = document.getElementById('worksIndex');
+  var totalEl = document.getElementById('worksTotal');
+  var dots    = Array.prototype.slice.call(document.querySelectorAll('.works__dot'));
+
+  if (totalEl) totalEl.textContent = String(N).padStart(2, '0');
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  // allSlides の中で現在中央に最も近いスライドの「allSlides 上の index」
+  function currentAllIndex() {
+    var center = track.scrollLeft + track.clientWidth / 2;
+    var best = 0, bestDist = Infinity;
+    allSlides.forEach(function(s, i) {
+      var c = s.offsetLeft + s.offsetWidth / 2;
+      var d = Math.abs(c - center);
+      if (d < bestDist) { bestDist = d; best = i; }
+    });
+    return best;
+  }
+
+  // 本体スライド index（0..N-1）へ変換
+  // allSlides の並びは [lastClone, 0, 1, ..., N-1, firstClone]
+  function currentIndex() {
+    var ai = currentAllIndex();
+    if (ai === 0) return N - 1;            // lastClone
+    if (ai === allSlides.length - 1) return 0; // firstClone
+    return ai - 1;
+  }
+
+  // allSlides index から X 座標目標値へ
+  function targetXForAllIndex(ai) {
+    var s = allSlides[ai];
+    return s.offsetLeft + s.offsetWidth / 2 - track.clientWidth / 2;
+  }
+
+  // クローンに着地したら対応する実スライドへ瞬時ジャンプ（アニメーション無し）
+  function settleIfOnClone() {
+    var ai = currentAllIndex();
+    if (ai === 0) {
+      // lastClone → 末尾の実スライドへ
+      jumpToAllIndex(allSlides.length - 2); // 最後の実スライド
+    } else if (ai === allSlides.length - 1) {
+      // firstClone → 先頭の実スライドへ
+      jumpToAllIndex(1);
+    }
+  }
+
+  function jumpToAllIndex(ai) {
+    var prevSnap = track.style.scrollSnapType;
+    var prevBehavior = track.style.scrollBehavior;
+    track.style.scrollSnapType = 'none';
+    track.style.scrollBehavior = 'auto';
+    track.scrollLeft = targetXForAllIndex(ai);
+    // 同期的にリセット
+    requestAnimationFrame(function() {
+      track.style.scrollSnapType = prevSnap;
+      track.style.scrollBehavior = prevBehavior;
+      updateUI();
+    });
+  }
+
+  function updateUI() {
+    var i = currentIndex();
+    if (idxEl) idxEl.textContent = pad2(i + 1);
+    dots.forEach(function(d, di) { d.classList.toggle('is-active', di === i); });
+    // 循環カルーセルなのでボタンは常に有効
+    if (prevBtn) prevBtn.removeAttribute('disabled');
+    if (nextBtn) nextBtn.removeAttribute('disabled');
+  }
+
+  var animFrame = null;
+  function animateTo(target, duration, onDone) {
+    if (animFrame) cancelAnimationFrame(animFrame);
+    var prevSnap = track.style.scrollSnapType;
+    var prevBehavior = track.style.scrollBehavior;
+    track.style.scrollSnapType = 'none';
+    track.style.scrollBehavior = 'auto';
+    var start = track.scrollLeft;
+    var change = target - start;
+    var startTime = performance.now();
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+    function step(now) {
+      var t = Math.min(1, (now - startTime) / duration);
+      track.scrollLeft = start + change * easeOutCubic(t);
+      updateUI();
+      if (t < 1) {
+        animFrame = requestAnimationFrame(step);
+      } else {
+        animFrame = null;
+        track.style.scrollSnapType = prevSnap;
+        track.style.scrollBehavior = prevBehavior;
+        if (onDone) onDone();
+      }
+    }
+    animFrame = requestAnimationFrame(step);
+  }
+
+  // dot クリック: 本体 index 0..N-1 → 対応するクローン込み allIndex
+  function goTo(realIndex) {
+    // realIndex は 0..N-1 想定（dotクリック用）
+    var ai = realIndex + 1; // allSlides 上では +1
+    animateTo(targetXForAllIndex(ai), 650);
+  }
+
+  // 次/前 — 循環処理はクローンに進んだ後、着地でシームレスにジャンプ
+  function goNext() {
+    var ai = currentAllIndex();
+    var nextAi = ai + 1;
+    if (nextAi > allSlides.length - 1) nextAi = allSlides.length - 1;
+    animateTo(targetXForAllIndex(nextAi), 650, settleIfOnClone);
+  }
+  function goPrev() {
+    var ai = currentAllIndex();
+    var nextAi = ai - 1;
+    if (nextAi < 0) nextAi = 0;
+    animateTo(targetXForAllIndex(nextAi), 650, settleIfOnClone);
+  }
+
+  // scroll-driven UI update (throttled)
+  var scrollTicking = false;
+  track.addEventListener('scroll', function() {
+    if (!scrollTicking) {
+      window.requestAnimationFrame(function() { scrollTicking = false; updateUI(); });
+      scrollTicking = true;
+    }
+  }, { passive: true });
+
+  // prev / next — 循環
+  if (prevBtn) prevBtn.addEventListener('click', goPrev);
+  if (nextBtn) nextBtn.addEventListener('click', goNext);
+
+  // dots
+  dots.forEach(function(d) {
+    d.addEventListener('click', function() { goTo(parseInt(d.dataset.goto, 10)); });
+  });
+
+  // keyboard — 循環
+  track.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goPrev(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
+  });
+
+  // drag to scroll (pointer events; clicks pass through when no drag)
+  var isDown = false, startX = 0, startScroll = 0, moved = 0;
+  track.addEventListener('pointerdown', function(e) {
+    isDown = true; moved = 0;
+    startX = e.clientX;
+    startScroll = track.scrollLeft;
+    track.classList.add('is-dragging');
+    track.setPointerCapture(e.pointerId);
+  });
+  track.addEventListener('pointermove', function(e) {
+    if (!isDown) return;
+    var dx = e.clientX - startX;
+    moved = Math.max(moved, Math.abs(dx));
+    track.scrollLeft = startScroll - dx;
+  });
+  function endDrag(e) {
+    if (!isDown) return;
+    isDown = false;
+    track.classList.remove('is-dragging');
+    // 現在のallIndexへアニメーションでスナップ、着地でクローン解決
+    var ai = currentAllIndex();
+    animateTo(targetXForAllIndex(ai), 450, settleIfOnClone);
+  }
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+  track.addEventListener('pointerleave', endDrag);
+
+  // prevent accidental click navigation right after drag
+  allSlides.forEach(function(s) {
+    s.addEventListener('click', function(e) { if (moved > 8) e.preventDefault(); });
+  });
+
+  // 初期位置: allIndex=1（= 実スライド 0番目 LAST CALL）をセンターに
+  function setInitialPosition() {
+    var prevSnap = track.style.scrollSnapType;
+    var prevBehavior = track.style.scrollBehavior;
+    track.style.scrollSnapType = 'none';
+    track.style.scrollBehavior = 'auto';
+    track.scrollLeft = targetXForAllIndex(1);
+    requestAnimationFrame(function() {
+      track.style.scrollSnapType = prevSnap;
+      track.style.scrollBehavior = prevBehavior;
+      updateUI();
+    });
+  }
+  // レイアウト確定後に設定（画像 decode 後も含め二段で保険）
+  setInitialPosition();
+  window.addEventListener('load', setInitialPosition);
+  window.addEventListener('resize', setInitialPosition);
+})();
+
+/* CREATOR Carousel — シンプルなページング（ドラッグ/矢印/キーボード） */
+(function() {
+  'use strict';
+  var list = document.getElementById('creatorList');
+  if (!list) return;
+  var prevBtn = document.getElementById('creatorPrev');
+  var nextBtn = document.getElementById('creatorNext');
+
+  var animFrame = null;
+  function animateTo(target, duration) {
+    if (animFrame) cancelAnimationFrame(animFrame);
+    var prevSnap = list.style.scrollSnapType;
+    var prevBehavior = list.style.scrollBehavior;
+    list.style.scrollSnapType = 'none';
+    list.style.scrollBehavior = 'auto';
+    var start = list.scrollLeft;
+    var change = target - start;
+    var startTime = performance.now();
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+    function step(now) {
+      var t = Math.min(1, (now - startTime) / duration);
+      list.scrollLeft = start + change * easeOutCubic(t);
+      if (t < 1) {
+        animFrame = requestAnimationFrame(step);
+      } else {
+        animFrame = null;
+        list.style.scrollSnapType = prevSnap;
+        list.style.scrollBehavior = prevBehavior;
+      }
+    }
+    animFrame = requestAnimationFrame(step);
+  }
+
+  function pageWidth() {
+    // 1アイテム幅 + gap ≒ 1ページ送り量（約1枚ずつ）
+    var first = list.querySelector('.creator__item');
+    if (!first) return 200;
+    var gap = parseFloat(getComputedStyle(list).columnGap || getComputedStyle(list).gap) || 20;
+    return first.offsetWidth + gap;
+  }
+
+  function goBy(direction) {
+    var target = list.scrollLeft + direction * pageWidth();
+    var max = list.scrollWidth - list.clientWidth;
+    if (target < 0) target = 0;
+    if (target > max) target = max;
+    animateTo(target, 550);
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function() { goBy(-1); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { goBy(1); });
+
+  list.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goBy(-1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goBy(1); }
+  });
+
+  // ドラッグ機能は削除: カルーセル操作は矢印ボタン/キーボード/タッチスワイプ（ネイティブ）のみ
+
+  // ボタンの disable 状態をスクロール位置で更新
+  function updateNavState() {
+    if (!prevBtn || !nextBtn) return;
+    var max = list.scrollWidth - list.clientWidth;
+    prevBtn.toggleAttribute('disabled', list.scrollLeft <= 1);
+    nextBtn.toggleAttribute('disabled', list.scrollLeft >= max - 1);
+  }
+
+  // ナビ矢印を写真(.creator__avatar)の高さ中央に配置
+  function updateNavPosition() {
+    var carousel = list.parentElement;
+    if (!carousel) return;
+    var avatar = list.querySelector('.creator__avatar');
+    if (!avatar) return;
+    var h = avatar.offsetHeight;
+    if (h > 0) {
+      carousel.style.setProperty('--creator-nav-top', (h / 2) + 'px');
+    }
+  }
+  var navTicking = false;
+  list.addEventListener('scroll', function() {
+    if (!navTicking) {
+      requestAnimationFrame(function() { navTicking = false; updateNavState(); });
+      navTicking = true;
+    }
+  }, { passive: true });
+  window.addEventListener('resize', function() {
+    updateNavState();
+    updateNavPosition();
+  });
+  window.addEventListener('load', updateNavPosition);
+  // 画像の decode 完了後にも再計測（初期表示時に高さ 0 になるのを防ぐ）
+  list.querySelectorAll('.creator__avatar img').forEach(function(img) {
+    if (img.complete) return;
+    img.addEventListener('load', updateNavPosition, { once: true });
+  });
+  updateNavState();
+  updateNavPosition();
+})();
+</script>
+
+<script>
+/* FLUX CANVAS — top-c と同様の Ikeda / Nicolai スタイル流線
+   ・HERO以外の各セクションに <canvas class="flux-canvas"> を挿入
+   ・波打つ線が流れ、IntersectionObserver で可視セクションのみ描画
+   ・色はセクションの --theme-fg（テーマ切替に同期） */
+(function() {
+  'use strict';
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ANGLE_POOL = [
+    0, 0, 0,
+    Math.PI / 2, Math.PI / 2, Math.PI / 2,
+    Math.PI / 4, -Math.PI / 4,
+    Math.PI / 3, -Math.PI / 3,
+    Math.PI / 6, -Math.PI / 6
+  ];
+
+  // 流線演出は暗背景セクション(CREATOR / CONTACT)のみ
+  var targets = document.querySelectorAll('[data-theme="stone"], [data-theme="black"]');
+  if (!targets.length) return;
+
+  var scenes = [];
+
+  targets.forEach(function(section) {
+    var canvas = document.createElement('canvas');
+    canvas.className = 'flux-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    section.insertBefore(canvas, section.firstChild);
+    var ctx = canvas.getContext('2d', { alpha: true });
+    var scene = {
+      section: section,
+      canvas: canvas,
+      ctx: ctx,
+      streams: [],
+      w: 0, h: 0,
+      visible: false,
+      colorCache: 'rgba(255,255,255,1)'
+    };
+    resize(scene);
+    seed(scene);
+    updateColor(scene);
+    scenes.push(scene);
+  });
+
+  function resize(scene) {
+    var rect = scene.section.getBoundingClientRect();
+    var w = rect.width, h = rect.height;
+    if (w <= 0 || h <= 0) { w = 320; h = 240; }
+    scene.canvas.width = Math.floor(w * DPR);
+    scene.canvas.height = Math.floor(h * DPR);
+    scene.w = scene.canvas.width;
+    scene.h = scene.canvas.height;
+  }
+
+  function seed(scene) {
+    scene.streams = [];
+    var diag = Math.hypot(scene.w, scene.h);
+    // 視認性を守るため更に抑制: 8〜22本程度
+    var count = Math.max(8, Math.min(22, Math.floor(diag / 160)));
+    for (var i = 0; i < count; i++) {
+      var base = ANGLE_POOL[Math.floor(Math.random() * ANGLE_POOL.length)];
+      var angle = base + (Math.random() - 0.5) * 0.18;
+      var dx = Math.cos(angle);
+      var dy = Math.sin(angle);
+      var flip = Math.random() < 0.5 ? -1 : 1;
+      scene.streams.push({
+        cx: Math.random() * scene.w,
+        cy: Math.random() * scene.h,
+        dx: dx,
+        dy: dy,
+        px: -dy * flip,
+        py: dx * flip,
+        speed: (0.08 + Math.random() * 0.5) * DPR,
+        amp: (1.0 + Math.random() * 9) * DPR,
+        freq: 0.0008 + Math.random() * 0.0045,
+        phase: Math.random() * Math.PI * 2,
+        omega: (Math.random() < 0.5 ? -1 : 1) * (0.005 + Math.random() * 0.018),
+        opacity: 0.05 + Math.random() * 0.28, // ライン自体の不透明度も下げる
+        accent: Math.random() > 0.95,         // アクセント線も減らす
+        len: diag * (0.9 + Math.random() * 0.7)
+      });
+    }
+  }
+
+  // テーマ色（rgb string）を取得して rgba テンプレートに変換
+  function updateColor(scene) {
+    var fg = getComputedStyle(scene.section).color; // theme-fg
+    var m = fg.match(/\d+/g);
+    if (m && m.length >= 3) {
+      scene.colorCache = m[0] + ',' + m[1] + ',' + m[2];
+    }
+  }
+
+  var t = 0;
+  function frame() {
+    t++;
+    scenes.forEach(function(s) {
+      if (!s.visible) return;
+      var ctx = s.ctx;
+      var w = s.w, h = s.h;
+
+      // 残像フェード（背景色は問わず alpha clear でトレイル）
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = 'rgba(0,0,0,0.18)';
+      ctx.fillRect(0, 0, w, h);
+      ctx.restore();
+
+      var step = 3 * DPR;
+      for (var i = 0; i < s.streams.length; i++) {
+        var st = s.streams[i];
+        var op = st.opacity;
+        ctx.strokeStyle = 'rgba(' + s.colorCache + ',' + op + ')';
+        ctx.lineWidth = (st.accent ? 0.9 : 0.4) * DPR; /* 細めに */
+        ctx.beginPath();
+        var nx = -st.dy, ny = st.dx;
+        var segs = Math.ceil(st.len / step);
+        for (var j = 0; j <= segs; j++) {
+          var p = (j / segs - 0.5) * st.len;
+          var sine = Math.sin(p * st.freq + st.phase + t * st.omega) * st.amp;
+          var x = st.cx + st.dx * p + nx * sine;
+          var y = st.cy + st.dy * p + ny * sine;
+          if (j === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // drift
+        st.cx += st.px * st.speed;
+        st.cy += st.py * st.speed;
+        var margin = st.amp * 2 + 80 * DPR;
+        if (st.cx < -margin) { st.cx = w + margin; st.phase = Math.random() * Math.PI * 2; }
+        else if (st.cx > w + margin) { st.cx = -margin; st.phase = Math.random() * Math.PI * 2; }
+        if (st.cy < -margin) { st.cy = h + margin; st.phase = Math.random() * Math.PI * 2; }
+        else if (st.cy > h + margin) { st.cy = -margin; st.phase = Math.random() * Math.PI * 2; }
+      }
+    });
+    // frame 再帰はドライバに任せる（rAF / hidden時はsetInterval）
+  }
+
+  // ドライバ: 表示状態に応じて rAF / setInterval を切替
+  var fallbackTimer = null;
+  function tick() {
+    frame();
+    if (prefersReducedMotion) return;
+    if (document.hidden) {
+      if (!fallbackTimer) fallbackTimer = setInterval(frame, 50);
+    } else {
+      if (fallbackTimer) { clearInterval(fallbackTimer); fallbackTimer = null; }
+      requestAnimationFrame(tick);
+    }
+  }
+  if (!prefersReducedMotion) tick();
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      if (!fallbackTimer && !prefersReducedMotion) fallbackTimer = setInterval(frame, 50);
+    } else {
+      if (fallbackTimer) { clearInterval(fallbackTimer); fallbackTimer = null; }
+      if (!prefersReducedMotion) requestAnimationFrame(tick);
+    }
+  });
+
+  // 視界に入ったシーンのみ描画（scroll イベント駆動）
+  function updateVisibility() {
+    var vh = window.innerHeight;
+    scenes.forEach(function(s) {
+      var r = s.canvas.getBoundingClientRect();
+      s.visible = r.bottom > -200 && r.top < vh + 200;
+    });
+  }
+  window.addEventListener('scroll', updateVisibility, { passive: true });
+  updateVisibility();
+
+  // テーマ切替検知：bodyの color 変化をポーリング風にチェック
+  var lastFg = '';
+  setInterval(function() {
+    var fg = getComputedStyle(document.body).color;
+    if (fg !== lastFg) {
+      lastFg = fg;
+      scenes.forEach(updateColor);
+    }
+  }, 400);
+
+  // リサイズ時に再構成
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      scenes.forEach(function(s) { resize(s); seed(s); });
+    }, 200);
+  });
+})();
+</script>
+
 </body>
 </html>

@@ -618,6 +618,69 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .page-cta__buttons { flex-direction: column; }
   .btn-primary, .btn-ghost, .btn-ghost-dark { width: 100%; justify-content: center; }
 }
+
+/* ---- AI クレジットティッカー（フッタ最上部） ---- */
+.footer__ticker {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  padding: clamp(20px, 3.2vw, 36px) 0;
+  margin-bottom: clamp(56px, 8vw, 96px);
+}
+.footer__ticker::before,
+.footer__ticker::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: clamp(80px, 12vw, 180px);
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.footer__ticker::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--black) 0%, transparent 100%);
+}
+.footer__ticker::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--black) 0%, transparent 100%);
+}
+.footer__ticker-track {
+  display: flex;
+  width: max-content;
+  animation: footer-ticker 40s linear infinite;
+  will-change: transform;
+}
+.footer__ticker:hover .footer__ticker-track {
+  animation-play-state: paused;
+}
+.footer__ticker-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.footer__ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(28px, 3vw, 48px);
+  padding: 0 clamp(28px, 3vw, 48px);
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: clamp(26px, 4.4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+@keyframes footer-ticker {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer__ticker-track { animation: none; }
+}
 </style>
 </head>
 
@@ -894,6 +957,28 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
 <!-- ============ FOOTER ============ -->
 <footer class="footer">
+  <!-- AI クレジットティッカー -->
+  <div class="footer__ticker" aria-hidden="true">
+    <div class="footer__ticker-track">
+      <div class="footer__ticker-group">
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+      </div>
+      <div class="footer__ticker-group" aria-hidden="true">
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+        <span class="footer__ticker-item">This website is entirely crafted with AI.</span>
+      </div>
+    </div>
+  </div>
+
   <div class="footer__inner">
     <div class="footer__top">
       <a href="index.html" class="footer__brand" aria-label="SAC"><span class="footer__logo">SAC</span></a>
@@ -918,7 +1003,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     </div>
     <div class="footer__bottom">
       <p class="footer__copy">© EPOCH Inc.</p>
-      <p class="footer__credit">This website is entirely crafted with AI.</p>
     </div>
   </div>
 </footer>
