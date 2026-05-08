@@ -1974,19 +1974,80 @@ html.is-loading body {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #0A0A0A;
+  /* loader 本体は透過。黒いカーテン2枚で画面を覆い、退場時に上下へ分割スライド */
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* フェードアウト時の描画を滑らかに */
-  transition: opacity 0.7s var(--ease), visibility 0.7s var(--ease);
 }
 
 .sac-loader.is-done {
-  opacity: 0;
-  visibility: hidden;
   pointer-events: none;
+}
+
+/* 退場時に visibility を遅延 OFF にして a11y ツリーから除去 */
+.sac-loader.is-done {
+  visibility: visible;
+  transition: visibility 0s 1.05s;
+}
+.sac-loader.is-done.is-gone {
+  visibility: hidden;
+}
+
+/* ---- 上下 2 枚の黒カーテン (退場時に上下へスライド分割) ---- */
+.sac-loader__curtain {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: #0A0A0A;
+  z-index: 1;
+  /* 退場時は cubic-bezier で重力感のある離脱 */
+  transition: transform 0.95s cubic-bezier(0.83, 0, 0.17, 1);
+  will-change: transform;
+}
+.sac-loader__curtain--top    { top: 0; }
+.sac-loader__curtain--bottom { bottom: 0; transition-delay: 0.06s; }
+
+/* 中央分割線に gold のハイライトラインを走らせる演出 */
+.sac-loader__curtain--top::after,
+.sac-loader__curtain--bottom::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+.sac-loader__curtain--top::after    { bottom: 0; }
+.sac-loader__curtain--bottom::before { top: 0; }
+
+.sac-loader.is-done .sac-loader__curtain--top    { transform: translateY(-100%); }
+.sac-loader.is-done .sac-loader__curtain--bottom { transform: translateY( 100%); }
+.sac-loader.is-done .sac-loader__curtain--top::after,
+.sac-loader.is-done .sac-loader__curtain--bottom::before { opacity: 1; }
+
+/* ---- 中央コンテンツ: 退場時にズーム拡大 + フェード ---- */
+.sac-loader__center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  transition:
+    transform 0.85s cubic-bezier(0.7, 0, 0.84, 0),
+    opacity   0.55s cubic-bezier(0.5, 0, 0.75, 0);
+  will-change: transform, opacity;
+}
+.sac-loader.is-done .sac-loader__center {
+  transform: scale(1.18);
+  opacity: 0;
 }
 
 /* HTML ベースで 2 枚重ね。SVG text + clip-path は一部ブラウザで不安定なため
@@ -2020,6 +2081,17 @@ html.is-loading body {
   -webkit-clip-path: inset(0 100% 0 0);
   clip-path: inset(0 100% 0 0);
   animation: sac-loader-paint 1.8s 0.5s cubic-bezier(0.83, 0, 0.17, 1) forwards;
+}
+
+/* 真ん中の "A" だけ gold で個別カラーリング */
+.sac-loader__title--outline .sac-loader__a {
+  -webkit-text-stroke-color: rgba(200, 168, 107, 0.55); /* gold semi-transparent outline */
+  color: transparent;
+}
+.sac-loader__title--filled .sac-loader__a {
+  color: var(--gold);
+  /* 塗り進行が A に到達した瞬間に少しだけ強調する微発光 */
+  text-shadow: 0 0 18px rgba(200, 168, 107, 0.45);
 }
 
 @keyframes sac-loader-paint {
@@ -2090,22 +2162,34 @@ html.is-loading body {
 
 <!-- ============ LOADING ANIMATION ============ -->
 <div class="sac-loader" id="sacLoader" aria-hidden="true">
-  <div class="sac-loader__title-wrap">
-    <!-- 下層: 薄いアウトラインの "SAC" -->
-    <h1 class="sac-loader__title sac-loader__title--outline">SAC</h1>
-    <!-- 上層: 白塗りの "SAC" を clip-path で左から解放 -->
-    <h1 class="sac-loader__title sac-loader__title--filled" aria-hidden="true">SAC</h1>
+  <!-- 上下 2 枚の黒カーテン: 退場時に上下へ分割スライド -->
+  <div class="sac-loader__curtain sac-loader__curtain--top"></div>
+  <div class="sac-loader__curtain sac-loader__curtain--bottom"></div>
+
+  <!-- 中央コンテンツ: 退場時にズーム + フェード -->
+  <div class="sac-loader__center">
+    <div class="sac-loader__title-wrap">
+      <!-- 下層: 薄いアウトライン (A だけ gold semi-trans 縁取り) -->
+      <h1 class="sac-loader__title sac-loader__title--outline">S<span class="sac-loader__a">A</span>C</h1>
+      <!-- 上層: 白塗り (A だけ gold)。clip-path で左から解放 -->
+      <h1 class="sac-loader__title sac-loader__title--filled" aria-hidden="true">S<span class="sac-loader__a">A</span>C</h1>
+    </div>
+    <p class="sac-loader__tagline">SMART AI CREATIVE</p>
+    <div class="sac-loader__bar" aria-hidden="true"></div>
   </div>
-  <p class="sac-loader__tagline">SMART AI CREATIVE</p>
-  <div class="sac-loader__bar" aria-hidden="true"></div>
 </div>
 <script>
 (function(){
-  // 塗りアニメ(0.5s 待ち + 1.8s 描画 = 2.3s) + 余韻 0.3s = 2.6s 後にフェードアウト
+  // 塗り(0.5s 待 + 1.8s 描画 = 2.3s) + 余韻 0.3s = 2.6s 後に退場開始。
+  // is-done 付与で カーテン分割(0.95s) + 中央ズーム(0.85s) が走り、
+  // その後 is-gone で visibility:hidden にして a11y ツリーから除外
   function dismissLoader(){
     var loader = document.getElementById('sacLoader');
-    if (loader) loader.classList.add('is-done');
+    if (!loader) return;
+    loader.classList.add('is-done');
     document.documentElement.classList.remove('is-loading');
+    // カーテンが完全にスライドアウトしてから完全に隠す
+    setTimeout(function(){ loader.classList.add('is-gone'); }, 1100);
   }
   function start(){
     setTimeout(dismissLoader, 2600);
@@ -2115,7 +2199,7 @@ html.is-loading body {
   } else {
     start();
   }
-  // フェイルセーフ: 何かで stuck しても 5s で必ず消す
+  // フェイルセーフ: 5s 経っても消えていなければ強制退場
   setTimeout(function(){
     var loader = document.getElementById('sacLoader');
     if (loader && !loader.classList.contains('is-done')) dismissLoader();
