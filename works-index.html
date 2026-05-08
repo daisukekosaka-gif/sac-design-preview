@@ -84,7 +84,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .breadcrumb [aria-current="page"] { color: var(--theme-fg); }
 
 /* ===================== HERO (creator-index と体裁を統一) ===================== */
-.w-hero { padding: 80px 40px 80px; position: relative; }
+.w-hero { padding: 80px 40px 120px; position: relative; }
 
 /* ===================== REEL (HERO bottom — featured videos) ===================== */
 .w-reel { padding: 0 40px 56px; position: relative; }
@@ -121,12 +121,10 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .w-reel__item:hover .w-reel__hairline { width: 100%; }
 .w-hero__inner {
   max-width: 1680px; margin: 0 auto;
-  display: grid; grid-template-columns: 120px minmax(0, 1fr) 280px;
+  display: grid; grid-template-columns: 120px minmax(0, 1fr);
   gap: 56px; align-items: end;
   min-height: 64vh;
 }
-.w-hero__main { min-width: 0; }
-.w-hero__stats { min-width: 0; }
 .w-hero__vlabel {
   writing-mode: vertical-rl;
   font-family: var(--font-jp); font-weight: 500; font-size: 14px;
@@ -136,6 +134,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   padding-top: 20px;
 }
 .w-hero__vlabel strong { color: var(--theme-fg); font-weight: 700; }
+
+.w-hero__main { position: relative; min-width: 0; max-width: 1320px; }
+.w-hero__tag { display: inline-block; margin-bottom: 36px; }
 
 .w-hero__title {
   font-family: var(--font-en); font-weight: 900;
@@ -155,15 +156,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 @keyframes strikeIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
-.w-hero__sub {
-  display: inline-flex; align-items: center; gap: 12px;
-  font-family: var(--font-en); font-weight: 500; font-size: 10px;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 36px;
-}
-.w-hero__sub::before { content: ""; width: 24px; height: 1px; background: currentColor; opacity: 0.7; }
-
 .w-hero__lead {
   font-family: var(--font-jp); font-weight: 500;
   font-size: clamp(17px, 1.4vw, 22px);
@@ -173,24 +165,14 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 .w-hero__lead strong { color: var(--theme-fg); font-weight: 700; }
 
-.w-hero__stats {
-  display: flex; flex-direction: column; gap: 12px;
-  padding: 0 0 0 20px;
-  border-left: 1px solid rgba(10,10,10,0.12);
-  align-self: end;
-  margin-bottom: 8px;
-}
-.w-hero__stats .w-hero__stat { font-size: 10px; letter-spacing: 0.22em; gap: 16px; }
-.w-hero__stats .w-hero__stat b { font-size: 18px; letter-spacing: -0.01em; }
-.w-hero__stat {
-  display: flex; justify-content: space-between; align-items: baseline;
-  gap: 24px;
+.w-hero__meta {
+  margin-top: 48px;
+  display: flex; gap: 40px; align-items: center; flex-wrap: wrap;
   font-family: var(--font-en); font-weight: 500; font-size: 11px;
   letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--gray-400);
 }
-.w-hero__stat b { font-weight: 700; font-size: 32px; letter-spacing: -0.02em; color: var(--theme-fg); }
-.w-hero__stat.gold b { color: var(--gold); }
+.w-hero__meta b { color: var(--gold); font-weight: 600; font-size: 14px; letter-spacing: 0.12em; }
 
 /* ===================== CATEGORY NAV ===================== */
 .w-cats {
@@ -489,17 +471,17 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .w-reel__item:nth-child(n+4) { display: none; }
 }
 @media (max-width: 1200px) {
-  .w-hero__inner { grid-template-columns: 90px minmax(0, 1fr) 220px; gap: 32px; }
+  .w-hero__inner { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
 }
 @media (max-width: 900px) {
   .header { padding: 0 20px; }
   .header__nav { display: none; }
   .header__hamburger { display: flex; }
   .breadcrumb { padding: 88px 20px 0; font-size: 10px; letter-spacing: 0.14em; gap: 10px; }
-  .w-hero { padding: 40px 20px 64px; }
-  .w-hero__inner { grid-template-columns: 1fr; gap: 32px; min-height: auto; }
-  .w-hero__vlabel { writing-mode: horizontal-tb; min-height: auto; padding-top: 0; letter-spacing: 0.3em; }
-  .w-hero__stats { padding: 24px 0 0 0; border-left: none; border-top: 1px solid rgba(10,10,10,0.1); }
+  .w-hero { padding: 48px 20px 80px; }
+  .w-hero__inner { grid-template-columns: 1fr; gap: 28px; min-height: auto; }
+  .w-hero__vlabel { writing-mode: horizontal-tb; height: auto; padding-top: 0; letter-spacing: 0.3em; }
+  .w-hero__meta { flex-wrap: wrap; gap: 16px; }
   .w-cats__inner { padding: 14px 20px; gap: 22px; }
   .w-cats__head, .w-cats__counter { display: none; }
   .w-reel { padding: 0 20px 40px; }
@@ -561,20 +543,22 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <section class="w-hero" id="top">
   <div class="w-hero__inner">
     <div class="w-hero__vlabel">SAC <strong>SELECTED WORKS</strong> ARCHIVE</div>
+
     <div class="w-hero__main">
-      <p class="w-hero__sub">SELECTED WORKS</p>
+      <span class="w-hero__tag section-label">SELECTED WORKS</span>
       <h1 class="w-hero__title js-reveal">WORKS<span class="dot">.</span><span class="strike" aria-hidden="true"></span></h1>
       <p class="w-hero__lead js-reveal">
         <strong>大手クライアント・スタートアップ・地方企業まで、</strong><br>
         ハイクオリティなAIクリエイティブを企画し実行。<br>
         SACでは予算や規模に関わらず、多くの実績を揃えています。
       </p>
+      <div class="w-hero__meta js-reveal">
+        <span>TOTAL <b>042</b></span>
+        <span>CATEGORIES <b>06</b></span>
+        <span>UPDATED 2025.04</span>
+      </div>
     </div>
-    <div class="w-hero__stats js-reveal">
-      <div class="w-hero__stat"><span>TOTAL WORKS</span><b>042</b></div>
-      <div class="w-hero__stat gold"><span>LATEST</span><b>2025.04</b></div>
-      <div class="w-hero__stat"><span>CATEGORIES</span><b>06</b></div>
-    </div>
+
   </div>
 </section>
 
