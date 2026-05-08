@@ -1961,9 +1961,159 @@ img, svg {
   .footer__bottom { margin-top: 24px; }
   /* ティッカーは clamp() で流体スケールしているのでモバイル個別指定は不要 */
 }
+
+/* ===================== LOADER (SAC を白で塗っていく) ===================== */
+/* ロード中は html / body のスクロールを停止し、loader の上にコンテンツが見えないようにする */
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
+  height: 100%;
+}
+
+.sac-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0A0A0A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* フェードアウト時の描画を滑らかに */
+  transition: opacity 0.7s var(--ease), visibility 0.7s var(--ease);
+}
+
+.sac-loader.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.sac-loader__svg {
+  width: min(86vw, 1280px);
+  height: auto;
+  overflow: visible;
+}
+
+/* 1枚目: 薄いアウトライン (常時表示) */
+.sac-loader__outline {
+  fill: transparent;
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 1.5;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 900;
+  font-size: 280px;
+  letter-spacing: 0.01em;
+}
+
+/* 2枚目: 白塗り版を clip-path で左→右に解放することで「塗られていく」効果 */
+.sac-loader__filled {
+  fill: #FFFFFF;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 900;
+  font-size: 280px;
+  letter-spacing: 0.01em;
+  clip-path: inset(0 100% 0 0);
+  animation: sac-loader-paint 1.8s 0.5s cubic-bezier(0.83, 0, 0.17, 1) forwards;
+}
+
+@keyframes sac-loader-paint {
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* タグライン: 塗りが進んでから遅れてフェードイン */
+.sac-loader__tagline {
+  position: absolute;
+  bottom: clamp(80px, 12vh, 160px);
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 500;
+  font-size: clamp(10px, 1.1vw, 13px);
+  letter-spacing: 0.5em;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  animation: sac-loader-fade 0.6s 1.6s var(--ease) forwards;
+}
+
+@keyframes sac-loader-fade {
+  to { opacity: 1; }
+}
+
+/* gold プログレスバー (走光) */
+.sac-loader__bar {
+  position: absolute;
+  bottom: clamp(48px, 7vh, 96px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(160px, 28vw, 280px);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.10);
+  overflow: hidden;
+}
+.sac-loader__bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: translateX(-100%);
+  animation: sac-loader-bar 1.4s 0.2s var(--ease) infinite;
+}
+
+@keyframes sac-loader-bar {
+  to { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sac-loader__filled { animation: none; clip-path: inset(0 0 0 0); }
+  .sac-loader__tagline { animation: none; opacity: 1; }
+  .sac-loader__bar::after { animation: none; opacity: 0.5; }
+}
+
+/* モバイルでも viewBox 経由で SVG はレスポンシブに収まる。font-size は SVG ユーザー単位なので追加調整不要 */
 </style>
+<!-- ロード前に html へ is-loading を付与してスクロールを停止 -->
+<script>document.documentElement.classList.add('is-loading');</script>
 </head>
 <body>
+
+<!-- ============ LOADING ANIMATION ============ -->
+<div class="sac-loader" id="sacLoader" aria-hidden="true">
+  <svg class="sac-loader__svg" viewBox="0 0 1000 320" preserveAspectRatio="xMidYMid meet">
+    <!-- 下層: 薄いアウトライン -->
+    <text x="500" y="232" text-anchor="middle" class="sac-loader__outline">SAC</text>
+    <!-- 上層: 白塗り (clip-path で左から解放) -->
+    <text x="500" y="232" text-anchor="middle" class="sac-loader__filled">SAC</text>
+  </svg>
+  <p class="sac-loader__tagline">SMART AI CREATIVE</p>
+  <div class="sac-loader__bar" aria-hidden="true"></div>
+</div>
+<script>
+(function(){
+  // 塗りアニメ(0.5s 待ち + 1.8s 描画 = 2.3s) + 余韻 0.3s = 2.6s 後にフェードアウト
+  function dismissLoader(){
+    var loader = document.getElementById('sacLoader');
+    if (loader) loader.classList.add('is-done');
+    document.documentElement.classList.remove('is-loading');
+  }
+  function start(){
+    setTimeout(dismissLoader, 2600);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+  // フェイルセーフ: 何かで stuck しても 5s で必ず消す
+  setTimeout(function(){
+    var loader = document.getElementById('sacLoader');
+    if (loader && !loader.classList.contains('is-done')) dismissLoader();
+  }, 5000);
+})();
+</script>
 
 <!-- HEADER -->
 <header class="header" id="header">
