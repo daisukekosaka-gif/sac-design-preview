@@ -2061,21 +2061,35 @@ html.is-loading body {
   will-change: transform, opacity, filter;
 }
 .sac-loader.is-done .sac-loader__center {
-  /* 全体 1.4s で 圧縮 → 大爆発ズーム → 連続的にフェードズームしながら奥行きへ。
-     HOLD フレームを廃止し、ピーク到達後すぐに次の動きへ移行することで
-     "静止" を感じさせず、カーテン分割までシームレスに繋がる */
-  animation: sac-loader-impact 1.4s cubic-bezier(0.55, 0, 0.18, 1) forwards;
+  /* 全体 timing は linear。各セグメントの加減速は per-keyframe で指定し、
+     ピーク後は等速 (linear) で常に動き続けることで "静止" を完全に排除する */
+  animation: sac-loader-impact 1.4s linear forwards;
 }
 
 @keyframes sac-loader-impact {
-  /* 0%   - 7%  : アンティシペーション(圧縮)
-     7%   - 30% : 大爆発ズーム (1.0 → 1.65) ← WOW の瞬間
-     30%  - 100%: 静止なし。連続的に scale ↑ + opacity ↓ + blur ↑ で奥に飛んでいく */
-  0%   { transform: scale(1)    translateZ(0)    rotate(0deg);     opacity: 1;    filter: blur(0);    }
-  7%   { transform: scale(0.90) translateZ(-50px) rotate(0.3deg);  opacity: 1;    filter: blur(0);    }
-  30%  { transform: scale(1.65) translateZ(115px) rotate(-0.7deg); opacity: 1;    filter: blur(0);    }
-  55%  { transform: scale(2.05) translateZ(175px) rotate(-0.15deg); opacity: 0.55; filter: blur(3px);  }
-  100% { transform: scale(2.85) translateZ(240px) rotate(0.5deg);   opacity: 0;    filter: blur(12px); }
+  /* 0%  - 7%  : アンティシペーション。重力で沈むような加速イーズ
+     7%  - 30% : 大爆発ズーム。decelerate イーズで一気に立ち上がる
+     30% - 100%: 完全 linear。等速で奥へ飛びながら opacity/blur が変化
+                 ピーク後の "減速感" を消し、カーテン分割までずっと動いて見える */
+  0% {
+    transform: scale(1)    translateZ(0)    rotate(0deg);
+    opacity: 1; filter: blur(0);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0.25);
+  }
+  7% {
+    transform: scale(0.90) translateZ(-30px) rotate(0deg);
+    opacity: 1; filter: blur(0);
+    animation-timing-function: cubic-bezier(0.2, 0.85, 0.4, 1);
+  }
+  30% {
+    transform: scale(1.70) translateZ(120px) rotate(-0.4deg);
+    opacity: 1; filter: blur(0);
+    animation-timing-function: linear; /* ピーク後は等速で動かし続ける */
+  }
+  100% {
+    transform: scale(3.4)  translateZ(320px) rotate(-1.2deg);
+    opacity: 0; filter: blur(14px);
+  }
 }
 
 /* ---- 中央フラッシュ (radial gold + white) ---- */
