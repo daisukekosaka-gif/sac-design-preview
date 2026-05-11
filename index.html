@@ -2061,21 +2061,21 @@ html.is-loading body {
   will-change: transform, opacity, filter;
 }
 .sac-loader.is-done .sac-loader__center {
-  /* 全体 1.4s に拡張: 圧縮 → 爆発ズーム → ピークホールド → フェードズームの 4 段階 */
+  /* 全体 1.4s で 圧縮 → 大爆発ズーム → 連続的にフェードズームしながら奥行きへ。
+     HOLD フレームを廃止し、ピーク到達後すぐに次の動きへ移行することで
+     "静止" を感じさせず、カーテン分割までシームレスに繋がる */
   animation: sac-loader-impact 1.4s cubic-bezier(0.55, 0, 0.18, 1) forwards;
 }
 
 @keyframes sac-loader-impact {
-  /* 0%   - 6%  : アンティシペーション(圧縮)
-     6%   - 28% : 大爆発ズーム (1.0 → 1.65) ← WOW の瞬間
-     28%  - 38% : ピーク HOLD (1.65 維持) ← 視覚的な"見せ場"
-     38%  - 100%: 奥に飛んでいきながらフェード + ブラー */
-  0%   { transform: scale(1)    translateZ(0)    rotate(0deg);    opacity: 1;    filter: blur(0);    }
-  6%   { transform: scale(0.90) translateZ(-50px) rotate(0.3deg); opacity: 1;    filter: blur(0);    }
-  28%  { transform: scale(1.65) translateZ(110px) rotate(-0.7deg); opacity: 1;   filter: blur(0);    }
-  38%  { transform: scale(1.65) translateZ(110px) rotate(-0.5deg); opacity: 1;   filter: blur(0);    }
-  60%  { transform: scale(2.05) translateZ(170px) rotate(0deg);    opacity: 0.55; filter: blur(3px);  }
-  100% { transform: scale(2.85) translateZ(240px) rotate(0.5deg);  opacity: 0;    filter: blur(12px); }
+  /* 0%   - 7%  : アンティシペーション(圧縮)
+     7%   - 30% : 大爆発ズーム (1.0 → 1.65) ← WOW の瞬間
+     30%  - 100%: 静止なし。連続的に scale ↑ + opacity ↓ + blur ↑ で奥に飛んでいく */
+  0%   { transform: scale(1)    translateZ(0)    rotate(0deg);     opacity: 1;    filter: blur(0);    }
+  7%   { transform: scale(0.90) translateZ(-50px) rotate(0.3deg);  opacity: 1;    filter: blur(0);    }
+  30%  { transform: scale(1.65) translateZ(115px) rotate(-0.7deg); opacity: 1;    filter: blur(0);    }
+  55%  { transform: scale(2.05) translateZ(175px) rotate(-0.15deg); opacity: 0.55; filter: blur(3px);  }
+  100% { transform: scale(2.85) translateZ(240px) rotate(0.5deg);   opacity: 0;    filter: blur(12px); }
 }
 
 /* ---- 中央フラッシュ (radial gold + white) ---- */
