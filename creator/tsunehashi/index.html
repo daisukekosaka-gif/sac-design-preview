@@ -727,6 +727,23 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
   /* --- 共通: iOS Safari 自動ズーム防止 --- */
   input, select, textarea { font-size: 16px; }
+
+  /* ────────── Phase 6: /creator/tsunehashi/ サブページ仕上げ ────────── */
+  .cd-hero { padding: 24px 20px 56px; }
+  .cd-hero__inner { grid-template-columns: 1fr; gap: 20px; min-height: auto; }
+  .cd-hero__role { font-size: 11px; letter-spacing: 0.2em; }
+  .cd-hero__name-jp { font-size: clamp(36px, 12vw, 56px); line-height: 1.15; }
+  .cd-hero__name-en { font-size: 12px; letter-spacing: 0.14em; }
+  .cd-hero__catch { font-size: 15px; line-height: 1.85; }
+  .cd-hero__portrait { width: 100%; }
+  .cd-hero__portrait img { width: 100%; }
+
+  /* page-cta（縦積みボタン） */
+  .page-cta { padding: 72px 20px; }
+  .page-cta__buttons { flex-direction: column; width: 100%; gap: 14px; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; min-height: 52px; }
+
+  .footer__ticker-track { animation-duration: 50s; }
 }
 </style>
 </head>
