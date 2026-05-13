@@ -2450,6 +2450,24 @@ html.is-loading body {
     top: 50%; right: 14px;
     transform: translateY(-50%);
   }
+
+  /* ────────── Phase 5: CREATOR (TOP carousel) ────────── */
+  .creator__title-sub { font-size: 13px; line-height: 1.7; }
+  .creator__cta-link { padding: 14px 24px; min-height: 48px; font-size: 12px; }
+  .creator__item { flex-basis: 72%; }
+  .creator__name { font-size: 14px; }
+  .creator__role { font-size: 11px; letter-spacing: 0.14em; }
+
+  /* ────────── Phase 5: INFO (TOP) ────────── */
+  .info__title { font-size: clamp(28px, 8vw, 40px); }
+  .info__item { padding: 18px 0; min-height: 64px; }
+
+  /* ────────── Phase 5: CONTACT (TOP) ────────── */
+  .contact__title { font-size: clamp(40px, 12vw, 64px); }
+
+  /* ────────── Phase 5: AI クレジットティッカー速度 SP 調整 ────────── */
+  /* SP では視野が狭いため、相対速度を 40s → 50s に緩める */
+  .footer__ticker-track { animation-duration: 50s; }
 }
 </style>
 <!-- ロード前に html へ is-loading を付与してスクロールを停止 -->

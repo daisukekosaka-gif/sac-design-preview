@@ -1430,6 +1430,58 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
   /* --- 共通: iOS Safari 自動ズーム防止 --- */
   input, select, textarea { font-size: 16px; }
+
+  /* ────────── Phase 5: /contact/ ────────── */
+  /* ヒーロー */
+  .s-hero { padding: 32px 20px 56px; min-height: auto; }
+  .s-hero__title { font-size: clamp(48px, 16vw, 80px); }
+  .s-hero__lead { font-size: 15px; line-height: 1.9; }
+
+  /* INQUIRY TYPES */
+  .c-types { padding: 64px 20px 48px; }
+  .c-types__title { font-size: clamp(24px, 7vw, 36px); }
+  .c-types__sub { font-size: 14.5px; line-height: 1.85; }
+  .c-types__grid { gap: 16px; }
+
+  /* FORM */
+  .c-form-section { padding: 56px 20px 80px; }
+  .c-form { padding: 28px 20px 24px; }
+  .c-form__label { font-size: 13px; letter-spacing: 0.08em; }
+  .c-form__hint { font-size: 12px; line-height: 1.6; }
+  .c-form__radios { gap: 12px; }
+  .c-form__radio label {
+    padding: 14px 16px;
+    min-height: 52px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  .c-form__check label {
+    padding: 8px 0;
+    min-height: 44px;
+    font-size: 13px;
+  }
+  .c-form__submit {
+    padding: 18px 28px;
+    min-height: 56px;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    width: 100%;
+  }
+
+  /* DIRECT / ACCESS */
+  .c-direct { padding: 64px 20px 56px; }
+  .c-direct__title { font-size: clamp(22px, 6vw, 30px); }
+  .c-access { padding: 56px 20px 72px; }
+  .c-access__title { font-size: clamp(22px, 6vw, 30px); }
+
+  /* page-cta（縦積みボタン） */
+  .page-cta { padding: 64px 20px; }
+  .page-cta__buttons { flex-direction: column; gap: 14px; width: 100%; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; min-height: 52px; }
+
+  /* AI ティッカー速度 */
+  .footer__ticker-track { animation-duration: 50s; }
 }
 </style>
 </head>

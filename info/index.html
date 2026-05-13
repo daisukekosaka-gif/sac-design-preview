@@ -549,6 +549,33 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
   /* --- 共通: iOS Safari 自動ズーム防止 --- */
   input, select, textarea { font-size: 16px; }
+
+  /* ────────── Phase 5: /info/ ────────── */
+  /* ヒーロー */
+  .i-hero { padding: 32px 20px 56px; min-height: auto; }
+  .i-hero__title { font-size: clamp(48px, 16vw, 80px); }
+  .i-hero__lead { font-size: 14.5px; line-height: 1.85; }
+
+  /* リスト */
+  .i-list { padding: 16px 20px 64px; }
+  .i-list__title { font-size: clamp(22px, 7vw, 32px); }
+  .i-list__filters { gap: 6px; flex-wrap: wrap; }
+  .i-list__filter {
+    padding: 10px 14px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    min-height: 44px;
+  }
+  .i-list__rows { grid-template-columns: 1fr; gap: 8px; }
+
+  /* i-row: タップ領域 64px, 矢印は SP では既存ルールで非表示 */
+  .i-row { padding: 0; border-bottom: 1px solid rgba(10,10,10,0.06); }
+  .i-row a { padding: 18px 0; min-height: 64px; gap: 12px; align-items: flex-start; }
+  .i-row__title { font-size: 15px; line-height: 1.6; -webkit-line-clamp: 3; }
+  .i-row__meta { gap: 10px; flex-wrap: wrap; }
+
+  /* AI ティッカー速度 */
+  .footer__ticker-track { animation-duration: 50s; }
 }
 </style>
 </head>
