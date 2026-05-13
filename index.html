@@ -319,6 +319,9 @@ img, svg {
   color: var(--gold);
 }
 
+/* SP 用の縦型動画コンテナ（9:16）— PC では非表示。SP @media で表示 */
+.hero__video-sp { display: none; }
+
 /* SCROLL インジケーター（右下） */
 .hero__scroll {
   position: absolute;
@@ -2304,6 +2307,84 @@ html.is-loading body {
 
   /* --- 共通: iOS Safari 自動ズーム防止 --- */
   input, select, textarea { font-size: 16px; }
+
+  /* ────────── Phase 2: HERO（TOP） ────────── */
+  /* 高さは 100svh 厳守（アドレスバー対策） */
+  .hero { height: 100svh; min-height: 0; }
+
+  /* PC 用の横型動画コンテナは SP で完全非表示 */
+  .hero__video { display: none !important; }
+
+  /* SP 用の縦型動画コンテナ（9:16）
+     ヘッダー直下〜画面下端まで。縦長端末では上下に黒帯が出るが
+     9:16 のシネマティック比を厳守。 */
+  .hero__video-sp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 64px;          /* SP ヘッダー高 */
+    left: 0; right: 0;
+    bottom: 0;
+    background: #000;
+    z-index: 2;
+  }
+  .hero__video-frame-sp {
+    position: relative;
+    /* 高さを基準に 9:16 を導出。親より幅が広くなる場合は max-width で制限 */
+    height: 100%;
+    aspect-ratio: 9 / 16;
+    max-width: 100%;
+    overflow: hidden;
+    background: #000;
+  }
+  .hero__video-frame-sp iframe,
+  .hero__video-frame-sp #heroYTSp,
+  .hero__video-frame-sp > div {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: 0;
+    pointer-events: none;
+  }
+
+  /* タイポ視認性確保のグラデーション座布団（hero 全体の下部にかける） */
+  .hero__video-sp::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 40%;
+    background: linear-gradient(to top,
+      rgba(0,0,0,0.85) 0%,
+      rgba(0,0,0,0.55) 45%,
+      rgba(0,0,0,0) 100%);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  /* タイトル: 動画の上にオーバーレイ、折り返し許容
+     "WORLD" の em 強調は維持 */
+  .hero__title-wrap {
+    left: 20px; right: 20px;
+    bottom: 56px;
+    z-index: 6;
+  }
+  .hero__title {
+    font-size: clamp(36px, 11vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    white-space: normal;
+    color: var(--white);
+    text-shadow: 0 4px 24px rgba(0,0,0,0.55);
+  }
+  .hero__title em { color: var(--gold); }
+
+  /* SCROLL インジケータは SP で非表示（既存 768px ルールでも非表示） */
+  .hero__scroll { display: none; }
+
+  /* prefers-reduced-motion: 動画は再生されるが、JS 側で onReady で
+     ユーザー設定を尊重したい場合は将来 muteOnly に切替可能 */
 }
 </style>
 <!-- ロード前に html へ is-loading を付与してスクロールを停止 -->
@@ -2404,6 +2485,13 @@ html.is-loading body {
     <div class="hero__video-frame" id="heroVideo">
       <!-- YouTube IFrame API で5秒以降ループ -->
       <div id="heroYT"></div>
+    </div>
+  </div>
+
+  <!-- SP 専用: 縦型動画 embed (9:16)。当面は PC と同 video ID。差し替えは Phase 2 ノート参照 -->
+  <div class="hero__video-sp" aria-hidden="true">
+    <div class="hero__video-frame-sp" id="heroVideoSp">
+      <div id="heroYTSp"></div>
     </div>
   </div>
 
@@ -3121,8 +3209,12 @@ html.is-loading body {
   document.head.appendChild(ytTag);
 
   window.onYouTubeIframeAPIReady = function() {
-    if (!document.getElementById('heroYT')) return;
-    var player = new YT.Player('heroYT', {
+    // SP (≤767px) は縦型 embed コンテナにマウントする。
+    // 当面は同じ動画 ID。差し替え時はここに SP 専用 ID を入れるだけで OK。
+    var isSP = window.matchMedia('(max-width: 767px)').matches;
+    var targetId = isSP ? 'heroYTSp' : 'heroYT';
+    if (!document.getElementById(targetId)) return;
+    var player = new YT.Player(targetId, {
       videoId: YT_VIDEO_ID,
       playerVars: {
         autoplay: 1,
