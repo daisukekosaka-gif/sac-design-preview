@@ -613,6 +613,45 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 
   /* --- 共通: iOS Safari 自動ズーム防止 --- */
   input, select, textarea { font-size: 16px; }
+
+  /* ────────── Phase 4: WORKS ────────── */
+  /* w-reel は SP では完全非表示（ユーザー決定） */
+  .w-reel { display: none !important; }
+
+  /* w-hero: タイトル/リード/メタ */
+  .w-hero { padding: 32px 20px 56px; min-height: auto; }
+  .w-hero__title { font-size: clamp(56px, 18vw, 96px); }
+  .w-hero__lead { font-size: 14.5px; line-height: 1.85; }
+  .w-hero__meta { gap: 12px; }
+  .w-hero__meta b { font-size: 13px; }
+
+  /* w-cats: 横スクロール許可、視覚的に整理 */
+  .w-cats__inner { padding: 12px 20px; gap: 20px; }
+  .w-cats { border-bottom: 1px solid rgba(10,10,10,0.08); }
+  .w-cat { padding: 10px 2px; min-height: 44px; }
+  .w-cat__en { font-size: 13px; letter-spacing: 0.2em; }
+  .w-cat__jp { font-size: 10px; }
+
+  /* w-gallery: 1列、card 内容を SP 向けに */
+  .w-gallery { padding: 48px 20px 56px; }
+  .w-gallery__inner { grid-template-columns: 1fr; column-gap: 0; row-gap: 36px; }
+  .w-item__media { aspect-ratio: 16 / 10; }
+  .w-item__meta { left: 14px; top: 14px; font-size: 10px; }
+  .w-item__cta { right: 14px; bottom: 14px; }
+  .w-item__foot { margin-top: 14px; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .w-item__title { font-size: clamp(22px, 6vw, 28px); }
+  .w-item__jp { font-size: 13px; }
+  .w-item__date { font-size: 11px; letter-spacing: 0.18em; }
+
+  /* w-more: MORE VIEW ボタン */
+  .w-more { padding: 20px 20px 56px; gap: 16px; flex-direction: column; align-items: center; }
+  .w-more__btn { padding: 16px 28px; min-height: 52px; font-size: 13px; letter-spacing: 0.18em; }
+  .w-more__counter { font-size: 11px; }
+
+  /* page-cta は about と同じ縦積みボタン */
+  .page-cta { padding: 80px 20px; }
+  .page-cta__buttons { flex-direction: column; width: 100%; gap: 14px; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; min-height: 52px; }
 }
 </style>
 </head>
