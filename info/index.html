@@ -93,8 +93,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   max-width: 1680px; margin: 0 auto;
   display: grid;
   grid-template-columns: 120px minmax(0, 1fr);
-  gap: 56px; align-items: end;
-  min-height: 64vh;
+  gap: 56px; align-items: start;
 }
 .i-hero__vlabel {
   writing-mode: vertical-rl;
@@ -280,18 +279,17 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .i-pager {
   max-width: 1880px; margin: 0 auto;
   padding: 64px 0 0;
-  display: grid;
-  grid-template-columns: 88px minmax(0, 1fr);
-  gap: 56px;
-  align-items: center;
+  position: relative;
+  display: flex; justify-content: center; align-items: center;
 }
 .i-pager__count {
+  position: absolute; left: 0; top: 50%; transform: translateY(calc(-50% + 32px));
   font-family: var(--font-en); font-weight: 600; font-size: 11px;
   letter-spacing: 0.22em; color: var(--gray-400); text-transform: uppercase;
 }
 .i-pager__count b { color: var(--theme-fg); font-size: 16px; }
 .i-pager__inner {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
 }
 .i-pager__btn {
   min-width: 48px; height: 48px;
@@ -413,13 +411,13 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 /* creator-index と同じブレークポイント (1200 / 900) で揃える */
 @media (max-width: 1200px) {
   .i-hero__inner { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
-  .i-pager { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
 }
 @media (max-width: 1100px) {
   .i-list__rows { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 28px; }
   .page-cta { padding: 96px 24px; }
   .page-cta__buttons { flex-direction: column; }
-  .i-pager { grid-template-columns: 1fr; gap: 18px; }
+  .i-pager { flex-direction: column; gap: 18px; padding-top: 48px; }
+  .i-pager__count { position: static; transform: none; align-self: center; }
 }
 @media (max-width: 900px) {
   .header { padding: 0 20px; }
@@ -428,7 +426,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .breadcrumb { padding: 88px 20px 0; }
   .i-hero { padding: 48px 20px 80px; }
   .i-hero__inner { grid-template-columns: 1fr; gap: 28px; min-height: auto; }
-  .i-hero__vlabel { writing-mode: horizontal-tb; height: auto; padding-top: 0; }
+  .i-hero__vlabel { writing-mode: horizontal-tb; height: auto; padding-top: 0; letter-spacing: 0.3em; }
   .i-list { padding: 12px 20px 72px; }
   .i-list__rows { grid-template-columns: 1fr; gap: 36px; }
   .i-row a { gap: 14px; }
