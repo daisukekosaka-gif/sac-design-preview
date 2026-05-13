@@ -648,12 +648,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   pointer-events: none;
 }
 .page-cta__inner {
-  max-width: 1280px; margin: 0 auto;
+  max-width: 1100px; margin: 0 auto;
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 80px;
-  align-items: end;
+  text-align: center;
 }
 .page-cta__sub {
   display: inline-flex; align-items: center; gap: 12px;
@@ -671,15 +668,15 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 }
 .page-cta__title em { font-style: normal; color: var(--gold); }
 .page-cta__title-jp {
-  display: block; margin-top: 18px;
+  display: block; margin: 18px auto 0;
   font-family: var(--font-jp); font-weight: 500;
   font-size: clamp(15px, 1.1vw, 18px);
   line-height: 2; letter-spacing: 0.04em;
   color: rgba(255,255,255,0.78);
-  max-width: 640px;
+  max-width: 720px;
 }
 .page-cta__title-jp strong { color: var(--gold); font-weight: 700; }
-.page-cta__right { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; padding-bottom: 16px; }
+.page-cta__buttons { display: inline-flex; flex-wrap: wrap; gap: 18px; justify-content: center; align-items: center; margin-top: 40px; }
 .btn-primary {
   position: relative; overflow: hidden;
   display: inline-flex; align-items: center; gap: 14px;
@@ -853,7 +850,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .credits__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .credits__head { grid-template-columns: 1fr; gap: 24px; }
   .share-block__inner { grid-template-columns: 1fr; gap: 28px; }
-  .page-cta__inner { grid-template-columns: 1fr; gap: 36px; }
+  .page-cta__buttons { flex-direction: column; width: 100%; }
+  .page-cta__buttons .btn-primary, .page-cta__buttons .btn-ghost { width: 100%; justify-content: center; }
   .article-nav__inner { grid-template-columns: 1fr; gap: 16px; }
   .article-nav__item--next { grid-template-columns: 80px minmax(0, 1fr); text-align: left; }
   .article-nav__center a { border: 1px solid rgba(10,10,10,0.08); padding: 12px 24px; border-radius: 999px; flex-direction: row; }
@@ -1269,30 +1267,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   </div>
 </section>
 
-<!-- ============ PAGE CTA ============ -->
-<section class="page-cta">
-  <div class="page-cta__inner">
-    <div>
-      <p class="page-cta__sub">CONTACT / 相談する</p>
-      <h2 class="page-cta__title">この温度の<br>仕事、<em>続けよう</em>。</h2>
-      <p class="page-cta__title-jp">
-        <strong>キービジュアル、ティザー、SNS運用、会場演出。</strong>
-        音楽以外でも、似た温度のクリエイティブを探しているなら、構想段階で構いません。SACのプロジェクトデスクへ直接ご相談ください。
-      </p>
-    </div>
-    <div class="page-cta__right">
-      <a href="../index.html#contact" class="btn-primary">
-        <span>SACに相談する</span>
-        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="../creator-index.html" class="btn-ghost">
-        <span>クリエイターを指名する</span>
-        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
 <!-- ============ ARTICLE NAV (prev / next) ============ -->
 <nav class="article-nav" aria-label="記事ナビゲーション">
   <div class="article-nav__inner">
@@ -1324,6 +1298,24 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     </a>
   </div>
 </nav>
+
+<!-- ============ PAGE CTA ============ -->
+<section class="page-cta">
+  <div class="page-cta__inner">
+    <p class="page-cta__sub">CONTACT / 相談する</p>
+    <h2 class="page-cta__title">この温度の<br>仕事、<em>続けよう</em>。</h2>
+    <p class="page-cta__title-jp">
+      <strong>キービジュアル、ティザー、SNS運用、会場演出。</strong>
+      音楽以外でも、似た温度のクリエイティブを探しているなら、構想段階で構いません。SACのプロジェクトデスクへ直接ご相談ください。
+    </p>
+    <div class="page-cta__buttons">
+      <a href="../index.html#contact" class="btn-primary">
+        <span>SACに相談する</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
 
 <!-- ============ FOOTER ============ -->
 <footer class="footer">
