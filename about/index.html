@@ -92,8 +92,19 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .s-hero { padding: 80px 40px 200px; position: relative; background: var(--white); min-height: calc(100svh - 72px); }
 .s-hero__inner {
   max-width: 1680px; margin: 0 auto;
-  display: block;
+  display: grid; grid-template-columns: 120px minmax(0, 1fr);
+  gap: 56px; align-items: start;
 }
+.s-hero__vlabel {
+  writing-mode: vertical-rl;
+  font-family: var(--font-jp); font-weight: 500; font-size: 14px;
+  letter-spacing: 0.42em;
+  color: var(--gray-400);
+  align-self: start;
+  padding-top: 20px;
+  height: 200px;
+}
+.s-hero__vlabel strong { color: var(--theme-fg); font-weight: 700; }
 
 .s-hero__main { position: relative; min-width: 0; max-width: 1320px; }
 .s-hero__tag { display: inline-block; margin-bottom: 36px; }
@@ -1052,6 +1063,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 .footer__credit { font-family: var(--font-en); font-weight: 300; font-style: italic; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.32); }
 
 /* ===================== RESPONSIVE ===================== */
+@media (max-width: 1200px) {
+  .s-hero__inner { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
+}
 @media (max-width: 1280px) {
   .s-fields__grid { grid-auto-rows: minmax(140px, auto); }
 }
@@ -1078,7 +1092,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .breadcrumb { padding: 88px 20px 0; font-size: 10px; letter-spacing: 0.14em; gap: 10px; }
 
   .s-hero { padding: 48px 20px 80px; }
-  .s-hero__inner { min-height: auto; }
+  .s-hero__inner { grid-template-columns: 1fr; gap: 28px; min-height: auto; }
+  .s-hero__vlabel { writing-mode: horizontal-tb; height: auto; padding-top: 0; letter-spacing: 0.3em; }
   .s-hero__lead strong { white-space: normal; }
 
   .s-about,
@@ -1229,6 +1244,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <!-- ============ HERO ============ -->
 <section class="s-hero" id="top" data-section="hero">
   <div class="s-hero__inner">
+    <div class="s-hero__vlabel">SAC <strong>ABOUT</strong></div>
+
     <div class="s-hero__main">
       <span class="s-hero__tag section-label">ABOUT</span>
       <h1 class="s-hero__title js-reveal">
@@ -1887,9 +1904,6 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 <section class="page-cta" id="contact" data-section="cta">
   <div class="page-cta__inner">
     <p class="page-cta__label js-reveal">CONTACT — START WITH A TALK</p>
-    <h2 class="page-cta__title js-reveal delay-1">
-      まずは、ざっくりした<em>相談</em>から。
-    </h2>
     <p class="page-cta__sub js-reveal delay-2">
       <strong>予算・要件・スケジュール、まだ固まっていなくて構いません。</strong><br>
       “こういうことをやりたい”の段階から、SACは一緒に考えます。<br>
@@ -1897,12 +1911,8 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     </p>
     <div class="page-cta__buttons js-reveal delay-3">
       <a href="../index.html#contact" class="btn-primary">
-        <span>相談する</span>
+        <span>SACに相談する</span>
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="../works/" class="btn-ghost">
-        <span>WORKSを見る</span>
-        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <p class="page-cta__small js-reveal delay-4">
