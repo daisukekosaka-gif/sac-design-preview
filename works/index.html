@@ -567,6 +567,53 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
 @media (prefers-reduced-motion: reduce) {
   .footer__ticker-track { animation: none; }
 }
+
+/* ============================================================
+   ▼ SP (≤767px) — Phase 1: グローバル基盤
+   PC・既存 768/900px ブロックは一切上書きしない方針。
+   末尾に追記して視認性・タップ領域・トーンを整える。
+============================================================ */
+@media (max-width: 767px) {
+  :root { --sp-side: 20px; }
+
+  /* --- HEADER --- */
+  .header { height: 64px; padding: 0 var(--sp-side); }
+  .header__hamburger {
+    display: flex;
+    min-width: 44px; min-height: 44px;
+    justify-content: center; align-items: center;
+    padding: 0 10px;
+  }
+
+  /* --- MOBILE MENU: スライドダウン + フェード --- */
+  .mobile-menu {
+    transform: translateY(-16px);
+    transition: opacity 0.5s var(--ease), transform 0.6s var(--ease);
+    padding: 0 var(--sp-side);
+  }
+  .mobile-menu.active { transform: translateY(0); }
+  .mobile-menu a {
+    font-size: 24px;
+    letter-spacing: 0.08em;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* --- FOOTER (Option B: 2列ナビ + その他は1列) --- */
+  .footer { padding: 64px var(--sp-side) 28px; }
+  .footer__col ul a { min-height: 44px; display: inline-flex; align-items: center; }
+  .footer__socials a { min-height: 44px; padding: 4px 0; }
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  /* --- 共通: iOS Safari 自動ズーム防止 --- */
+  input, select, textarea { font-size: 16px; }
+}
 </style>
 </head>
 
