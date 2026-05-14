@@ -1943,14 +1943,15 @@ img, svg {
   .hero__title { font-size: clamp(40px, 12vw, 80px); white-space: nowrap; }
   .hero__scroll { display: none; }
 
-  .about { padding: 100px 20px; }
+  .about { padding: 0 20px; }
+  .about__stage { padding: 48px 24px; }
   .works { padding: 80px 20px 100px; }
   .works { min-height: auto; padding: 80px 0 56px; }
   .works__head, .works__footer { padding: 0 24px; }
   .works__head { margin-bottom: 24px; }
   .works__carousel { min-height: 60vh; }
   .works__track { gap: 16px; padding: 2px 24px; }
-  .works__slide { flex-basis: 86%; height: 60vh; min-height: 360px; }
+  .works__slide { flex-basis: 88%; height: auto; min-height: 0; aspect-ratio: 16 / 9; }
   .works__slide:first-child { margin-left: 0; }
   .works__slide:last-child { margin-right: 0; }
   .works__slide-title { font-size: clamp(26px, 6vw, 36px); }
@@ -1974,6 +1975,7 @@ img, svg {
   .creator__carousel { margin: 0; }
   .creator__list { gap: 14px; padding: 2px 20px; }
   .creator__item { flex-basis: 68%; min-width: 0; }
+  .creator__avatar img { object-fit: contain; object-position: center; }
   .creator__nav { display: none; }
   .creator__cta { padding: 0 20px; margin-top: 32px; }
 
@@ -2492,8 +2494,8 @@ html.is-loading body {
   .creator__role { font-size: 11px; letter-spacing: 0.14em; }
 
   /* ────────── Phase 5: INFO (TOP) ────────── */
-  .info__title { font-size: clamp(28px, 8vw, 40px); }
-  .info__item { padding: 18px 0; min-height: 64px; }
+  .info__title { font-size: clamp(14px, 4vw, 17px); line-height: 1.5; }
+  .info__item { padding: 12px 0; min-height: 48px; }
 
   /* ────────── Phase 5: CONTACT (TOP) ────────── */
   .contact__title { font-size: clamp(40px, 12vw, 64px); }
