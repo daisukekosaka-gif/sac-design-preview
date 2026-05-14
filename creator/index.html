@@ -519,6 +519,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   transition: color 0.3s var(--ease);
 }
 .footer__col ul a:hover { color: var(--gold); }
+/* 遷移想起 → アイコン */
+.footer__col ul a::after, .footer__col-title a::after { content: " →"; opacity: 0.5; display: inline-block; transition: transform 0.3s var(--ease), opacity 0.3s var(--ease); }
+.footer__col ul a:hover::after, .footer__col-title a:hover::after { transform: translateX(3px); opacity: 1; }
 .footer__col--right { text-align: right; min-width: 140px; }
 .footer__col--right ul a { font-size: 16px; letter-spacing: 0.04em; }
 
@@ -604,7 +607,9 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
   .page-cta { padding: 120px 20px; }
   .footer { padding: 72px 20px 32px; }
   .footer__top { grid-template-columns: 1fr; gap: 32px; padding-bottom: 56px; }
-  .footer__nav { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .footer__nav { grid-template-columns: 1fr 1fr; gap: 20px 16px; }
+  .footer__col { gap: 10px; }
+  .footer__col ul { gap: 6px; }
   .footer__col--right { text-align: left; }
   .footer__middle { grid-template-columns: 1fr; gap: 28px; }
   .footer__bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
@@ -1171,7 +1176,7 @@ button { background: none; border: none; cursor: pointer; color: inherit; font: 
     </p>
     <div class="page-cta__buttons">
       <a href="../#contact" class="btn-primary">
-        <span>SACへ問い合わせる</span>
+        <span>SACに相談する</span>
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
           <path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
