@@ -1949,15 +1949,58 @@ img, svg {
   .works { min-height: auto; padding: 80px 0 56px; }
   .works__head, .works__footer { padding: 0 24px; }
   .works__head { margin-bottom: 24px; }
+  /* WORKSスライド: 画像+下テキストのリスト型カード (SP) */
   .works__carousel { min-height: 0; }
   .works__track { gap: 16px; padding: 2px 24px; align-items: flex-start; }
-  .works__slide { flex-basis: 88%; height: auto; min-height: 0; aspect-ratio: 16 / 9; align-self: flex-start; }
-  .works__slide-img { object-fit: cover; object-position: center; }
+  .works__slide {
+    flex: 0 0 88%;
+    height: auto;
+    min-height: 0;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    overflow: hidden;
+  }
   .works__slide:first-child { margin-left: 0; }
   .works__slide:last-child { margin-right: 0; }
-  .works__slide-title { font-size: clamp(26px, 6vw, 36px); }
-  .works__slide-content { left: 24px; right: 24px; bottom: 24px; }
-  .works__slide-meta { top: 20px; left: 20px; right: 20px; }
+  .works__slide-bg { display: none; }
+  .works__slide-overlay { display: none; }
+  .works__slide-img {
+    position: relative;
+    inset: auto;
+    top: auto; left: auto; right: auto; bottom: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+    flex: 0 0 auto;
+    filter: none;
+    border-radius: 2px;
+  }
+  .works__slide-meta {
+    position: static;
+    top: auto; left: auto; right: auto;
+    padding: 12px 2px 4px;
+    color: var(--gray-500);
+  }
+  .works__slide-content {
+    position: static;
+    bottom: auto; left: auto; right: auto;
+    padding: 0 2px 8px;
+    color: var(--theme-fg);
+  }
+  .works__slide-title {
+    font-size: clamp(18px, 5vw, 22px);
+    color: var(--theme-fg);
+    margin-bottom: 4px;
+    line-height: 1.25;
+  }
+  .works__slide-sub {
+    color: var(--gray-500);
+    font-size: 12px;
+  }
   .works__slide-cta { display: none; }
   .works__nav { display: none; }
 
