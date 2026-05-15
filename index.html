@@ -109,7 +109,7 @@ img, svg {
   left: 0;
   width: 100%;
   height: 72px;
-  z-index: 1000;
+  z-index: 1200;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -188,7 +188,7 @@ img, svg {
 }
 
 /* Mobile menu overlay */
-/* ===================== MOBILE MENU (Refined) ===================== */
+/* ===================== MOBILE MENU (Refined v2) ===================== */
 .mobile-menu {
   position: fixed;
   inset: 0;
@@ -203,33 +203,19 @@ img, svg {
   pointer-events: none;
   transform: translateY(-12px);
   transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-  counter-reset: nav-item;
 }
 .mobile-menu.active {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
 }
-/* メニュー左上のロゴ */
-.mobile-menu::before {
-  content: "SAC";
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  font-family: var(--font-en);
-  font-weight: 700;
-  font-size: 18px;
-  letter-spacing: 0.08em;
-  color: var(--white);
-}
 /* 各メニューアイテム */
 .mobile-menu a {
   position: relative;
-  counter-increment: nav-item;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 8px 22px 56px;
+  padding: 20px 8px;
   font-family: var(--font-en);
   font-weight: 300;
   font-size: 30px;
@@ -244,17 +230,6 @@ img, svg {
 .mobile-menu a:first-of-type {
   border-top: 1px solid rgba(255,255,255,0.08);
 }
-.mobile-menu a::before {
-  content: counter(nav-item, decimal-leading-zero);
-  position: absolute;
-  left: 8px;
-  font-family: var(--font-en);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.28em;
-  color: var(--gold);
-  opacity: 0.85;
-}
 .mobile-menu a::after {
   content: "→";
   font-family: var(--font-en);
@@ -263,7 +238,7 @@ img, svg {
   color: rgba(255,255,255,0.35);
   transition: transform 0.35s var(--ease), color 0.35s var(--ease);
 }
-.mobile-menu a:hover { color: var(--gold); padding-left: 64px; }
+.mobile-menu a:hover { color: var(--gold); padding-left: 16px; }
 .mobile-menu a:hover::after { color: var(--gold); transform: translateX(6px); }
 /* スタガード入場アニメ */
 .mobile-menu.active a {
@@ -271,13 +246,15 @@ img, svg {
   transform: translateY(0);
   transition: opacity 0.65s var(--ease), transform 0.65s var(--ease), color 0.35s var(--ease), padding-left 0.45s var(--ease);
 }
-.mobile-menu.active a:nth-of-type(1) { transition-delay: 0.16s; }
-.mobile-menu.active a:nth-of-type(2) { transition-delay: 0.22s; }
-.mobile-menu.active a:nth-of-type(3) { transition-delay: 0.28s; }
-.mobile-menu.active a:nth-of-type(4) { transition-delay: 0.34s; }
-.mobile-menu.active a:nth-of-type(5) { transition-delay: 0.40s; }
-/* メニュー展開中はハンバーガーアイコン (X) を白に固定 */
-.header__hamburger.active span { background: var(--white); }
+.mobile-menu.active a:nth-of-type(1) { transition-delay: 0.10s; }
+.mobile-menu.active a:nth-of-type(2) { transition-delay: 0.16s; }
+.mobile-menu.active a:nth-of-type(3) { transition-delay: 0.22s; }
+.mobile-menu.active a:nth-of-type(4) { transition-delay: 0.28s; }
+.mobile-menu.active a:nth-of-type(5) { transition-delay: 0.34s; }
+/* メニュー展開中: ハンバーガーが menu の上に出るようヘッダーの z-index を上げる */
+html.menu-open .header { background: transparent !important; border-bottom-color: transparent !important; }
+html.menu-open .header__logo { color: var(--white); }
+html.menu-open .header__hamburger span { background: var(--white); }
 
 /* ===================== HERO (dots&lines × mount.jp inspired) =====================
    レイアウト方針:
@@ -2079,18 +2056,20 @@ img, svg {
   .footer { padding: 64px 20px 24px; }
   .footer__top { grid-template-columns: 1fr; gap: 40px; padding-bottom: 48px; }
   .footer__brand { margin: 0 auto; }
-  .footer__nav { grid-template-columns: 1fr 1fr; gap: 14px 12px; }
-  .footer__col { gap: 6px; }
-  .footer__col ul { gap: 3px; }
+  .footer__nav { grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+  .footer__col { gap: 0; }
+  .footer__col ul { gap: 0; }
   .footer__col ul a { line-height: 1.3; }
-  /* INFO / CONTACT を CREATOR タイトルと同じ字面に揃える (Y座標も自然に揃う) */
-  .footer__col--right ul { gap: 12px; }
+  /* INFO / CONTACT を CREATOR タイトルと完全に同じスタイルに統一 */
+  .footer__col--right ul { gap: 0; }
+  .footer__col--right ul li { line-height: 1; }
   .footer__col--right ul a {
     font-family: var(--font-en);
     font-weight: 800;
     font-size: 18px;
     letter-spacing: 0.02em;
     line-height: 1;
+    color: var(--white);
   }
   .footer__col--right { text-align: left; }
   .footer__col-title { font-size: 18px; }
@@ -3389,7 +3368,9 @@ html.is-loading body {
   hamburger.addEventListener('click', function() {
     hamburger.classList.toggle('active');
     mobileMenu.classList.toggle('active');
-    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    var isOpen = mobileMenu.classList.contains('active');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    document.documentElement.classList.toggle('menu-open', isOpen);
   });
 
   mobileLinks.forEach(function(link) {
@@ -3397,6 +3378,7 @@ html.is-loading body {
       hamburger.classList.remove('active');
       mobileMenu.classList.remove('active');
       document.body.style.overflow = '';
+      document.documentElement.classList.remove('menu-open');
     });
   });
 
