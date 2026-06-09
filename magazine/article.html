@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIブランド映像の作り方 — SAC MAGAZINE</title>
+<meta name="description" content="企画からプロンプト設計、納品までAIブランド映像制作の全工程を、事例・比較・チェックリスト付きで解説。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/sac-mag.css">
+<link rel="stylesheet" href="css/modules-rich.css">
+<style>
+  .progress{ position:fixed; top:0; left:0; height:3px; background:var(--gold); width:0; z-index:60; transition:width .1s linear; }
+
+  /* HERO (OGP-friendly) */
+  .a-hero .frame{ max-width:var(--maxw); margin:0 auto; padding:28px 40px 0; }
+  .a-hero .crumb{ margin-bottom:28px; }
+  .a-hero .meta-top{ display:flex; gap:12px; align-items:center; margin-bottom:20px; flex-wrap:wrap; }
+  .a-hero .cat{ font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#fff; background:var(--gold); padding:7px 14px; border-radius:100px; }
+  .a-hero .ty{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--ink); padding:7px 13px; border-radius:100px; }
+  .a-hero .tags{ font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-3); }
+  .a-hero h1{ font-family:var(--sans); font-weight:700; font-size:clamp(30px,5vw,54px); line-height:1.42; letter-spacing:.01em; margin:0 0 24px; max-width:24ch; }
+  .a-hero .deck{ font-size:17px; line-height:2; color:var(--ink-2); max-width:58ch; margin:0 0 30px; }
+  .a-hero .byline{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px; padding:20px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .a-hero .who{ display:flex; align-items:center; gap:13px; }
+  .a-hero .who .av{ width:42px; height:42px; border-radius:50%; overflow:hidden; border:1px solid var(--line); }
+  .a-hero .who .av .ph{ aspect-ratio:1; border:0; border-radius:0; }
+  .a-hero .who .nm{ font-weight:700; font-size:13.5px; }
+  .a-hero .who .rl{ font-family:var(--mono); font-size:11px; color:var(--ink-3); }
+  .a-hero .info{ font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink-3); display:flex; gap:20px; }
+  .a-hero .actions{ display:flex; gap:9px; }
+  .a-hero .actions button{ font-family:var(--mono); font-size:11px; letter-spacing:.06em; padding:9px 15px; border:1px solid var(--line); background:var(--paper-3); border-radius:100px; cursor:pointer; color:var(--ink-2); display:flex; gap:7px; align-items:center; transition:.2s; }
+  .a-hero .actions button:hover{ border-color:var(--ink); color:var(--ink); }
+  .a-hero .keyvis{ max-width:var(--maxw); margin:36px auto 0; padding:0 40px; }
+  .a-hero .keyvis .ph{ aspect-ratio:16/9; }
+  .a-hero .keyvis figcaption{ font-family:var(--mono); font-size:11px; color:var(--ink-3); margin-top:12px; }
+
+  .body-wrap{ padding-top:58px; }
+  .label-mod{ font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:14px; }
+  .sec-anchor{ scroll-margin-top:84px; }
+
+  /* inline TOC module */
+  .m-toc{ max-width:var(--measure); background:var(--paper-3); border:1px solid var(--line); border-radius:8px; padding:28px 32px; }
+  .m-toc .tt{ font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+  .m-toc .tt::before{ content:""; width:22px; height:1px; background:var(--gold); }
+  .m-toc ol{ list-style:none; margin:0; padding:0; counter-reset:toc; columns:2; column-gap:40px; }
+  .m-toc li{ counter-increment:toc; break-inside:avoid; }
+  .m-toc a{ display:flex; gap:11px; padding:7px 0; text-decoration:none; color:var(--ink-2); font-size:14px; line-height:1.5; border-bottom:1px solid var(--line-2); transition:.2s; }
+  .m-toc a::before{ content:counter(toc,decimal-leading-zero); font-family:var(--mono); font-size:11px; color:var(--gold); }
+  .m-toc a:hover{ color:var(--ink); padding-left:4px; }
+
+  .endline{ max-width:var(--measure); margin:50px auto 0; text-align:center; font-family:var(--disp); font-weight:900; color:var(--gold); font-size:20px; letter-spacing:.3em; }
+
+  @media (max-width:860px){
+    .a-hero .frame,.a-hero .keyvis{ padding-left:22px; padding-right:22px; }
+    .a-hero .byline{ flex-direction:column; align-items:flex-start; }
+    .m-toc ol{ columns:1; }
+  }
+</style>
+</head>
+<body class="mag">
+<div class="progress" id="prog"></div>
+
+<header class="mag-header">
+  <div class="bar">
+    <a class="brand" href="overview.html"><span class="b1">SAC</span><span class="b2">Magazine</span></a>
+    <nav class="mag-nav">
+      <a href="list.html">Magazine</a>
+      <a href="overview.html">Concept</a>
+      <a href="#">Categories</a>
+      <a class="back" href="#">SAC本体サイト <span>↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ===== M01 HERO ===== -->
+  <article class="a-hero">
+    <div class="frame">
+      <div class="crumb"><a href="#">HOME</a><span class="sep">/</span><a href="list.html">MAGAZINE</a><span class="sep">/</span><a href="#">HOW TO</a><span class="sep">/</span><span class="cur">ai-brand-film-guide</span></div>
+      <div class="meta-top"><span class="cat">How To</span><span class="ty">保存版</span><span class="tags"># AI映像 　# ブランディング 　# プロンプト設計</span></div>
+      <h1>AIブランド映像の作り方。<br>企画から納品までの全工程<span class="dot">.</span></h1>
+      <p class="deck">生成AIで映像をつくる時代に、ブランドの"らしさ"をどう保つか。企画・絵コンテ・プロンプト設計・編集・納品まで、SACが実際に踏む全工程を、事例と比較表、コピペできるプロンプト付きで解説します。</p>
+      <div class="byline">
+        <div class="who"><span class="av"><span class="ph"></span></span><div><div class="nm">SAC 編集部 ／ 監修：ツネハシ タケシ</div><div class="rl">SAC MAGAZINE — How To</div></div></div>
+        <div class="info"><span>2026.06.06</span><span>18 MIN READ</span></div>
+        <div class="actions"><button>♥ 保存</button><button>⧉ 共有</button><button>⎙ 印刷</button></div>
+      </div>
+    </div>
+    <figure class="keyvis">
+      <div class="ph"><span class="tag">HERO VISUAL — 16:9 / 1200×630 OGP対応</span></div>
+      <figcaption>『PROJECT ECHO』ブランドフィルムより — Directed by SAC</figcaption>
+    </figure>
+  </article>
+
+  <div class="article body-wrap">
+
+    <!-- M02 LEAD -->
+    <div class="module m-lead">AIは映像制作の「速度」を変えました。けれど、ブランドの記憶に残る映像をつくるために必要なのは、相変わらず<strong>設計と判断</strong>です。この記事は、その判断のポイントを工程順にまとめた実務ガイドです。</div>
+
+    <!-- M17 TOC -->
+    <nav class="module m-toc">
+      <div class="tt">目次 / Contents</div>
+      <ol>
+        <li><a href="#s1">AIブランド映像とは何か</a></li>
+        <li><a href="#s2">制作の全体像をつかむ</a></li>
+        <li><a href="#s3">レイアウトで魅せる</a></li>
+        <li><a href="#s4">動画で世界観を伝える</a></li>
+        <li><a href="#s5">つくり手に聞く</a></li>
+        <li><a href="#s6">プロンプト設計 6ステップ</a></li>
+        <li><a href="#s7">ツール選定と品質管理</a></li>
+        <li><a href="#s8">よくある質問</a></li>
+      </ol>
+    </nav>
+
+    <!-- M04 HEADING + M03 RICH -->
+    <div class="module m-heading line sec-anchor" id="s1"><span class="h-eye">01</span><h2>AIブランド映像とは何か<span class="dot">.</span></h2></div>
+    <div class="module m-rich">
+      <p>AIブランド映像とは、生成AIを制作パイプラインに組み込みながら、<strong>ブランドの世界観を一貫した温度で表現する映像</strong>のこと。実写・CG・生成素材を横断し、従来なら数週間かかった工程を数日に圧縮します。</p>
+      <p>ただし、速くなった分だけ「何を伝えるか」の設計がより重要になります。<a href="#">SACのWORKS</a>でも、生成と人の手を行き来するハイブリッドな制作が増えています。</p>
+    </div>
+
+    <!-- M05 IMAGE — full bleed -->
+    <figure class="module m-image bleed">
+      <span class="label-mod" style="max-width:var(--measure);margin:0 auto 14px;">Image — 大判横ぶち抜き（Full Bleed）</span>
+      <div class="ph wide"><span class="tag">FULL-BLEED VISUAL — 21:9</span></div>
+      <figcaption>生成素材と実写素材が同一タイムラインに並ぶ編集画面。</figcaption>
+    </figure>
+
+    <!-- M04 HEADING -->
+    <div class="module m-heading line sec-anchor" id="s2"><span class="h-eye">02</span><h2>制作の全体像をつかむ<span class="dot">.</span></h2></div>
+    <div class="module m-rich"><p>まずは大きな流れを押さえましょう。下の大画像はワークフローの全体像です。各工程は独立しておらず、行き来しながら磨き込んでいきます。</p></div>
+
+    <!-- M05 IMAGE — large -->
+    <figure class="module m-image large"><div class="ph"><span class="tag">LARGE IMAGE — 16:9</span></div><figcaption>制作ワークフロー全体図（企画→絵コンテ→生成→編集→納品）。</figcaption></figure>
+
+    <!-- M05 IMAGE — medium center -->
+    <figure class="module m-image medium"><div class="ph"><span class="tag">MEDIUM CENTER — 16:9</span></div><figcaption>中画像（センター）。本文のリズムを整える標準サイズ。</figcaption></figure>
+
+    <!-- text-wrap left -->
+    <div class="module m-heading sec-anchor" id="s3"><span class="h-eye">03</span><h2>レイアウトで魅せる<span class="dot">.</span></h2></div>
+    <div class="module m-textimg left">
+      <figure><div class="ph"><span class="tag">MEDIUM LEFT</span></div><figcaption>中画像（左寄せ・回り込み）</figcaption></figure>
+      <p>左寄せ中画像のテキスト回り込みサンプルです。製品カットや人物カットを本文の脇に置きたいときに使います。文章が画像の右側に自然に流れ込み、読みのリズムを保ったまま視覚情報を添えられます。</p>
+      <p>キャプションには撮影意図や条件を簡潔に。回り込みは段落2〜3つ分が読みやすさの目安です。</p>
+    </div>
+    <div class="module m-textimg right">
+      <figure><div class="ph"><span class="tag">MEDIUM RIGHT</span></div><figcaption>中画像（右寄せ・回り込み）</figcaption></figure>
+      <p>右寄せ版。左右を交互に使うとページに視覚的なリズムが生まれます。長い解説テキストに対して、根拠となるビジュアルを添える用途に向いています。</p>
+      <p>SP表示では自動的に画像が上、テキストが下の積み重ねに切り替わります。</p>
+    </div>
+
+    <!-- small center -->
+    <figure class="module m-image small"><div class="ph"><span class="tag">SMALL CENTER</span></div><figcaption>小画像（センター）。図版やアイコンの補足に。</figcaption></figure>
+
+    <!-- split image right -->
+    <div class="module m-split img-right">
+      <div class="txt"><span class="lbl">2 Column — Image Right</span><h3>テキストとビジュアルを<br>対で見せる<span class="dot">.</span></h3><p>左にメッセージ、右にビジュアル。コンセプトの要点を、対応する画像とセットで提示できる2カラムモジュール。製品の特徴説明や、ビフォー／アフターの提示に有効です。</p></div>
+      <figure class="vis"><div class="ph"><span class="tag">SPLIT IMG</span></div></figure>
+    </div>
+    <!-- split image left -->
+    <div class="module m-split img-left">
+      <div class="txt"><span class="lbl">2 Column — Image Left</span><h3>反対パターンで<br>緩急をつける<span class="dot">.</span></h3><p>画像とテキストの位置を入れ替えた配置。連続して使うときは左右を交互にすると、単調にならず読み進めやすくなります。</p></div>
+      <figure class="vis"><div class="ph"><span class="tag">SPLIT IMG</span></div></figure>
+    </div>
+
+    <!-- M06 GALLERY -->
+    <div class="module m-gallery"><span class="label-mod">Image Gallery — 3 Up</span><figure><div class="g g3"><div class="ph sq"><span class="tag">STILL 01</span></div><div class="ph sq"><span class="tag">STILL 02</span></div><div class="ph sq"><span class="tag">STILL 03</span></div></div><figcaption>生成バリエーションのスチル比較。</figcaption></figure></div>
+
+    <!-- M VIDEO — youtube -->
+    <div class="module m-video sec-anchor" id="s4">
+      <span class="label-mod">Video — YouTube 埋め込み</span>
+      <figure>
+        <div class="player" data-embed="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+          <span class="badge"><span class="yt"></span> YouTube</span><span class="ratio">16:9</span>
+          <span class="play"><span></span></span>
+        </div>
+        <figcaption>完成したブランドフィルム本編（YouTube）。クリックで再生。</figcaption>
+      </figure>
+    </div>
+    <!-- M VIDEO — vimeo -->
+    <div class="module m-video">
+      <span class="label-mod">Video — Vimeo 埋め込み</span>
+      <figure>
+        <div class="player" data-embed="https://player.vimeo.com/video/76979871?autoplay=1">
+          <span class="badge"><span class="vm"></span> Vimeo</span><span class="ratio">16:9</span>
+          <span class="play"><span></span></span>
+        </div>
+        <figcaption>メイキング映像（Vimeo）。クリックで再生。</figcaption>
+      </figure>
+    </div>
+
+    <!-- M07 QUOTE / pullquote -->
+    <div class="module m-quote"><div class="mark">“</div><blockquote>速くなった分の時間は、<br>もっと深く人を観るために使う<span class="dot">.</span></blockquote><cite>ツネハシ タケシ — AI Creative Director</cite></div>
+
+    <!-- M DIALOGUE -->
+    <div class="module m-dialogue sec-anchor" id="s5">
+      <span class="d-lbl">Dialogue — 会話形式（インタビュー）</span>
+      <div class="turn"><span class="ava"><span class="ph"></span></span><div><div class="who">編集部</div><div class="bubble">AIブランド映像で、最初に決めるべきことは何ですか？</div></div></div>
+      <div class="turn right"><span class="ava"><span class="ph"></span></span><div><div class="who">ツネハシ</div><div class="bubble">「らしさ」の言語化です。色・間・温度をプロンプト以前に言葉にしておくと、生成のブレが激減します。</div></div></div>
+      <div class="turn"><span class="ava"><span class="ph"></span></span><div><div class="who">編集部</div><div class="bubble">なるほど。逆に、AIに任せてはいけない工程は？</div></div></div>
+      <div class="turn right"><span class="ava"><span class="ph"></span></span><div><div class="who">ツネハシ</div><div class="bubble">最後の"判断"です。どのカットを選び、どこで止めるか。そこは人間の審美眼にしか宿りません。</div></div></div>
+    </div>
+
+    <!-- M09 STEP -->
+    <div class="module m-heading line sec-anchor" id="s6"><span class="h-eye">06</span><h2>プロンプト設計 6ステップ<span class="dot">.</span></h2></div>
+    <div class="module m-steps">
+      <div class="step"><span class="num">01</span><div><h4>「らしさ」を言語化する</h4><p>色・間・温度・被写体の方向性を、生成前に言葉で固めます。</p></div></div>
+      <div class="step"><span class="num">02</span><div><h4>主題と構図を指定する</h4><p>誰が・何が・どの画角か。カメラ的な語彙で具体的に。</p></div></div>
+      <div class="step"><span class="num">03</span><div><h4>スタイルと質感を足す</h4><p>シネマティック／フィルムグレインなど作家性を言語化。</p></div></div>
+      <div class="step"><span class="num">04</span><div><h4>ライティングを決める</h4><p>逆光・ゴールデンアワー等。光が雰囲気の8割を決めます。</p></div></div>
+      <div class="step"><span class="num">05</span><div><h4>seedを固定して反復</h4><p>気に入った1枚のseedを固定し、語を1つずつ変えて検証。</p></div></div>
+      <div class="step"><span class="num">06</span><div><h4>人の手で仕上げる</h4><p>最後に介入レイヤーを挟み、ブランドの温度に寄せます。</p></div></div>
+    </div>
+
+    <!-- M08 POINT -->
+    <div class="module m-point"><div class="pt-head"><span class="ic">!</span><div><span class="lbl">Point</span><h4>ブレを抑える3原則</h4></div></div><ul><li>抽象語より具体語（"美しい"→"逆光・f1.4・夕暮れ"）</li><li>1プロンプト＝1意図。盛り込みすぎたら分割する</li><li>seedとプロンプトは必ず記録・保管する</li></ul></div>
+
+    <!-- M13 PROMPT -->
+    <div class="module m-prompt">
+      <div class="pr-head"><div class="left"><span class="dots"><i></i><i></i><i></i></span> PROMPT — Brand Film Key Visual</div><button class="copy" data-c="kv">⧉ COPY</button></div>
+      <pre>夕暮れのビル屋上に立つ人物、<span class="v">ローアングル</span>、
+シネマティックな実写、35mm、<span class="v">f1.4</span>、浅い被写界深度、
+<span class="v">逆光のゴールデンアワー</span>、フィルムグレイン、繊細な肌の質感、
+高解像度、--ar 16:9 --style raw</pre>
+      <div class="pr-note">※ ネガティブ：text, watermark, extra fingers, low-res</div>
+    </div>
+
+    <!-- M11 COMPARISON TABLE (stripe) -->
+    <div class="module m-heading line sec-anchor" id="s7"><span class="h-eye">07</span><h2>ツール選定と品質管理<span class="dot">.</span></h2></div>
+    <div class="module m-table"><span class="label-mod">Comparison Table — ストライプ</span><div class="scroll"><table>
+      <thead><tr><th>項目</th><th>Tool A</th><th>Tool B</th><th>Tool C</th></tr></thead>
+      <tbody>
+        <tr class="hl"><th>得意な表現</th><td class="best">シネマ実写</td><td>イラスト全般</td><td>商用ストック</td></tr>
+        <tr><th>学習コスト</th><td>中</td><td class="best">低</td><td>低</td></tr>
+        <tr><th>商用利用</th><td class="yes">可</td><td class="yes">可</td><td class="yes">可</td></tr>
+        <tr><th>細部の制御</th><td class="best">高</td><td>中</td><td>中</td></tr>
+        <tr><th>向いている人</th><td>映像・広告</td><td>個人・SNS</td><td>事業・量産</td></tr>
+      </tbody>
+    </table></div></div>
+
+    <!-- Simple table -->
+    <div class="module m-table" style="max-width:560px;"><span class="label-mod">Simple Table — シンプル</span><div class="scroll"><table>
+      <tbody>
+        <tr><th>標準納品形式</th><td>ProRes 422 / H.264</td></tr>
+        <tr><th>解像度</th><td>3840×2160（4K）</td></tr>
+        <tr><th>標準尺</th><td>15s / 30s / 60s</td></tr>
+      </tbody>
+    </table></div></div>
+
+    <!-- M10 CHECKLIST -->
+    <div class="module m-check"><div class="ck-head"><h4>納品前チェックリスト</h4><span class="lbl">Checklist</span></div><ul>
+      <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span><span>ブランドのトンマナと一貫しているか</span></li>
+      <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span><span>手指・文字・ロゴの破綻がないか</span></li>
+      <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span><span>使用ツールの商用利用条件を満たすか</span></li>
+      <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span><span>納品形式・解像度・尺が要件通りか</span></li>
+      <li><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 12l5 5L20 6"/></svg></span><span>プロンプトとseedを記録・保管したか</span></li>
+    </ul></div>
+
+    <!-- Note + Supplement -->
+    <div class="module m-note"><span class="ic">i</span><div><span class="lbl">お知らせ</span><p>本テンプレートのモジュールは、CMS上で選択・入力・並び替えが可能です。</p></div></div>
+    <div class="module m-supplement"><span class="lbl">補足</span><p>本記事は2026年6月時点の情報に基づきます。各ツールの仕様・規約は変更される場合があります。</p></div>
+
+    <!-- OGP card -->
+    <div class="module m-ogp"><span class="label-mod">OGP / Link Card</span><a href="#"><div class="thumb"><div class="ph"><span class="tag">OGP</span></div></div><div class="body"><div class="ttl">SAC WORKS — PROJECT ECHO</div><div class="desc">本記事で取り上げたブランドフィルムの制作事例。完成映像とクレジットを掲載。</div><div class="dom">sac-creative.jp</div></div></a></div>
+
+    <!-- Divider -->
+    <div class="module m-divider"><span class="mk">✦</span></div>
+
+    <!-- M12 FAQ -->
+    <div class="module m-heading line sec-anchor" id="s8"><span class="h-eye">08</span><h2>よくある質問<span class="dot">.</span></h2></div>
+    <div class="module m-faq">
+      <details open><summary><span class="q">Q</span>制作期間はどのくらいですか？<span class="pm"></span></summary><div class="a"><span class="a-ic">A</span><span>尺と要件によりますが、30秒のブランドフィルムで2〜4週間が目安です。生成パートの活用で短縮できますが、判断と仕上げの工程は確保します。</span></div></details>
+      <details><summary><span class="q">Q</span>実写と組み合わせられますか？<span class="pm"></span></summary><div class="a"><span class="a-ic">A</span><span>はい。SACの多くの案件は実写・CG・生成のハイブリッドです。素材の質感を揃えるグレーディングが品質の鍵になります。</span></div></details>
+      <details><summary><span class="q">Q</span>権利・商用利用の扱いは？<span class="pm"></span></summary><div class="a"><span class="a-ic">A</span><span>使用ツールの規約に準拠し、実在の人物・作品との酷似を避けて制作します。納品時にプロンプトとseedの記録もお渡しできます。</span></div></details>
+    </div>
+
+    <div class="endline">———</div>
+
+    <!-- M15 CTA -->
+    <div class="module m-cta" style="margin-top:70px;"><div class="box"><div><div class="ct-eye">Let's talk</div><h3>ブランド映像の構想、<br>一緒に言語化します<span class="dot">.</span></h3><p>営業ではなく、まず対話から。企画段階のご相談を歓迎します。</p></div><a class="btn gold" href="#">SACに相談する <span class="arr">→</span></a></div></div>
+
+    <!-- M16 AUTHOR -->
+    <div class="module m-author" style="margin-top:54px;"><div class="box"><div class="ava"><span class="ph"></span></div><div><div class="a-eye">Supervised by</div><h4>ツネハシ タケシ</h4><div class="role">Movie Director / AI Creative Director — SAC</div><p>AI生成映像と従来制作のハイブリッドなワークフロー設計を専門とする。「人間の温度を残したまま、制作速度を変える」をテーマに、ブランド映像を多数手がける。</p><div class="socials"><a href="#">X (Twitter) ↗</a><a href="#">作品を見る ↗</a></div></div></div></div>
+  </div>
+
+  <!-- M14 RELATED -->
+  <section class="m-related wrap">
+    <div class="secmark"><span class="n">/ Related</span> <b>あわせて読みたい</b></div>
+    <div class="grid">
+      <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><span class="tag">VISUAL</span></div><span class="cat">How To</span></div><h4>AI画像生成プロンプトの書き方 完全ガイド<span class="dot">.</span></h4><div class="meta">2026.06.04 ・ 14 MIN</div></a>
+      <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><span class="tag">VISUAL</span></div><span class="cat">比較</span></div><h4>主要AI画像生成ツール 徹底比較｜用途別の選び方<span class="dot">.</span></h4><div class="meta">2026.05.30 ・ 10 MIN</div></a>
+      <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><span class="tag">VISUAL</span></div><span class="cat">Interview</span></div><h4>AIは「作る」を変えるのか。人間の温度の残し方<span class="dot">.</span></h4><div class="meta">2026.06.02 ・ 12 MIN</div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="mag-footer">
+  <div class="marquee"><div>SAC MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;ONE PROMPT, CHANGE THE <b>WORLD</b>.&nbsp;&nbsp;·&nbsp;&nbsp;SAC MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;ONE PROMPT, CHANGE THE <b>WORLD</b>.&nbsp;&nbsp;·&nbsp;&nbsp;</div></div>
+  <div class="cols">
+    <div class="col"><h4>SAC<span class="dot">.</span></h4><p class="lead-sm">Smart AI Creative — AI・クリエイター・ビジネスを掛け合わせ、クリエイティブ制作におけるすべての制約を解放する。</p></div>
+    <div class="col"><h5>Magazine</h5><ul><li><a href="list.html">記事一覧</a></li><li><a href="#">カテゴリ</a></li><li><a href="#">タグ</a></li><li><a href="overview.html">Concept</a></li></ul></div>
+    <div class="col"><h5>SAC</h5><ul><li><a href="#">About</a></li><li><a href="#">Works</a></li><li><a href="#">Creator</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div class="col"><h5>Follow</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">X (Twitter)</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
+  </div>
+  <div class="legal"><span>〒141-0021 東京都品川区上大崎3-14-1 中丸ハウス B棟</span><span>© EPOCH Inc.</span></div>
+</footer>
+
+<script>
+  const prog=document.getElementById('prog');
+  addEventListener('scroll',()=>{const h=document.documentElement;const s=h.scrollTop/(h.scrollHeight-h.clientHeight);prog.style.width=(s*100)+'%';},{passive:true});
+
+  // lite video embeds
+  document.querySelectorAll('.m-video .player').forEach(p=>p.addEventListener('click',()=>{
+    const url=p.dataset.embed; if(!url) return;
+    p.innerHTML='<iframe src="'+url+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+  }));
+
+  // prompt copy
+  const prompts={kv:"夕暮れのビル屋上に立つ人物、ローアングル、シネマティックな実写、35mm、f1.4、浅い被写界深度、逆光のゴールデンアワー、フィルムグレイン、繊細な肌の質感、高解像度、--ar 16:9 --style raw"};
+  document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',async()=>{
+    try{await navigator.clipboard.writeText(prompts[b.dataset.c]||'');}catch(e){}
+    const t=b.textContent; b.textContent='✓ COPIED'; b.classList.add('done');
+    setTimeout(()=>{b.textContent=t; b.classList.remove('done');},1600);
+  }));
+
+  // TOC smooth + active
+  const tocLinks=[...document.querySelectorAll('.m-toc a')];
+  const tgt=tocLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  tocLinks.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});}));
+</script>
+</body>
+</html>

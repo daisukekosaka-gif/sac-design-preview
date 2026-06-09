@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAC MAGAZINE — 記事一覧</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/sac-mag.css">
+<style>
+  .pagehead{ padding:62px 0 34px; position:relative; }
+  .pagehead .side{ position:absolute; left:-4px; top:62px; writing-mode:vertical-rl; font-family:var(--mono); font-size:11px; letter-spacing:.3em; color:var(--ink-3); }
+  .pagehead h1{ font-family:var(--disp); font-weight:900; font-size:clamp(48px,8vw,96px); line-height:.92; letter-spacing:-.02em; margin:0; }
+  .pagehead .intro{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-top:26px; flex-wrap:wrap; }
+  .pagehead .intro p{ max-width:48ch; font-size:16px; line-height:1.95; color:var(--ink-2); margin:0; }
+  .pagehead .stat{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--ink-3); display:flex; gap:24px; }
+  .pagehead .stat b{ color:var(--gold); font-weight:700; }
+  .pagehead .searchrow{ margin-top:30px; }
+  .search{ max-width:520px; display:flex; align-items:center; gap:12px; border:1px solid var(--line); background:var(--paper-3); border-radius:100px; padding:13px 22px; }
+  .search input{ border:0; background:none; outline:none; font-family:var(--sans); font-size:14px; width:100%; color:var(--ink); }
+  .search .ic{ color:var(--ink-3); font-family:var(--mono); }
+  .search .kbd{ font-family:var(--mono); font-size:10px; color:var(--ink-3); border:1px solid var(--line); border-radius:4px; padding:3px 7px; }
+
+  /* feature */
+  .feature{ margin-top:50px; }
+  .feature a{ display:grid; grid-template-columns:1.3fr 1fr; gap:48px; text-decoration:none; color:inherit; align-items:center; }
+  .feature .vis{ position:relative; }
+  .feature .vis .ph{ aspect-ratio:5/4; }
+  .feature .badge{ position:absolute; left:18px; top:18px; font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; background:var(--ink); color:var(--paper); padding:7px 13px; border-radius:100px; }
+  .feature .types{ display:flex; gap:10px; align-items:center; }
+  .feature .cat{ font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); }
+  .feature .ty{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#fff; background:var(--ink); padding:4px 10px; border-radius:100px; }
+  .feature h2{ font-family:var(--sans); font-weight:700; font-size:clamp(26px,3.2vw,38px); line-height:1.42; letter-spacing:.01em; margin:16px 0 16px; }
+  .feature:hover h2{ color:var(--ink-2); }
+  .feature .ex{ color:var(--ink-2); font-size:15px; line-height:1.95; margin:0 0 22px; max-width:48ch; }
+  .feature .meta{ font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-3); display:flex; gap:16px; align-items:center; }
+  .feature .meta .av{ width:30px; height:30px; border-radius:50%; overflow:hidden; border:1px solid var(--line); }
+  .feature .meta .av .ph{ aspect-ratio:1; border:0; border-radius:0; }
+
+  /* filter */
+  .filterbar{ position:sticky; top:64px; z-index:20; background:color-mix(in srgb,var(--paper) 90%, transparent); backdrop-filter:blur(10px); border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-top:66px; }
+  .filterbar .in{ max-width:var(--maxw); margin:0 auto; padding:13px 40px; display:flex; justify-content:space-between; align-items:center; gap:20px; }
+  .cats{ display:flex; gap:7px; flex-wrap:wrap; }
+  .cats button{ font-family:var(--mono); font-size:11px; letter-spacing:.08em; padding:8px 14px; border:1px solid transparent; background:none; border-radius:100px; cursor:pointer; color:var(--ink-2); transition:.2s; }
+  .cats button:hover{ color:var(--ink); }
+  .cats button.on{ background:var(--ink); color:var(--paper); }
+  .filterbar .right{ display:flex; align-items:center; gap:18px; }
+  .filterbar .count{ font-family:var(--mono); font-size:11px; letter-spacing:.12em; color:var(--ink-3); white-space:nowrap; }
+  .filterbar .count b{ color:var(--gold); }
+  .filterbar .sort{ font-family:var(--mono); font-size:11px; color:var(--ink-3); white-space:nowrap; }
+
+  /* grid */
+  .listwrap{ padding:54px 0 0; }
+  .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:42px 34px; }
+  .card{ text-decoration:none; color:inherit; display:flex; flex-direction:column; }
+  .card .thumb{ position:relative; margin-bottom:16px; }
+  .card .thumb .ph{ aspect-ratio:4/3; }
+  .card .pin{ position:absolute; left:13px; top:13px; font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; background:var(--ink); color:var(--paper); padding:6px 11px; border-radius:100px; }
+  .card .play{ position:absolute; right:13px; bottom:13px; width:34px; height:34px; border-radius:50%; background:rgba(22,20,15,.7); display:flex; align-items:center; justify-content:center; }
+  .card .play::after{ content:""; border-left:11px solid #f1ece1; border-top:7px solid transparent; border-bottom:7px solid transparent; margin-left:3px; }
+  .card .cat{ font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); }
+  .card h3{ font-family:var(--sans); font-weight:700; font-size:18px; line-height:1.55; margin:9px 0 10px; letter-spacing:.01em; }
+  .card:hover h3{ color:var(--gold); }
+  .card .ex{ font-size:13.5px; color:var(--ink-2); line-height:1.85; margin:0 0 14px; }
+  .card .meta{ margin-top:auto; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--ink-3); display:flex; gap:13px; padding-top:13px; border-top:1px solid var(--line); }
+
+  .more{ display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:64px; }
+  .more .ct{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--ink-3); }
+  .more .ct b{ color:var(--gold); }
+
+  .quietcta{ margin-top:108px; background:var(--dark); color:var(--paper); }
+  .quietcta .in{ max-width:var(--maxw); margin:0 auto; padding:72px 40px; text-align:center; }
+  .quietcta .eyebrow{ color:rgba(255,255,255,.5); justify-content:center; }
+  .quietcta h2{ font-family:var(--serif); font-weight:500; font-size:clamp(23px,3.2vw,32px); line-height:1.7; margin:22px 0 10px; }
+  .quietcta p{ color:rgba(255,255,255,.55); font-size:14px; margin:0 0 30px; }
+
+  @media (max-width:860px){
+    .feature a{ grid-template-columns:1fr; gap:24px; }
+    .grid{ grid-template-columns:1fr; gap:36px; }
+    .filterbar .in{ flex-direction:column; align-items:flex-start; }
+    .cats{ overflow-x:auto; }
+  }
+</style>
+</head>
+<body class="mag">
+
+<header class="mag-header">
+  <div class="bar">
+    <a class="brand" href="overview.html"><span class="b1">SAC</span><span class="b2">Magazine</span></a>
+    <nav class="mag-nav">
+      <a href="list.html">Magazine</a>
+      <a href="overview.html">Concept</a>
+      <a href="#">Categories</a>
+      <a class="back" href="#">SAC本体サイト <span>↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="pagehead">
+      <span class="side">SAC&nbsp;/&nbsp;MAGAZINE</span>
+      <div class="crumb" style="margin-bottom:24px;"><a href="#">HOME</a><span class="sep">/</span><span class="cur">MAGAZINE</span></div>
+      <span class="eyebrow">SAC Magazine — AI × Creative</span>
+      <h1>MAGAZINE<span class="dot">.</span></h1>
+      <div class="intro">
+        <p>AIとクリエイティブの「いま」と「やり方」を。思想・トレンド・インタビューから、HowTo・比較・プロンプト集まで、SACが現場で考え、手を動かしていることを綴ります。</p>
+        <div class="stat"><span>ARTICLES <b>174</b></span><span>CATEGORIES <b>06</b></span><span>UPDATED <b>2026.06</b></span></div>
+      </div>
+      <div class="searchrow"><div class="search"><span class="ic">⌕</span><input placeholder="キーワードで探す（例：プロンプト 構図、ブランド映像）"><span class="kbd">⌘ K</span></div></div>
+    </div>
+
+    <!-- FEATURE -->
+    <section class="feature">
+      <a href="article.html">
+        <div class="vis"><div class="ph"><span class="tag">FEATURE VISUAL — 5:4 / OGP対応</span></div><span class="badge">Pick Up</span></div>
+        <div class="txt">
+          <div class="types"><span class="cat">How To</span><span class="ty">保存版</span></div>
+          <h2>AIブランド映像の作り方。<br>企画から納品までの全工程<span class="dot">.</span></h2>
+          <p class="ex">生成AIで映像をつくる時代に、ブランドの"らしさ"をどう保つか。全工程を、事例・比較表・コピペできるプロンプト付きで解説します。</p>
+          <div class="meta"><span class="av"><span class="ph"></span></span><span>SAC 編集部</span><span>2026.06.06</span><span>18 MIN</span></div>
+        </div>
+      </a>
+    </section>
+  </div>
+
+  <!-- FILTER -->
+  <div class="filterbar">
+    <div class="in">
+      <div class="cats">
+        <button class="on">All</button>
+        <button>Branding</button>
+        <button>Trend</button>
+        <button>Interview</button>
+        <button>Case Study</button>
+        <button>How To</button>
+        <button>比較・Prompt</button>
+      </div>
+      <div class="right"><div class="sort">SORT — 新着順 ▾</div><div class="count"><b>174</b> Articles</div></div>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="wrap">
+    <div class="listwrap">
+      <div class="grid">
+        <a class="card" href="article.html">
+          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div><span class="pin">How To</span></div>
+          <span class="cat">プロンプト</span><h3>AI画像生成プロンプトの書き方 完全ガイド<span class="dot">.</span></h3>
+          <p class="ex">構図・スタイル・品質を分解して、狙った画を安定して出す型を雛形つきで。</p>
+          <div class="meta"><span>2026.06.04</span><span>14 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div><span class="pin">Interview</span></div>
+          <span class="cat">Interview</span><h3>AIは「作る」を変えるのか。人間の温度の残し方<span class="dot">.</span></h3>
+          <p class="ex">ブランド映像の最前線に立つディレクターと、"温度"の在りかを語り合った。</p>
+          <div class="meta"><span>2026.06.02</span><span>12 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div><span class="pin">比較</span></div>
+          <span class="cat">ツール選定</span><h3>主要AI画像生成ツール 徹底比較｜用途別の選び方<span class="dot">.</span></h3>
+          <p class="ex">商用利用・学習コスト・出力傾向を一覧表で比較し、目的別の最適解を。</p>
+          <div class="meta"><span>2026.05.30</span><span>10 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div><span class="play"></span></div>
+          <span class="cat">Case Study</span><h3>24世紀ラーメン — 架空ブランドが本物になるまで<span class="dot">.</span></h3>
+          <p class="ex">AIで立ち上げた架空ブランドを、いかに実在のキャンペーンへ接続したか。</p>
+          <div class="meta"><span>2026.05.20</span><span>10 MIN ・ 動画あり</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div><span class="pin">チェックリスト</span></div>
+          <span class="cat">品質管理</span><h3>AI生成物の「公開前」チェックリスト 22項目<span class="dot">.</span></h3>
+          <p class="ex">権利・ブランド整合・ファクト・表記ゆれ。保存できる確認リスト。</p>
+          <div class="meta"><span>2026.05.22</span><span>7 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div></div>
+          <span class="cat">Branding</span><h3>ロゴが動き出す時代の、モーション・ブランディング<span class="dot">.</span></h3>
+          <p class="ex">静止したアイデンティティから、振る舞うアイデンティティへ。</p>
+          <div class="meta"><span>2026.05.06</span><span>9 MIN</span></div>
+        </a>
+      </div>
+      <div class="more"><a class="btn" href="#">More Articles <span class="arr">↓</span></a><div class="ct"><b>06</b> / 174 表示中</div></div>
+    </div>
+  </div>
+
+  <!-- QUIET CTA -->
+  <section class="quietcta">
+    <div class="in">
+      <span class="eyebrow no-rule"><span style="width:26px;height:1px;background:var(--gold);display:inline-block;"></span> Let's talk</span>
+      <h2>気になる一本があれば、その先も、<br>一緒に言語化できます<span class="dot">.</span></h2>
+      <p>構想段階のご相談から。まずは「どんなことを考えているか」から。</p>
+      <a class="btn gold" href="#">SACに相談する <span class="arr">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="mag-footer">
+  <div class="marquee"><div>SAC MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;ONE PROMPT, CHANGE THE <b>WORLD</b>.&nbsp;&nbsp;·&nbsp;&nbsp;SAC MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;ONE PROMPT, CHANGE THE <b>WORLD</b>.&nbsp;&nbsp;·&nbsp;&nbsp;</div></div>
+  <div class="cols">
+    <div class="col"><h4>SAC<span class="dot">.</span></h4><p class="lead-sm">Smart AI Creative — AI・クリエイター・ビジネスを掛け合わせ、クリエイティブ制作におけるすべての制約を解放する。</p></div>
+    <div class="col"><h5>Magazine</h5><ul><li><a href="list.html">記事一覧</a></li><li><a href="#">カテゴリ</a></li><li><a href="#">タグ</a></li><li><a href="overview.html">Concept</a></li></ul></div>
+    <div class="col"><h5>SAC</h5><ul><li><a href="#">About</a></li><li><a href="#">Works</a></li><li><a href="#">Creator</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div class="col"><h5>Follow</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">X (Twitter)</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
+  </div>
+  <div class="legal"><span>〒141-0021 東京都品川区上大崎3-14-1 中丸ハウス B棟</span><span>© EPOCH Inc.</span></div>
+</footer>
+
+<script>
+  document.querySelectorAll('.cats button').forEach(b=>b.addEventListener('click',()=>{document.querySelector('.cats button.on')?.classList.remove('on');b.classList.add('on');}));
+</script>
+</body>
+</html>

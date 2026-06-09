@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAC MAGAZINE — Design Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/sac-mag.css">
+<style>
+  .hero-c{ padding:88px 0 66px; border-bottom:1px solid var(--line); position:relative; }
+  .hero-c .side{ position:absolute; left:34px; top:88px; writing-mode:vertical-rl; font-family:var(--mono); font-size:11px; letter-spacing:.3em; color:var(--ink-3); }
+  .hero-c .eyebrow{ margin-bottom:28px; }
+  .hero-c h1{ font-family:var(--disp); font-weight:900; font-size:clamp(46px,8vw,104px); line-height:.94; letter-spacing:-.02em; margin:0; }
+  .hero-c h1 .jp{ font-family:var(--sans); font-weight:900; font-size:.4em; display:block; letter-spacing:.02em; margin-top:.5em; color:var(--ink-2); }
+  .hero-c .sub{ max-width:60ch; margin-top:32px; font-size:17px; line-height:2; color:var(--ink-2); }
+
+  .sec{ padding:78px 0; }
+  .sec.alt{ background:var(--paper-2); }
+  .sec h2.big{ font-family:var(--disp); font-weight:900; font-size:clamp(30px,5vw,52px); letter-spacing:-.01em; margin:0 0 8px; }
+  .sec .lead{ max-width:64ch; color:var(--ink-2); font-size:16px; line-height:1.95; margin:0 0 46px; }
+
+  /* one-template concept */
+  .concept{ display:grid; grid-template-columns:1.1fr 1fr; gap:50px; align-items:stretch; }
+  .ctile{ background:var(--paper-3); border:1px solid var(--line); border-radius:10px; padding:40px 42px; }
+  .ctile .no{ font-family:var(--mono); font-size:12px; letter-spacing:.2em; color:var(--gold); }
+  .ctile h3{ font-family:var(--disp); font-weight:800; font-size:26px; margin:14px 0 12px; }
+  .ctile p{ color:var(--ink-2); font-size:14.5px; line-height:1.95; margin:0; }
+  .modes{ display:flex; flex-direction:column; gap:18px; }
+  .mode{ background:var(--paper-3); border:1px solid var(--line); border-radius:10px; padding:26px 30px; display:flex; gap:20px; align-items:flex-start; }
+  .mode .ix{ font-family:var(--disp); font-weight:900; font-size:30px; color:var(--gold); line-height:1; flex:none; width:54px; }
+  .mode h4{ margin:0 0 6px; font-size:17px; }
+  .mode .jp{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); margin-bottom:8px; }
+  .mode p{ margin:0; color:var(--ink-2); font-size:13.5px; line-height:1.85; }
+  .mode .tg{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .mode .tg span{ font-family:var(--mono); font-size:9.5px; letter-spacing:.06em; padding:5px 9px; border:1px solid var(--line); border-radius:100px; color:var(--ink-2); }
+
+  /* screens */
+  .screens{ display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+  .scard{ position:relative; display:block; text-decoration:none; color:inherit; background:var(--paper-3); border:1px solid var(--line); border-radius:10px; overflow:hidden; transition:.25s; }
+  .scard:hover{ transform:translateY(-3px); box-shadow:0 22px 44px -26px rgba(26,24,19,.45); border-color:var(--gold); }
+  .scard .pv{ aspect-ratio:16/10; border-bottom:1px solid var(--line); }
+  .scard .meta{ padding:20px 24px; display:flex; justify-content:space-between; align-items:center; }
+  .scard .meta .t{ font-weight:700; font-size:16px; }
+  .scard .meta .p{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; color:var(--ink-3); margin-top:4px; }
+  .scard .arr{ font-family:var(--mono); color:var(--gold); font-size:18px; }
+
+  /* tokens */
+  .tok-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:50px; }
+  .swatches{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .sw .chip{ height:82px; border-radius:6px; border:1px solid var(--line); }
+  .sw .nm{ font-family:var(--mono); font-size:11px; margin-top:8px; color:var(--ink-2); }
+  .sw .hx{ font-family:var(--mono); font-size:10px; color:var(--ink-3); }
+  .type-stack > div{ padding:15px 0; border-bottom:1px solid var(--line); }
+  .type-stack .lab{ font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); margin-bottom:8px; }
+  .ts1{ font-family:var(--disp); font-weight:900; font-size:36px; letter-spacing:-.01em; }
+  .ts2{ font-family:var(--sans); font-weight:700; font-size:23px; }
+  .ts3{ font-family:var(--serif); font-size:18px; }
+  .ts4{ font-family:var(--mono); font-size:13px; letter-spacing:.16em; }
+
+  /* module library grouped */
+  .mgroup{ margin-bottom:38px; }
+  .mgroup .gt{ font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-3); display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .mgroup .gt::after{ content:""; flex:1; height:1px; background:var(--line); }
+  .mgroup .gt b{ color:var(--gold); font-weight:400; }
+  .mods{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .mod{ background:var(--paper-3); border:1px solid var(--line); border-radius:6px; padding:16px 18px; }
+  .mod .mnm{ font-family:var(--disp); font-weight:700; font-size:14px; margin:0 0 3px; }
+  .mod .mjp{ font-size:11.5px; color:var(--ink-3); }
+
+  @media (max-width:860px){
+    .concept,.tok-grid{ grid-template-columns:1fr; }
+    .screens{ grid-template-columns:1fr; }
+    .mods{ grid-template-columns:1fr 1fr; }
+    .hero-c .side{ display:none; }
+  }
+</style>
+</head>
+<body class="mag">
+
+<header class="mag-header">
+  <div class="bar">
+    <a class="brand" href="overview.html"><span class="b1">SAC</span><span class="b2">Magazine</span></a>
+    <nav class="mag-nav">
+      <a href="list.html">Magazine</a>
+      <a href="article.html">Article</a>
+      <a href="#system">System</a>
+      <a class="back" href="#">SAC本体サイト <span>↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero-c">
+    <div class="wrap">
+      <span class="eyebrow">Design Concept — One Unified Template</span>
+      <h1>MAGAZINE<span class="dot">.</span><span class="jp">AI×クリエイティブを、読み物にする。</span></h1>
+      <p class="sub">SAC本体サイトのトンマナ（暖色のクリーム、重厚なグロテスク、真鍮のアクセント、そして「<span class="dot">.</span>」）を受け継ぎながら、SEOコンテンツとして独立して成立する<strong>1つの記事テンプレート</strong>。本文の可読性を最優先に、画像・動画をふんだんに使えるモジュール群を、CMSで選択・並び替えして組み立てます。</p>
+    </div>
+  </section>
+
+  <!-- 01 ONE TEMPLATE -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="secmark"><span class="n">/ 01</span> <b>ONE TEMPLATE, TWO MODES</b></div>
+      <h2 class="big">テンプレートは1つ<span class="dot">.</span></h2>
+      <p class="lead">パターンを2つに分けるのをやめ、<strong>1つのテンプレートに統合</strong>しました。記事の性格は、どのモジュールをどう組むかで決まります。同じ器が、思想を綴る読み物にも、保存される実務ガイドにもなる——CMS上で誰が組んでも破綻しない設計です。</p>
+
+      <div class="concept">
+        <div class="ctile">
+          <div class="no">UNIFIED SYSTEM</div>
+          <h3>1つの器、自在の中身<span class="dot">.</span></h3>
+          <p>Hero・Lead・本文・見出し・目次という背骨は共通。そこに画像レイアウト（大判／回り込み／2カラム）、動画（YouTube・Vimeo）、会話形式、ステップ、比較表、Prompt Box などを必要なだけ差し込みます。記事の目的に応じてモジュールを選ぶだけで、トーンが自然に切り替わります。CTAは常に控えめに、本文の余韻や実用性を壊しません。</p>
+        </div>
+        <div class="modes">
+          <div class="mode">
+            <div class="ix">A</div>
+            <div>
+              <div class="jp">Editorial Mode</div>
+              <h4>読み物として組む<span class="dot">.</span></h4>
+              <p>大きなビジュアル・引用・会話形式・著者プロフィールを中心に。ブランド／トレンド／インタビュー向け。</p>
+              <div class="tg"><span>Hero大</span><span>Quote</span><span>Dialogue</span><span>Gallery</span></div>
+            </div>
+          </div>
+          <div class="mode">
+            <div class="ix">B</div>
+            <div>
+              <div class="jp">Practical Mode</div>
+              <h4>ノウハウとして組む<span class="dot">.</span></h4>
+              <p>目次・ステップ・チェックリスト・比較表・Prompt Box・FAQ を中心に。HowTo／比較／プロンプト集向け。</p>
+              <div class="tg"><span>TOC</span><span>Step</span><span>Table</span><span>Prompt</span><span>FAQ</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 SCREENS -->
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="secmark"><span class="n">/ 02</span> <b>SCREEN PROPOSALS</b></div>
+      <h2 class="big">2つの画面<span class="dot">.</span></h2>
+      <p class="lead"><code style="font-family:var(--mono);font-size:13px;">/magazine</code>（記事一覧）と <code style="font-family:var(--mono);font-size:13px;">/magazine/[slug]</code>（記事詳細）。詳細ページは全モジュールを実装したショーケースとして確認できます。</p>
+      <div class="screens">
+        <a class="scard" href="list.html">
+          <div class="pv"><div class="ph" style="aspect-ratio:16/10;border:0;border-radius:0;"><span class="tag">Magazine — List</span></div></div>
+          <div class="meta"><div><div class="t">記事一覧</div><div class="p">/magazine</div></div><span class="arr">→</span></div>
+        </a>
+        <a class="scard" href="article.html">
+          <div class="pv"><div class="ph dark" style="aspect-ratio:16/10;border:0;border-radius:0;"><span class="tag">Article — Full Module Showcase</span></div></div>
+          <div class="meta"><div><div class="t">記事詳細（全モジュール）</div><div class="p">/magazine/[slug]</div></div><span class="arr">→</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 SYSTEM -->
+  <section class="sec" id="system">
+    <div class="wrap">
+      <div class="secmark"><span class="n">/ 03</span> <b>SHARED DESIGN SYSTEM</b></div>
+      <h2 class="big">受け継ぐトンマナ<span class="dot">.</span></h2>
+      <p class="lead">本体サイトと地続きのトークン。色は暖色ニュートラル＋真鍮の1アクセント、見出しは重厚なグロテスク、ラベルはモノスペース。本文はサンセリフで広い行間を取り、長文の可読性を最優先します。引用だけセリフをアクセントに。</p>
+      <div class="tok-grid">
+        <div>
+          <div class="kicker" style="margin-bottom:16px;">COLOR</div>
+          <div class="swatches">
+            <div class="sw"><div class="chip" style="background:var(--paper)"></div><div class="nm">Paper</div><div class="hx">#EFEAE1</div></div>
+            <div class="sw"><div class="chip" style="background:var(--paper-2)"></div><div class="nm">Paper 2</div><div class="hx">#E7DED0</div></div>
+            <div class="sw"><div class="chip" style="background:var(--ink)"></div><div class="nm">Ink</div><div class="hx">#1A1813</div></div>
+            <div class="sw"><div class="chip" style="background:var(--gold)"></div><div class="nm">Brass</div><div class="hx">#B1944F</div></div>
+            <div class="sw"><div class="chip" style="background:var(--dark)"></div><div class="nm">Dark</div><div class="hx">#16140F</div></div>
+            <div class="sw"><div class="chip" style="background:var(--ink-2)"></div><div class="nm">Ink 2</div><div class="hx">#4C463B</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="kicker" style="margin-bottom:16px;">TYPE</div>
+          <div class="type-stack">
+            <div><div class="lab">Display — Archivo Black</div><div class="ts1">CHANGE THE WORLD<span class="dot">.</span></div></div>
+            <div><div class="lab">Heading — Noto Sans JP</div><div class="ts2">AIブランド映像の作り方。</div></div>
+            <div><div class="lab">Body — Noto Sans JP / Quote — Noto Serif JP</div><div class="ts3">人間の温度を残したまま、制作速度を変える。</div></div>
+            <div><div class="lab">Label — Space Mono</div><div class="ts4">CATEGORY / 01 — SELECTED</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 MODULE LIBRARY -->
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="secmark"><span class="n">/ 04</span> <b>MODULE LIBRARY</b></div>
+      <h2 class="big">モジュール一覧<span class="dot">.</span></h2>
+      <p class="lead">CMSで選択・入力・並び替えできる構成ブロック。画像・動画をふんだんに使う前提で、レイアウトのバリエーションを厚く揃えています。</p>
+
+      <div class="mgroup">
+        <div class="gt"><b>Structure</b> — 背骨</div>
+        <div class="mods">
+          <div class="mod"><div class="mnm">Hero</div><div class="mjp">ヒーロー / OGP転用</div></div>
+          <div class="mod"><div class="mnm">Lead</div><div class="mjp">リード文</div></div>
+          <div class="mod"><div class="mnm">Rich Text</div><div class="mjp">リッチテキスト</div></div>
+          <div class="mod"><div class="mnm">Heading</div><div class="mjp">見出し</div></div>
+          <div class="mod"><div class="mnm">TOC</div><div class="mjp">目次（自動生成）</div></div>
+          <div class="mod"><div class="mnm">Divider</div><div class="mjp">装飾区切り</div></div>
+        </div>
+      </div>
+
+      <div class="mgroup">
+        <div class="gt"><b>Image &amp; Video</b> — 画像・動画</div>
+        <div class="mods">
+          <div class="mod"><div class="mnm">Image — Full</div><div class="mjp">大判横ぶち抜き</div></div>
+          <div class="mod"><div class="mnm">Image — Large/Med/Small</div><div class="mjp">大・中・小（センター）</div></div>
+          <div class="mod"><div class="mnm">Image — 回り込み</div><div class="mjp">中画像 左寄せ／右寄せ</div></div>
+          <div class="mod"><div class="mnm">2-Column Split</div><div class="mjp">テキスト＋画像 左右</div></div>
+          <div class="mod"><div class="mnm">Image Gallery</div><div class="mjp">画像ギャラリー</div></div>
+          <div class="mod"><div class="mnm">YouTube</div><div class="mjp">YouTube 埋め込み</div></div>
+          <div class="mod"><div class="mnm">Vimeo</div><div class="mjp">Vimeo 埋め込み</div></div>
+          <div class="mod"><div class="mnm">OGP Card</div><div class="mjp">リンクカード</div></div>
+        </div>
+      </div>
+
+      <div class="mgroup">
+        <div class="gt"><b>Editorial</b> — 読み物</div>
+        <div class="mods">
+          <div class="mod"><div class="mnm">Quote</div><div class="mjp">引用 / プルクオート</div></div>
+          <div class="mod"><div class="mnm">Dialogue</div><div class="mjp">会話形式</div></div>
+          <div class="mod"><div class="mnm">Author</div><div class="mjp">著者プロフィール</div></div>
+          <div class="mod"><div class="mnm">Related</div><div class="mjp">関連記事</div></div>
+        </div>
+      </div>
+
+      <div class="mgroup">
+        <div class="gt"><b>Knowledge &amp; Callout</b> — 実務・強調</div>
+        <div class="mods">
+          <div class="mod"><div class="mnm">Step List</div><div class="mjp">手順リスト</div></div>
+          <div class="mod"><div class="mnm">Checklist</div><div class="mjp">チェックリスト</div></div>
+          <div class="mod"><div class="mnm">Comparison Table</div><div class="mjp">比較表（ストライプ）</div></div>
+          <div class="mod"><div class="mnm">Simple Table</div><div class="mjp">シンプル表</div></div>
+          <div class="mod"><div class="mnm">Prompt Box</div><div class="mjp">プロンプト枠（コピー）</div></div>
+          <div class="mod"><div class="mnm">FAQ</div><div class="mjp">よくある質問</div></div>
+          <div class="mod"><div class="mnm">Point Box</div><div class="mjp">ポイント枠</div></div>
+          <div class="mod"><div class="mnm">Note / Supplement</div><div class="mjp">お知らせ／補足</div></div>
+          <div class="mod"><div class="mnm">CTA Box</div><div class="mjp">CTA枠（控えめ）</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="mag-footer">
+  <div class="marquee"><div>SAC MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;ONE PROMPT, CHANGE THE <b>WORLD</b>.&nbsp;&nbsp;·&nbsp;&nbsp;SAC MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;ONE PROMPT, CHANGE THE <b>WORLD</b>.&nbsp;&nbsp;·&nbsp;&nbsp;</div></div>
+  <div class="cols">
+    <div class="col"><h4>SAC<span class="dot">.</span></h4><p class="lead-sm">Smart AI Creative — AI・クリエイター・ビジネスを掛け合わせ、クリエイティブ制作におけるすべての制約を解放する。</p></div>
+    <div class="col"><h5>Magazine</h5><ul><li><a href="list.html">記事一覧</a></li><li><a href="article.html">記事詳細</a></li><li><a href="#">カテゴリ</a></li><li><a href="#">タグ</a></li></ul></div>
+    <div class="col"><h5>SAC</h5><ul><li><a href="#">About</a></li><li><a href="#">Works</a></li><li><a href="#">Creator</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div class="col"><h5>Follow</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">X (Twitter)</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
+  </div>
+  <div class="legal"><span>〒141-0021 東京都品川区上大崎3-14-1 中丸ハウス B棟</span><span>© EPOCH Inc.</span></div>
+</footer>
+</body>
+</html>
