@@ -10,17 +10,20 @@
 <link rel="stylesheet" href="css/sac-mag.css">
 <style>
   .pagehead{ padding:62px 0 34px; position:relative; }
-  .pagehead .side{ position:absolute; left:-4px; top:62px; writing-mode:vertical-rl; font-family:var(--mono); font-size:11px; letter-spacing:.3em; color:var(--ink-3); }
   .pagehead h1{ font-family:var(--disp); font-weight:900; font-size:clamp(48px,8vw,96px); line-height:.92; letter-spacing:-.02em; margin:0; }
   .pagehead .intro{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-top:26px; flex-wrap:wrap; }
   .pagehead .intro p{ max-width:48ch; font-size:16px; line-height:1.95; color:var(--ink-2); margin:0; }
   .pagehead .stat{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--ink-3); display:flex; gap:24px; }
   .pagehead .stat b{ color:var(--gold); font-weight:700; }
   .pagehead .searchrow{ margin-top:30px; }
-  .search{ max-width:520px; display:flex; align-items:center; gap:12px; border:1px solid var(--line); background:var(--paper-3); border-radius:100px; padding:13px 22px; }
-  .search input{ border:0; background:none; outline:none; font-family:var(--sans); font-size:14px; width:100%; color:var(--ink); }
-  .search .ic{ color:var(--ink-3); font-family:var(--mono); }
-  .search .kbd{ font-family:var(--mono); font-size:10px; color:var(--ink-3); border:1px solid var(--line); border-radius:4px; padding:3px 7px; }
+  .search{ width:100%; max-width:760px; display:flex; align-items:center; gap:14px; border:1px solid var(--line); background:var(--paper-3); border-radius:100px; padding:7px 7px 7px 24px; transition:border-color .2s; }
+  .search:focus-within{ border-color:var(--ink); }
+  .search input{ border:0; background:none; outline:none; font-family:var(--sans); font-size:15px; width:100%; color:var(--ink); }
+  .search .ic{ color:var(--ink-3); font-family:var(--mono); font-size:16px; }
+  .search-btn{ font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--paper); background:var(--ink); border:0; border-radius:100px; padding:13px 26px; cursor:pointer; display:flex; align-items:center; gap:9px; white-space:nowrap; transition:.2s; }
+  .search-btn:hover{ background:var(--gold); }
+  .search-btn .arr{ transition:transform .2s; }
+  .search-btn:hover .arr{ transform:translateX(3px); }
 
   /* feature */
   .feature{ margin-top:50px; }
@@ -100,7 +103,6 @@
 <main>
   <div class="wrap">
     <div class="pagehead">
-      <span class="side">SAC&nbsp;/&nbsp;MAGAZINE</span>
       <div class="crumb" style="margin-bottom:24px;"><a href="#">HOME</a><span class="sep">/</span><span class="cur">MAGAZINE</span></div>
       <span class="eyebrow">SAC Magazine — AI × Creative</span>
       <h1>MAGAZINE<span class="dot">.</span></h1>
@@ -108,18 +110,18 @@
         <p>AIとクリエイティブの「いま」と「やり方」を。思想・トレンド・インタビューから、HowTo・比較・プロンプト集まで、SACが現場で考え、手を動かしていることを綴ります。</p>
         <div class="stat"><span>ARTICLES <b>174</b></span><span>CATEGORIES <b>06</b></span><span>UPDATED <b>2026.06</b></span></div>
       </div>
-      <div class="searchrow"><div class="search"><span class="ic">⌕</span><input placeholder="キーワードで探す（例：プロンプト 構図、ブランド映像）"><span class="kbd">⌘ K</span></div></div>
+      <div class="searchrow"><div class="search"><span class="ic">⌕</span><input placeholder="キーワードで探す（例：プロンプト 構図、ブランド映像）"><button class="search-btn">検索 <span class="arr">→</span></button></span></div></div>
     </div>
 
     <!-- FEATURE -->
     <section class="feature">
       <a href="article.html">
-        <div class="vis"><div class="ph"><span class="tag">FEATURE VISUAL — 5:4 / OGP対応</span></div><span class="badge">Pick Up</span></div>
+        <div class="vis"><div class="ph"><img src="assets/feature.png" alt="AIブランド映像の作り方 — 特集ビジュアル"></div><span class="badge">Pick Up</span></div>
         <div class="txt">
           <div class="types"><span class="cat">How To</span><span class="ty">保存版</span></div>
           <h2>AIブランド映像の作り方。<br>企画から納品までの全工程<span class="dot">.</span></h2>
           <p class="ex">生成AIで映像をつくる時代に、ブランドの"らしさ"をどう保つか。全工程を、事例・比較表・コピペできるプロンプト付きで解説します。</p>
-          <div class="meta"><span class="av"><span class="ph"></span></span><span>SAC 編集部</span><span>2026.06.06</span><span>18 MIN</span></div>
+          <div class="meta"><span class="av"><span class="ph"><img src="assets/avatar1.png" alt=""></span></span><span>SAC 編集部</span><span>2026.06.06</span><span>18 MIN</span></div>
         </div>
       </a>
     </section>
@@ -146,37 +148,37 @@
     <div class="listwrap">
       <div class="grid">
         <a class="card" href="article.html">
-          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div><span class="pin">How To</span></div>
+          <div class="thumb"><div class="ph"><img src="assets/work1.png" alt=""></div><span class="pin">How To</span></div>
           <span class="cat">プロンプト</span><h3>AI画像生成プロンプトの書き方 完全ガイド<span class="dot">.</span></h3>
           <p class="ex">構図・スタイル・品質を分解して、狙った画を安定して出す型を雛形つきで。</p>
           <div class="meta"><span>2026.06.04</span><span>14 MIN</span></div>
         </a>
         <a class="card" href="article.html">
-          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div><span class="pin">Interview</span></div>
+          <div class="thumb"><div class="ph"><img src="assets/work2.png" alt=""></div><span class="pin">Interview</span></div>
           <span class="cat">Interview</span><h3>AIは「作る」を変えるのか。人間の温度の残し方<span class="dot">.</span></h3>
           <p class="ex">ブランド映像の最前線に立つディレクターと、"温度"の在りかを語り合った。</p>
           <div class="meta"><span>2026.06.02</span><span>12 MIN</span></div>
         </a>
         <a class="card" href="article.html">
-          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div><span class="pin">比較</span></div>
+          <div class="thumb"><div class="ph"><img src="assets/work3.png" alt=""></div><span class="pin">比較</span></div>
           <span class="cat">ツール選定</span><h3>主要AI画像生成ツール 徹底比較｜用途別の選び方<span class="dot">.</span></h3>
           <p class="ex">商用利用・学習コスト・出力傾向を一覧表で比較し、目的別の最適解を。</p>
           <div class="meta"><span>2026.05.30</span><span>10 MIN</span></div>
         </a>
         <a class="card" href="article.html">
-          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div><span class="play"></span></div>
+          <div class="thumb"><div class="ph"><img src="assets/work4.png" alt=""></div><span class="play"></span></div>
           <span class="cat">Case Study</span><h3>24世紀ラーメン — 架空ブランドが本物になるまで<span class="dot">.</span></h3>
           <p class="ex">AIで立ち上げた架空ブランドを、いかに実在のキャンペーンへ接続したか。</p>
           <div class="meta"><span>2026.05.20</span><span>10 MIN ・ 動画あり</span></div>
         </a>
         <a class="card" href="article.html">
-          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div><span class="pin">チェックリスト</span></div>
+          <div class="thumb"><div class="ph"><img src="assets/work5.png" alt=""></div><span class="pin">チェックリスト</span></div>
           <span class="cat">品質管理</span><h3>AI生成物の「公開前」チェックリスト 22項目<span class="dot">.</span></h3>
           <p class="ex">権利・ブランド整合・ファクト・表記ゆれ。保存できる確認リスト。</p>
           <div class="meta"><span>2026.05.22</span><span>7 MIN</span></div>
         </a>
         <a class="card" href="article.html">
-          <div class="thumb"><div class="ph"><span class="tag">VISUAL 4:3</span></div></div>
+          <div class="thumb"><div class="ph"><img src="assets/work6.png" alt=""></div></div>
           <span class="cat">Branding</span><h3>ロゴが動き出す時代の、モーション・ブランディング<span class="dot">.</span></h3>
           <p class="ex">静止したアイデンティティから、振る舞うアイデンティティへ。</p>
           <div class="meta"><span>2026.05.06</span><span>9 MIN</span></div>
