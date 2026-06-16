@@ -57,6 +57,53 @@
     .a-hero .byline{ flex-direction:column; align-items:flex-start; }
     .m-toc ol{ columns:1; }
   }
+
+  /* ===== 2-COLUMN LAYOUT + STICKY SIDEBAR ===== */
+  .layout{ max-width:1220px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:54px; align-items:start; }
+  .layout .article{ max-width:100%; margin:0; padding:0; }
+  .layout .body-wrap{ padding-top:50px; }
+  .layout .main-col .module{ margin-left:0; margin-right:0; max-width:100%; }
+  .layout .main-col .module[style*="max-width"]{ max-width:100% !important; }
+  .layout .m-related{ max-width:100%; margin-top:64px; }
+  .layout .m-related .grid{ grid-template-columns:1fr 1fr; gap:22px; }
+
+  /* sidebar */
+  .side-col{ position:sticky; top:80px; max-height:calc(100vh - 100px); overflow-y:auto; overflow-x:hidden; padding-right:8px; }
+  .side-col::-webkit-scrollbar{ width:6px; }
+  .side-col::-webkit-scrollbar-thumb{ background:var(--line); border-radius:10px; }
+  .side-col::-webkit-scrollbar-track{ background:transparent; }
+  .wgt{ margin-bottom:32px; }
+  .wgt:last-child{ margin-bottom:0; }
+  .wgt-head{ font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); display:flex; align-items:center; gap:10px; margin-bottom:16px; padding-bottom:11px; border-bottom:1px solid var(--ink); }
+  .wgt-head::before{ content:""; width:13px; height:13px; background:var(--gold); border-radius:2px; flex:none; }
+  .wgt-head .jp{ color:var(--ink-3); font-size:10px; letter-spacing:.04em; margin-left:auto; }
+
+  /* search widget */
+  .sw-search{ display:flex; gap:8px; }
+  .sw-search input{ flex:1; min-width:0; border:1px solid var(--line); background:var(--paper-3); border-radius:100px; padding:12px 18px; font-family:var(--sans); font-size:13px; color:var(--ink); outline:none; transition:border-color .2s; }
+  .sw-search input:focus{ border-color:var(--ink); }
+  .sw-search button{ background:var(--ink); color:var(--paper); border:0; border-radius:100px; padding:0 18px; font-family:var(--mono); font-size:12px; letter-spacing:.06em; cursor:pointer; transition:.2s; flex:none; }
+  .sw-search button:hover{ background:var(--gold); }
+  .sw-tags{ display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+  .sw-tags a{ font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-2); text-decoration:none; border:1px solid var(--line); border-radius:100px; padding:5px 11px; transition:.2s; }
+  .sw-tags a:hover{ border-color:var(--ink); color:var(--ink); }
+
+  /* article items (popular / related) */
+  .s-item{ display:grid; grid-template-columns:88px 1fr; gap:13px; padding:12px 0; border-bottom:1px solid var(--line-2); text-decoration:none; color:inherit; align-items:start; }
+  .s-item:last-child{ border-bottom:0; }
+  .s-item .ban{ position:relative; aspect-ratio:4/3; border-radius:5px; overflow:hidden; border:1px solid var(--line); background:var(--paper-3); }
+  .s-item .ban img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .s-item .rk{ position:absolute; left:0; top:0; width:24px; height:24px; background:var(--ink); color:var(--paper); font-family:var(--disp); font-weight:900; font-size:12px; display:flex; align-items:center; justify-content:center; }
+  .s-item.top .rk{ background:var(--gold); }
+  .s-item .t{ font-size:12.5px; line-height:1.55; font-weight:700; letter-spacing:.01em; }
+  .s-item:hover .t{ color:var(--gold); }
+  .s-item .mt{ font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-3); margin-top:6px; }
+
+  @media (max-width:980px){
+    .layout{ grid-template-columns:1fr; gap:0; padding-left:22px; padding-right:22px; }
+    .side-col{ position:static; max-height:none; overflow:visible; padding-right:0; margin-top:54px; padding-top:40px; border-top:1px solid var(--line); }
+    .layout .m-related .grid{ grid-template-columns:1fr; }
+  }
 </style>
 </head>
 <body class="mag">
@@ -94,6 +141,8 @@
     </figure>
   </article>
 
+  <div class="layout">
+   <div class="main-col">
   <div class="article body-wrap">
 
     <!-- M02 LEAD -->
@@ -286,7 +335,7 @@
   </div>
 
   <!-- M14 RELATED -->
-  <section class="m-related wrap">
+  <section class="m-related">
     <div class="secmark"><span class="n">/ Related</span> <b>あわせて読みたい</b></div>
     <div class="grid">
       <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><img src="assets/work1.png" alt=""></div><span class="cat">How To</span></div><h4>AI画像生成プロンプトの書き方 完全ガイド<span class="dot">.</span></h4><div class="meta">2026.06.04 ・ 14 MIN</div></a>
@@ -294,12 +343,58 @@
       <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><img src="assets/work2.png" alt=""></div><span class="cat">Interview</span></div><h4>AIは「作る」を変えるのか。人間の温度の残し方<span class="dot">.</span></h4><div class="meta">2026.06.02 ・ 12 MIN</div></a>
     </div>
   </section>
+   </div><!-- /main-col -->
+
+   <aside class="side-col">
+     <!-- WIDGET: Search -->
+     <div class="wgt">
+       <div class="wgt-head">Search <span class="jp">記事を探す</span></div>
+       <form class="sw-search" onsubmit="return false">
+         <input type="text" placeholder="キーワードで探す">
+         <button type="submit">検索</button>
+       </form>
+       <div class="sw-tags">
+         <a href="#"># プロンプト</a><a href="#"># ブランド映像</a><a href="#"># 比較</a><a href="#"># 事例</a><a href="#"># チェックリスト</a>
+       </div>
+     </div>
+
+     <!-- WIDGET: Popular 10 -->
+     <div class="wgt">
+       <div class="wgt-head">Popular <span class="jp">人気記事</span></div>
+       <a class="s-item top" href="#"><div class="ban"><span class="rk">1</span><img src="assets/work1.png" alt=""></div><div><div class="t">AI画像生成プロンプトの書き方 完全ガイド</div><div class="mt">How To ・ ♥ 2,480</div></div></a>
+       <a class="s-item top" href="#"><div class="ban"><span class="rk">2</span><img src="assets/work3.png" alt=""></div><div><div class="t">主要AI画像生成ツール 徹底比較｜用途別の選び方</div><div class="mt">比較 ・ ♥ 1,930</div></div></a>
+       <a class="s-item top" href="#"><div class="ban"><span class="rk">3</span><img src="assets/work5.png" alt=""></div><div><div class="t">AI生成物の「公開前」チェックリスト22項目</div><div class="mt">チェックリスト ・ ♥ 3,110</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><span class="rk">4</span><img src="assets/work4.png" alt=""></div><div><div class="t">ブランド映像のためのプロンプト30選</div><div class="mt">プロンプト集 ・ ♥ 4,260</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><span class="rk">5</span><img src="assets/work6.png" alt=""></div><div><div class="t">AI映像のルックを安定させる5ステップ</div><div class="mt">How To ・ ♥ 1,540</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><span class="rk">6</span><img src="assets/work2.png" alt=""></div><div><div class="t">生成AIで作る、架空ブランドの世界観</div><div class="mt">事例 ・ ♥ 1,280</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><span class="rk">7</span><img src="assets/g1.png" alt=""></div><div><div class="t">モーション・ブランディング入門</div><div class="mt">Branding ・ ♥ 980</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><span class="rk">8</span><img src="assets/g2.png" alt=""></div><div><div class="t">AIと著作権、商用利用の基礎知識</div><div class="mt">ノウハウ ・ ♥ 870</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><span class="rk">9</span><img src="assets/g3.png" alt=""></div><div><div class="t">効果が出るネガティブプロンプト集</div><div class="mt">プロンプト集 ・ ♥ 760</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><span class="rk">10</span><img src="assets/medium.png" alt=""></div><div><div class="t">制作スピードを2倍にするワークフロー</div><div class="mt">ワークフロー ・ ♥ 640</div></div></a>
+     </div>
+
+     <!-- WIDGET: Related 10 -->
+     <div class="wgt">
+       <div class="wgt-head">Related <span class="jp">関連記事</span></div>
+       <a class="s-item" href="#"><div class="ban"><img src="assets/medium-l.png" alt=""></div><div><div class="t">AIは「作る」を変えるのか。人間の温度の残し方</div><div class="mt">Interview ・ 12 MIN</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><img src="assets/medium-r.png" alt=""></div><div><div class="t">「人間の温度」を、プロンプトに翻訳する</div><div class="mt">Essay ・ 6 MIN</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><img src="assets/large.png" alt=""></div><div><div class="t">24世紀ラーメン — 架空ブランドが本物になるまで</div><div class="mt">Case Study ・ 10 MIN</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><img src="assets/small.png" alt=""></div><div><div class="t">ロゴが動き出す時代の、モーション・ブランディング</div><div class="mt">Branding ・ 9 MIN</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><img src="assets/split-a.png" alt=""></div><div><div class="t">サウンドクリエイターが見る、AIと「耳の作家性」</div><div class="mt">Interview ・ 11 MIN</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><img src="assets/split-b.png" alt=""></div><div><div class="t">展示空間とAI — インスタレーションの新しい文法</div><div class="mt">Trend ・ 7 MIN</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><img src="assets/feature.png" alt=""></div><div><div class="t">ブランドの一貫性を守る、生成ルールの作り方</div><div class="mt">Branding ・ 8 MIN</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><img src="assets/ogpcard.png" alt=""></div><div><div class="t">シネマティックなルックの作り方</div><div class="mt">How To ・ 9 MIN</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><img src="assets/wide.png" alt=""></div><div><div class="t">絵コンテをAIで高速化する方法</div><div class="mt">How To ・ 6 MIN</div></div></a>
+       <a class="s-item" href="#"><div class="ban"><img src="assets/hero.png" alt=""></div><div><div class="t">納品形式と品質管理の実務ガイド</div><div class="mt">ノウハウ ・ 7 MIN</div></div></a>
+     </div>
+   </aside>
+  </div><!-- /layout -->
 </main>
 
 <footer class="mag-footer">
   <div class="marquee"><div>SAC MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;ONE PROMPT, CHANGE THE <b>WORLD</b>.&nbsp;&nbsp;·&nbsp;&nbsp;SAC MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;ONE PROMPT, CHANGE THE <b>WORLD</b>.&nbsp;&nbsp;·&nbsp;&nbsp;</div></div>
   <div class="cols">
-    <div class="col"><h4>SAC<span class="dot">.</span></h4><p class="lead-sm">Smart AI Creative — AI・クリエイター・ビジネスを掛け合わせ、クリエイティブ制作におけるすべての制約を解放する。</p></div>
+    <div class="col"><h4>SAC</h4><p class="lead-sm">Smart AI Creative — AI・クリエイター・ビジネスを掛け合わせ、クリエイティブ制作におけるすべての制約を解放する。</p></div>
     <div class="col"><h5>Magazine</h5><ul><li><a href="list.html">記事一覧</a></li><li><a href="#">カテゴリ</a></li><li><a href="#">タグ</a></li><li><a href="overview.html">Concept</a></li></ul></div>
     <div class="col"><h5>SAC</h5><ul><li><a href="#">About</a></li><li><a href="#">Works</a></li><li><a href="#">Creator</a></li><li><a href="#">Contact</a></li></ul></div>
     <div class="col"><h5>Follow</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">X (Twitter)</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
