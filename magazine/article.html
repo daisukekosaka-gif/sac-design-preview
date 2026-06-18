@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AIブランド映像の作り方 — SAC MAGAZINE</title>
+<title>AIブランド映像の作り方 — AI NOW MAGAZINE</title>
 <meta name="description" content="企画からプロンプト設計、納品までAIブランド映像制作の全工程を、事例・比較・チェックリスト付きで解説。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/sac-mag.css">
 <link rel="stylesheet" href="css/modules-rich.css">
 <style>
@@ -20,7 +20,7 @@
   .a-hero .cat{ font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#fff; background:var(--gold); padding:7px 14px; border-radius:100px; }
   .a-hero .ty{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#fff; background:var(--ink); padding:7px 13px; border-radius:100px; }
   .a-hero .tags{ font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-3); }
-  .a-hero h1{ font-family:var(--sans); font-weight:700; font-size:clamp(30px,5vw,54px); line-height:1.42; letter-spacing:.01em; margin:0 0 24px; max-width:24ch; }
+  .a-hero h1{ font-family:var(--disp); font-weight:700; font-size:clamp(28px,6.2vw,94px); line-height:1.14; letter-spacing:-.02em; margin:0 0 28px; max-width:none; }
   .a-hero .deck{ font-size:17px; line-height:2; color:var(--ink-2); max-width:58ch; margin:0 0 30px; }
   .a-hero .byline{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px; padding:20px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .a-hero .who{ display:flex; align-items:center; gap:13px; }
@@ -38,6 +38,29 @@
 
   .body-wrap{ padding-top:58px; }
   .label-mod{ font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:14px; }
+
+  /* ===== Sound Ethics blue hero block ===== */
+  .a-hero{ background:radial-gradient(120% 90% at 82% -10%, rgba(194,255,61,.12), transparent 55%), var(--blue); color:#fff; padding-bottom:48px; }
+  .a-hero .frame{ padding-top:36px; }
+  .a-hero .crumb, .a-hero .crumb a{ color:rgba(255,255,255,.6); }
+  .a-hero .crumb .cur{ color:#fff; }
+  .a-hero .crumb .sep{ color:rgba(255,255,255,.32); }
+  .a-hero .cat{ background:var(--acid); color:#0b0b0d; }
+  .a-hero .ty{ background:rgba(255,255,255,.16); color:#fff; }
+  .a-hero .tags{ color:rgba(255,255,255,.66); }
+  .a-hero .tags a{ color:inherit; text-decoration:none; transition:.2s; }
+  .a-hero .tags a:hover{ color:var(--acid); }
+  .a-hero h1{ color:#fff; }
+  .a-hero .deck{ color:rgba(255,255,255,.82); }
+  .a-hero .byline{ border-color:rgba(255,255,255,.22); }
+  .a-hero .who .nm{ color:#fff; }
+  .a-hero .who .rl{ color:rgba(255,255,255,.6); }
+  .a-hero .who .av{ border-color:rgba(255,255,255,.3); }
+  .a-hero .info{ color:rgba(255,255,255,.6); }
+  .a-hero .actions button{ background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.26); color:#fff; }
+  .a-hero .actions button:hover{ background:#fff; color:var(--ink); border-color:#fff; }
+  .a-hero .keyvis .ph{ border-color:rgba(255,255,255,.22); }
+  .a-hero .keyvis figcaption{ color:rgba(255,255,255,.55); }
   .sec-anchor{ scroll-margin-top:84px; }
 
   /* inline TOC module */
@@ -50,7 +73,7 @@
   .m-toc a::before{ content:counter(toc,decimal-leading-zero); font-family:var(--mono); font-size:11px; color:var(--gold); }
   .m-toc a:hover{ color:var(--ink); padding-left:4px; }
 
-  .endline{ max-width:var(--measure); margin:50px auto 0; text-align:center; font-family:var(--disp); font-weight:900; color:var(--gold); font-size:20px; letter-spacing:.3em; }
+  .endline{ max-width:var(--measure); margin:50px auto 0; text-align:center; font-family:var(--head); font-weight:900; color:var(--gold); font-size:20px; letter-spacing:.3em; }
 
   @media (max-width:860px){
     .a-hero .frame,.a-hero .keyvis{ padding-left:22px; padding-right:22px; }
@@ -64,11 +87,20 @@
   .layout .body-wrap{ padding-top:50px; }
   .layout .main-col .module{ margin-left:0; margin-right:0; max-width:100%; }
   .layout .main-col .module[style*="max-width"]{ max-width:100% !important; }
+  /* white reading sheet floating on the dark page */
+  .main-col.sheet{ background:#fff; border-radius:16px; padding:6px 48px 48px; box-shadow:0 40px 80px -50px rgba(0,0,0,.7); }
+  @media (max-width:600px){ .main-col.sheet{ padding:6px 22px 32px; border-radius:12px; } }
   .layout .m-related{ max-width:100%; margin-top:64px; }
   .layout .m-related .grid{ grid-template-columns:1fr 1fr; gap:22px; }
+  .related-foot{ margin-top:110px; }
+  .related-foot .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  @media (max-width:860px){ .related-foot .grid{ grid-template-columns:1fr; } }
 
   /* sidebar */
-  .side-col{ position:sticky; top:80px; max-height:calc(100vh - 100px); overflow-y:auto; overflow-x:hidden; padding-right:8px; }
+  .side-col{ position:sticky; top:80px; max-height:calc(100vh - 100px); overflow-y:auto; overflow-x:hidden; background:#fff; border-radius:16px; padding:30px 24px; box-shadow:0 40px 80px -50px rgba(0,0,0,.7); }
+  .side-col .wgt-head::before{ background:#54c40a; }
+  .side-col .s-item.top .rk{ background:#54c40a; color:#0b0b0d; }
+  .side-col .sw-search button:hover{ background:#54c40a; color:#0b0b0d; }
   .side-col::-webkit-scrollbar{ width:6px; }
   .side-col::-webkit-scrollbar-thumb{ background:var(--line); border-radius:10px; }
   .side-col::-webkit-scrollbar-track{ background:transparent; }
@@ -93,7 +125,7 @@
   .s-item:last-child{ border-bottom:0; }
   .s-item .ban{ position:relative; aspect-ratio:4/3; border-radius:5px; overflow:hidden; border:1px solid var(--line); background:var(--paper-3); }
   .s-item .ban img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .s-item .rk{ position:absolute; left:0; top:0; width:24px; height:24px; background:var(--ink); color:var(--paper); font-family:var(--disp); font-weight:900; font-size:12px; display:flex; align-items:center; justify-content:center; }
+  .s-item .rk{ position:absolute; left:0; top:0; width:24px; height:24px; background:var(--ink); color:var(--paper); font-family:var(--head); font-weight:900; font-size:12px; display:flex; align-items:center; justify-content:center; }
   .s-item.top .rk{ background:var(--gold); }
   .s-item .t{ font-size:12.5px; line-height:1.55; font-weight:700; letter-spacing:.01em; }
   .s-item:hover .t{ color:var(--gold); }
@@ -101,22 +133,22 @@
 
   @media (max-width:980px){
     .layout{ grid-template-columns:1fr; gap:0; padding-left:22px; padding-right:22px; }
-    .side-col{ position:static; max-height:none; overflow:visible; padding-right:0; margin-top:54px; padding-top:40px; border-top:1px solid var(--line); }
+    .side-col{ position:static; max-height:none; overflow:visible; margin-top:40px; padding:26px 22px; }
     .layout .m-related .grid{ grid-template-columns:1fr; }
   }
 </style>
 </head>
-<body class="mag">
-<div class="progress" id="prog"></div>
+<body class="mag has-cta-band">
+<div class="scrollprog" id="scrollprog"></div>
 
 <header class="mag-header">
   <div class="bar">
-    <a class="brand" href="overview.html"><span class="b1">SAC</span><span class="b2">Magazine</span></a>
+    <a class="brand" href="list.html"><span class="brandmark"><span class="ring r1"></span><span class="ring r2"></span><span class="core"></span></span><span class="brandtype"><span class="b1">AI&nbsp;NOW</span><span class="b2">Magazine</span></span></a>
     <nav class="mag-nav">
       <a href="list.html">Magazine</a>
-      <a href="overview.html">Concept</a>
-      <a href="#">Categories</a>
-      <a class="back" href="#">SAC本体サイト <span>↗</span></a>
+      <a href="category.html">Categories</a>
+      <a href="contact.html">Contact</a>
+      <a class="back" href="#">SAC <span>↗</span></a>
     </nav>
   </div>
 </header>
@@ -126,23 +158,23 @@
   <article class="a-hero">
     <div class="frame">
       <div class="crumb"><a href="#">HOME</a><span class="sep">/</span><a href="list.html">MAGAZINE</a><span class="sep">/</span><a href="#">HOW TO</a><span class="sep">/</span><span class="cur">ai-brand-film-guide</span></div>
-      <div class="meta-top"><span class="cat">How To</span><span class="ty">保存版</span><span class="tags"># AI映像 　# ブランディング 　# プロンプト設計</span></div>
+      <div class="meta-top"><span class="cat">How To</span><span class="ty">保存版</span><span class="tags"><a href="tag.html?k=movie"># AI映像</a> 　<a href="tag.html?k=branding"># ブランディング</a> 　<a href="tag.html?k=prompt"># プロンプト設計</a></span></div>
       <h1>AIブランド映像の作り方。<br>企画から納品までの全工程<span class="dot">.</span></h1>
-      <p class="deck">生成AIで映像をつくる時代に、ブランドの"らしさ"をどう保つか。企画・絵コンテ・プロンプト設計・編集・納品まで、SACが実際に踏む全工程を、事例と比較表、コピペできるプロンプト付きで解説します。</p>
+      <p class="deck">生成AIで映像をつくる時代に、ブランドの"らしさ"をどう保つか。企画・絵コンテ・プロンプト設計・編集・納品まで、AI NOWが実際に踏む全工程を、事例と比較表、コピペできるプロンプト付きで解説します。</p>
       <div class="byline">
-        <div class="who"><span class="av"><span class="ph"><img src="assets/avatar1.png" alt=""></span></span><div><div class="nm">SAC 編集部 ／ 監修：ツネハシ タケシ</div><div class="rl">SAC MAGAZINE — How To</div></div></div>
+        <div class="who"><span class="av"><span class="ph"><img src="assets/avatar1.png" alt=""></span></span><div><div class="nm">AI NOW 編集部 ／ 監修：ツネハシ タケシ</div><div class="rl">AI NOW MAGAZINE — How To</div></div></div>
         <div class="info"><span>2026.06.06</span><span>18 MIN READ</span></div>
         <div class="actions"><button>♥ 保存</button><button>⧉ 共有</button><button>⎙ 印刷</button></div>
       </div>
     </div>
     <figure class="keyvis">
       <div class="ph"><img src="assets/hero.png" alt="PROJECT ECHO ブランドフィルムのキービジュアル"></div>
-      <figcaption>『PROJECT ECHO』ブランドフィルムより — Directed by SAC</figcaption>
+      <figcaption>『PROJECT ECHO』ブランドフィルムより — Directed by AI NOW</figcaption>
     </figure>
   </article>
 
   <div class="layout">
-   <div class="main-col">
+   <div class="main-col sheet invert-light">
   <div class="article body-wrap">
 
     <!-- M02 LEAD -->
@@ -167,7 +199,7 @@
     <div class="module m-heading line sec-anchor" id="s1"><span class="h-eye">01</span><h2>AIブランド映像とは何か<span class="dot">.</span></h2></div>
     <div class="module m-rich">
       <p>AIブランド映像とは、生成AIを制作パイプラインに組み込みながら、<strong>ブランドの世界観を一貫した温度で表現する映像</strong>のこと。実写・CG・生成素材を横断し、従来なら数週間かかった工程を数日に圧縮します。</p>
-      <p>ただし、速くなった分だけ「何を伝えるか」の設計がより重要になります。<a href="#">SACのWORKS</a>でも、生成と人の手を行き来するハイブリッドな制作が増えています。</p>
+      <p>ただし、速くなった分だけ「何を伝えるか」の設計がより重要になります。<a href="#">関連記事</a>でも、生成と人の手を行き来するハイブリッドな制作が増えています。</p>
     </div>
 
     <!-- M05 IMAGE — full bleed -->
@@ -312,7 +344,7 @@
     <div class="module m-supplement"><span class="lbl">補足</span><p>本記事は2026年6月時点の情報に基づきます。各ツールの仕様・規約は変更される場合があります。</p></div>
 
     <!-- OGP card -->
-    <div class="module m-ogp"><span class="label-mod">OGP / Link Card</span><a href="#"><div class="thumb"><div class="ph"><img src="assets/ogpcard.png" alt="SAC WORKS"></div></div><div class="body"><div class="ttl">SAC WORKS — PROJECT ECHO</div><div class="desc">本記事で取り上げたブランドフィルムの制作事例。完成映像とクレジットを掲載。</div><div class="dom">sac-creative.jp</div></div></a></div>
+    <div class="module m-ogp"><span class="label-mod">OGP / Link Card</span><a href="#"><div class="thumb"><div class="ph"><img src="assets/ogpcard.png" alt="AI NOW"></div></div><div class="body"><div class="ttl">AI NOW — PROJECT ECHO</div><div class="desc">本記事で取り上げたブランドフィルムの制作事例。完成映像とクレジットを掲載。</div><div class="dom">ainow.jp</div></div></a></div>
 
     <!-- Divider -->
     <div class="module m-divider"><span class="mk">✦</span></div>
@@ -321,31 +353,22 @@
     <div class="module m-heading line sec-anchor" id="s8"><span class="h-eye">08</span><h2>よくある質問<span class="dot">.</span></h2></div>
     <div class="module m-faq">
       <details open><summary><span class="q">Q</span>制作期間はどのくらいですか？<span class="pm"></span></summary><div class="a"><span class="a-ic">A</span><span>尺と要件によりますが、30秒のブランドフィルムで2〜4週間が目安です。生成パートの活用で短縮できますが、判断と仕上げの工程は確保します。</span></div></details>
-      <details><summary><span class="q">Q</span>実写と組み合わせられますか？<span class="pm"></span></summary><div class="a"><span class="a-ic">A</span><span>はい。SACの多くの案件は実写・CG・生成のハイブリッドです。素材の質感を揃えるグレーディングが品質の鍵になります。</span></div></details>
+      <details><summary><span class="q">Q</span>実写と組み合わせられますか？<span class="pm"></span></summary><div class="a"><span class="a-ic">A</span><span>はい。AI NOWの多くの案件は実写・CG・生成のハイブリッドです。素材の質感を揃えるグレーディングが品質の鍵になります。</span></div></details>
       <details><summary><span class="q">Q</span>権利・商用利用の扱いは？<span class="pm"></span></summary><div class="a"><span class="a-ic">A</span><span>使用ツールの規約に準拠し、実在の人物・作品との酷似を避けて制作します。納品時にプロンプトとseedの記録もお渡しできます。</span></div></details>
     </div>
 
     <div class="endline">———</div>
 
     <!-- M15 CTA -->
-    <div class="module m-cta" style="margin-top:70px;"><div class="box"><div><div class="ct-eye">Let's talk</div><h3>ブランド映像の構想、<br>一緒に言語化します<span class="dot">.</span></h3><p>営業ではなく、まず対話から。企画段階のご相談を歓迎します。</p></div><a class="btn gold" href="#">SACに相談する <span class="arr">→</span></a></div></div>
+    <div class="module m-cta" style="margin-top:70px;"><div class="box"><div><div class="ct-eye">Let's talk</div><h3>ブランド映像の構想、<br>一緒に言語化します<span class="dot">.</span></h3><p>営業ではなく、まず対話から。企画段階のご相談を歓迎します。</p></div><a class="btn gold" href="contact.html">お問い合わせ <span class="arr">→</span></a></div></div>
 
     <!-- M16 AUTHOR -->
-    <div class="module m-author" style="margin-top:54px;"><div class="box"><div class="ava"><span class="ph"><img src="assets/avatar3.png" alt="ツネハシ タケシ"></span></div><div><div class="a-eye">Supervised by</div><h4>ツネハシ タケシ</h4><div class="role">Movie Director / AI Creative Director — SAC</div><p>AI生成映像と従来制作のハイブリッドなワークフロー設計を専門とする。「人間の温度を残したまま、制作速度を変える」をテーマに、ブランド映像を多数手がける。</p><div class="socials"><a href="#">X (Twitter) ↗</a><a href="#">作品を見る ↗</a></div></div></div></div>
+    <div class="module m-author" style="margin-top:54px;"><div class="box"><div class="ava"><span class="ph"><img src="assets/avatar3.png" alt="ツネハシ タケシ"></span></div><div><div class="a-eye">Supervised by</div><h4>ツネハシ タケシ</h4><div class="role">Movie Director / AI Creative Director — AI NOW</div><p>AI生成映像と従来制作のハイブリッドなワークフロー設計を専門とする。「人間の温度を残したまま、制作速度を変える」をテーマに、ブランド映像を多数手がける。</p><div class="socials"><a href="#">X (Twitter) ↗</a><a href="#">作品を見る ↗</a></div></div></div></div>
   </div>
 
-  <!-- M14 RELATED -->
-  <section class="m-related">
-    <div class="secmark"><span class="n">/ Related</span> <b>あわせて読みたい</b></div>
-    <div class="grid">
-      <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><img src="assets/work1.png" alt=""></div><span class="cat">How To</span></div><h4>AI画像生成プロンプトの書き方 完全ガイド<span class="dot">.</span></h4><div class="meta">2026.06.04 ・ 14 MIN</div></a>
-      <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><img src="assets/work3.png" alt=""></div><span class="cat">比較</span></div><h4>主要AI画像生成ツール 徹底比較｜用途別の選び方<span class="dot">.</span></h4><div class="meta">2026.05.30 ・ 10 MIN</div></a>
-      <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><img src="assets/work2.png" alt=""></div><span class="cat">Interview</span></div><h4>AIは「作る」を変えるのか。人間の温度の残し方<span class="dot">.</span></h4><div class="meta">2026.06.02 ・ 12 MIN</div></a>
-    </div>
-  </section>
    </div><!-- /main-col -->
 
-   <aside class="side-col">
+   <aside class="side-col invert-light">
      <!-- WIDGET: Search -->
      <div class="wgt">
        <div class="wgt-head">Search <span class="jp">記事を探す</span></div>
@@ -354,7 +377,7 @@
          <button type="submit">検索</button>
        </form>
        <div class="sw-tags">
-         <a href="#"># プロンプト</a><a href="#"># ブランド映像</a><a href="#"># 比較</a><a href="#"># 事例</a><a href="#"># チェックリスト</a>
+         <a href="tag.html?k=prompt"># プロンプト</a><a href="tag.html?k=movie"># AI映像</a><a href="tag.html?k=branding"># ブランディング</a><a href="tag.html?k=workflow"># ワークフロー</a><a href="tag.html?k=quality"># 品質管理</a>
        </div>
      </div>
 
@@ -366,11 +389,6 @@
        <a class="s-item top" href="#"><div class="ban"><span class="rk">3</span><img src="assets/work5.png" alt=""></div><div><div class="t">AI生成物の「公開前」チェックリスト22項目</div><div class="mt">チェックリスト ・ ♥ 3,110</div></div></a>
        <a class="s-item" href="#"><div class="ban"><span class="rk">4</span><img src="assets/work4.png" alt=""></div><div><div class="t">ブランド映像のためのプロンプト30選</div><div class="mt">プロンプト集 ・ ♥ 4,260</div></div></a>
        <a class="s-item" href="#"><div class="ban"><span class="rk">5</span><img src="assets/work6.png" alt=""></div><div><div class="t">AI映像のルックを安定させる5ステップ</div><div class="mt">How To ・ ♥ 1,540</div></div></a>
-       <a class="s-item" href="#"><div class="ban"><span class="rk">6</span><img src="assets/work2.png" alt=""></div><div><div class="t">生成AIで作る、架空ブランドの世界観</div><div class="mt">事例 ・ ♥ 1,280</div></div></a>
-       <a class="s-item" href="#"><div class="ban"><span class="rk">7</span><img src="assets/g1.png" alt=""></div><div><div class="t">モーション・ブランディング入門</div><div class="mt">Branding ・ ♥ 980</div></div></a>
-       <a class="s-item" href="#"><div class="ban"><span class="rk">8</span><img src="assets/g2.png" alt=""></div><div><div class="t">AIと著作権、商用利用の基礎知識</div><div class="mt">ノウハウ ・ ♥ 870</div></div></a>
-       <a class="s-item" href="#"><div class="ban"><span class="rk">9</span><img src="assets/g3.png" alt=""></div><div><div class="t">効果が出るネガティブプロンプト集</div><div class="mt">プロンプト集 ・ ♥ 760</div></div></a>
-       <a class="s-item" href="#"><div class="ban"><span class="rk">10</span><img src="assets/medium.png" alt=""></div><div><div class="t">制作スピードを2倍にするワークフロー</div><div class="mt">ワークフロー ・ ♥ 640</div></div></a>
      </div>
 
      <!-- WIDGET: Related 10 -->
@@ -381,29 +399,45 @@
        <a class="s-item" href="#"><div class="ban"><img src="assets/large.png" alt=""></div><div><div class="t">24世紀ラーメン — 架空ブランドが本物になるまで</div><div class="mt">Case Study ・ 10 MIN</div></div></a>
        <a class="s-item" href="#"><div class="ban"><img src="assets/small.png" alt=""></div><div><div class="t">ロゴが動き出す時代の、モーション・ブランディング</div><div class="mt">Branding ・ 9 MIN</div></div></a>
        <a class="s-item" href="#"><div class="ban"><img src="assets/split-a.png" alt=""></div><div><div class="t">サウンドクリエイターが見る、AIと「耳の作家性」</div><div class="mt">Interview ・ 11 MIN</div></div></a>
-       <a class="s-item" href="#"><div class="ban"><img src="assets/split-b.png" alt=""></div><div><div class="t">展示空間とAI — インスタレーションの新しい文法</div><div class="mt">Trend ・ 7 MIN</div></div></a>
-       <a class="s-item" href="#"><div class="ban"><img src="assets/feature.png" alt=""></div><div><div class="t">ブランドの一貫性を守る、生成ルールの作り方</div><div class="mt">Branding ・ 8 MIN</div></div></a>
-       <a class="s-item" href="#"><div class="ban"><img src="assets/ogpcard.png" alt=""></div><div><div class="t">シネマティックなルックの作り方</div><div class="mt">How To ・ 9 MIN</div></div></a>
-       <a class="s-item" href="#"><div class="ban"><img src="assets/wide.png" alt=""></div><div><div class="t">絵コンテをAIで高速化する方法</div><div class="mt">How To ・ 6 MIN</div></div></a>
-       <a class="s-item" href="#"><div class="ban"><img src="assets/hero.png" alt=""></div><div><div class="t">納品形式と品質管理の実務ガイド</div><div class="mt">ノウハウ ・ 7 MIN</div></div></a>
      </div>
    </aside>
   </div><!-- /layout -->
+
+  <!-- M14 RELATED — above footer, full width -->
+  <section class="m-related wrap related-foot">
+    <div class="secmark"><span class="n">/ Related</span> <b>あわせて読みたい</b></div>
+    <div class="grid">
+      <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><img src="assets/work1.png" alt=""></div><span class="cat">How To</span></div><h4>AI画像生成プロンプトの書き方 完全ガイド<span class="dot">.</span></h4><div class="meta">2026.06.04 ・ 14 MIN</div></a>
+      <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><img src="assets/work3.png" alt=""></div><span class="cat">比較</span></div><h4>主要AI画像生成ツール 徹底比較｜用途別の選び方<span class="dot">.</span></h4><div class="meta">2026.05.30 ・ 10 MIN</div></a>
+      <a class="rel-card" href="article.html"><div class="thumb"><div class="ph"><img src="assets/work2.png" alt=""></div><span class="cat">Interview</span></div><h4>AIは「作る」を変えるのか。人間の温度の残し方<span class="dot">.</span></h4><div class="meta">2026.06.02 ・ 12 MIN</div></a>
+    </div>
+  </section>
+
+  <!-- QUIET CTA -->
+  <section class="quietcta">
+    <div class="in">
+      <span class="eyebrow no-rule">Let's talk</span>
+      <h2>AIクリエイティブの今をお届けします<span class="dot">.</span></h2>
+      <p>まずはどんな事を考えているのかお聞かせください。</p>
+      <a class="btn gold" href="contact.html">お問い合わせ <span class="arr">→</span></a>
+    </div>
+  </section>
 </main>
 
 <footer class="mag-footer">
-  <div class="marquee"><div>SAC MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;ONE PROMPT, CHANGE THE <b>WORLD</b>.&nbsp;&nbsp;·&nbsp;&nbsp;SAC MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;ONE PROMPT, CHANGE THE <b>WORLD</b>.&nbsp;&nbsp;·&nbsp;&nbsp;</div></div>
+  <div class="marquee"><div class="mqt">AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;</div></div>
   <div class="cols">
-    <div class="col"><h4>SAC</h4><p class="lead-sm">Smart AI Creative — AI・クリエイター・ビジネスを掛け合わせ、クリエイティブ制作におけるすべての制約を解放する。</p></div>
-    <div class="col"><h5>Magazine</h5><ul><li><a href="list.html">記事一覧</a></li><li><a href="#">カテゴリ</a></li><li><a href="#">タグ</a></li><li><a href="overview.html">Concept</a></li></ul></div>
-    <div class="col"><h5>SAC</h5><ul><li><a href="#">About</a></li><li><a href="#">Works</a></li><li><a href="#">Creator</a></li><li><a href="#">Contact</a></li></ul></div>
-    <div class="col"><h5>Follow</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">X (Twitter)</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
+    <div class="col"><h4><span class="brandmark"><span class="ring r1"></span><span class="ring r2"></span><span class="core"></span></span>SAC</h4><p class="lead-sm">AI NOW MAGAZINE — AIとクリエイティブの「いま」を、現場の視点で。実務ノウハウから、つくり手の思想まで。</p></div>
+    <div class="col"><h5>Magazine</h5><ul><li><a href="list.html">記事一覧</a></li><li><a href="category.html">カテゴリ</a></li><li><a href="tag.html">タグ</a></li></ul></div>
+    <div class="col"><h5>SAC</h5><ul><li><a href="#">About</a></li><li><a href="#">Works</a></li><li><a href="#">Creator</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="col"><h5>Follow</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">X (Twitter)</a></li><li><a href="#">Facebook</a></li></ul></div>
   </div>
-  <div class="legal"><span>〒141-0021 東京都品川区上大崎3-14-1 中丸ハウス B棟</span><span>© EPOCH Inc.</span></div>
+  <div class="foot-word"><span class="g">AI NOW</span> MAGAZINE.</div>
+  <div class="legal"><span>© EPOCH Inc.</span></div>
 </footer>
 
 <script>
-  const prog=document.getElementById('prog');
+  const prog=document.getElementById('scrollprog');
   addEventListener('scroll',()=>{const h=document.documentElement;const s=h.scrollTop/(h.scrollHeight-h.clientHeight);prog.style.width=(s*100)+'%';},{passive:true});
 
   // lite video embeds

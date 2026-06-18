@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>カテゴリ — AI NOW MAGAZINE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&family=Space+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/sac-mag.css">
+<style>
+  /* archive hero */
+  .archead{ position:relative; background:radial-gradient(110% 100% at 86% -10%, rgba(47,230,255,.12), transparent 55%), var(--blue); color:#fff; padding:40px 0 0; }
+  .archead::before{ content:""; position:absolute; inset:0; left:50%; transform:translateX(-50%); width:100vw; background:var(--blue); z-index:0; }
+  .archead > .wrap{ position:relative; z-index:1; }
+  .archead .crumb, .archead .crumb a{ color:rgba(255,255,255,.6); }
+  .archead .crumb .cur{ color:#fff; }
+  .archead .crumb .sep{ color:rgba(255,255,255,.32); }
+  .archead .kind{ font-family:var(--mono); font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--acid); margin:26px 0 14px; }
+  .archead h1{ font-family:var(--disp); font-weight:400; font-size:clamp(60px,11vw,150px); line-height:.86; letter-spacing:.01em; margin:0; color:#fff; }
+  .archead h1 .dot{ color:var(--acid); }
+  .archead .jp{ font-family:var(--head); font-weight:700; font-size:clamp(18px,2.4vw,26px); margin:14px 0 0; color:#fff; }
+  .archead .desc{ max-width:60ch; font-size:15.5px; line-height:1.95; color:rgba(255,255,255,.78); margin:16px 0 0; }
+  .archead .stat{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:rgba(255,255,255,.6); display:flex; gap:24px; margin:24px 0 0; }
+  .archead .stat b{ color:var(--acid); font-weight:700; }
+
+  /* term switcher rail */
+  .terms{ position:relative; z-index:1; display:flex; gap:10px; flex-wrap:wrap; padding:34px 0 38px; }
+  .terms a{ font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-decoration:none; color:rgba(255,255,255,.7); border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.04); border-radius:100px; padding:10px 18px; transition:.2s; display:flex; align-items:center; gap:9px; cursor:pointer; }
+  .terms a:hover{ border-color:#fff; color:#fff; }
+  .terms a.on{ background:var(--acid); border-color:var(--acid); color:#0b0b0d; font-weight:700; }
+  .terms a .n{ opacity:.6; font-size:11px; }
+  .terms a.on .n{ opacity:.7; }
+
+  /* sort bar */
+  .sortbar{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .sortbar .in{ max-width:var(--maxw); margin:0 auto; padding:14px 40px; display:flex; justify-content:space-between; align-items:center; gap:20px; }
+  .sortbar .lbl{ font-family:var(--mono); font-size:11px; letter-spacing:.12em; color:var(--ink-3); }
+  .sortbar .lbl b{ color:var(--acid); }
+  .sortbar .sort{ font-family:var(--mono); font-size:11px; color:var(--ink-3); }
+
+  /* grid (shared look with list) */
+  .listwrap{ padding:54px 0 96px; }
+  .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:42px 34px; }
+  .card{ text-decoration:none; color:inherit; display:flex; flex-direction:column; }
+  .card .thumb{ position:relative; margin-bottom:16px; }
+  .card .thumb .ph{ aspect-ratio:4/3; }
+  .card .thumb img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:var(--r); border:1px solid var(--line); }
+  .card .pin{ position:absolute; left:13px; top:13px; font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#0b0b0d; background:var(--acid); padding:6px 11px; border-radius:100px; }
+  .card .cat{ font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); }
+  .card h3{ font-family:var(--head); font-weight:700; font-size:18px; line-height:1.5; margin:9px 0 10px; letter-spacing:0; }
+  .card:hover h3{ color:var(--gold); }
+  .card .ex{ font-size:13.5px; color:var(--ink-2); line-height:1.85; margin:0 0 14px; }
+  .card .meta{ margin-top:auto; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--ink-3); display:flex; gap:13px; padding-top:13px; border-top:1px solid var(--line); }
+
+  /* pagination */
+  .pager{ display:flex; justify-content:center; align-items:center; gap:8px; margin-top:70px; }
+  .pager a{ font-family:var(--mono); font-size:13px; min-width:42px; height:42px; padding:0 12px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:9px; text-decoration:none; color:var(--ink-2); transition:.2s; }
+  .pager a:hover{ border-color:var(--ink); color:var(--ink); }
+  .pager a.on{ background:var(--acid); border-color:var(--acid); color:#0b0b0d; font-weight:700; }
+  .pager a.nav{ font-size:12px; letter-spacing:.06em; }
+  .pager .gap{ color:var(--ink-3); padding:0 4px; }
+
+  @media (max-width:860px){
+    .grid{ grid-template-columns:1fr; gap:36px; }
+    .archead{ padding-top:28px; }
+    .sortbar .in{ padding-left:22px; padding-right:22px; }
+  }
+</style>
+</head>
+<body class="mag has-cta-band">
+
+<header class="mag-header">
+  <div class="bar">
+    <a class="brand" href="list.html"><span class="brandmark"><span class="ring r1"></span><span class="ring r2"></span><span class="core"></span></span><span class="brandtype"><span class="b1">AI&nbsp;NOW</span><span class="b2">Magazine</span></span></a>
+    <nav class="mag-nav">
+      <a href="list.html">Magazine</a>
+      <a href="category.html">Categories</a>
+      <a href="contact.html">Contact</a>
+      <a class="back" href="#">SAC <span>↗</span></a>
+    </nav>
+  </div>
+</header>
+<div class="scrollprog" id="scrollprog"></div>
+
+<main>
+  <!-- ARCHIVE HEAD -->
+  <section class="archead">
+    <div class="wrap">
+      <div class="crumb"><a href="list.html">HOME</a><span class="sep">/</span><a href="list.html">MAGAZINE</a><span class="sep">/</span><span class="cur">CATEGORY</span><span class="sep">/</span><span class="cur" id="crumb-term">How&nbsp;To</span></div>
+      <div class="kind">Category Archive</div>
+      <h1 id="term-en">HOW TO<span class="dot">.</span></h1>
+      <div class="jp" id="term-jp">ハウツー・実践ガイド</div>
+      <p class="desc" id="term-desc">手を動かせる粒度で、AIクリエイティブの「やり方」を。プロンプト設計、ワークフロー、品質管理まで、保存して使える実践記事を集めました。</p>
+      <div class="stat"><span>ARTICLES <b id="term-count">42</b></span><span>IN THIS CATEGORY</span><span>UPDATED <b>2026.06</b></span></div>
+
+      <!-- TERM SWITCHER -->
+      <nav class="terms" id="terms">
+        <a class="on" data-k="howto"><span>How To</span><span class="n">42</span></a>
+        <a data-k="branding"><span>Branding</span><span class="n">28</span></a>
+        <a data-k="trend"><span>Trend</span><span class="n">31</span></a>
+        <a data-k="interview"><span>Interview</span><span class="n">19</span></a>
+        <a data-k="case"><span>Case Study</span><span class="n">23</span></a>
+        <a data-k="compare"><span>比較・Prompt</span><span class="n">31</span></a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- SORT BAR -->
+  <div class="sortbar">
+    <div class="in">
+      <div class="lbl">CATEGORY <b id="bar-term">How To</b> の記事</div>
+      <div class="sort">SORT — 新着順 ▾</div>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="wrap">
+    <div class="listwrap">
+      <div class="grid">
+        <a class="card" href="article.html">
+          <div class="thumb"><img src="assets/work1.png" alt=""><span class="pin">How To</span></div>
+          <span class="cat">プロンプト</span><h3>AI画像生成プロンプトの書き方 完全ガイド<span class="dot">.</span></h3>
+          <p class="ex">構図・スタイル・品質を分解して、狙った画を安定して出す型を雛形つきで。</p>
+          <div class="meta"><span>2026.06.04</span><span>14 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><img src="assets/hero.png" alt=""><span class="pin">How To</span></div>
+          <span class="cat">ワークフロー</span><h3>AIブランド映像の作り方。企画から納品までの全工程<span class="dot">.</span></h3>
+          <p class="ex">生成AIで映像をつくる時代に、ブランドの"らしさ"をどう保つか。全工程を解説。</p>
+          <div class="meta"><span>2026.06.06</span><span>18 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><img src="assets/medium.png" alt=""><span class="pin">How To</span></div>
+          <span class="cat">品質管理</span><h3>AI生成物の「公開前」チェックリスト 22項目<span class="dot">.</span></h3>
+          <p class="ex">権利・ブランド整合・ファクト・表記ゆれ。保存できる確認リスト。</p>
+          <div class="meta"><span>2026.05.22</span><span>7 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><img src="assets/large.png" alt=""><span class="pin">How To</span></div>
+          <span class="cat">プロンプト</span><h3>狙った構図を出す、カメラ語彙プロンプト集<span class="dot">.</span></h3>
+          <p class="ex">画角・レンズ・被写界深度。写真用語でAIに意図を伝える実践テクニック。</p>
+          <div class="meta"><span>2026.05.18</span><span>9 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><img src="assets/split-a.png" alt=""><span class="pin">How To</span></div>
+          <span class="cat">ワークフロー</span><h3>seedを固定して再現性を上げる5つの手順<span class="dot">.</span></h3>
+          <p class="ex">同じ画をもう一度出すために。seed管理と差分検証のワークフロー。</p>
+          <div class="meta"><span>2026.05.11</span><span>8 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><img src="assets/medium-l.png" alt=""><span class="pin">How To</span></div>
+          <span class="cat">編集</span><h3>生成素材と実写を馴染ませるグレーディング入門<span class="dot">.</span></h3>
+          <p class="ex">質感の差をなくす色設計。ハイブリッド制作の仕上げを支える基礎。</p>
+          <div class="meta"><span>2026.05.03</span><span>11 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><img src="assets/g1.png" alt=""><span class="pin">How To</span></div>
+          <span class="cat">プロンプト</span><h3>ネガティブプロンプトの正しい使い方<span class="dot">.</span></h3>
+          <p class="ex">出したくない要素を確実に消す。除外指定の優先順位と書き方。</p>
+          <div class="meta"><span>2026.04.27</span><span>6 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><img src="assets/wide.png" alt=""><span class="pin">How To</span></div>
+          <span class="cat">ツール</span><h3>はじめてのAI動画生成、最初の一本の作り方<span class="dot">.</span></h3>
+          <p class="ex">ツール選びから書き出しまで。動画生成の最短ルートを手順で。</p>
+          <div class="meta"><span>2026.04.20</span><span>13 MIN</span></div>
+        </a>
+        <a class="card" href="article.html">
+          <div class="thumb"><img src="assets/medium-r.png" alt=""><span class="pin">How To</span></div>
+          <span class="cat">品質管理</span><h3>ブランドトンマナを保つプロンプト・テンプレート化<span class="dot">.</span></h3>
+          <p class="ex">量産しても崩れない。"らしさ"を再利用可能な型に落とし込む方法。</p>
+          <div class="meta"><span>2026.04.12</span><span>10 MIN</span></div>
+        </a>
+      </div>
+
+      <!-- PAGINATION -->
+      <nav class="pager">
+        <a class="nav" href="#">← PREV</a>
+        <a class="on" href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <span class="gap">…</span>
+        <a href="#">5</a>
+        <a class="nav" href="#">NEXT →</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- QUIET CTA -->
+  <section class="quietcta">
+    <div class="in">
+      <span class="eyebrow no-rule">Let's talk</span>
+      <h2>AIクリエイティブの今をお届けします<span class="dot">.</span></h2>
+      <p>まずはどんな事を考えているのかお聞かせください。</p>
+      <a class="btn gold" href="contact.html">お問い合わせ <span class="arr">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="mag-footer">
+  <div class="marquee"><div class="mqt">AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;</div></div>
+  <div class="cols">
+    <div class="col"><h4><span class="brandmark"><span class="ring r1"></span><span class="ring r2"></span><span class="core"></span></span>SAC</h4><p class="lead-sm">AI NOW MAGAZINE — AIとクリエイティブの「いま」を、現場の視点で。実務ノウハウから、つくり手の思想まで。</p></div>
+    <div class="col"><h5>Magazine</h5><ul><li><a href="list.html">記事一覧</a></li><li><a href="category.html">カテゴリ</a></li><li><a href="tag.html">タグ</a></li></ul></div>
+    <div class="col"><h5>SAC</h5><ul><li><a href="#">About</a></li><li><a href="#">Works</a></li><li><a href="#">Creator</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="col"><h5>Follow</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">X (Twitter)</a></li><li><a href="#">Facebook</a></li></ul></div>
+  </div>
+  <div class="foot-word" style="font-size: 100px;"><span class="g">AI NOW</span> MAGAZINE.</div>
+  <div class="legal"><span>© EPOCH Inc.</span></div>
+</footer>
+
+<script>
+  // demo: switching category term updates the archive head (one template serves all categories)
+  const TERMS={
+    howto:   {en:'HOW TO',     jp:'ハウツー・実践ガイド',   ja:'How To',     n:42, d:'手を動かせる粒度で、AIクリエイティブの「やり方」を。プロンプト設計、ワークフロー、品質管理まで、保存して使える実践記事を集めました。'},
+    branding:{en:'BRANDING',   jp:'ブランディング',         ja:'Branding',   n:28, d:'AI時代に、ブランドの一貫性と"らしさ"をどう設計するか。アイデンティティの考え方から運用まで。'},
+    trend:   {en:'TREND',      jp:'トレンド・潮流',         ja:'Trend',      n:31, d:'生成AIとクリエイティブの「いま」を読み解く。技術・表現・市場の最新動向をSACの視点で。'},
+    interview:{en:'INTERVIEW', jp:'インタビュー',           ja:'Interview',  n:19, d:'つくり手の言葉から、AIとの向き合い方を聞く。現場のリアルな思想と判断の記録。'},
+    case:    {en:'CASE STUDY', jp:'事例紹介',               ja:'Case Study', n:23, d:'実際のプロジェクトから学ぶ。企画意図から制作プロセス、成果までを具体的に。'},
+    compare: {en:'COMPARE',    jp:'比較・プロンプト集',     ja:'比較・Prompt',n:31, d:'ツール比較から、そのまま使えるプロンプト集まで。選定と実装の判断を助ける実用記事。'}
+  };
+  const $=id=>document.getElementById(id);
+  document.querySelectorAll('#terms a').forEach(a=>a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=TERMS[a.dataset.k]; if(!t) return;
+    document.querySelector('#terms a.on')?.classList.remove('on'); a.classList.add('on');
+    $('term-en').innerHTML=t.en+'<span class="dot">.</span>';
+    $('term-jp').textContent=t.jp;
+    $('term-desc').textContent=t.d;
+    $('term-count').textContent=t.n;
+    $('crumb-term').textContent=t.ja;
+    $('bar-term').textContent=t.ja;
+    document.querySelectorAll('.card .pin').forEach(p=>p.textContent=t.ja);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+  addEventListener('scroll',()=>{const sp=$('scrollprog');if(!sp)return;const h=document.documentElement;sp.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
+  // land on the term passed via ?k=
+  (function(){const k=new URLSearchParams(location.search).get('k');if(!k)return;const el=document.querySelector('#terms a[data-k="'+k+'"]');if(el){document.querySelector('#terms a.on')?.classList.remove('on');el.classList.add('on');const t=TERMS[k];if(t){$('term-en').innerHTML=t.en+'<span class="dot">.</span>';$('term-jp').textContent=t.jp;$('term-desc').textContent=t.d;$('term-count').textContent=t.n;$('crumb-term').textContent=t.ja;$('bar-term').textContent=t.ja;document.querySelectorAll('.card .pin').forEach(p=>p.textContent=t.ja);}}})();
+</script>
+</body>
+</html>

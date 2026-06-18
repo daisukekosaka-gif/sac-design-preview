@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>お問い合わせ — AI NOW MAGAZINE</title>
+<meta name="description" content="AI NOW MAGAZINE / SAC へのお問い合わせ。取材・制作のご相談、広告・タイアップ、協業のご依頼はこちらから。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/sac-mag.css">
+<style>
+  /* hero block */
+  .c-hero{ background:radial-gradient(120% 90% at 82% -10%, rgba(194,255,61,.12), transparent 55%), var(--blue); color:#fff; }
+  .c-hero .frame{ max-width:var(--maxw); margin:0 auto; padding:40px 40px 56px; }
+  .c-hero .crumb{ margin-bottom:30px; }
+  .c-hero .crumb, .c-hero .crumb a{ color:rgba(255,255,255,.6); }
+  .c-hero .crumb .cur{ color:#fff; }
+  .c-hero .crumb .sep{ color:rgba(255,255,255,.32); }
+  .c-hero .eyebrow{ color:rgba(255,255,255,.72); margin-bottom:18px; }
+  .c-hero .eyebrow::before{ background:var(--acid); }
+  .c-hero h1{ font-family:var(--disp); font-weight:400; font-size:clamp(72px,15vw,200px); line-height:.86; letter-spacing:.012em; margin:0; color:#fff; }
+  .c-hero h1 .dot{ color:var(--acid); }
+  .c-hero .sub{ font-size:16px; line-height:1.95; color:rgba(255,255,255,.82); max-width:54ch; margin:20px 0 0; }
+
+  /* form */
+  .c-body{ max-width:760px; margin:0 auto; padding:64px 40px 0; }
+  .c-note{ font-size:13px; color:var(--ink-3); line-height:1.9; margin:0 0 36px; padding:16px 20px; border:1px dashed var(--line); border-radius:8px; }
+  .c-note b{ color:var(--acid); font-weight:400; font-family:var(--mono); font-size:11px; letter-spacing:.1em; }
+
+  form{ display:flex; flex-direction:column; gap:24px; }
+  .field{ display:flex; flex-direction:column; gap:9px; }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  label{ font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2); display:flex; align-items:center; gap:9px; }
+  label .req{ color:#0b0b0d; background:var(--acid); font-size:9px; letter-spacing:.08em; padding:3px 7px; border-radius:100px; }
+  label .opt{ color:var(--ink-3); border:1px solid var(--line); font-size:9px; letter-spacing:.08em; padding:2px 7px; border-radius:100px; }
+  label .jp{ font-family:var(--sans); font-weight:700; font-size:13px; letter-spacing:0; text-transform:none; color:var(--ink); }
+  input, select, textarea{
+    font-family:var(--sans); font-size:15px; color:#fff;
+    background:var(--paper-3); border:1px solid var(--line); border-radius:9px;
+    padding:14px 16px; outline:none; transition:border-color .18s, box-shadow .18s; width:100%;
+  }
+  textarea{ resize:vertical; min-height:150px; line-height:1.8; }
+  input::placeholder, textarea::placeholder{ color:var(--ink-3); }
+  input:focus, select:focus, textarea:focus{ border-color:var(--acid); box-shadow:0 0 0 3px rgba(194,255,61,.16); }
+  select{ appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2376767e' stroke-width='1.6' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 18px center; padding-right:42px; }
+
+  .agree{ display:flex; gap:13px; align-items:flex-start; padding:20px 22px; background:var(--paper-3); border:1px solid var(--line); border-radius:9px; }
+  .agree input{ width:20px; height:20px; flex:none; margin-top:1px; accent-color:#76e63a; }
+  .agree label{ font-family:var(--sans); text-transform:none; letter-spacing:0; font-size:13.5px; color:var(--ink-2); line-height:1.7; }
+  .agree a{ color:var(--acid); text-decoration:underline; text-underline-offset:3px; }
+
+  .submit-row{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-top:6px; }
+  .submit-row .btn.gold{ font-size:13px; padding:17px 38px; }
+  .submit-row .hint{ font-family:var(--mono); font-size:11px; color:var(--ink-3); letter-spacing:.04em; }
+
+  .sent{ display:none; text-align:center; padding:54px 30px; border:1px solid var(--acid); border-radius:12px; background:var(--gold-tint); }
+  .sent.on{ display:block; }
+  .sent .ic{ width:54px; height:54px; border-radius:50%; background:var(--acid); color:#0b0b0d; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; font-size:26px; }
+  .sent h3{ font-family:var(--head); font-weight:400; font-size:30px; letter-spacing:.01em; margin:0 0 10px; color:#fff; }
+  .sent p{ color:var(--ink-2); font-size:14px; margin:0; }
+
+  @media (max-width:680px){
+    .c-hero .frame{ padding-left:22px; padding-right:22px; }
+    .c-body{ padding-left:22px; padding-right:22px; }
+    .row2{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body class="mag">
+
+<header class="mag-header">
+  <div class="bar">
+    <a class="brand" href="list.html"><span class="brandmark"><span class="ring r1"></span><span class="ring r2"></span><span class="core"></span></span><span class="brandtype"><span class="b1">AI&nbsp;NOW</span><span class="b2">Magazine</span></span></a>
+    <nav class="mag-nav">
+      <a href="list.html">Magazine</a>
+      <a href="category.html">Categories</a>
+      <a href="contact.html">Contact</a>
+      <a class="back" href="#">SAC <span>↗</span></a>
+    </nav>
+  </div>
+</header>
+<div class="scrollprog" id="scrollprog"></div>
+
+<main>
+  <section class="c-hero">
+    <div class="frame">
+      <div class="crumb"><a href="list.html">HOME</a><span class="sep">/</span><span class="cur">CONTACT</span></div>
+      <span class="eyebrow">Let's talk</span>
+      <h1>CONTACT<span class="dot">.</span></h1>
+      <p class="sub">取材・記事掲載、制作やワークフローのご相談、広告・タイアップ、協業のご依頼まで。営業ではなく、まずは「どんなことを考えているか」からお聞かせください。</p>
+    </div>
+  </section>
+
+  <div class="c-body">
+    <p class="c-note"><b>DEMO</b>　本フォームはデザインテンプレートのサンプルです。送信処理は行われません（実装時に各CMS／フォームツールへ接続します）。</p>
+
+    <form id="cform" novalidate>
+      <div class="row2">
+        <div class="field">
+          <label for="name"><span class="jp">お名前</span> <span class="req">必須</span></label>
+          <input id="name" name="name" type="text" placeholder="山田 太郎" required>
+        </div>
+        <div class="field">
+          <label for="company"><span class="jp">会社名・団体名</span> <span class="opt">任意</span></label>
+          <input id="company" name="company" type="text" placeholder="株式会社〇〇">
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label for="email"><span class="jp">メールアドレス</span> <span class="req">必須</span></label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="tel"><span class="jp">電話番号</span> <span class="opt">任意</span></label>
+          <input id="tel" name="tel" type="tel" placeholder="03-0000-0000">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="type"><span class="jp">ご相談の種別</span> <span class="req">必須</span></label>
+        <select id="type" name="type" required>
+          <option value="" disabled selected>選択してください</option>
+          <option>取材・記事掲載のご依頼</option>
+          <option>制作・ワークフローのご相談</option>
+          <option>広告・タイアップ</option>
+          <option>採用・協業のご相談</option>
+          <option>その他</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="budget"><span class="jp">ご予算感</span> <span class="opt">任意</span></label>
+        <select id="budget" name="budget">
+          <option value="" disabled selected>選択してください</option>
+          <option>〜50万円</option>
+          <option>50〜100万円</option>
+          <option>100〜300万円</option>
+          <option>300万円〜</option>
+          <option>未定・相談したい</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="message"><span class="jp">お問い合わせ内容</span> <span class="req">必須</span></label>
+        <textarea id="message" name="message" placeholder="ご検討中の内容、背景、希望時期などをご記入ください。" required></textarea>
+      </div>
+
+      <div class="agree">
+        <input id="agree" type="checkbox" required>
+        <label for="agree"><a href="#">プライバシーポリシー</a>に同意のうえ、送信します。</label>
+      </div>
+
+      <div class="submit-row">
+        <button class="btn gold" type="submit">送信する <span class="arr">→</span></button>
+        <span class="hint">通常 2〜3 営業日以内にご返信します。</span>
+      </div>
+    </form>
+
+    <div class="sent" id="sent">
+      <div class="ic">✓</div>
+      <h3>送信しました<span class="dot" style="color:var(--acid)">.</span></h3>
+      <p>お問い合わせありがとうございます。担当者より追ってご連絡いたします。</p>
+    </div>
+  </div>
+</main>
+
+<footer class="mag-footer">
+  <div class="marquee"><div class="mqt">AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;AI NOW MAGAZINE&nbsp;&nbsp;·&nbsp;&nbsp;THE STATE OF <b>AI CREATIVE</b>.&nbsp;&nbsp;·&nbsp;&nbsp;</div></div>
+  <div class="cols">
+    <div class="col"><h4><span class="brandmark"><span class="ring r1"></span><span class="ring r2"></span><span class="core"></span></span>SAC</h4><p class="lead-sm">AI NOW MAGAZINE — AIとクリエイティブの「いま」を、現場の視点で。実務ノウハウから、つくり手の思想まで。</p></div>
+    <div class="col"><h5>Magazine</h5><ul><li><a href="list.html">記事一覧</a></li><li><a href="category.html">カテゴリ</a></li><li><a href="tag.html">タグ</a></li></ul></div>
+    <div class="col"><h5>SAC</h5><ul><li><a href="#">About</a></li><li><a href="#">Works</a></li><li><a href="#">Creator</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="col"><h5>Follow</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">X (Twitter)</a></li><li><a href="#">Facebook</a></li></ul></div>
+  </div>
+  <div class="foot-word"><span class="g">AI NOW</span> MAGAZINE.</div>
+  <div class="legal"><span>© EPOCH Inc.</span></div>
+</footer>
+
+<script>
+  addEventListener('scroll',()=>{const sp=document.getElementById('scrollprog');if(!sp)return;const h=document.documentElement;sp.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
+
+  document.getElementById('cform').addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!this.checkValidity()){ this.reportValidity(); return; }
+    this.style.display='none';
+    document.querySelector('.c-note').style.display='none';
+    const s=document.getElementById('sent'); s.classList.add('on');
+    s.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+</script>
+</body>
+</html>
